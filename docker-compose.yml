@@ -1,0 +1,21 @@
+services:
+  hercule-db:
+    image: mysql:8.0-bookworm
+    volumes:
+      - ./:/home/hercuser/Hercules
+      - ./init_db.sh:/docker-entrypoint-initdb.d/init_db.sh
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      SERVER_RENEWAL_MODE: RENEWAL
+      # SERVER_RENEWAL_MODE: PRERENEWAL
+
+
+  server:
+    build: ./
+    volumes:
+      - ./:/home/hercuser/Hercules
+
+  # builder:
+  #   build: ./dockerfile-builder
+  #   volumes:
+  #     - ./:/home/hercuser/Hercules
