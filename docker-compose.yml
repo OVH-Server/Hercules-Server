@@ -15,7 +15,7 @@ services:
     volumes:
       - ./:/home/hercuser/Hercules
 
-  # builder:
-  #   build: ./dockerfile-builder
-  #   volumes:
-  #     - ./:/home/hercuser/Hercules
+  builder:
+   build: ./docker-builder
+   volumes:
+     - ./:/home/hercuser/Hercules
