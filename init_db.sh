@@ -34,3 +34,4 @@ mysql -u root -proot ragnarok < mob_db2.sql
 mysql -u root -proot ragnarok < mob_skill_db2.sql
 mysql -u root -proot -e "CREATE USER 'ragnarok'@'%' IDENTIFIED BY 'ragnarok'; GRANT ALL PRIVILEGES ON ragnarok.* TO 'ragnarok'@'%'; FLUSH PRIVILEGES;"
 
+echo end > ${CHECK_FILE}

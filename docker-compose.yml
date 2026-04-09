@@ -4,20 +4,34 @@ services:
     volumes:
       - ./:/home/hercuser/Hercules
       - ./init_db.sh:/docker-entrypoint-initdb.d/init_db.sh
+      - ./check_script_end.sh:/check_script_end.sh
     environment:
       MYSQL_ROOT_PASSWORD: root
-      SERVER_RENEWAL_MODE: RENEWAL
+      SERVER_RENEWAL_MODE: PRERENEWAL
+      CHECK_FILE: /tmp/database_ready
     healthcheck:
-          test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "ragnarok", "-pragnarok"]
+          test: ["CMD", "/check_script_end.sh"]
           interval: 10s
           timeout: 5s
           retries: 5
           start_period: 30s
 
-# L_SRV=login-server
-# C_SRV=char-server
-# M_SRV=map-server
-# A_SRV=api-server
+
+# export UID=$(id -u)
+# export GID=$(id -g)
+# docker-compose up
+  
+  builder:
+    build: ./docker-builder
+    volumes:
+      - ./:/home/hercuser/Hercules
+      - ./docker_start.sh/:/docker_start.sh
+    environment:
+      COMPILE_SERVER: true
+      PACKETVER: 20250716
+      ENABLE_RENEWAL_PACKET: "no" # yes or no
+    command: ["/docker_start.sh"]
+    user: ubuntu
 
   login-server:
     build: ./docker-builder
@@ -26,11 +40,12 @@ services:
       - ./docker_start.sh/:/docker_start.sh
     environment:
       COMPILE_SERVER: false
-      PACKETVER: 20250716
       SERVER_TYPE: login-server
     depends_on:
       hercule-db:
         condition: service_healthy
+      builder:
+        condition: service_completed_successfully
     ports:
       - 6900:6900
     command: ["/docker_start.sh"]
@@ -43,11 +58,12 @@ services:
       - ./docker_start.sh/:/docker_start.sh
     environment:
       COMPILE_SERVER: false
-      PACKETVER: 20250716
       SERVER_TYPE: char-server
     depends_on:
       hercule-db:
         condition: service_healthy
+      builder:
+        condition: service_completed_successfully
     ports:
       - 6121:6121
     command: ["/docker_start.sh"]
@@ -60,11 +76,12 @@ services:
       - ./docker_start.sh/:/docker_start.sh
     environment:
       COMPILE_SERVER: false
-      PACKETVER: 20250716
       SERVER_TYPE: map-server
     depends_on:
       hercule-db:
         condition: service_healthy
+      builder:
+        condition: service_completed_successfully
     ports:
       - 5121:5121
     command: ["/docker_start.sh"]
@@ -77,11 +94,12 @@ services:
       - ./docker_start.sh/:/docker_start.sh
     environment:
       COMPILE_SERVER: false
-      PACKETVER: 20250716
       SERVER_TYPE: api-server
     depends_on:
       hercule-db:
         condition: service_healthy
+      builder:
+        condition: service_completed_successfully
     ports:
       - 7121:7121
     command: ["/docker_start.sh"]
