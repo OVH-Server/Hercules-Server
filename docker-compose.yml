@@ -7,15 +7,88 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       SERVER_RENEWAL_MODE: RENEWAL
-      # SERVER_RENEWAL_MODE: PRERENEWAL
+    healthcheck:
+          test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "ragnarok", "-pragnarok"]
+          interval: 10s
+          timeout: 5s
+          retries: 5
+          start_period: 30s
 
+# L_SRV=login-server
+# C_SRV=char-server
+# M_SRV=map-server
+# A_SRV=api-server
 
-  server:
-    build: ./
+  login-server:
+    build: ./docker-builder
     volumes:
       - ./:/home/hercuser/Hercules
+      - ./docker_start.sh/:/docker_start.sh
+    environment:
+      COMPILE_SERVER: false
+      PACKETVER: 20250716
+      SERVER_TYPE: login-server
+    depends_on:
+      hercule-db:
+        condition: service_healthy
+    ports:
+      - 6900:6900
+    command: ["/docker_start.sh"]
+    user: ubuntu
 
-  builder:
-   build: ./docker-builder
-   volumes:
-     - ./:/home/hercuser/Hercules
+  char-server:
+    build: ./docker-builder
+    volumes:
+      - ./:/home/hercuser/Hercules
+      - ./docker_start.sh/:/docker_start.sh
+    environment:
+      COMPILE_SERVER: false
+      PACKETVER: 20250716
+      SERVER_TYPE: char-server
+    depends_on:
+      hercule-db:
+        condition: service_healthy
+    ports:
+      - 6121:6121
+    command: ["/docker_start.sh"]
+    user: ubuntu
+
+  map-server:
+    build: ./docker-builder
+    volumes:
+      - ./:/home/hercuser/Hercules
+      - ./docker_start.sh/:/docker_start.sh
+    environment:
+      COMPILE_SERVER: false
+      PACKETVER: 20250716
+      SERVER_TYPE: map-server
+    depends_on:
+      hercule-db:
+        condition: service_healthy
+    ports:
+      - 5121:5121
+    command: ["/docker_start.sh"]
+    user: ubuntu
+
+  api-server:
+    build: ./docker-builder
+    volumes:
+      - ./:/home/hercuser/Hercules
+      - ./docker_start.sh/:/docker_start.sh
+    environment:
+      COMPILE_SERVER: false
+      PACKETVER: 20250716
+      SERVER_TYPE: api-server
+    depends_on:
+      hercule-db:
+        condition: service_healthy
+    ports:
+      - 7121:7121
+    command: ["/docker_start.sh"]
+    user: ubuntu
+
+
+  # builder:
+  #  build: ./docker-builder
+  #  volumes:
+  #    - ./:/home/hercuser/Hercules
