@@ -28,7 +28,8 @@ services:
       - ./docker_start.sh/:/docker_start.sh
     environment:
       COMPILE_SERVER: true
-      PACKETVER: 20250716
+      PACKETVER: 20200401
+      # PACKETVER: 20250716
       ENABLE_RENEWAL_PACKET: "no" # yes or no
     command: ["/docker_start.sh"]
     user: ubuntu

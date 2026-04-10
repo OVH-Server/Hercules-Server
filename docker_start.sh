@@ -12,7 +12,7 @@ if [[ ! -z ${COMPILE_SERVER} ]] && [[ $COMPILE_SERVER == "true" ]]; then
     if [[ ${ENABLE_RENEWAL_PACKET} == "yes" ]]; then
         ./configure --enable-packetver=${PACKETVER} --enable-packetver-re=${ENABLE_RENEWAL_PACKET}
     else
-        ./configure --enable-packetver=${PACKETVER} --enable-packetver-re=${ENABLE_RENEWAL_PACKET} --disable-renewal
+        ./configure --enable-packetver=${PACKETVER} --enable-packetver-re=${ENABLE_RENEWAL_PACKET} --disable-renewal --enable-cashshop-preview-patch
     fi
     make sql -j
 fi
