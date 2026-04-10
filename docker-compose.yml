@@ -5,15 +5,16 @@ services:
       - ./:/home/hercuser/Hercules
       - ./init_db.sh:/docker-entrypoint-initdb.d/init_db.sh
       - ./check_script_end.sh:/check_script_end.sh
+      - ./mysql_data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
       SERVER_RENEWAL_MODE: PRERENEWAL
       CHECK_FILE: /tmp/database_ready
     healthcheck:
           test: ["CMD", "/check_script_end.sh"]
-          interval: 10s
+          interval: 15s
           timeout: 5s
-          retries: 5
+          retries: 50 
           start_period: 30s
 
 
@@ -27,12 +28,11 @@ services:
       - ./:/home/hercuser/Hercules
       - ./docker_start.sh/:/docker_start.sh
     environment:
-      COMPILE_SERVER: true
+      COMPILE_SERVER: false 
       PACKETVER: 20200401
       # PACKETVER: 20250716
       ENABLE_RENEWAL_PACKET: "no" # yes or no
     command: ["/docker_start.sh"]
-    user: ubuntu
 
   login-server:
     build: ./docker-builder
@@ -50,7 +50,6 @@ services:
     ports:
       - 6900:6900
     command: ["/docker_start.sh"]
-    user: ubuntu
 
   char-server:
     build: ./docker-builder
@@ -68,7 +67,6 @@ services:
     ports:
       - 6121:6121
     command: ["/docker_start.sh"]
-    user: ubuntu
 
   map-server:
     build: ./docker-builder
@@ -86,7 +84,6 @@ services:
     ports:
       - 5121:5121
     command: ["/docker_start.sh"]
-    user: ubuntu
 
   api-server:
     build: ./docker-builder
@@ -104,7 +101,6 @@ services:
     ports:
       - 7121:7121
     command: ["/docker_start.sh"]
-    user: ubuntu
 
 
   # builder:
