@@ -14,7 +14,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       SERVER_RENEWAL_MODE: PRERENEWAL
-      CHECK_FILE: /tmp/database_ready
+      CHECK_FILE: /var/lib/mysql/database_ready
     healthcheck:
           test: ["CMD", "/check_script_end.sh"]
           interval: 15s
