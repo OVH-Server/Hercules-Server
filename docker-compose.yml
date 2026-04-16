@@ -23,6 +23,8 @@ services:
           start_period: 30s
     networks:
       ragnarok-net:
+    labels:
+      - ragnarok-webserv-dashboard.show=true
 
 
 # export UID=$(id -u)
@@ -59,6 +61,9 @@ services:
     command: ["/docker_start.sh"]
     networks:
       ragnarok-net:
+    labels:
+      - ragnarok-webserv-dashboard.show=true
+
 
   char-server:
     build: ./docker-builder
@@ -78,6 +83,8 @@ services:
     command: ["/docker_start.sh"]
     networks:
       ragnarok-net:
+    labels:
+      - ragnarok-webserv-dashboard.show=true
 
   map-server:
     build: ./docker-builder
@@ -97,6 +104,8 @@ services:
     command: ["/docker_start.sh"]
     networks:
       ragnarok-net:
+    labels:
+      - ragnarok-webserv-dashboard.show=true
 
   # api-server:
   #   build: ./docker-builder
