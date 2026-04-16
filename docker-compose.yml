@@ -23,8 +23,8 @@ services:
           start_period: 30s
     networks:
       ragnarok-net:
-    labels:
-      - ragnarok-webserv-dashboard.show=true
+    # labels:
+    #   - ragnarok-webserv-dashboard.show=true
 
 
 # export UID=$(id -u)
