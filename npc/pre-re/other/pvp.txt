@@ -34,12 +34,12 @@
 //=========================================================================
 
 //== PVP Warpers ===========================================
-pvp_y_room,86,85,4	script	Fight Square Reception#8	8W_SOLDIER,{
+prontera,159,189,4	script	Fight Square Reception#8	8W_SOLDIER,{
 	callfunc "F_PVP_FSRS";
 	end;
 
 OnInit:
-	waitingroom "Free for all",0;
+	waitingroom "PVP test",0;
 	end;
 }
 
