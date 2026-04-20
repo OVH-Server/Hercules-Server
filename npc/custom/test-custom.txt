@@ -1,0 +1,119 @@
+//prontera,155,175,4  script  Stylist#custom_stylist	2_M_DYEINGER,{
+prontera,155,175,1	script	Drop Protector#drop_protector	2_F_MAGICMASTER,{
+    mes("[Drop Protector]");
+    mes("Drop Choice!");
+    next();
+
+    switch(select("Drop", "Bye")) {
+    case 1:
+
+
+        mes("[Drop Protector]");
+        mes("Search for Monster Name:");
+        next();
+        input(.@search$);
+
+        if (.@search$ == "") {
+            mes("[Drop Protector]");
+            mes("Empty Search, good bye!");
+            close();
+            end;
+        }
+
+        .@query$ = "SELECT id, kName FROM mob_db WHERE kName LIKE '%" + .@search$ + "%' LIMIT 20";
+        .@count = query_sql(.@query$, .@mob_ids, .@mob_names$);
+
+        if (.@count == 0) {
+            mes("[Drop Protector]");
+            mes("No monster found for : " + .@search$);
+            close();
+            end;
+        } else if (.@count >= 20) {
+            mes("[Drop Protector]");
+            mes("Too many result for pattern: [" + .@search$ + "] please search for another pattern");
+            close();
+            end;
+        }
+
+        // build dynamic select choice with monster id + name
+        .@menu$ = "";
+        for (.@i = 0; .@i < .@count; ++.@i) {
+            if (.@i > 0)
+                .@menu$ = .@menu$ + ":";
+            .@menu$ = .@menu$ + "[" + .@mob_ids[.@i] + "] " + .@mob_names$[.@i];
+        }
+        .@menu$ = .@menu$ + ":-- Close --";
+
+
+        mes("[Drop Protector]");
+        mes("Found " + .@count + " result for search ^0000FF" + .@search$ + "^000000");
+        mes("Choice monster :");
+        next();
+
+        .@choice = select(.@menu$) - 1;  // 0-based
+
+        // last option close
+        if (.@choice == .@count) {
+            mes("[Drop Protector]");
+            mes("Close selected goodbye");
+            close();
+            end;
+        }
+
+        .@selected_id$    = .@mob_ids[.@choice];
+        .@selected_name$ = .@mob_names$[.@choice];
+
+        mes("[Drop Protector]");
+        mes("Monster : ^0000FF" + .@selected_name$ + "^000000");
+        mes("Monster : ^0000FF" + .@selected_id$ + "^000000");
+
+        
+        // Get item in base then same logic to build menu and select one
+        .@query$ = "SELECT Drop1id FROM mob_db WHERE id = " + .@selected_id$ + " AND Drop1id > 0 UNION SELECT Drop2id FROM mob_db WHERE id = " + .@selected_id$ + " AND Drop2id > 0 UNION SELECT Drop3id FROM mob_db WHERE id = " + .@selected_id$ + " AND Drop3id > 0 UNION SELECT Drop4id FROM mob_db WHERE id = " + .@selected_id$ + " AND Drop4id > 0 UNION SELECT Drop5id FROM mob_db WHERE id = " + .@selected_id$ + " AND Drop5id > 0 UNION SELECT Drop6id FROM mob_db WHERE id = " + .@selected_id$ + " AND Drop6id > 0 UNION SELECT Drop7id FROM mob_db WHERE id = " + .@selected_id$ + " AND Drop7id > 0 UNION SELECT Drop8id FROM mob_db WHERE id = " + .@selected_id$ + " AND Drop8id > 0 UNION SELECT Drop9id FROM mob_db WHERE id = " + .@selected_id$ + " AND Drop9id > 0";
+        .@count = query_sql(.@query$, .@drops);
+
+        .@query_per$ = "SELECT Drop1per FROM mob_db WHERE id = " + .@selected_id$ + " AND Drop1id > 0 UNION SELECT Drop2per FROM mob_db WHERE id = " + .@selected_id$ + " AND Drop2id > 0 UNION SELECT Drop3per FROM mob_db WHERE id = " + .@selected_id$ + " AND Drop3id > 0 UNION SELECT Drop4per FROM mob_db WHERE id = " + .@selected_id$ + " AND Drop4id > 0 UNION SELECT Drop5per FROM mob_db WHERE id = " + .@selected_id$ + " AND Drop5id > 0 UNION SELECT Drop6per FROM mob_db WHERE id = " + .@selected_id$ + " AND Drop6id > 0 UNION SELECT Drop7per FROM mob_db WHERE id = " + .@selected_id$ + " AND Drop7id > 0 UNION SELECT Drop8per FROM mob_db WHERE id = " + .@selected_id$ + " AND Drop8id > 0 UNION SELECT Drop9per FROM mob_db WHERE id = " + .@selected_id$ + " AND Drop9id > 0";
+        .@count_per = query_sql(.@query_per$, .@drops_per);
+
+
+        for (.@i = 0; .@i < .@count; ++.@i)
+            mes("- " + getitemname(.@drops[.@i]) + " ( " + .@drops_per[.@i] / 100 + "% )");
+
+        .@menu$ = "";
+        for (.@i = 0; .@i < .@count; ++.@i) {
+            if (.@i > 0)
+                .@menu$ = .@menu$ + ":";
+           .@menu$ = .@menu$ + getitemname(.@drops[.@i]);
+        }
+        .@menu$ = .@menu$ + ":-- Close --";
+        mes("Choice item :");
+        next();
+
+        .@choice = select(.@menu$) - 1;  // 0-based
+
+        if (.@choice == .@count) {
+            mes("[Drop Protector]");
+            mes("Close selected goodbye");
+            close();
+            end;
+        }
+
+        .@selected_item$ = getitemname(.@drops[.@choice]);
+
+        mes("[Drop Protector]");
+        mes("Item selected : ^0000FF" + .@selected_item$ + "^000000");
+
+
+        close();
+        break;
+    
+    case 2:
+        mes("[Drop Protector]");
+        mes("Good bye");
+        close();
+        break;
+    }
+    end;
+}
+
+
