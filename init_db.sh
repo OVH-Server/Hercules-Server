@@ -46,6 +46,9 @@ mysql -u root -proot ragnarok < mob_skill_db2.sql
 echo 10
 mysql -u root -proot -e "CREATE USER 'ragnarok'@'%' IDENTIFIED BY 'ragnarok'; GRANT ALL PRIVILEGES ON ragnarok.* TO 'ragnarok'@'%'; FLUSH PRIVILEGES;"
 
+echo run init login script:
+/tmp/init_login_account.sh
+
 echo create file ${CHECK_FILE}
 echo DATABASE SETUP FINISH wait 10 sec
 sleep 10
