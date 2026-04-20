@@ -11,7 +11,6 @@ services:
       - ./init_db.sh:/docker-entrypoint-initdb.d/init_db.sh
       - ./check_script_end.sh:/check_script_end.sh
       - ./mysql_data:/var/lib/mysql
-      - ./fix.sh:/tmp/init_login_account.sh
     environment:
       MYSQL_ROOT_PASSWORD: root
       SERVER_RENEWAL_MODE: PRERENEWAL
@@ -38,7 +37,7 @@ services:
       - ./:/home/hercuser/Hercules
       - ./docker_start.sh/:/docker_start.sh
     environment:
-      COMPILE_SERVER: false
+      COMPILE_SERVER: false 
       PACKETVER: 20200401
       # PACKETVER: 20250716
       ENABLE_RENEWAL_PACKET: "no" # yes or no
@@ -58,8 +57,7 @@ services:
       builder:
         condition: service_completed_successfully
     ports:
-      # - 6900:6900
-      - 6903:6903
+      - 6900:6900
     command: ["/docker_start.sh"]
     networks:
       ragnarok-net:
@@ -81,8 +79,7 @@ services:
       builder:
         condition: service_completed_successfully
     ports:
-      # - 6121:6121
-      - 6123:6123
+      - 6121:6121
     command: ["/docker_start.sh"]
     networks:
       ragnarok-net:
@@ -103,8 +100,7 @@ services:
       builder:
         condition: service_completed_successfully
     ports:
-      # - 5121:5121
-      - 5123:5123
+      - 5121:5121
     command: ["/docker_start.sh"]
     networks:
       ragnarok-net:
