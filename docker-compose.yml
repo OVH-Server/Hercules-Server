@@ -107,24 +107,26 @@ services:
     labels:
       - ragnarok-webserv-dashboard.show=true
 
-  # api-server:
-  #   build: ./docker-builder
-  #   volumes:
-  #     - ./:/home/hercuser/Hercules
-  #     - ./docker_start.sh/:/docker_start.sh
-  #   environment:
-  #     COMPILE_SERVER: false
-  #     SERVER_TYPE: api-server
-  #   depends_on:
-  #     hercule-db:
-  #       condition: service_healthy
-  #     builder:
-  #       condition: service_completed_successfully
-  #   ports:
-  #     - 7121:7121
-  #   command: ["/docker_start.sh"]
-  #   networks:
-  #     ragnarok-net:
+  api-server:
+    build: ./docker-builder
+    volumes:
+      - ./:/home/hercuser/Hercules
+      - ./docker_start.sh/:/docker_start.sh
+    environment:
+      COMPILE_SERVER: false
+      SERVER_TYPE: api-server
+    depends_on:
+      hercule-db:
+        condition: service_healthy
+      builder:
+        condition: service_completed_successfully
+    ports:
+      - 7121:7121
+    command: ["/docker_start.sh"]
+    networks:
+      ragnarok-net:
+    labels:
+      - ragnarok-webserv-dashboard.show=true
 
 
   # builder:
