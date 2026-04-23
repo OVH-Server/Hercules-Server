@@ -1,5 +1,5 @@
 //prontera,155,175,4  script  Stylist#custom_stylist	2_M_DYEINGER,{
-prontera,155,175,1	script	Drop Protector#drop_protector	2_F_MAGICMASTER,{
+prontera,159,175,6	script	Drop Protector#dprot	4_EP19_VOGLINDE,{
     mes("[Drop Protector]");
     mes("Drop Choice!");
     mes("Your current Monster is ^0000FF" + drop_protector_monster$ + "^000000 ( ^FF0000" + drop_protector_monster_id + "^000000 )");

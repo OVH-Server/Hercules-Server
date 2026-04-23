@@ -34,7 +34,7 @@
 //=========================================================================
 
 //== PVP Warpers ===========================================
-prontera,159,189,4	script	Fight Square Reception#8	8W_SOLDIER,{
+prontera,150,191,4	script	Fight Square Reception#8	4_EXJOB_NINJA,{
 	callfunc "F_PVP_FSRS";
 	end;
 
