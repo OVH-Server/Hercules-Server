@@ -15,7 +15,7 @@
 //= 1.2.1a fix due to new script engine
 //============================================================
 
-prontera,139,173,4	script  lotterygenerator  2_SLOT_MACHINE,{-
+-	script	lotterygenerator	FAKE_NPC,{
 OnInit:
 	set $L_TicketPrice,4750; // TICKET COST
 	set $L_Prize_Money,5000000; // JACKPOT AMOUNT
@@ -86,7 +86,7 @@ L_Rigged_Draw:
 	goto L_Broadcast;
 }
 
-prontera,139,173,4	script  2_SLOT_MACHINE,{
+prontera,140,173,4	script	Lottery	2_SLOT_MACHINE,{
 L_Begin:
 	mes "[Lottery]";
 	mes "Winning Lotto Numbers ("+$LID2+"):";
