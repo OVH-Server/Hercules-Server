@@ -9,7 +9,7 @@ function script ServerStatusDisplay {
 }
 
 // NPC Example
-prontera,430,430,4	script	Server Status	151,{
+prontera,164,162,4	script	Server Status	4_MACHINE_DEVICE,{
     callfunc "ServerStatusDisplay";
     close;
 }
