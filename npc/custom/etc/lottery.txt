@@ -86,7 +86,7 @@ L_Rigged_Draw:
 	goto L_Broadcast;
 }
 
-prontera,139,173,4	script	2_SLOT_MACHINE,{
+prontera,139,173,4	script  Lottery  2_SLOT_MACHINE,{
 L_Begin:
 	mes "[Lottery]";
 	mes "Winning Lotto Numbers ("+$LID2+"):";
