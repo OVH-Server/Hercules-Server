@@ -15,7 +15,7 @@
 //============================================================
 
 // Entrance
-prontera,154,197,3	script	MVP Warper	8_M_JPNMASTER,{
+prontera,148,168,4	script	MVP Warper	4_M_CHNGENERL,{
 	mes "[ ^0065DFMVP Warper^000000 ]";
 	mes "Would you like to enter";
 	mes "the MVP Arena?";
