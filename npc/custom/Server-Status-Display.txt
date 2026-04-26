@@ -10,7 +10,7 @@
 }
 
 // NPC Example
-prontera,164,162,4	script	Server Status	151,{
+prontera,164,162,4	script	Server Status	1_M_01,{
     callfunc "ServerStatusDisplay";
     close;
 }
