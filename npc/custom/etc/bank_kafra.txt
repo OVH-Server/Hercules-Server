@@ -8,7 +8,7 @@
 //= A bank which has an interest %
 //===== Additional Comments: =================================
 // Look for this formula and setup your Bank daily % interest
-// #kafrabank/1000 = 0.1% of interest per day
+#kafrabank/1000 = 0.1% of interest per day
 // #kafrabank/100  =  1%  of interest per day
 // #kafrabank/10   =  10% of interest per day
 //
