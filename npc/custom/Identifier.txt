@@ -6,17 +6,17 @@ prontera,145,168,4	script	Identifier	4_M_KID2,{
 		if ( @inventorylist_identify[.@i] == 1 ) continue;
 
 		// Merchant's Identify skill
-		// if ( getskilllv(40) == 1 && sp >= 10 ) heal 0,-10;
+		 if ( getskilllv(40) == 1 && sp >= 10 ) heal 0,-10;
 
 		// check if there is any Magnifier
-		// else if ( countitem(611) ) delitem 611,1;
+		 else if ( countitem(611) ) delitem 611,1;
 
 		// base on Magnifier price, Rogue's Compulsion Discount skill
-		// else if ( getskilllv(224) && zeny >= ( 100 - ( 5 + 4 * getskilllv(224) ) )* 2/5 )
+		 else if ( getskilllv(224) && zeny >= ( 100 - ( 5 + 4 * getskilllv(224) ) )* 2/5 )
 			set zeny, zeny - ( 100 - ( 5 + 4 * getskilllv(224) ) )* 2/5;
 
 		// base on Magnifier price, Merchants that not enough sp and learned Discount skill
-		// else if ( getskilllv(37) && zeny >= ( 100 - ( 5 + 2 * getskilllv(37) ) )* 2/5 )
+		 else if ( getskilllv(37) && zeny >= ( 100 - ( 5 + 2 * getskilllv(37) ) )* 2/5 )
 			set zeny, zeny - ( 100 - ( 5 + 2 * getskilllv(37) ) )* 2/5;
 
 		// if none of the above, deduct the zeny
