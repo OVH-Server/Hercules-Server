@@ -53,7 +53,7 @@ OnMinute00: // Put all your start timer here
 	}
 	.start = true;
 	sleep 3600000; // 30000 for last 30 seconds ; 3600000 for 1 hour
-	.start = false;
+	//.start = false;
 	announce "["+ strnpcinfo(0) +"] Thank you everyone for the participation.", bc_all;
 	end;
 OnInit:
