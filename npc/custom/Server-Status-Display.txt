@@ -1,7 +1,7 @@
 //------Server Status Display------
 //--NPC displaying online players and the server status--
 
-function script ServerStatusDisplay {
+-  script ServerStatusDisplay {
     mes "Server Status:";
     mes "Online Players: " + getusers(1);
     mes "Server Time: " + gettimestr("%Y-%m-%d %H:%M:%S", 4);
