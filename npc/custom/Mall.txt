@@ -151,7 +151,7 @@ que_moc_16.gat,74,65,6	shop	Costumes4	944,19937:10000000,19978:10000000,19980:10
 
 //The Warper to Mall
 
-prontera.gat,164,167,4	script	Mall	WARPNPC,{
+prontera.gat,164,167,4	script	Mall	4_F_KAFRA6,{
 
 OnInit:
 	   waitingroom "MALL",0;
@@ -161,6 +161,6 @@ OnInit:
 
 //The Exit to Prontera
 
-que_moc_16,87,70,5	script	EXIT	738,{
+que_moc_16,87,70,5	script	EXIT	4_F_KAFRA6,{
 	warp "prontera" ,162,168;
 }
