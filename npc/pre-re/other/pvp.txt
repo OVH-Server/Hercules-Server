@@ -34,7 +34,7 @@
 //=========================================================================
 
 //== PVP Warpers ===========================================
-prontera,164,168,4	script	PVP#8	4_M_GRANDMONK,{
+prontera,159,192,4	script	PVP#8	4_M_GRANDMONK,{
 	callfunc "F_PVP_FSRS";
 	end;
 
