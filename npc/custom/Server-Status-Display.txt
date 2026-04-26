@@ -1,6 +1,7 @@
 //------Server Status Display------
 //--NPC displaying online players and the server status--
 
+
 -  script ServerStatusDisplay {
     mes "Server Status:";
     mes "Online Players: " + getusers(1);
