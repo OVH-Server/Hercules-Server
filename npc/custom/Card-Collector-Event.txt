@@ -37,9 +37,9 @@ prontera,140,178,4	script	Card collector	2_VENDING_MACHINE1,{
 	}
 	mes "Thank You !!";
 	delitem .look4card, .@give;
-	if ( .checkboss == 0 ) getitem Poring_Coin, 5 * .@give; // 5 poring coins given for every normal card
-	if ( .checkboss == 1 ) getitem Poring_Coin, 10 * .@give; // 10 poring coins given for every miniboss card
-	if ( .checkboss == 2 ) getitem Poring_Coin, 20 * .@give; // 20 poring coins given for every MVP card
+	if ( .checkboss == 0 ) getitem Apple, 5 * .@give; // 5 poring coins given for every normal card
+	if ( .checkboss == 1 ) getitem Apple, 10 * .@give; // 10 poring coins given for every miniboss card
+	if ( .checkboss == 2 ) getitem Apple, 20 * .@give; // 20 poring coins given for every MVP card
 	close;
 OnStart:
 OnMinute00: // Put all your start timer here
@@ -52,7 +52,7 @@ OnMinute00: // Put all your start timer here
 		.checkboss = ( .@j < .mvpcards )? 2 : 1;
 	}
 	.start = true;
-	sleep 30000; // last 30 seconds
+	sleep 3600000; // 30000 for last 30 seconds ; 3600000 for 1 hour
 	.start = false;
 	announce "["+ strnpcinfo(0) +"] Thank you everyone for the participation.", bc_all;
 	end;
@@ -60,8 +60,8 @@ OnInit:
 	.allcards = query_sql("select item_db.id from item_db right join mob_db on item_db.id = mob_db.dropcardid where type = 6 group by name_japanese", .allcardid);
 	.mvpcards = query_sql("select item_db.id from item_db right join mob_db on item_db.id = mob_db.dropcardid where mexp > 0 and type = 6 group by name_japanese;", .mvpcardid);
 	.bosscards = query_sql("select item_db.id from item_db right join mob_db on item_db.id = mob_db.dropcardid where mode & 32 and type = 6 group by name_japanese;", .bosscardid);
-//	bindatcmd "test", strnpcinfo(0)+"::OnStart", 99, 100;
-//	bindatcmd "look", strnpcinfo(0)+"::OnValue", 99, 100;
+	bindatcmd "test", strnpcinfo(0)+"::OnStart", 99, 100;
+	bindatcmd "look", strnpcinfo(0)+"::OnValue", 99, 100;
 	end;
 OnValue:
 	if ( .start )
