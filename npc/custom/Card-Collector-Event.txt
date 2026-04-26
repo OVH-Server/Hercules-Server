@@ -37,7 +37,7 @@ prontera,140,178,4	script	Card collector	2_VENDING_MACHINE1,{
 	}
 	mes "Thank You !!";
 	delitem .look4card, .@give;
-	if ( .checkboss == 0 ) getitem Apple, 5 * .@give; // 5 poring coins given for every normal card
+	if ( .checkboss == 0 ) getitem Apple, 5 * .@give; // 5 poring coins given for every normal card ;  Apple for test 
 	if ( .checkboss == 1 ) getitem Apple, 10 * .@give; // 10 poring coins given for every miniboss card
 	if ( .checkboss == 2 ) getitem Apple, 20 * .@give; // 20 poring coins given for every MVP card
 	close;
@@ -52,8 +52,8 @@ OnMinute00: // Put all your start timer here
 		.checkboss = ( .@j < .mvpcards )? 2 : 1;
 	}
 	.start = true;
-	sleep 3600000; // 30000 for last 30 seconds ; 3600000 for 1 hour
-	//.start = false;
+	sleep 30000; // 30000 for last 30 seconds ;
+	.start = false;
 	announce "["+ strnpcinfo(0) +"] Thank you everyone for the participation.", bc_all;
 	end;
 OnInit:
