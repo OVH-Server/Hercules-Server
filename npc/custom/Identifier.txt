@@ -20,7 +20,7 @@ prontera,145,168,4	script	Identifier	4_M_KID2,{
 			set zeny, zeny - ( 100 - ( 5 + 2 * getskilllv(37) ) )* 2/5;
 
 		// if none of the above, deduct the zeny
-		 else if ( zeny >= 0 )  set zeny, zeny - 40;
+		 else if ( zeny >= 40 )  set zeny, zeny - 40;
 
 		// or stop the script if there the person not enough money
 		// else break;
