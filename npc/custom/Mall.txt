@@ -2,7 +2,7 @@
 
 prontera.gat,164,167,4	script	Mall	4_F_KAFRA6,{
 
-OnInit:1waitingroom "MALL",0;
+OnInit: waitingroom "MALL",0;
 
 	shop: warp "que_moc_16" ,87,76;
 }
