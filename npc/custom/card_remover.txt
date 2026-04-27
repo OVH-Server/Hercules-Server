@@ -60,7 +60,7 @@ prontera,151,168,4	script	Card Remover	4_F_THAISHAMAN,{
 			close;
 		}
 		mes "[Wise Old Woman]";
-		mes "Test message KOALA";
+		mes "Besoin : Yellow Gemstone et Star Crumb ";
 		next;
 		if(select("Very well. Do it.", "Nevermind.") == 2) {
 			mes "[Wise Old Woman]";
