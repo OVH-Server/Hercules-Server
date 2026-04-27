@@ -1,6 +1,6 @@
 prontera,159,157,4	script	Joueurs en ligne	4_MACHINE_DEVICE,{
 	mes "[Joueurs en ligne]";
-	mes "Joueurs actuellement connectés :";
+	mes "Joueurs actuellement connecte :";
 	next;
 
 	.@count = getunits(BL_PC, .@players, false);
