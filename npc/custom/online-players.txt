@@ -10,6 +10,12 @@ prontera,159,157,4	script	Joueurs en ligne	4_MACHINE_DEVICE,{
 		close;
 	}
 
+	for (.@i = 0; .@i < .@count; .@i++) {
+		mes "- " + rid2name(.@players[.@i]);
+	}
+
+	next;
+
 	mes "Total : " + .@count + " joueur(s) en ligne.";
 	close;
 }
