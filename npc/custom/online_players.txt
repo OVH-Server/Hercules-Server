@@ -1,0 +1,30 @@
+prontera,159,157,4	script	Joueurs en ligne	4_MACHINE_DEVICE,{
+	mes "[Joueurs en ligne]";
+	mes "Voici les joueurs actuellement connectés :";
+	next;
+
+	.@count = 0;
+
+	// Parcourt tous les joueurs connectés
+	for (.@i = 0; .@i < getunits(BL_PC, .@players); .@i++) {
+		attachrid(.@players[.@i]);
+
+		// Optionnel : cacher les GM niveau 99+
+		//if (getgmlevel() >= 99) {
+			//detachrid;
+			//continue;
+		//}
+
+		.@count++;
+		mes "- " + strcharinfo(0);
+		detachrid;
+	}
+
+	if (.@count == 0) {
+		mes "Aucun joueur en ligne.";
+	} else {
+		mes "Total : " + .@count + " joueur(s) en ligne.";
+	}
+
+	close;
+}
