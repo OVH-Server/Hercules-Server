@@ -1,21 +1,48 @@
 prontera,159,154,4	script	Vendeur Ambulant	4_F_KAFRA1,{
 	mes "[Vendeur Ambulant]";
-	mes "J'ai des Red Potions fraîches !";
+	mes "Red Potions ! Même en marchant !";
 	next;
 
 	callshop "Shop_RedPotion",1;
 	end;
 
 OnInit:
+	// Point de départ
+	set .startX,159;
+	set .startY,154;
+
+	// Point d'arrivée
+	set .destX,156;
+	set .destY,183;
+
+	// Zone de déplacement horizontal
+	set .leftX,156;
+	set .rightX,166; // +10 cases
+
+	set .phase,0;     // 0 = déplacement initial, 1 = patrouille
+	set .direction,0; // 0 = droite, 1 = gauche
+
 	initnpctimer;
 	end;
 
-OnTimer3000:
-	// déplacement aléatoire dans un carré autour du point de départ
-	set .@x, rand(145,165);
-	set .@y, rand(145,165);
-	npctalk "Je bouge, je vends !";
-	movenpc strnpcinfo(0), .@x, .@y;
+OnTimer8000:
+	if (.phase == 0) {
+		npcwalkto .destX, .destY;
+		set .phase,1;
+		setnpctimer 0;
+		end;
+	}
+
+	if (.phase == 1) {
+		if (.direction == 0) {
+			npcwalkto .rightX, .destY;
+			set .direction,1;
+		} else {
+			npcwalkto .leftX, .destY;
+			set .direction,0;
+		}
+	}
+
 	setnpctimer 0;
 	end;
 }
