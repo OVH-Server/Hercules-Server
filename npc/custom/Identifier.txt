@@ -1,9 +1,10 @@
 //----Identifier---- 
 
 prontera,145,168,4 script Identifier 4_M_KID2,{ 
-getinventorylist;
-	for( set .@i,0; .@i < @inventorylist_count; set .@i, .@i + 1 ) {
-		if ( @inventorylist_identify[.@i] == 1 ) continue;
+
+	getinventorylist;
+		for( set .@i,0; .@i < @inventorylist_count; set .@i, .@i + 1 ) {
+			if ( @inventorylist_identify[.@i] == 1 ) continue;
 
 		// Merchant's Identify skill
 		if ( getskilllv(40) == 1 && sp >= 10 ) heal 0,-10;
