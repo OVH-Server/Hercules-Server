@@ -1280,6 +1280,6 @@ bl_depth2
 //Place your custom maps with a starting ID here.
 //======================================================================================
 //Example:
+mall01
 //
-//mymap	1250
-//mymap-2
+//
