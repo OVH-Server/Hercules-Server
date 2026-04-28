@@ -1,0 +1,41 @@
+prontera,159,151,4	script	Daily Reward	4_VENDING_MACHINE,{
+	mes "[Recompense Journaliere]";
+
+	// Jour actuel basé sur le timestamp serveur
+	set .@today, gettimetick(2) / 86400;
+
+	// Vérifie si le compte a déjà récupéré sa récompense aujourd'hui
+	if (#DailyReward_LastDay == .@today) {
+		mes "Tu as déjà récupéré ta récompense journalière aujourd'hui.";
+		mes "Reviens demain, champion de la patience.";
+		close;
+	}
+
+	// Liste des récompenses
+	setarray .@item_id[0], 501, 607, 5171;
+	setarray .@item_amount[0], 1, 1, 1;
+
+	// Sécurité : si l'index est hors limite, on repart à 0
+	if (#DailyReward_Index < 0 || #DailyReward_Index > 2) {
+		set #DailyReward_Index, 0;
+	}
+
+	// Donne la récompense du jour
+	getitem .@item_id[#DailyReward_Index], .@item_amount[#DailyReward_Index];
+
+	mes "Voici ta recompense journaliere :";
+	mes "^00AAFF" + getitemname(.@item_id[#DailyReward_Index]) + "^000000 x" + .@item_amount[#DailyReward_Index];
+
+	// Sauvegarde que le compte a récupéré aujourd'hui
+	set #DailyReward_LastDay, .@today;
+
+	// Passe à la récompense suivante
+	set #DailyReward_Index, #DailyReward_Index + 1;
+
+	// Si on dépasse le dernier item, on recommence au début
+	if (#DailyReward_Index > 2) {
+		set #DailyReward_Index, 0;
+	}
+
+	close;
+}
