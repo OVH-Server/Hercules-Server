@@ -1,6 +1,6 @@
 prontera,159,151,6	script	Le Maire	573,{
 	mes "[Le Maire]";
-	mes "Je peux diffuser ton message à tous les joueurs sur le serveur !";
+	mes "Je peux diffuser ton message a tous les joueurs sur le serveur !";
 	mes "Prix : ^FF000010 000 zeny^000000.";
 	next;
 
@@ -61,7 +61,11 @@ prontera,159,151,6	script	Le Maire	573,{
 
 	set Zeny, Zeny - 10000;
 
-	announce "[" + .@channel$ + "] " + strcharinfo(0) + " : " + .@message$, bc_all, 0x00FF00;
+	if (.@channel$ == "Commerce") {
+	announce "[Commerce] " + strcharinfo(0) + " : " + .@message$, bc_all, 0xFFA500;
+} else {
+	announce "[Recrutement] " + strcharinfo(0) + " : " + .@message$, bc_all, 0x00FF00;
+}
 
 	mes "[Le Maire]";
 	mes "Message bien recu !";
