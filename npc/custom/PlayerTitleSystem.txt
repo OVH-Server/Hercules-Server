@@ -1,36 +1,42 @@
 //----PlayerTitleSystem----
 
-- script PlayerTitleSystem {
-    setarray .@titles$[0], "Novice", "Warrior", "Hero"; // List of titles
-    setarray .@requirements[0], 1, 10, 100; // Corresponding requirements (e.g., kill counts)
+function	script	PlayerTitleSystem	{
+	mes "[Title Selector]";
+	mes "Titre actuel : " + ((#PlayerTitle$ == "") ? "Aucun" : #PlayerTitle$);
+	mes "Choisis ton titre :";
+	next;
 
-    mes "Choose a title:";
-    for (set .@i, 0; .@i < getarraysize(.@titles$); set .@i, .@i + 1) {
-        if (readparam(PC_KILL_COUNT) >= .@requirements[.@i]) {
-            menu .@titles$[.@i], "L_Title_" + .@i;
-        } else {
-            mes .@titles$[.@i] + " (Requires " + .@requirements[.@i] + " kills)";
-        }
-    }
+	switch(select("Newbie:GM:MacGyver:Retirer mon titre")) {
+		case 1:
+			set #PlayerTitle$, "Newbie";
+			break;
 
-    L_Title_0:
-    set title, 1;
-    mes "Your title has been set to " + .@titles$[0] + "!";
-    close;
+		case 2:
+			set #PlayerTitle$, "GM";
+			break;
 
-    L_Title_1:
-    set title, 2;
-    mes "Your title has been set to " + .@titles$[1] + "!";
-    close;
+		case 3:
+			set #PlayerTitle$, "MacGyver";
+			break;
 
-    L_Title_2:
-    set title, 3;
-    mes "Your title has been set to " + .@titles$[2] + "!";
-    close;
+		case 4:
+			set #PlayerTitle$, "";
+			break;
+	}
+
+	mes "[Title Selector]";
+
+	if (#PlayerTitle$ == "") {
+		mes "Ton titre a été retiré.";
+	} else {
+		mes "Ton titre est maintenant : [" + #PlayerTitle$ + "]";
+	}
+
+	close;
 }
 
-// NPC Example
+// NPC
 prontera,164,153,4	script	Title Selector	4_M_OLDFRIAR,{
-    callfunc "PlayerTitleSystem";
-    close;
+	callfunc "PlayerTitleSystem";
+	end;
 }
