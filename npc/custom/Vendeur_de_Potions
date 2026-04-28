@@ -1,6 +1,6 @@
-prontera,159,154,4	script	Vendeur Ambulant	4_CAT_CHEF,{
+prontera,159,154,4	script	Jean-Pierre Coffe	4_CAT_CHEF,{
 	mes "[Vendeur Ambulant]";
-	mes "Red Potions ! Même en marchant !";
+	mes "Bonjour ! Et voila ca bouge tous seul !";
 	next;
 
 	callshop "Shop_RedPotion",1;
