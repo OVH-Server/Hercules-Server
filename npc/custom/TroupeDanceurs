@@ -1,3 +1,8 @@
+prontera,164,148,4	script	Start Salsa	4_M_01,{
+	donpcevent "TroupeDanceCtrl::OnStartDance";
+	end;
+}
+
 prontera,159,148,4	script	TroupeLeader	4_GEFFEN_10,{
 	mes "Place a la troupe !";
 	close;
