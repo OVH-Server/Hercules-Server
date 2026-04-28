@@ -1,0 +1,10 @@
+prontera,159,154,4	script	Vendeur de Potions	4_F_KAFRA1,{
+	mes "[Vendeur de Potions]";
+	mes "Bonjour ! Je vends des Red Potions.";
+	next;
+
+	callshop "Shop_RedPotion",1;
+	end;
+}
+
+-	shop	Shop_RedPotion	-1,501:50
