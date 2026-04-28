@@ -1,15 +1,21 @@
-prontera,159,154,4	script	Vendeur Ambulant	4_F_KAFRA1,{
+prontera,159,154,4	script	Vendeur Ambulant	4_CAT_CHEF,{
 	mes "[Vendeur Ambulant]";
-	mes "Red Potions ! Je suis partout !";
+	mes "Red Potions ! Même en marchant !";
 	next;
 
 	callshop "Shop_RedPotion",1;
 	end;
 
 OnInit:
+	// Point de départ
+	set .startX,159;
+	set .startY,154;
+
+	// Point d'arrivée
 	set .destX,156;
 	set .destY,183;
 
+	// Zone de déplacement horizontal
 	set .leftX,156;
 	set .rightX,166; // +10 cases
 
@@ -19,23 +25,14 @@ OnInit:
 	initnpctimer;
 	end;
 
-OnTimer1000:
-
-	// Phase 1 : aller au point d'arrivée
+OnTimer8000:
 	if (.phase == 0) {
 		npcwalkto .destX, .destY;
-
-		// Vérifie s'il est arrivé
-		getmapxy(.@map$, .@x, .@y, UNITTYPE_NPC);
-
-		if (.@x == .destX && .@y == .destY) {
-			set .phase,1;
-		}
+		set .phase,1;
 		setnpctimer 0;
 		end;
 	}
 
-	// Phase 2 : aller-retour horizontal
 	if (.phase == 1) {
 		if (.direction == 0) {
 			npcwalkto .rightX, .destY;
@@ -46,8 +43,8 @@ OnTimer1000:
 		}
 	}
 
-	setnpctimer 3000;
+	setnpctimer 0;
 	end;
 }
 
--	shop	Shop_RedPotion	-1,501:50
+-	shop	Shop_RedPotion	-1,501:10,1000:10,715:10
