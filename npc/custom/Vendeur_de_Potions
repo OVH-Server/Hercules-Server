@@ -1,9 +1,22 @@
-prontera,159,154,4	script	Vendeur de Potions	4_F_KAFRA1,{
-	mes "[Vendeur de Potions]";
-	mes "Bonjour ! Je vends des Red Potions.";
+prontera,159,154,4	script	Vendeur Ambulant	4_F_KAFRA1,{
+	mes "[Vendeur Ambulant]";
+	mes "J'ai des Red Potions fraîches !";
 	next;
 
 	callshop "Shop_RedPotion",1;
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer3000:
+	// déplacement aléatoire dans un carré autour du point de départ
+	set .@x, rand(145,165);
+	set .@y, rand(145,165);
+	npctalk "Je bouge, je vends !";
+	movenpc strnpcinfo(0), .@x, .@y;
+	setnpctimer 0;
 	end;
 }
 
