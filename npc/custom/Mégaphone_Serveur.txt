@@ -1,0 +1,69 @@
+prontera,159,151,6	script	Le Maire	573,{
+	mes "[Le Maire]";
+	mes "Je peux diffuser ton message à tous les joueurs sur le serveur !";
+	mes "Prix : ^FF000010 000 zeny^000000.";
+	next;
+
+	if (Zeny < 10000) {
+		mes "[Le Maire]";
+		mes "Tu n'as pas assez de zeny.";
+		mes "Salut byebye";
+		close;
+	}
+
+	mes "[Le Maire]";
+	mes "Dans quel canal veux-tu envoyer ton message ?";
+	next;
+
+	switch(select("Commerce:Recrutement:Annuler")) {
+		case 1:
+			set .@channel$, "Commerce";
+			break;
+
+		case 2:
+			set .@channel$, "Recrutement";
+			break;
+
+		case 3:
+			mes "[Le Maire]";
+			mes "Annulé.";
+			close;
+	}
+
+	mes "[Le Maire]";
+	mes "Note ton message :";
+	next;
+
+	input .@message$;
+
+	if (.@message$ == "") {
+		mes "[Le Maire]";
+		mes "Message vide annule.";
+		close;
+	}
+
+	mes "[Le Maire]";
+	mes "Ton message sera envoye dans le canal ^00AAFF" + .@channel$ + "^000000 :";
+	mes "\"" + .@message$ + "\"";
+	next;
+
+	if (select("Envoyer:Annuler") == 2) {
+		mes "[Le Maire]";
+		mes "Annule.";
+		close;
+	}
+
+	if (Zeny < 10000) {
+		mes "[Le Maire]";
+		mes "Tu n'as plus assez de zeny.";
+		close;
+	}
+
+	set Zeny, Zeny - 10000;
+
+	announce "[" + .@channel$ + "] " + strcharinfo(0) + " : " + .@message$, bc_all, 0x00FF00;
+
+	mes "[Le Maire]";
+	mes "Message bien recu !";
+	close;
+}
