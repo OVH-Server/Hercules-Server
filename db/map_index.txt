@@ -1280,6 +1280,6 @@ bl_depth2
 //Place your custom maps with a starting ID here.
 //======================================================================================
 //Example:
-mall01 1000  // map ajouté dans le grf/custom
+1000 mall01
 //
 //
