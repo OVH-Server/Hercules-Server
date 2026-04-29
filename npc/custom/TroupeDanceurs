@@ -14,17 +14,21 @@ prontera,159,148,4	script	TroupeLeader	4_GEFFEN_10,{
 	mes "Place a la troupe !";
 	close2;
 
-	// Apparition des 2 membres de la troupe derrière le leader
-	enablenpc "Troupe_Nacoruri";
-	enablenpc "Troupe_Dancer";
-
-	// Déplacement du leader vers la place principale
+	// Déplacement du leader
 	npcwalkto 156,179;
+
+	// Attente du trajet
+	sleep 5000; // ajuste si besoin
+
+	// Spawn à gauche et à droite du leader
+	enablenpc "Troupe_Nacoruri"; // gauche
+	enablenpc "Troupe_Dancer";   // droite
 
 	end;
 }
 
-prontera,159,146,4	script	Troupe_Nacoruri	4_F_NACORURI,{
+// Gauche du leader (156,179 → 155,179)
+prontera,155,179,4	script	Troupe_Nacoruri	4_F_NACORURI,{
 	end;
 
 OnInit:
@@ -32,7 +36,8 @@ OnInit:
 	end;
 }
 
-prontera,160,146,4	script	Troupe_Dancer	DANCER_H,{
+// Droite du leader (156,179 → 157,179)
+prontera,157,179,4	script	Troupe_Dancer	DANCER_H,{
 	end;
 
 OnInit:
