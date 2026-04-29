@@ -89,7 +89,7 @@ ayothaya,161,172,4	script	Transporteur Ayothaya	1_F_MERCHANT_02,{
 }
 
 //--- Transporteur place marchande Lighthalzen vers Prontera
-Lighthalzen,158,50,4	script	Transporteur Lighthalzen	1_F_MERCHANT_02,{
+lighthalzen,158,50,4	script	Transporteur Lighthalzen	1_F_MERCHANT_02,{
 
 	mes "[Transporteur]";
 	mes "Envie d'aller à Prontera ?";
