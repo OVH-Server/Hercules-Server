@@ -15,7 +15,7 @@ prontera,159,148,5	script	Maitre Ribs	4_GEFFEN_10,{
 	close2;
 
 	// Déplacement du leader
-	npcwalkto 156,179,2;
+	npcwalkto 156,179;
 
 	// Attente du trajet
 	sleep 6500;
