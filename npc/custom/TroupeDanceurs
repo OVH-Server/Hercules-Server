@@ -9,7 +9,7 @@ prontera,159,148,4	script	TroupeLeader	4_GEFFEN_10,{
 	case 1:
 		mes "[Leader de la troupe]";
 		mes "Place a la troupe !";
-		close2;
+		close;
 
 		npctalk "Place a la troupe !";
 
