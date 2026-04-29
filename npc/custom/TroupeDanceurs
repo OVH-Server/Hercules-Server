@@ -18,29 +18,29 @@ prontera,159,148,5	script	Maitre Ribs	4_GEFFEN_10,{
 	npcwalkto 156,179;
 
 	// Attente du trajet
-	sleep 8000;
+	sleep 6000;
 
-	// Apparition de la troupe
-	enablenpc "Troupe_Nacoruri";
-	enablenpc "Troupe_Dancer";
+	// Apparition des deux Nacoruri derrière (gauche + droite)
+	enablenpc "Troupe_Nacoruri_Gauche";
+	enablenpc "Troupe_Nacoruri_Droite";
 
 	end;
 }
 
-// Gauche du leader
-prontera,155,179,5	script	Troupe_Nacoruri	4_F_NACORURI,{
+// Derrière gauche du leader (156,179 → 155,178)
+prontera,155,178,5	script	Troupe_Nacoruri_Gauche	4_F_NACORURI,{
 	end;
 
 OnInit:
-	disablenpc "Troupe_Nacoruri";
+	disablenpc "Troupe_Nacoruri_Gauche";
 	end;
 }
 
-// Droite du leader
-prontera,157,179,5	script	Troupe_Dancer	DANCER_B,{
+// Derrière droite du leader (156,179 → 157,178)
+prontera,157,178,5	script	Troupe_Nacoruri_Droite	4_F_NACORURI,{
 	end;
 
 OnInit:
-	disablenpc "Troupe_Dancer";
+	disablenpc "Troupe_Nacoruri_Droite";
 	end;
 }
