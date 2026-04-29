@@ -1,16 +1,16 @@
-prontera,159,148,4	script	TroupeLeader	4_GEFFEN_10,{
+prontera,159,148,5	script	Maitre Ribs	4_GEFFEN_10,{
 
-	mes "[Leader de la troupe]";
+	mes "[Maitre Ribs]";
 	mes "Voulez-vous que je parte danser sur la place principale ?";
 	next;
 
 	if (select("Oui, allez à la place principale.:Non, restez ici.") == 2) {
-		mes "[Leader de la troupe]";
+		mes "[Maitre Ribs]";
 		mes "Très bien, je reste ici.";
 		close;
 	}
 
-	mes "[Leader de la troupe]";
+	mes "[Maitre Ribs]";
 	mes "Place a la troupe !";
 	close2;
 
@@ -27,8 +27,8 @@ prontera,159,148,4	script	TroupeLeader	4_GEFFEN_10,{
 	end;
 }
 
-// Gauche du leader (156,179 → 155,179)
-prontera,155,179,4	script	Troupe_Nacoruri	4_F_NACORURI,{
+// Gauche du leader
+prontera,155,179,5	script	Troupe_Nacoruri	4_F_NACORURI,{
 	end;
 
 OnInit:
@@ -36,8 +36,8 @@ OnInit:
 	end;
 }
 
-// Droite du leader (156,179 → 157,179)
-prontera,157,179,4	script	Troupe_Dancer	DANCER_H,{
+// Droite du leader
+prontera,157,179,5	script	Troupe_Dancer	DANCER,{
 	end;
 
 OnInit:
