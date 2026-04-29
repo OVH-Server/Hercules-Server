@@ -1,51 +1,45 @@
-//--- Transporteur Prontera vers place marchande Alberta
+
+//--- Transporteur Prontera vers place marchandes Alberta, Ayothaya et Lighthalzen
 prontera,159,160,4	script	Transporteur Prontera	1_F_MERCHANT_02,{
 
 	mes "[Transporteur]";
-	mes "Direction Place marchande d'Alberta ?";
+	mes "Ou souhaitez-vous aller ?";
 	next;
 
-	if (select("Oui, allons-y.:Non merci.") == 2) {
+	switch(select("Place marchande d'Alberta:Ayothaya:Lighthalzen:Annuler")) {
+
+	case 1:
 		mes "[Transporteur]";
-		mes "Comme tu veux.";
-		close;
-	}
+		mes "Direction Alberta !";
+		close2;
+		warp "alberta",212,51;
+		end;
 
-	mes "[Transporteur]";
-	mes "En route !";
-	close2;
+	case 2:
+		mes "[Transporteur]";
+		mes "Direction Ayothaya !";
+		close2;
+		warp "ayothaya",162,169;
+		end;
 
-	warp "alberta",212,51;
+	case 3:
+		mes "[Transporteur]";
+		mes "Direction Lighthalzen !";
+		close2;
+		warp "lighthalzen",158,54;
+		end;
 
-	end;
-}
-
-//--- Transporteur place marchande Alberta vers Prontera
-alberta,210,53,4	script	Transporteur Alberta	1_F_MERCHANT_02,{
-
-	mes "[Transporteur]";
-	mes "Envie d'aller à Prontera ?";
-	next;
-
-	if (select("Oui !.:Non merci.") == 2) {
+	case 4:
 		mes "[Transporteur]";
 		mes "Très bien.";
 		close;
 	}
-
-	mes "[Transporteur]";
-	mes "Bon voyage !";
-	close2;
-
-	warp "prontera",157,160;
-
-	end;
 }
 
 
 
 
-//--- Bot Marchand " Il est frais mon poisson ! "
+//--- Bot Marchand Alberta " Il est frais mon poisson ! "
 alberta,205,39,4	script	Marchand Louche	4_M_HUMERCHANT,{
 
 	mes "[Marchand Louche]";
