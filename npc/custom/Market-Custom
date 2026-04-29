@@ -20,9 +20,32 @@ prontera,159,160,4	script	Transporteur Prontera	1_F_MERCHANT_02,{
 	end;
 }
 
-
-
 //--- Transporteur place marchande Alberta vers Prontera
+alberta,210,53,4	script	Transporteur Alberta	1_F_MERCHANT_02,{
+
+	mes "[Transporteur]";
+	mes "Envie d'aller à Prontera ?";
+	next;
+
+	if (select("Oui !.:Non merci.") == 2) {
+		mes "[Transporteur]";
+		mes "Très bien.";
+		close;
+	}
+
+	mes "[Transporteur]";
+	mes "Bon voyage !";
+	close2;
+
+	warp "prontera",157,160;
+
+	end;
+}
+
+
+
+
+//--- Bot Marchand " Il est frais mon poisson ! "
 alberta,205,39,4	script	Marchand Louche	4_M_HUMERCHANT,{
 
 	mes "[Marchand Louche]";
@@ -78,7 +101,7 @@ OnInit:
 	initnpctimer;
 	end;
 
-OnTimer5000:
+OnTimer15000:
 	npctalk "Il est frais mon poisson !";
 	initnpctimer;
 	end;
