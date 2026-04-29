@@ -14,7 +14,28 @@ prontera,159,148,4	script	TroupeLeader	4_GEFFEN_10,{
 	mes "Place a la troupe !";
 	close2;
 
+	// Apparition des 2 membres de la troupe derrière le leader
+	enablenpc "Troupe_Nacoruri";
+	enablenpc "Troupe_Dancer";
+
+	// Déplacement du leader vers la place principale
 	npcwalkto 156,179;
 
+	end;
+}
+
+prontera,159,146,4	script	Troupe_Nacoruri	4_F_NACORURI,{
+	end;
+
+OnInit:
+	disablenpc "Troupe_Nacoruri";
+	end;
+}
+
+prontera,160,146,4	script	Troupe_Dancer	DANCER_H,{
+	end;
+
+OnInit:
+	disablenpc "Troupe_Dancer";
 	end;
 }
