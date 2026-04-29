@@ -1,37 +1,61 @@
 prontera,159,148,4	script	TroupeLeader	4_GEFFEN_10,{
 
 	mes "[Leader de la troupe]";
-	mes "Nous sommes prêts à rejoindre la place principale.";
+	mes "Nous sommes prêts à aller à la place principale.";
 	next;
 
-	if (select("Allez à la place principale !:Pas maintenant.") == 2) {
+	switch(select("Allez à la place principale !:Pas maintenant.")) {
+
+	case 1:
 		mes "[Leader de la troupe]";
-		mes "Très bien.";
+		mes "Place a la troupe !";
+		close2;
+
+		npctalk "Place a la troupe !";
+
+		// Apparition des deux danseurs derrière le leader
+		enablenpc "Danseuse_Nacoruri";
+		enablenpc "Danseuse_Dancer";
+
+		sleep 500;
+
+		// Mise en route vers la place principale
+		unitwalk getnpcid(0,"TroupeLeader"),156,179;
+		sleep 300;
+
+		unitwalk getnpcid(0,"Danseuse_Nacoruri"),155,177;
+		unitwalk getnpcid(0,"Danseuse_Dancer"),157,177;
+
+		sleep 9000;
+
+		sleep 3000;
+
+		npctalk "Salsa", "TroupeLeader";
+		npctalk "Salsa", "Danseuse_Nacoruri";
+		npctalk "Salsa", "Danseuse_Dancer";
+
+		end;
+
+	case 2:
+		mes "[Leader de la troupe]";
+		mes "Très bien, nous attendrons.";
 		close;
 	}
+}
 
-	mes "[Leader de la troupe]";
-	mes "Place a la troupe !";
-	close2;
+prontera,159,146,4	script	Danseuse_Nacoruri	4_F_NACORURI,{
+	end;
 
-	npctalk "Place a la troupe !";
+OnInit:
+	disablenpc "Danseuse_Nacoruri";
+	end;
+}
 
-	enablenpc "Danseuse Nacoruri";
-	enablenpc "Danseuse Dancer";
+prontera,160,146,4	script	Danseuse_Dancer	DANCER_H,{
+	end;
 
-	sleep 500;
-
-	unitwalk getnpcid(0,"TroupeLeader"),156,179;
-	unitwalk getnpcid(0,"Danseuse Nacoruri"),156,177;
-	unitwalk getnpcid(0,"Danseuse Dancer"),157,177;
-
-	sleep 8000;
-	sleep 3000;
-
-	npctalk "Salsa", "TroupeLeader";
-	npctalk "Salsa", "Danseuse Nacoruri";
-	npctalk "Salsa", "Danseuse Dancer";
-
+OnInit:
+	disablenpc "Danseuse_Dancer";
 	end;
 }
 
