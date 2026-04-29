@@ -44,7 +44,7 @@ alberta,210,53,4	script	Transporteur Alberta	1_F_MERCHANT_02,{
 }
 
 //--- Bot marchant avec liste aléatoire et respawn lorsque vide
-alberta,205,39,4	script	Marchand Louche	MERCHANT,{
+alberta,205,39,4	script	Marchand Louche	4_M_HUMERCHANT,{
 
 	mes "[Marchand Louche]";
 
