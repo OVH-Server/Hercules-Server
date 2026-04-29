@@ -15,23 +15,46 @@ prontera,159,148,5	script	Maitre Ribs	4_GEFFEN_10,{
 	close2;
 
 	// Déplacement du leader
-	npcwalkto 156,179;
+	npcwalkto 156,179,2;
 
 	// Attente du trajet
 	sleep 6500;
 
-	// Orientation vers le bas (une fois arrivé)
+	// Orientation vers le bas
 	setnpcdir getnpcid(0),2;
 
-	// Apparition des deux Nacoruri derrière (gauche + droite)
+	// Apparition des deux Nacoruri derrière
 	enablenpc "Troupe_Nacoruri_Gauche";
 	enablenpc "Troupe_Nacoruri_Droite";
 
 	end;
 }
 
-// Derrière gauche du leader (156,179 → 155,178)
-prontera,155,178,5	script	Troupe_Nacoruri_Gauche	4_F_NACORURI,{
+// Leader à la place principale (interaction DANSE)
+prontera,156,179,5	duplicate(Maitre Ribs)	Maitre Ribs Place	4_GEFFEN_10,{
+	mes "[Maitre Ribs]";
+	mes "Le spectacle peut commencer.";
+	next;
+
+	if (select("DANSER !:Pas maintenant.") == 2) {
+		mes "[Maitre Ribs]";
+		mes "Très bien, nous attendrons.";
+		close;
+	}
+
+	mes "[Maitre Ribs]";
+	mes "Musique !";
+	close2;
+
+	npctalk "Salsa", "Maitre Ribs Place";
+	npctalk "Salsa", "Troupe_Nacoruri_Gauche";
+	npctalk "Salsa", "Troupe_Nacoruri_Droite";
+
+	end;
+}
+
+// Derrière gauche
+prontera,155,178,2	script	Troupe_Nacoruri_Gauche	4_F_NACORURI,{
 	end;
 
 OnInit:
@@ -39,8 +62,8 @@ OnInit:
 	end;
 }
 
-// Derrière droite du leader (156,179 → 157,178)
-prontera,157,178,5	script	Troupe_Nacoruri_Droite	4_F_NACORURI,{
+// Derrière droite
+prontera,157,178,2	script	Troupe_Nacoruri_Droite	4_F_NACORURI,{
 	end;
 
 OnInit:
