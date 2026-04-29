@@ -31,19 +31,19 @@ prontera,159,148,5	script	Maitre Ribs	4_GEFFEN_10,{
 }
 
 // Derrière gauche du leader (156,179 → 155,178)
-prontera,155,178,5	script	Lolita	4_F_NACORURI,{
+prontera,155,178,5	script	Troupe_Nacoruri_Gauche	4_F_NACORURI,{
 	end;
 
 OnInit:
-	disablenpc "Lolita";
+	disablenpc "Troupe_Nacoruri_Gauche";
 	end;
 }
 
 // Derrière droite du leader (156,179 → 157,178)
-prontera,157,178,5	script	Berenice	4_F_NACORURI,{
+prontera,157,178,5	script	Troupe_Nacoruri_Droite	4_F_NACORURI,{
 	end;
 
 OnInit:
-	disablenpc "Berenice";
+	disablenpc "Troupe_Nacoruri_Droite";
 	end;
 }
