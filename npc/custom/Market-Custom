@@ -1,42 +1,117 @@
-
-//--- Transporteur Prontera vers place marchandes Alberta, Ayothaya et Lighthalzen
+//---Transporteur Prontera vers place marchandes Alberta, Ayothaya et Lighthalzen
 prontera,159,160,4	script	Transporteur Prontera	1_F_MERCHANT_02,{
 
-	mes "[Transporteur]";
+	mes "[Transporteur ]";
 	mes "Ou souhaitez-vous aller ?";
 	next;
 
-	switch(select("Place marchande d'Alberta:Ayothaya:Lighthalzen:Annuler")) {
+	switch(select(
+	"Place marchande d'Alberta:"
+	+"Place marchande d'Ayothaya:"
+	+"Place marchande de Lighthalzen:"
+	+"Annuler")) {
 
 	case 1:
 		mes "[Transporteur]";
-		mes "Direction Alberta !";
+		mes "Direction la place marchande d'Alberta !";
 		close2;
 		warp "alberta",212,51;
 		end;
 
 	case 2:
 		mes "[Transporteur]";
-		mes "Direction Ayothaya !";
+		mes "Direction la place marchande d'Ayothaya !";
 		close2;
-		warp "ayothaya",162,169;
+		warp "ayothaya",161,169;
 		end;
 
 	case 3:
 		mes "[Transporteur]";
-		mes "Direction Lighthalzen !";
+		mes "Direction la place marchande de Lighthalzen !";
 		close2;
 		warp "lighthalzen",158,54;
 		end;
 
 	case 4:
 		mes "[Transporteur]";
-		mes "Très bien.";
+		mes "Tres bien.";
 		close;
 	}
 }
 
 
+///////////////////////////////////////////////////////////////////////////
+///////---Transporteur Retour vers Prontera 
+///////////////////////////////////////////////////////////////////////////
+
+//--- Transporteur place marchande Alberta vers Prontera
+alberta,210,53,4	script	Transporteur Alberta	1_F_MERCHANT_02,{
+
+	mes "[Transporteur]";
+	mes "Envie d'aller à Prontera ?";
+	next;
+
+	if (select("Oui !.:Non merci.") == 2) {
+		mes "[Transporteur]";
+		mes "Tres bien.";
+		close;
+	}
+
+	mes "[Transporteur]";
+	mes "Bon voyage !";
+	close2;
+
+	warp "prontera",157,160;
+
+	end;
+}
+
+//--- Transporteur place marchande Ayothaya vers Prontera
+ayothaya,161,172,4	script	Transporteur Ayothaya	1_F_MERCHANT_02,{
+
+	mes "[Transporteur]";
+	mes "Envie d'aller à Prontera ?";
+	next;
+
+	if (select("Oui !.:Non merci.") == 2) {
+		mes "[Transporteur]";
+		mes "Tres bien.";
+		close;
+	}
+
+	mes "[Transporteur]";
+	mes "Bon voyage !";
+	close2;
+
+	warp "prontera",157,160;
+
+	end;
+}
+
+//--- Transporteur place marchande Lighthalzen vers Prontera
+ayothaya,158,50,4	script	Transporteur Lighthalzen	1_F_MERCHANT_02,{
+
+	mes "[Transporteur]";
+	mes "Envie d'aller à Prontera ?";
+	next;
+
+	if (select("Oui !.:Non merci.") == 2) {
+		mes "[Transporteur]";
+		mes "Tres bien.";
+		close;
+	}
+
+	mes "[Transporteur]";
+	mes "Bon voyage !";
+	close2;
+
+	warp "prontera",157,160;
+
+	end;
+}
+
+/////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 
 
 //--- Bot Marchand Alberta " Il est frais mon poisson ! "
