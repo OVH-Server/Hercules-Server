@@ -18,11 +18,11 @@ prontera,159,148,5	script	Maitre Ribs	4_GEFFEN_10,{
 	npcwalkto 156,179;
 
 	// Attente du trajet
-	sleep 5000; // ajuste si besoin
+	sleep 8000;
 
-	// Spawn à gauche et à droite du leader
-	enablenpc "Troupe_Nacoruri"; // gauche
-	enablenpc "Troupe_Dancer";   // droite
+	// Apparition de la troupe
+	enablenpc "Troupe_Nacoruri";
+	enablenpc "Troupe_Dancer";
 
 	end;
 }
@@ -37,7 +37,7 @@ OnInit:
 }
 
 // Droite du leader
-prontera,157,179,5	script	Troupe_Dancer	DANCER,{
+prontera,157,179,5	script	Troupe_Dancer	DANCER_B,{
 	end;
 
 OnInit:
