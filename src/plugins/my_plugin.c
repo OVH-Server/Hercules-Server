@@ -1,5 +1,3 @@
-/// Sample Hercules Plugin
-
 #include "common/hercules.h"
 #include "common/memmgr.h"
 #include "common/mmo.h"
@@ -7,6 +5,7 @@
 #include "common/socket.h"
 #include "common/strlib.h"
 #include "common/sql.h"
+#include "common/timer.h"
 #include "login/login.h"
 #include "login/lclif.p.h"
 #include "map/clif.h"
@@ -17,6 +16,8 @@
 #include "map/mercenary.h"
 #include "map/homunculus.h"
 #include "map/itemdb.h"
+#include "map/map.h"
+#include "map/battle.h"
 
 #include "plugins/HPMHooking.h"
 #include "common/HPMDataCheck.h"
@@ -40,7 +41,7 @@ int check_drop_protector(int char_id, int mob_id) {
         "SELECT `value` FROM `char_reg_num_db` WHERE `char_id` = '%d' AND `key` = 'drop_protector_monster_id' AND `index` = 0", 
         char_id)) {
         Sql_ShowDebug(map->mysql_handle);
-        ShowError("Koala: Error on request get drop_protector_monster_id\n");
+        ShowError("drop_protector: Error on request get drop_protector_monster_id\n");
         return 0;
     }
     
@@ -51,7 +52,7 @@ int check_drop_protector(int char_id, int mob_id) {
     }
     
     SQL->FreeResult(map->mysql_handle);
-    ShowInfo("koala: Get mob id %d for char id %d, killed mob %d\n", protected_mob_id, char_id, mob_id);
+    ShowInfo("drop_protector: Get mob id %d for char id %d, killed mob %d\n", protected_mob_id, char_id, mob_id);
     return (protected_mob_id == mob_id) ? 1 : 0;
 }
 
@@ -85,11 +86,11 @@ int myplugin_custom_mob_dead_pre(struct mob_data **md, struct block_list **src, 
         int mob_id = mob_data->db->mob_id;
         int char_id = sd->status.char_id;
         
-        ShowInfo("Koala: Player %s (ID:%d) killed Mob ID %d\n", 
+        ShowInfo("drop_protector: Player %s (ID:%d) killed Mob ID %d\n", 
                  sd->status.name, char_id, mob_id);
         
         if (check_drop_protector(char_id, mob_id)) {
-            ShowInfo("Koala: DROP PROTECTOR ACTIVATED! Player %s has protection for Mob ID %d\n", 
+            ShowInfo("drop_protector: DROP PROTECTOR ACTIVATED! Player %s has protection for Mob ID %d\n", 
                      sd->status.name, mob_id);
             
             struct item it;
@@ -97,10 +98,15 @@ int myplugin_custom_mob_dead_pre(struct mob_data **md, struct block_list **src, 
             it.nameid = 7836; // Dawn essence (ID 7836)
             it.identify = 1;
             it.amount = 1;
-            map->addflooritem(&mob_data->bl, &it, 1, mob_data->bl.m, 
-                                mob_data->bl.x, mob_data->bl.y, 
-                                sd->status.char_id, 0, 0, 4, true);
-            ShowInfo("Koala: Essence dropped on floor\n");
+            if (pc->additem(sd, &it, 1, LOG_TYPE_PICKDROP_MONSTER) != 0) {
+                // Si l'inventaire est plein, drop au sol
+                map->addflooritem(&mob_data->bl, &it, 1, mob_data->bl.m, 
+                                 mob_data->bl.x, mob_data->bl.y, 
+                                 sd->status.char_id, 0, 0, 4, true);
+                ShowInfo("drop_protector: Dawn Essence dropped on floor (inventory full)\n");
+            } else {
+                ShowInfo("drop_protector: Dawn Essence added to player inventory\n");
+            }
         }
     }
 
@@ -108,28 +114,28 @@ int myplugin_custom_mob_dead_pre(struct mob_data **md, struct block_list **src, 
 }
 
 int myplugin_custom_mob_dead_post(int retVal___, struct mob_data *md, struct block_list *src, int type) {
-    ShowInfo("Koala: POST Mob Id [%d] RetVal: %d\n", md->db->mob_id, retVal___);
+    ShowInfo("drop_protector: POST Mob Id [%d] RetVal: %d\n", md->db->mob_id, retVal___);
     return retVal___;
 }
 
 HPExport void plugin_init(void) {
     ShowInfo("==========================================\n");
-    ShowInfo("   [My_Plugin KOALA] Initialisation... \n");
+    ShowInfo("   [My_Plugin drop_protector] Initialisation... \n");
     ShowInfo("==========================================\n");
 
     if (SERVER_TYPE == SERVER_TYPE_MAP) {
-        ShowInfo("Koala: Adding hook function for mob_dead\n");
+        ShowInfo("drop_protector: Adding hook function for mob_dead\n");
         addHookPre(mob, dead, myplugin_custom_mob_dead_pre);
         addHookPost(mob, dead, myplugin_custom_mob_dead_post);
     } else {
-        ShowInfo("Koala: Unknown SERVERTYPE\n");
+        ShowInfo("drop_protector: Unknown SERVERTYPE\n");
     }
 }
 
 HPExport void server_online(void) {
-    ShowInfo("Koala: Server is online\n");
+    ShowInfo("drop_protector: Server is online\n");
 }
 
 HPExport void server_ready(void) {
-    ShowInfo("Koala: Server is ready\n");
+    ShowInfo("drop_protector: Server is ready\n");
 }

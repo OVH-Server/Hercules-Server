@@ -1,13 +1,25 @@
 //prontera,155,175,4  script  Stylist#custom_stylist	2_M_DYEINGER,{
 prontera,159,174,6	script	Drop Protector#dprot	4_EP19_VOGLINDE,{
     mes("[Drop Protector]");
-    mes("Drop Choice!");
-    mes("Your current Monster is ^0000FF" + drop_protector_monster$ + "^000000 ( ^FF0000" + drop_protector_monster_id + "^000000 )");
-    mes("Your current Item choice is ^0000FF" + drop_protector_item$ + "^000000");
+
+    .@essence_id = 7836; // dawn essence id
+
+
+    if (drop_protector_item_id == -1) {
+        mes("Select one monster then one item");
+        drop_protector_item$ = "";
+        drop_protector_monster$ = "";
+        drop_protector_monster_id = -1;
+        drop_protector_item_id = -1;
+    } else { 
+        mes("Drop Choice!");
+        mes("Your current Monster is ^0000FF" + drop_protector_monster$ + "^000000 ( ^FF0000" + drop_protector_monster_id + "^000000 )");
+        mes("Your current Item choice is ^0000FF" + drop_protector_item$ + "^000000");
+    }
 
     next();
 
-    switch(select("Select Monster", "Trade Essence", "Close")) {
+    switch(select("Select Monster", "Trade your Essence", "Close")) {
     case 1:
 
         mes("[Drop Protector]");
@@ -96,15 +108,30 @@ prontera,159,174,6	script	Drop Protector#dprot	4_EP19_VOGLINDE,{
 
         if (.@choice == .@count) {
             mes("[Drop Protector]");
-            mes("Close selected goodbye");
-            close();
-            end;
+            goto(exit_label);
         }
 
         // here we need to remove the essence player have already drop, maybe open a submenu to ask for confirmation
+        if (drop_protector_item_id != -1) {
+            mes("You are about to choose a new item. If you continue, you will lose all your essence. Are you sure you want to continue?");
+            .@nb_essence_to_remove = countitem(.@essence_id);
+            mes("You will loose: " + .@nb_essence_to_remove + " dawn essence");
+            switch(select("Yes", "No")) {
+                case 1:
+                    // remove essence then continue
+                    mes("You lost: " + .@nb_essence_to_remove + " dawn essence");
+                    delitem(.@essence_id, .@nb_essence_to_remove);
+                    next();
+                    break ;
+                case 2:
+                    // close here
+                    mes("You have abandoned the selection of a new item, but you retain your essences.");
+                    goto(exit_label);
+                    break;
+            }
+        }
 
         .@selected_item$ = getitemname(.@drops[.@choice]);
-
         // update global variable to the selected item/monster
         drop_protector_item$ = getitemname(.@drops[.@choice]);
         drop_protector_item_id = .@drops[.@choice];
@@ -122,33 +149,33 @@ prontera,159,174,6	script	Drop Protector#dprot	4_EP19_VOGLINDE,{
     case 2:
         // 7836 is item id for essence
         mes("[Drop Protector]");
-        .@essence_id = 7836;
-        .@essence_count = countitem(essence_id);
-        mes("You actualy had" + .@essence_count);
-        if (.@essence_count < 500) {
-            mes("You don't have any essence to trade item come when you have 500 esssence");
-            close();
-            break;
+
+        if (drop_protector_item_id == -1) {
+            mes("You don't have select any item, please an item before try to trade");
+            goto(exit_label);
+        }
+        .@essence_count = countitem(.@essence_id);
+        mes("You actualy had " + .@essence_count);
+        if (.@essence_count < 350) {
+            mes("You don't have any essence to trade item come when you have 350 esssence");
+            goto(exit_label);
         }
         mes("Do you want to trade your essence against ^0000FF" + drop_protector_item$ + "^000000");
-        
-        next(); // realy needed ?
         
         switch(select("Yes", "No")) {
             case 1:
                 mes("[Drop Protector]");
-                mes("Remove 350 Essence from your inventory")
-                mes("You receive^0000FF" + .@selected_item$ + "^000000")
                 // do the trade remove 350 essence then give the wanted item
-                delitem(essence_id, 350);
-                getitem(drop_protector_item_id, 1)
+                delitem(.@essence_id, 350);
+                mes("Remove 350 Essence from your inventory");
+                getitem(drop_protector_item_id, 1);
+                mes("You receive ^0000FF" + drop_protector_item$ + "^000000");
                 // reset global variable
                 drop_protector_item$ = "";
                 drop_protector_monster$ = "";
                 drop_protector_monster_id = -1;
                 drop_protector_item_id = -1;
-                close();
-                break;
+                goto(exit_label);
              case 2:
                 goto(exit_label);
         }
@@ -156,8 +183,8 @@ prontera,159,174,6	script	Drop Protector#dprot	4_EP19_VOGLINDE,{
         break;
     
     case 3:
-        exit_label:
             mes("[Drop Protector]");
+        exit_label:
             mes("Good bye");
             close();
             break;
