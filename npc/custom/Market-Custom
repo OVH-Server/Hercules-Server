@@ -44,44 +44,73 @@ alberta,210,53,4	script	Transporteur Alberta	1_F_MERCHANT_02,{
 }
 
 //--- Bot marchant avec liste aléatoire et respawn lorsque vide
-alberta,205,39,4	marketshop	Marchand Louche	4_M_HUMERCHANT,909:1000:1
+alberta,205,39,4	script	Marchand Louche	4_M_HUMERCHANT,{
 
-alberta,205,39,4	script	Marchand_Louche_Ctrl	-1,{
+	mes "[Marchand Louche]";
 
-OnInit:
-	callsub S_GenerateStock;
-	end;
+	if (.stock_count <= 0) {
+		callsub S_GenerateStock;
+		mes "J'ai reçu une nouvelle cargaison.";
+		next;
+	}
+
+	mes "Voilà ce que je vends :";
+	next;
+
+	.@menu$ = "";
+
+	for (.@i = 0; .@i < .stock_count; .@i++) {
+		.@menu$ += getitemname(.stock_id[.@i])+" x"+.stock_amount[.@i]+" - "+.stock_price[.@i]+"z:";
+	}
+
+	.@menu$ += "Quitter";
+
+	.@choice = select(.@menu$) - 1;
+
+	if (.@choice == .stock_count) close;
+
+	if (Zeny < .stock_price[.@choice]) {
+		mes "[Marchand Louche]";
+		mes "Tu n'as pas assez de zeny.";
+		close;
+	}
+
+	set Zeny, Zeny - .stock_price[.@choice];
+	getitem .stock_id[.@choice],1;
+
+	.stock_amount[.@choice]--;
+
+	mes "[Marchand Louche]";
+	mes "Marché conclu.";
+	next;
+
+	if (.stock_amount[.@choice] <= 0) {
+		for (.@i = .@choice; .@i < .stock_count - 1; .@i++) {
+			.stock_id[.@i] = .stock_id[.@i+1];
+			.stock_price[.@i] = .stock_price[.@i+1];
+			.stock_amount[.@i] = .stock_amount[.@i+1];
+		}
+		.stock_count--;
+	}
+
+	close;
 
 S_GenerateStock:
-	// Vide l'ancien stock (on force un reset large)
-	marketshopdelitem "Marchand Louche",909;
-	marketshopdelitem "Marchand Louche",910;
-	marketshopdelitem "Marchand Louche",911;
-	marketshopdelitem "Marchand Louche",912;
-	marketshopdelitem "Marchand Louche",913;
-	marketshopdelitem "Marchand Louche",914;
-	marketshopdelitem "Marchand Louche",915;
-	marketshopdelitem "Marchand Louche",938;
-	marketshopdelitem "Marchand Louche",942;
-	marketshopdelitem "Marchand Louche",943;
 
-	// Pool ressources communes
+	deletearray .stock_id[0], getarraysize(.stock_id);
+	deletearray .stock_price[0], getarraysize(.stock_price);
+	deletearray .stock_amount[0], getarraysize(.stock_amount);
+
 	setarray .@pool[0],
 		909,910,911,912,913,914,915,938,942,943;
 
-	.@count = rand(5,10); // nombre de lignes
+	.stock_count = rand(5,10);
 
-	for (.@i = 0; .@i < .@count; .@i++) {
-		.@item = .@pool[rand(getarraysize(.@pool))];
-
-		// Prix rond entre 1000 et 10000
-		.@price = rand(1,10) * 1000;
-
-		// Quantité entre 1 et 99
-		.@amount = rand(1,99);
-
-		marketshopadditem "Marchand Louche",.@item,.@price,.@amount;
+	for (.@i = 0; .@i < .stock_count; .@i++) {
+		.stock_id[.@i] = .@pool[rand(getarraysize(.@pool))];
+		.stock_price[.@i] = rand(1,10) * 1000;
+		.stock_amount[.@i] = rand(1,99);
 	}
 
-	end;
+	return;
 }
