@@ -1,0 +1,44 @@
+//--- Transporteur Prontera vers place marchande Alberta
+prontera,159,160,4	script	Transporteur Prontera	1_F_MERCHANT_02,{
+
+	mes "[Transporteur]";
+	mes "Direction Place marchande d'Alberta ?";
+	next;
+
+	if (select("Oui, allons-y.:Non merci.") == 2) {
+		mes "[Transporteur]";
+		mes "Comme tu veux.";
+		close;
+	}
+
+	mes "[Transporteur]";
+	mes "En route !";
+	close2;
+
+	warp "alberta",210,53;
+
+	end;
+}
+
+
+//--- Transporteur place marchande Alberta vers Prontera
+alberta,210,53,4	script	Transporteur Alberta	1_F_MERCHANT_02,{
+
+	mes "[Transporteur]";
+	mes "Envie d'aller à Prontera ?";
+	next;
+
+	if (select("Oui, téléporte-moi.:Non merci.") == 2) {
+		mes "[Transporteur]";
+		mes "Très bien.";
+		close;
+	}
+
+	mes "[Transporteur]";
+	mes "Bon voyage !";
+	close2;
+
+	warp "prontera",159,160;
+
+	end;
+}
