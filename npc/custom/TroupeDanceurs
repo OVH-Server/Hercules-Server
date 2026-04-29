@@ -16,22 +16,19 @@ prontera,159,148,4	script	TroupeLeader	4_GEFFEN_10,{
 
 	npctalk "Place a la troupe !";
 
-	// Apparition des danseurs derrière le leader
 	enablenpc "Danseuse Nacoruri";
 	enablenpc "Danseuse Dancer";
 
 	sleep 500;
 
-	// Déplacement vers la place principale
-	unitwalk getnpcid(0),156,179;
+	unitwalk getnpcid(0,"TroupeLeader"),156,179;
 	unitwalk getnpcid(0,"Danseuse Nacoruri"),156,177;
 	unitwalk getnpcid(0,"Danseuse Dancer"),157,177;
 
 	sleep 8000;
-
 	sleep 3000;
 
-	npctalk "Salsa";
+	npctalk "Salsa", "TroupeLeader";
 	npctalk "Salsa", "Danseuse Nacoruri";
 	npctalk "Salsa", "Danseuse Dancer";
 
