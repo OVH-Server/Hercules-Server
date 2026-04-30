@@ -202,4 +202,4 @@ OnInit:
 
 ////////////////
 //////Duplicate
-gon_in,170,10,6	duplicate(Drop Protector#dprot)	Drop Protector	4_EP19_VOGLINDE
+gon_in,170,10,6	duplicate(Drop Protector#dprot)	Drop Protector#gon	4_EP19_VOGLINDE 
