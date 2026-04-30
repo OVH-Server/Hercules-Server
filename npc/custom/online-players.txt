@@ -19,3 +19,6 @@ prontera,159,157,4	script	Joueurs en ligne	4_MACHINE_DEVICE,{
 	mes "Total : " + .@count + " joueur(s) en ligne.";
 	close;
 }
+
+//Duplicate
+gon_in,148,20,4	duplicate(Joueurs en ligne)	Joueurs en ligne	4_MACHINE_DEVICE
