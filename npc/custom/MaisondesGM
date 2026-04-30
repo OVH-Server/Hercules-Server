@@ -9,3 +9,88 @@ gonryun,197,125,4	script	Panneau Secret	2_BOARD1,{
 	mes "Direction sud.";
 	close;
 }
+
+//=======================================================
+//====================== MAISON GM ======================
+//=======================================================
+
+// Blocage passage 1
+gonryun,210,118,1	script	BlockPassage1	-1,{
+	if (#AccessOK != 1) {
+		message strcharinfo(0),"Le gardien vous bloque le passage.";
+		warp strcharinfo(3),211,119;
+	}
+	end;
+}
+
+// Blocage passage 2
+gonryun,210,110,1	script	BlockPassage2	-1,{
+	if (#AccessOK != 1) {
+		message strcharinfo(0),"Le gardien vous bloque le passage.";
+		warp strcharinfo(3),211,111;
+	}
+	end;
+}
+
+// Gardien 1
+gonryun,211,118,4	script	Gardien Sacré#1	4_M_CHNSOLDIER,{
+
+	// Orientation vers la gauche
+	setnpcdir getnpcid(0),3;
+
+	mes "[Gardien Sacré]";
+	mes "Personne ne passe sans le mot de passe.";
+	next;
+
+	input .@pass$;
+
+	if (.@pass$ != "123") {
+		mes "[Gardien Sacré]";
+		mes "Mot de passe incorrect.";
+		close;
+	}
+
+	mes "[Gardien Sacré]";
+	mes "Très bien. Tu as 10 secondes.";
+	close2;
+
+	set #AccessOK,1;
+	addtimer 10000, strnpcinfo(3)+"::OnReset";
+
+	end;
+
+OnReset:
+	set #AccessOK,0;
+	end;
+}
+
+// Gardien 2
+gonryun,211,110,4	script	Gardien Sacré#2	4_M_CHNSOLDIER,{
+
+	setnpcdir getnpcid(0),3;
+
+	mes "[Gardien Sacré]";
+	mes "Personne ne passe sans le mot de passe.";
+	next;
+
+	input .@pass$;
+
+	if (.@pass$ != "123") {
+		mes "[Gardien Sacré]";
+		mes "Mot de passe incorrect.";
+		close;
+	}
+
+	mes "[Gardien Sacré]";
+	mes "Très bien. Tu as 10 secondes.";
+	close2;
+
+	set #AccessOK,1;
+	addtimer 10000, strnpcinfo(3)+"::OnReset";
+
+	end;
+
+OnReset:
+	set #AccessOK,0;
+	end;
+}
