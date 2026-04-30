@@ -113,8 +113,8 @@ lighthalzen,158,50,4	script	Transporteur Lighthalzen	1_F_MERCHANT_02,{
 /////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 
-///====Panneaux Place marchande
-alberta,216,39,6	script	SUD	4_BULLETIN_BOARD2,{
+///====Panneaux Place marchande 
+alberta,216,39,6	script	SUD	4_BULLETIN_BOARD2,{   // Panneau principal à Alberta
 
 	mes "[Information]";
 	mes "Place marchande d'Alberta.";
@@ -123,7 +123,7 @@ alberta,216,39,6	script	SUD	4_BULLETIN_BOARD2,{
 	close;
 }
 
-// Duplications
+// Duplications panneaux Alberta
 alberta,216,28,6	duplicate(SUD)	SUD	4_BULLETIN_BOARD2
 alberta,222,28,6	duplicate(SUD)	SUD	4_BULLETIN_BOARD2
 alberta,222,39,6	duplicate(SUD)	SUD	4_BULLETIN_BOARD2
@@ -143,6 +143,19 @@ alberta,229,46,6	duplicate(SUD)	EST	4_BULLETIN_BOARD2
 alberta,225,53,6	duplicate(SUD)	EST	4_BULLETIN_BOARD2
 alberta,225,60,6	duplicate(SUD)	EST	4_BULLETIN_BOARD2
 alberta,229,60,6	duplicate(SUD)	EST	4_BULLETIN_BOARD2
+
+// Duplications panneaux Ayothaya
+ayothaya,143,172,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+ayothaya,158,172,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+ayothaya,143,160,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+ayothaya,143,148,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+ayothaya,134,148,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+ayothaya,161,144,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+ayothaya,158,144,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+ayothaya,158,160,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+ayothaya,143,139,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+ayothaya,143,135,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+ayothaya,132,139,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
 
 
 //--- Bot Marchand Alberta " Il est frais mon poisson ! "
