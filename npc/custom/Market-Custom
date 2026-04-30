@@ -128,17 +128,17 @@ alberta,216,28,6	duplicate(SUD)	SUD	4_BULLETIN_BOARD2
 alberta,222,28,6	duplicate(SUD)	SUD	4_BULLETIN_BOARD2
 alberta,222,39,6	duplicate(SUD)	SUD	4_BULLETIN_BOARD2
 alberta,187,39,6	duplicate(SUD)	SUD	4_BULLETIN_BOARD2
-alberta,209,47,6	duplicate(Panneau_Marchand)	CENTRE	4_BULLETIN_BOARD2
-alberta,194,47,6	duplicate(Panneau_Marchand)	CENTRE	4_BULLETIN_BOARD2
-alberta,187,55,6	duplicate(Panneau_Marchand)	CENTRE	4_BULLETIN_BOARD2
-alberta,187,67,6	duplicate(Panneau_Marchand)	CENTRE	4_BULLETIN_BOARD2
-alberta,188,74,6	duplicate(Panneau_Marchand)	CENTRE	4_BULLETIN_BOARD2
-alberta,180,78,6	duplicate(Panneau_Marchand)	CENTRE	4_BULLETIN_BOARD2
-alberta,232,46,6	duplicate(Panneau_Marchand)	EST	4_BULLETIN_BOARD2
-alberta,229,46,6	duplicate(Panneau_Marchand)	EST	4_BULLETIN_BOARD2
-alberta,225,53,6	duplicate(Panneau_Marchand)	EST	4_BULLETIN_BOARD2
-alberta,225,60,6	duplicate(Panneau_Marchand)	EST	4_BULLETIN_BOARD2
-alberta,229,60,6	duplicate(Panneau_Marchand)	EST	4_BULLETIN_BOARD2
+alberta,209,47,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+alberta,194,47,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+alberta,187,55,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+alberta,187,67,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+alberta,188,74,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+alberta,180,78,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+alberta,232,46,6	duplicate(SUD)	EST	4_BULLETIN_BOARD2
+alberta,229,46,6	duplicate(SUD)	EST	4_BULLETIN_BOARD2
+alberta,225,53,6	duplicate(SUD)	EST	4_BULLETIN_BOARD2
+alberta,225,60,6	duplicate(SUD)	EST	4_BULLETIN_BOARD2
+alberta,229,60,6	duplicate(SUD)	EST	4_BULLETIN_BOARD2
 
 
 //--- Bot Marchand Alberta " Il est frais mon poisson ! "
