@@ -16,7 +16,7 @@
 //= 1.2a Switched 'atcommand' to 'unitskilluseid'.
 //============================================================
 
-prontera,143,179,1	script	Coco, la cocotte	4_NFCOCK,{
+gon_in,182,29,2	script	Coco, la cocotte	4_NFCOCK,{
 
 	set .@GMAccess,80;	// GM level required to access NPC
 
