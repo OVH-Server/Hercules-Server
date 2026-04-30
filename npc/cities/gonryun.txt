@@ -335,7 +335,7 @@ gon_in,73,82,5	script	Ji Chung Zhe#gon	4_M_TWTEAMAN,{
 	}
 }
 
-gon_in,173,27,3	script	Yu Jiu Xia#gon	4_M_TWBOY,{
+gon_in,88,22,6	script	Yu Jiu Xia#gon	4_M_TWBOY,{
 	mes "[Yu Jiu Xia]";
 	mes "Geez, just as I thought.";
 	mes "They won't sell alcohol to me.";
