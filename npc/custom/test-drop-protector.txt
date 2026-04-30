@@ -200,3 +200,6 @@ OnInit:
 }
 
 
+////////////////
+//////Duplicate
+gon_in,170,10,1	duplicate(Drop Protector#dprot)	Drop Protector	4_EP19_VOGLINDE
