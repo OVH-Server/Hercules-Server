@@ -67,7 +67,7 @@ gonryun,211,110,3	script	Gardien Sacré#2	4_M_CHNSOLDIER,{
 //======================
 // Zone de blocage 1
 //======================
-gonryun,210,118,0	script	BlockPassage1	-1,1,1,{
+gonryun,210,118,0	script	BlockPassage1	-1,2,4,{
 
 OnTouch:
 	if (#GonryunAccessTime < gettimetick(2)) {
@@ -80,7 +80,7 @@ OnTouch:
 //======================
 // Zone de blocage 2
 //======================
-gonryun,210,110,0	script	BlockPassage2	-1,1,1,{
+gonryun,210,110,0	script	BlockPassage2	-1,2,4,{
 
 OnTouch:
 	if (#GonryunAccessTime < gettimetick(2)) {
