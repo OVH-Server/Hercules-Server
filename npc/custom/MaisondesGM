@@ -14,29 +14,10 @@ gonryun,197,125,4	script	Panneau Secret	2_BOARD1,{
 //====================== MAISON GM ======================
 //=======================================================
 
-// Blocage passage 1
-gonryun,210,118,1	script	BlockPassage1	-1,{
-	if (#AccessOK != 1) {
-		message strcharinfo(0),"Le gardien vous bloque le passage.";
-		warp strcharinfo(3),211,119;
-	}
-	end;
-}
-
-// Blocage passage 2
-gonryun,210,110,1	script	BlockPassage2	-1,{
-	if (#AccessOK != 1) {
-		message strcharinfo(0),"Le gardien vous bloque le passage.";
-		warp strcharinfo(3),211,111;
-	}
-	end;
-}
-
+//======================
 // Gardien 1
-gonryun,211,118,4	script	Gardien Sacré#1	4_M_CHNSOLDIER,{
-
-	// Orientation vers la gauche
-	setnpcdir getnpcid(0),3;
+//======================
+gonryun,211,118,3	script	Gardien Sacré#1	4_M_CHNSOLDIER,{
 
 	mes "[Gardien Sacré]";
 	mes "Personne ne passe sans le mot de passe.";
@@ -51,23 +32,17 @@ gonryun,211,118,4	script	Gardien Sacré#1	4_M_CHNSOLDIER,{
 	}
 
 	mes "[Gardien Sacré]";
-	mes "Très bien. Tu as 10 secondes.";
+	mes "Très bien. Tu as 10 secondes pour entrer.";
 	close2;
 
-	set #AccessOK,1;
-	addtimer 10000, strnpcinfo(3)+"::OnReset";
-
-	end;
-
-OnReset:
-	set #AccessOK,0;
+	set #GonryunAccessTime, gettimetick(2) + 10;
 	end;
 }
 
+//======================
 // Gardien 2
-gonryun,211,110,4	script	Gardien Sacré#2	4_M_CHNSOLDIER,{
-
-	setnpcdir getnpcid(0),3;
+//======================
+gonryun,211,110,3	script	Gardien Sacré#2	4_M_CHNSOLDIER,{
 
 	mes "[Gardien Sacré]";
 	mes "Personne ne passe sans le mot de passe.";
@@ -82,15 +57,35 @@ gonryun,211,110,4	script	Gardien Sacré#2	4_M_CHNSOLDIER,{
 	}
 
 	mes "[Gardien Sacré]";
-	mes "Très bien. Tu as 10 secondes.";
+	mes "Très bien. Tu as 10 secondes pour entrer.";
 	close2;
 
-	set #AccessOK,1;
-	addtimer 10000, strnpcinfo(3)+"::OnReset";
-
+	set #GonryunAccessTime, gettimetick(2) + 10;
 	end;
+}
 
-OnReset:
-	set #AccessOK,0;
+//======================
+// Zone de blocage 1
+//======================
+gonryun,210,118,0	script	BlockPassage1	-1,1,1,{
+
+OnTouch:
+	if (#GonryunAccessTime < gettimetick(2)) {
+		message strcharinfo(0), "Le gardien sacré vous bloque le passage.";
+		warp "gonryun",212,118;
+	}
+	end;
+}
+
+//======================
+// Zone de blocage 2
+//======================
+gonryun,210,110,0	script	BlockPassage2	-1,1,1,{
+
+OnTouch:
+	if (#GonryunAccessTime < gettimetick(2)) {
+		message strcharinfo(0), "Le gardien sacré vous bloque le passage.";
+		warp "gonryun",212,110;
+	}
 	end;
 }
