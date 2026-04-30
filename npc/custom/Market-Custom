@@ -149,13 +149,27 @@ ayothaya,143,172,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
 ayothaya,158,172,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
 ayothaya,143,160,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
 ayothaya,143,148,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
-ayothaya,134,148,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+ayothaya,132,148,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
 ayothaya,161,144,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+ayothaya,161,160,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
 ayothaya,158,144,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
 ayothaya,158,160,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
 ayothaya,143,139,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
 ayothaya,143,135,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
 ayothaya,132,139,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+
+// Duplications panneaux Lighthalzen
+lighthalzen,164,51,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+lighthalzen,164,42,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+lighthalzen,175,51,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+lighthalzen,184,51,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+lighthalzen,184,42,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+lighthalzen,153,51,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+lighthalzen,153,42,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+lighthalzen,122,42,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+lighthalzen,122,51,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+lighthalzen,138,51,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+lighthalzen,138,42,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
 
 
 //--- Bot Marchand Alberta " Il est frais mon poisson ! "
