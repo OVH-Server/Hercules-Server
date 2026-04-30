@@ -512,10 +512,15 @@ yuno,162,47,4	duplicate(Warper)	Warper#yuno	4_F_VALKYRIE
 // --------------------------------------------------
 //	Duplicates (Renewal):
 // --------------------------------------------------
-brasilis,201,222,4	duplicate(Warper)	Warper#bra	4_F_VALKYRIE
-dewata,204,186,6	duplicate(Warper)	Warper#dew	4_F_VALKYRIE
-dicastes01,194,194,6	duplicate(Warper)	Warper#dic	4_F_VALKYRIE
-ecl_in01,51,60,4	duplicate(Warper)	Warper#ecl	4_F_VALKYRIE
-malangdo,134,117,6	duplicate(Warper)	Warper#mal	4_F_VALKYRIE
-malaya,231,204,4	duplicate(Warper)	Warper#ma	4_F_VALKYRIE
-mora,57,152,4	duplicate(Warper)	Warper#mora	4_F_VALKYRIE
+//brasilis,201,222,4	duplicate(Warper)	Warper#bra	4_F_VALKYRIE
+//dewata,204,186,6	duplicate(Warper)	Warper#dew	4_F_VALKYRIE
+//dicastes01,194,194,6	duplicate(Warper)	Warper#dic	4_F_VALKYRIE
+//ecl_in01,51,60,4	duplicate(Warper)	Warper#ecl	4_F_VALKYRIE
+//malangdo,134,117,6	duplicate(Warper)	Warper#mal	4_F_VALKYRIE
+//malaya,231,204,4	duplicate(Warper)	Warper#ma	4_F_VALKYRIE
+//mora,57,152,4	duplicate(Warper)	Warper#mora	4_F_VALKYRIE
+
+// --------------------------------------------------
+// Custom ( Ajouté par nous )
+// --------------------------------------------------
+gon_in,152,35,4	duplicate(Warper)	Warper	4_ELEPHANT
