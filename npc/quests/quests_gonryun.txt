@@ -432,7 +432,7 @@ gon_in,17,93,5	script	Chief#gon	4_M_TWMASKMAN,{
 	close;
 }
 
-gon_in,31,13,6	script	Hostess#gon	4_F_GON,{
+gon_in,91,13,6	script	Hostess#gon	4_F_GON,{
 	if (b_sword < 1) {
 		mes "[Mei Yen Fang]";
 		mes "Oh...you're new here, right?";
