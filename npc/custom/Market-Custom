@@ -1,4 +1,4 @@
-//---Transporteur Prontera vers place marchandes Alberta, Ayothaya et Lighthalzen
+//===Transporteur Prontera vers place marchandes Alberta, Ayothaya et Lighthalzen
 prontera,159,160,4	script	Transporteur Prontera	1_F_MERCHANT_02,{
 
 	mes "[Transporteur ]";
@@ -41,10 +41,10 @@ prontera,159,160,4	script	Transporteur Prontera	1_F_MERCHANT_02,{
 
 
 ///////////////////////////////////////////////////////////////////////////
-///////---Transporteur Retour vers Prontera 
+///////===Transporteur Retour vers Prontera 
 ///////////////////////////////////////////////////////////////////////////
 
-//--- Transporteur place marchande Alberta vers Prontera
+//===Transporteur place marchande Alberta vers Prontera
 alberta,210,53,4	script	Transporteur Alberta	1_F_MERCHANT_02,{
 
 	mes "[Transporteur]";
@@ -66,7 +66,7 @@ alberta,210,53,4	script	Transporteur Alberta	1_F_MERCHANT_02,{
 	end;
 }
 
-//--- Transporteur place marchande Ayothaya vers Prontera
+//=== Transporteur place marchande Ayothaya vers Prontera
 ayothaya,161,172,4	script	Transporteur Ayothaya	1_F_MERCHANT_02,{
 
 	mes "[Transporteur]";
@@ -88,7 +88,7 @@ ayothaya,161,172,4	script	Transporteur Ayothaya	1_F_MERCHANT_02,{
 	end;
 }
 
-//--- Transporteur place marchande Lighthalzen vers Prontera
+//===Transporteur place marchande Lighthalzen vers Prontera
 lighthalzen,158,50,4	script	Transporteur Lighthalzen	1_F_MERCHANT_02,{
 
 	mes "[Transporteur]";
@@ -112,6 +112,29 @@ lighthalzen,158,50,4	script	Transporteur Lighthalzen	1_F_MERCHANT_02,{
 
 /////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
+
+///====Panneaux Place marchande
+alberta,216,39,4	script	Panneau_Marchand	2_BULLETIN_BOARD,{
+
+	mes "[Information]";
+	mes "Place marchande d'Alberta.";
+	mes "Veuillez installer vos stands entre les panneaux !";
+	mes "Bonnes ventes !";
+	close;
+}
+
+// Duplications
+alberta,216,28,4	duplicate(Panneau_Marchand)	Panneau_1	2_BULLETIN_BOARD
+alberta,222,28,4	duplicate(Panneau_Marchand)	Panneau_2	2_BULLETIN_BOARD
+alberta,222,39,4	duplicate(Panneau_Marchand)	Panneau_3	2_BULLETIN_BOARD
+alberta,187,39,4	duplicate(Panneau_Marchand)	Panneau_4	2_BULLETIN_BOARD
+alberta,209,47,4	duplicate(Panneau_Marchand)	Panneau_5	2_BULLETIN_BOARD
+alberta,194,47,4	duplicate(Panneau_Marchand)	Panneau_6	2_BULLETIN_BOARD
+alberta,187,55,4	duplicate(Panneau_Marchand)	Panneau_7	2_BULLETIN_BOARD
+alberta,187,167,4	duplicate(Panneau_Marchand)	Panneau_8	2_BULLETIN_BOARD
+
+
+
 
 
 //--- Bot Marchand Alberta " Il est frais mon poisson ! "
