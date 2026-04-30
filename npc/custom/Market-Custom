@@ -114,7 +114,7 @@ lighthalzen,158,50,4	script	Transporteur Lighthalzen	1_F_MERCHANT_02,{
 ///////////////////////////////////////////////////////////////////////////
 
 ///====Panneaux Place marchande
-alberta,216,39,4	script	Panneau_Marchand	2_BULLETIN_BOARD,{
+alberta,216,39,6	script	SUD	4_BULLETIN_BOARD2,{
 
 	mes "[Information]";
 	mes "Place marchande d'Alberta.";
@@ -124,17 +124,21 @@ alberta,216,39,4	script	Panneau_Marchand	2_BULLETIN_BOARD,{
 }
 
 // Duplications
-alberta,216,28,4	duplicate(Panneau_Marchand)	Panneau_1	2_BULLETIN_BOARD
-alberta,222,28,4	duplicate(Panneau_Marchand)	Panneau_2	2_BULLETIN_BOARD
-alberta,222,39,4	duplicate(Panneau_Marchand)	Panneau_3	2_BULLETIN_BOARD
-alberta,187,39,4	duplicate(Panneau_Marchand)	Panneau_4	2_BULLETIN_BOARD
-alberta,209,47,4	duplicate(Panneau_Marchand)	Panneau_5	2_BULLETIN_BOARD
-alberta,194,47,4	duplicate(Panneau_Marchand)	Panneau_6	2_BULLETIN_BOARD
-alberta,187,55,4	duplicate(Panneau_Marchand)	Panneau_7	2_BULLETIN_BOARD
-alberta,187,167,4	duplicate(Panneau_Marchand)	Panneau_8	2_BULLETIN_BOARD
-
-
-
+alberta,216,28,6	duplicate(Panneau_Marchand)	SUD	4_BULLETIN_BOARD2
+alberta,222,28,6	duplicate(Panneau_Marchand)	SUD	4_BULLETIN_BOARD2
+alberta,222,39,6	duplicate(Panneau_Marchand)	SUD	4_BULLETIN_BOARD2
+alberta,187,39,6	duplicate(Panneau_Marchand)	SUD	4_BULLETIN_BOARD2
+alberta,209,47,6	duplicate(Panneau_Marchand)	CENTRE	4_BULLETIN_BOARD2
+alberta,194,47,6	duplicate(Panneau_Marchand)	CENTRE	4_BULLETIN_BOARD2
+alberta,187,55,6	duplicate(Panneau_Marchand)	CENTRE	4_BULLETIN_BOARD2
+alberta,187,67,6	duplicate(Panneau_Marchand)	CENTRE	4_BULLETIN_BOARD2
+alberta,188,74,6	duplicate(Panneau_Marchand)	CENTRE	4_BULLETIN_BOARD2
+alberta,180,78,6	duplicate(Panneau_Marchand)	CENTRE	4_BULLETIN_BOARD2
+alberta,232,46,6	duplicate(Panneau_Marchand)	EST	4_BULLETIN_BOARD2
+alberta,229,46,6	duplicate(Panneau_Marchand)	EST	4_BULLETIN_BOARD2
+alberta,225,53,6	duplicate(Panneau_Marchand)	EST	4_BULLETIN_BOARD2
+alberta,225,60,6	duplicate(Panneau_Marchand)	EST	4_BULLETIN_BOARD2
+alberta,229,60,6	duplicate(Panneau_Marchand)	EST	4_BULLETIN_BOARD2
 
 
 //--- Bot Marchand Alberta " Il est frais mon poisson ! "
