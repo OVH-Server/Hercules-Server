@@ -1,0 +1,11 @@
+//===Panneau vers Yu Jiu Xia, Xue Bong et Mei Yen Fang
+//Les npc était present dans un batiment legerement au nord d'ou ils sont placés maintenant
+
+gonryun,197,125,4	script	Panneau Secret	2_BOARD1,{
+
+	mes "[Information]";
+	mes "Salle secrète, pas si secrète.";
+	mes "Retrouvez-y ^0000FFYu Jiu Xia^000000, ^0000FFXue Bong^000000 et ^0000FFMei Yen Fang^000000.";
+	mes "Direction sud.";
+	close;
+}
