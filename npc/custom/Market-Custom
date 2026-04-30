@@ -146,9 +146,9 @@ alberta,229,60,6	duplicate(SUD)	EST	4_BULLETIN_BOARD2
 
 
 //--- Bot Marchand Alberta " Il est frais mon poisson ! "
-alberta,205,39,4	script	Marchand Louche	4_M_HUMERCHANT,{
+alberta,214,38,6	script	Aladeen	4_M_ALADDIN,{
 
-	mes "[Marchand Louche]";
+	mes "[Aladeen]";
 
 	if (.stock_count <= 0) {
 		callsub S_GenerateStock;
@@ -172,7 +172,7 @@ alberta,205,39,4	script	Marchand Louche	4_M_HUMERCHANT,{
 	if (.@choice == .stock_count) close;
 
 	if (Zeny < .stock_price[.@choice]) {
-		mes "[Marchand Louche]";
+		mes "[Aladeen]";
 		mes "Tu n'as pas assez de zeny.";
 		close;
 	}
@@ -182,7 +182,7 @@ alberta,205,39,4	script	Marchand Louche	4_M_HUMERCHANT,{
 
 	.stock_amount[.@choice]--;
 
-	mes "[Marchand Louche]";
+	mes "[Aladeen]";
 	mes "Marché conclu.";
 	next;
 
