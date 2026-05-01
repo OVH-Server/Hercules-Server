@@ -50,6 +50,7 @@ prontera,159,174,6	script	Drop Protector#dprot	4_EP19_VOGLINDE,{
         drop_protector_monster$ = "";
         drop_protector_monster_id = -1;
         drop_protector_item_id = -1;
+        drop_protector_item_is_card = 0;
     } else { 
         mes("Drop Choice!");
         mes("Your current Monster is ^0000FF" + drop_protector_monster$ + "^000000 ( ^FF0000" + drop_protector_monster_id + "^000000 )");
@@ -154,6 +155,7 @@ prontera,159,174,6	script	Drop Protector#dprot	4_EP19_VOGLINDE,{
         .@count_item_card = 0;
         for (.@i = 0; .@i < .@count; ++.@i) {
             .@item_type = getiteminfo(.@drops[.@i], ITEMINFO_TYPE);
+            // if item is weapon armor or card
             if (.@item_type >= 4 && .@item_type <= 6) {
                 mes(getitemname(.@drops[.@i]) + " Type: [" + item_type_id_to_item_type_name(.@item_type) + "]" + " ( " + .@drops_per[.@i] / 100 + "% )");
                 .@equip_and_card_item_only[.@count_item_card] = .@drops[.@i];
@@ -217,6 +219,10 @@ prontera,159,174,6	script	Drop Protector#dprot	4_EP19_VOGLINDE,{
         drop_protector_monster$ = .@selected_name$;
         drop_protector_monster_id = .@selected_id;
 
+        // boolean if item type == card
+        drop_protector_item_is_card = (getiteminfo(drop_protector_item_id, ITEMINFO_TYPE) == 6);
+
+
 
         mes("[Drop Protector]");
         mes("Item selected : ^0000FF" + .@selected_item$ + "^000000");
@@ -233,10 +239,16 @@ prontera,159,174,6	script	Drop Protector#dprot	4_EP19_VOGLINDE,{
             mes("You don't have select any item, please an item before try to trade");
             goto(exit_label);
         }
+
+        .@needed_essence_for_trade = 350;
+        if (drop_protector_item_is_card == 1) {
+            .@needed_essence_for_trade = 500;
+        } 
+
         .@essence_count = countitem(.@essence_id);
         mes("You actualy had " + .@essence_count);
-        if (.@essence_count < 350) {
-            mes("You don't have any essence to trade item come when you have 350 esssence");
+        if (.@essence_count < .@needed_essence_for_trade) {
+            mes("You don't have any essence to trade item come when you have " + .@needed_essence_for_trade + " esssence");
             goto(exit_label);
         }
         mes("Do you want to trade your essence against ^0000FF" + drop_protector_item$ + "^000000");
@@ -244,9 +256,9 @@ prontera,159,174,6	script	Drop Protector#dprot	4_EP19_VOGLINDE,{
         switch(select("Yes", "No")) {
             case 1:
                 mes("[Drop Protector]");
-                // do the trade remove 350 essence then give the wanted item
-                delitem(.@essence_id, 350);
-                mes("Remove 350 Essence from your inventory");
+                // do the trade remove .@needed_essence_for_trade essence then give the wanted item
+                delitem(.@essence_id, .@needed_essence_for_trade);
+                mes("Remove " + .@needed_essence_for_trade + " Essence from your inventory");
                 getitem(drop_protector_item_id, 1);
                 mes("You receive ^0000FF" + drop_protector_item$ + "^000000");
                 // reset global variable
@@ -254,6 +266,7 @@ prontera,159,174,6	script	Drop Protector#dprot	4_EP19_VOGLINDE,{
                 drop_protector_monster$ = "";
                 drop_protector_monster_id = -1;
                 drop_protector_item_id = -1;
+                drop_protector_item_is_card = 0;
                 goto(exit_label);
              case 2:
                 goto(exit_label);
@@ -274,7 +287,7 @@ OnInit:
     drop_protector_monster$ = "";
     drop_protector_monster_id = -1;
     drop_protector_item_id = -1;
-    // todo add a drop_protector_is_card_id variable to add card trade handling
+    drop_protector_item_is_card = 0;
     end;
 }
 
