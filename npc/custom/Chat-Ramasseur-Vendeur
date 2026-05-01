@@ -174,7 +174,7 @@ OnTimer30000:
 	// Utilise Greed autour du PNJ
 	// 10 = niveau de la compétence, largement suffisant pour ce cirque
 	// BS_GREED = compétence Greed
-	unitskilluseid getnpcid(0),BS_GREED,10;
+	unitskilluseid getnpcid(0),681,10;
 
 	// Relance le timer
 	initnpctimer;
