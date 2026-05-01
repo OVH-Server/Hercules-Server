@@ -55,6 +55,9 @@ prontera,159,174,6	script	Drop Protector#dprot	4_EP19_VOGLINDE,{
         mes("Drop Choice!");
         mes("Your current Monster is ^0000FF" + drop_protector_monster$ + "^000000 ( ^FF0000" + drop_protector_monster_id + "^000000 )");
         mes("Your current Item choice is ^0000FF" + drop_protector_item$ + "^000000");
+        .@mab_array$ = "";
+        .@qty = "";
+        // getmobspawn(1002, .@mab_array$, .@qty);
     }
 
     next();

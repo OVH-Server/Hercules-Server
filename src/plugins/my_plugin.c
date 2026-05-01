@@ -33,6 +33,68 @@ HPExport struct hplugin_info pinfo = {
     HPM_VERSION,
 };
 
+
+// Syntax: getmobspawn(<mob_id>, <map_array>, <qty_array>)
+// Returns: number map of monster spawn
+static BUILDIN(getmobspawn) {
+    int mob_id;
+    struct script_data *map_data;
+    struct script_data *qty_data;
+    struct mob_db *mob_data;
+    int count = 0;
+    int i, j;
+
+    mob_id = script_getnum(st, 2);
+    map_data = script_getdata(st, 3);
+    qty_data = script_getdata(st, 4);
+
+    if (!data_isreference(map_data) || !data_isreference(qty_data)) {
+        ShowError("getmobspawn: Les paramètres 2 et 3 doivent être des arrays!\n");
+        script_pushint(st, 0);
+        return false;
+    }
+
+    // check mob exist
+    if (!mob->db_checkid(mob_id)) {
+        ShowError("getmobspawn: Mob ID %d invalide!\n", mob_id);
+        script_pushint(st, 0);
+        return false;
+    }
+
+    // get mob structure
+    mob_data = mob->db(mob_id);
+    if (!mob_data) {
+        ShowError("getmobspawn: Impossible de récupérer les données du mob %d!\n", mob_id);
+        script_pushint(st, 0);
+        return false;
+    }
+
+    // iter on mob spawn
+    for (i = 0; i <  ARRAYLENGTH(mob_data->spawn) && mob_data->spawn[i].qty; i++) {
+        j = map->mapindex2mapid(mob_data->spawn[i].mapindex);
+        
+        if (j < 0) {
+            continue; // invalid map
+        }
+
+        // store map name in array
+        script->set_reg(st, NULL, reference_uid(reference_getid(map_data), count), 
+                       map->list[j].name, map_data, NULL);
+        
+        // store qqty in array
+        script->set_reg(st, NULL, reference_uid(reference_getid(qty_data), count), 
+                       (const void *)(intptr_t)mob_data->spawn[i].qty, qty_data, NULL);
+        
+        count++;
+    }
+
+    ShowInfo("getmobspawn: Mob %d (%s) spawn on %d map(s)\n", 
+             mob_id, mob_data->name, count);
+
+    script_pushint(st, count);
+    return true;
+}
+
 // poring map @warp prt_fild08
 int check_drop_protector(int char_id, int mob_id) {
     int protected_mob_id = 0;
