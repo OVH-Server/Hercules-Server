@@ -1,0 +1,155 @@
+prontera,155,196,4	script	Chat Ramasseur	4_CAT_DOWN,{
+
+	// Dialogue principal du PNJ vendeur
+	mes "[Chat Ramasseur]";
+	mes "Miaou. J'ai récupéré quelques objets.";
+	next;
+
+	// Si le stock est vide, le PNJ n'a rien à vendre
+	if (.stock_count <= 0) {
+		mes "Je n'ai rien à vendre pour le moment.";
+		close;
+	}
+
+	// Création du menu de vente
+	.@menu$ = "";
+	for (.@i = 0; .@i < .stock_count; .@i++) {
+		.@menu$ += getitemname(.stock_id[.@i])+" x"+.stock_amount[.@i]+" - "+.stock_price[.@i]+"z/u:";
+	}
+	.@menu$ += "Quitter";
+
+	// Choix du joueur dans le menu
+	.@choice = select(.@menu$) - 1;
+
+	// Si le joueur choisit Quitter
+	if (.@choice == .stock_count) close;
+
+	// Vérification de l'argent du joueur
+	if (Zeny < .stock_price[.@choice]) {
+		mes "[Chat Ramasseur]";
+		mes "Pas assez de zeny.";
+		close;
+	}
+
+	// Paiement et remise de l'objet
+	set Zeny, Zeny - .stock_price[.@choice];
+	getitem .stock_id[.@choice],1;
+
+	// Retire 1 unité du stock
+	.stock_amount[.@choice]--;
+
+	// Si la quantité tombe à 0, on retire la ligne du stock
+	if (.stock_amount[.@choice] <= 0) {
+		for (.@i = .@choice; .@i < .stock_count - 1; .@i++) {
+			.stock_id[.@i] = .stock_id[.@i+1];
+			.stock_amount[.@i] = .stock_amount[.@i+1];
+			.stock_price[.@i] = .stock_price[.@i+1];
+		}
+		.stock_count--;
+	}
+
+	mes "[Chat Ramasseur]";
+	mes "Miaou. Marché conclu.";
+	close;
+
+OnInit:
+	// Position de départ du PNJ
+	.home_map$ = "prontera";
+	.home_x = 155;
+	.home_y = 196;
+
+	// Rayon de détection autour de la position initiale
+	.range = 100;
+
+	// Démarre le timer de scan des objets au sol
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	// Stoppe temporairement le timer pour éviter les doubles exécutions
+	stopnpctimer;
+
+	// Si le chat est déjà en train d'aller chercher un objet, on ne fait rien
+	if (.busy) {
+		initnpctimer;
+		end;
+	}
+
+	// Recherche les objets au sol dans un rayon de 100 cases autour du point de départ
+	.@count = getunits(
+		BL_ITEM,
+		.@drops,
+		false,
+		.home_map$,
+		.home_x - .range,
+		.home_y - .range,
+		.home_x + .range,
+		.home_y + .range
+	);
+
+	// Si au moins un objet est trouvé
+	if (.@count > 0) {
+		.busy = 1;
+
+		// Récupère les informations du premier objet trouvé
+		getunitdata .@drops[0], .@data;
+
+		.@item_id = .@data[UDT_ITEMID];
+		.@amount = .@data[UDT_AMOUNT];
+		.@x = .@data[UDT_X];
+		.@y = .@data[UDT_Y];
+
+		// Le chat marche jusqu'à l'objet
+		npcwalkto .@x,.@y;
+		sleep 2000;
+
+		// Supprime l'objet au sol, comme s'il avait été ramassé
+		unitkill .@drops[0];
+
+		// Ajoute l'objet récupéré au stock de vente
+		callsub S_AddStock, .@item_id, .@amount;
+
+		// Le chat retourne à sa position initiale
+		npcwalkto .home_x,.home_y;
+		sleep 2000;
+
+		.busy = 0;
+	}
+
+	// Relance le timer de scan
+	initnpctimer;
+	end;
+
+S_AddStock:
+	// Récupère l'ID et la quantité de l'objet ramassé
+	.@item_id = getarg(0);
+	.@amount = getarg(1);
+
+	// Détermine le type de l'objet
+	.@type = getiteminfo(.@item_id, ITEMINFO_TYPE);
+
+	// Prix fixe selon le type d'objet
+	// Type 4 = arme
+	// Type 5 = armure / équipement
+	if (.@type == 4 || .@type == 5) {
+		.@price = 5000;
+	} else {
+		.@price = 500;
+	}
+
+	// Si l'objet existe déjà en stock, on ajoute simplement la quantité
+	for (.@i = 0; .@i < .stock_count; .@i++) {
+		if (.stock_id[.@i] == .@item_id) {
+			.stock_amount[.@i] += .@amount;
+			return;
+		}
+	}
+
+	// Sinon, on ajoute une nouvelle ligne dans le stock
+	.stock_id[.stock_count] = .@item_id;
+	.stock_amount[.stock_count] = .@amount;
+	.stock_price[.stock_count] = .@price;
+	.stock_count++;
+
+	return;
+}
