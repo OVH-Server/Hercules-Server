@@ -156,3 +156,27 @@ S_AddStock:
 
 	return;
 }
+
+/////Poubelle
+
+prontera,156,196,4	script	Poubelle Greed	4_CAT_DOWN,{
+
+	mes "[Poubelle]";
+	mes "Je ramasse les objets abandonnés autour de moi.";
+	close;
+
+OnInit:
+	// Lance le timer au chargement du script
+	initnpctimer;
+	end;
+
+OnTimer30000:
+	// Utilise Greed autour du PNJ
+	// 10 = niveau de la compétence, largement suffisant pour ce cirque
+	// BS_GREED = compétence Greed
+	unitskilluseid getnpcid(0),BS_GREED,10;
+
+	// Relance le timer
+	initnpctimer;
+	end;
+}
