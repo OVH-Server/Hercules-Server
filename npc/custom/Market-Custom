@@ -6,28 +6,28 @@ prontera,159,160,4	script	Transporteur Prontera	1_F_MERCHANT_02,{
 	next;
 
 	switch(select(
-	"Place marchande d'Alberta:"
-	+"Place marchande d'Ayothaya:"
-	+"Place marchande de Lighthalzen:"
+	"^FF0000Place marchande d'Alberta^000000:"
+	+"^FF0000Place marchande d'Ayothaya^000000:"
+	+"^FF0000Place marchande de Lighthalzen^000000:"
 	+"Annuler")) {
 
 	case 1:
 		mes "[Transporteur]";
-		mes "Direction la place marchande d'Alberta !";
+		mes "Direction ^FF0000la place marchande d'Alberta !^000000";
 		close2;
 		warp "alberta",212,51;
 		end;
 
 	case 2:
 		mes "[Transporteur]";
-		mes "Direction la place marchande d'Ayothaya !";
+		mes "Direction ^FF0000la place marchande d'Ayothaya !^000000";
 		close2;
 		warp "ayothaya",161,169;
 		end;
 
 	case 3:
 		mes "[Transporteur]";
-		mes "Direction la place marchande de Lighthalzen !";
+		mes "Direction ^FF0000la place marchande de Lighthalzen !^000000";
 		close2;
 		warp "lighthalzen",158,54;
 		end;
@@ -135,7 +135,7 @@ alberta,216,39,6	script	CENTRE	4_BULLETIN_BOARD2,{   // Panneau principal à Ayo
 alberta,216,39,6	script	AILEGAUCHE	4_BULLETIN_BOARD2,{   // Panneau principal à Lightalzen
 
 	mes "[Information]";
-	mes "^FF0000Place marchande d'Lightalzen.^000000";
+	mes "^FF0000Place marchande de Lighthalzen.^000000";
 	mes "Veuillez installer vos stands entre les panneaux !";
 	mes "Bonnes ventes !";
 	close;
