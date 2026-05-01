@@ -159,7 +159,7 @@ S_AddStock:
 
 ///Chat Ygg
 
-prontera,155,196,4	script	Chat Troc Ygg	4_CAT_DOWN,{
+prontera,156,196,4	script	Chat Troc Ygg	4_CAT_DOWN,{
 
 	mes "[Chat Troc Ygg]";
 	mes "Je peux échanger tes objets contre des Yggdrasil Berry ou des Yggdrasil Seed.";
