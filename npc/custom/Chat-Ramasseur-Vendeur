@@ -1,258 +1,270 @@
-prontera,155,196,4	script	Chat Ramasseur	4_CAT_DOWN,{
+////////////////////////////////////////////////////////////////
+///// Chat Rammasseur (OFF) qui vend les items trouvé par terre 
+////////////////////////////////////////////////////////////////
 
-	// Dialogue principal du PNJ vendeur
-	mes "[Chat Ramasseur]";
-	mes "Miaou. J'ai récupéré quelques objets.";
-	next;
+// prontera,155,196,4	script	Chat Ramasseur	4_CAT_DOWN,{
 
-	// Si le stock est vide, le PNJ n'a rien à vendre
-	if (.stock_count <= 0) {
-		mes "Je n'ai rien à vendre pour le moment.";
-		close;
-	}
+// 	// Dialogue principal du PNJ vendeur
+// 	mes "[Chat Ramasseur]";
+// 	mes "Miaou. J'ai récupéré quelques objets.";
+// 	next;
 
-	// Création du menu de vente
-	.@menu$ = "";
-	for (.@i = 0; .@i < .stock_count; .@i++) {
-		.@menu$ += getitemname(.stock_id[.@i])+" x"+.stock_amount[.@i]+" - "+.stock_price[.@i]+"z/u:";
-	}
-	.@menu$ += "Quitter";
+// 	// Si le stock est vide, le PNJ n'a rien à vendre
+// 	if (.stock_count <= 0) {
+// 		mes "Je n'ai rien à vendre pour le moment.";
+// 		close;
+// 	}
 
-	// Choix du joueur dans le menu
-	.@choice = select(.@menu$) - 1;
+// 	// Création du menu de vente
+// 	.@menu$ = "";
+// 	for (.@i = 0; .@i < .stock_count; .@i++) {
+// 		.@menu$ += getitemname(.stock_id[.@i])+" x"+.stock_amount[.@i]+" - "+.stock_price[.@i]+"z/u:";
+// 	}
+// 	.@menu$ += "Quitter";
 
-	// Si le joueur choisit Quitter
-	if (.@choice == .stock_count) close;
+// 	// Choix du joueur dans le menu
+// 	.@choice = select(.@menu$) - 1;
 
-	// Vérification de l'argent du joueur
-	if (Zeny < .stock_price[.@choice]) {
-		mes "[Chat Ramasseur]";
-		mes "Pas assez de zeny.";
-		close;
-	}
+// 	// Si le joueur choisit Quitter
+// 	if (.@choice == .stock_count) close;
 
-	// Paiement et remise de l'objet
-	set Zeny, Zeny - .stock_price[.@choice];
-	getitem .stock_id[.@choice],1;
+// 	// Vérification de l'argent du joueur
+// 	if (Zeny < .stock_price[.@choice]) {
+// 		mes "[Chat Ramasseur]";
+// 		mes "Pas assez de zeny.";
+// 		close;
+// 	}
 
-	// Retire 1 unité du stock
-	.stock_amount[.@choice]--;
+// 	// Paiement et remise de l'objet
+// 	set Zeny, Zeny - .stock_price[.@choice];
+// 	getitem .stock_id[.@choice],1;
 
-	// Si la quantité tombe à 0, on retire la ligne du stock
-	if (.stock_amount[.@choice] <= 0) {
-		for (.@i = .@choice; .@i < .stock_count - 1; .@i++) {
-			.stock_id[.@i] = .stock_id[.@i+1];
-			.stock_amount[.@i] = .stock_amount[.@i+1];
-			.stock_price[.@i] = .stock_price[.@i+1];
-		}
-		.stock_count--;
-	}
+// 	// Retire 1 unité du stock
+// 	.stock_amount[.@choice]--;
 
-	mes "[Chat Ramasseur]";
-	mes "Miaou. Marché conclu.";
-	close;
+// 	// Si la quantité tombe à 0, on retire la ligne du stock
+// 	if (.stock_amount[.@choice] <= 0) {
+// 		for (.@i = .@choice; .@i < .stock_count - 1; .@i++) {
+// 			.stock_id[.@i] = .stock_id[.@i+1];
+// 			.stock_amount[.@i] = .stock_amount[.@i+1];
+// 			.stock_price[.@i] = .stock_price[.@i+1];
+// 		}
+// 		.stock_count--;
+// 	}
 
-OnInit:
-	// Position de départ du PNJ
-	.home_map$ = "prontera";
-	.home_x = 155;
-	.home_y = 196;
+// 	mes "[Chat Ramasseur]";
+// 	mes "Miaou. Marché conclu.";
+// 	close;
 
-	// Rayon de détection autour de la position initiale
-	.range = 100;
+// OnInit:
+// 	// Position de départ du PNJ
+// 	.home_map$ = "prontera";
+// 	.home_x = 155;
+// 	.home_y = 196;
 
-	// Démarre le timer de scan des objets au sol
-	initnpctimer;
-	end;
+// 	// Rayon de détection autour de la position initiale
+// 	.range = 100;
 
-OnTimer1000:
-	// On stoppe le timer pendant le traitement
-	stopnpctimer;
+// 	// Démarre le timer de scan des objets au sol
+// 	initnpctimer;
+// 	end;
 
-	// Si le chat est déjà occupé, on relance juste le timer
-	if (.busy) {
-		initnpctimer;
-		end;
-	}
+// OnTimer1000:
+// 	// On stoppe le timer pendant le traitement
+// 	stopnpctimer;
 
-	// Recherche des items au sol autour de la position initiale
-	.@count = getunits(
-		BL_ITEM,
-		.@drops,
-		.home_map$,
-		.home_x - .range,
-		.home_y - .range,
-		.home_x + .range,
-		.home_y + .range
-	);
+// 	// Si le chat est déjà occupé, on relance juste le timer
+// 	if (.busy) {
+// 		initnpctimer;
+// 		end;
+// 	}
 
-	// Si aucun item trouvé, on relance le timer
-	if (.@count <= 0) {
-		initnpctimer;
-		end;
-	}
+// 	// Recherche des items au sol autour de la position initiale
+// 	.@count = getunits(
+// 		BL_ITEM,
+// 		.@drops,
+// 		.home_map$,
+// 		.home_x - .range,
+// 		.home_y - .range,
+// 		.home_x + .range,
+// 		.home_y + .range
+// 	);
 
-	// Le chat est occupé
-	.busy = 1;
+// 	// Si aucun item trouvé, on relance le timer
+// 	if (.@count <= 0) {
+// 		initnpctimer;
+// 		end;
+// 	}
 
-	// On récupère les infos du premier item trouvé
-	getunitdata .@drops[0], .@data;
+// 	// Le chat est occupé
+// 	.busy = 1;
 
-	.@item_id = .@data[UDT_ITEMID];
-	.@amount = .@data[UDT_AMOUNT];
-	.@x = .@data[UDT_X];
-	.@y = .@data[UDT_Y];
+// 	// On récupère les infos du premier item trouvé
+// 	getunitdata .@drops[0], .@data;
 
-	// Le chat va jusqu'à l'objet
-	npcwalkto .@x,.@y;
-	sleep 2000;
+// 	.@item_id = .@data[UDT_ITEMID];
+// 	.@amount = .@data[UDT_AMOUNT];
+// 	.@x = .@data[UDT_X];
+// 	.@y = .@data[UDT_Y];
 
-	// On supprime l'objet au sol
-	unitkill .@drops[0];
+// 	// Le chat va jusqu'à l'objet
+// 	npcwalkto .@x,.@y;
+// 	sleep 2000;
 
-	// On ajoute l'objet au stock
-	callsub S_AddStock, .@item_id, .@amount;
+// 	// On supprime l'objet au sol
+// 	unitkill .@drops[0];
 
-	// Le chat retourne à sa position de départ
-	npcwalkto .home_x,.home_y;
-	sleep 2000;
+// 	// On ajoute l'objet au stock
+// 	callsub S_AddStock, .@item_id, .@amount;
 
-	.busy = 0;
+// 	// Le chat retourne à sa position de départ
+// 	npcwalkto .home_x,.home_y;
+// 	sleep 2000;
 
-	// On relance le timer
-	initnpctimer;
-	end;
+// 	.busy = 0;
 
-S_AddStock:
-	// Récupère l'ID et la quantité de l'objet ramassé
-	.@item_id = getarg(0);
-	.@amount = getarg(1);
+// 	// On relance le timer
+// 	initnpctimer;
+// 	end;
 
-	// Détermine le type de l'objet
-	.@type = getiteminfo(.@item_id, ITEMINFO_TYPE);
+// S_AddStock:
+// 	// Récupère l'ID et la quantité de l'objet ramassé
+// 	.@item_id = getarg(0);
+// 	.@amount = getarg(1);
 
-	// Prix fixe selon le type d'objet
-	// Type 4 = arme
-	// Type 5 = armure / équipement
-	if (.@type == 4 || .@type == 5) {
-		.@price = 5000;
-	} else {
-		.@price = 500;
-	}
+// 	// Détermine le type de l'objet
+// 	.@type = getiteminfo(.@item_id, ITEMINFO_TYPE);
 
-	// Si l'objet existe déjà en stock, on ajoute simplement la quantité
-	for (.@i = 0; .@i < .stock_count; .@i++) {
-		if (.stock_id[.@i] == .@item_id) {
-			.stock_amount[.@i] += .@amount;
-			return;
-		}
-	}
+// 	// Prix fixe selon le type d'objet
+// 	// Type 4 = arme
+// 	// Type 5 = armure / équipement
+// 	if (.@type == 4 || .@type == 5) {
+// 		.@price = 5000;
+// 	} else {
+// 		.@price = 500;
+// 	}
 
-	// Sinon, on ajoute une nouvelle ligne dans le stock
-	.stock_id[.stock_count] = .@item_id;
-	.stock_amount[.stock_count] = .@amount;
-	.stock_price[.stock_count] = .@price;
-	.stock_count++;
+// 	// Si l'objet existe déjà en stock, on ajoute simplement la quantité
+// 	for (.@i = 0; .@i < .stock_count; .@i++) {
+// 		if (.stock_id[.@i] == .@item_id) {
+// 			.stock_amount[.@i] += .@amount;
+// 			return;
+// 		}
+// 	}
 
-	return;
-}
+// 	// Sinon, on ajoute une nouvelle ligne dans le stock
+// 	.stock_id[.stock_count] = .@item_id;
+// 	.stock_amount[.stock_count] = .@amount;
+// 	.stock_price[.stock_count] = .@price;
+// 	.stock_count++;
 
-///Chat Ygg
+// 	return;
+// }
+
+
+
+//////////////////////////////////////////////////////////
+/////Chat échangeur items contre Yggdrassil Berry ou Seed
+//////////////////////////////////////////////////////////
 
 prontera,156,196,4	script	Chat Troc Ygg	4_CAT_DOWN,{
 
 	mes "[Chat Troc Ygg]";
-	mes "Je peux échanger tes objets contre des Yggdrasil Berry ou des Yggdrasil Seed.";
+	mes "Mets tes objets dans la fenêtre de vente.";
+	mes "Ressources communes : 100 points/u.";
+	mes "Équipements : 500 points/u.";
 	next;
 
-	mes "Valeurs :";
-	mes "- Ressource commune : 100 points/u";
-	mes "- Équipement : 500 points/u";
-	mes "- Yggdrasil Seed : 5000 points";
-	mes "- Yggdrasil Berry : 10000 points";
-	next;
+	mes "Une Yggdrasil Seed vaut 5000 points.";
+	mes "Une Yggdrasil Berry vaut 10000 points.";
+	close2;
 
-	mes "Entre l'ID de l'objet que tu veux échanger.";
-	next;
-	input .@item_id;
+	// Ouvre la fenêtre de vente
+	callshop "chat_troc_ygg_shop",2;
+	end;
 
-	if (countitem(.@item_id) <= 0) {
-		mes "[Chat Troc Ygg]";
-		mes "Tu ne possèdes pas cet objet.";
-		close;
+OnInit:
+	// Attache le shop caché à ce script
+	npcshopattach "chat_troc_ygg_shop";
+	end;
+
+OnSellItem:
+	// Si rien n'a été vendu, on arrête
+	if (!@sold_quantity) end;
+
+	.@total = 0;
+
+	// On parcourt tous les items mis dans la fenêtre de vente
+	for (.@i = 0; .@i < getarraysize(@sold_nameid); .@i++) {
+
+		.@item_id = @sold_nameid[.@i];
+		.@amount = @sold_quantity[.@i];
+
+		// Récupère le type de l'item
+		// Type 4 = arme
+		// Type 5 = armure / équipement
+		.@type = getiteminfo(.@item_id, ITEMINFO_TYPE);
+
+		// Si c'est un équipement, valeur 500/u
+		if (.@type == 4 || .@type == 5) {
+			.@value = 500;
+		}
+		// Sinon, considéré comme ressource commune, valeur 100/u
+		else {
+			.@value = 100;
+		}
+
+		// Ajoute la valeur au total
+		.@total += .@value * .@amount;
+
+		// Supprime réellement les items vendus au joueur
+		delitem .@item_id,.@amount;
 	}
 
-	mes "[Chat Troc Ygg]";
-	mes "Objet : ^00AAFF" + getitemname(.@item_id) + "^000000";
-	mes "Tu en possèdes : " + countitem(.@item_id);
-	mes "Combien veux-tu proposer ?";
-	next;
-	input .@amount;
-
-	if (.@amount <= 0 || .@amount > countitem(.@item_id)) {
-		mes "[Chat Troc Ygg]";
-		mes "Quantité invalide.";
-		close;
-	}
-
-	.@type = getiteminfo(.@item_id, ITEMINFO_TYPE);
-
-	// Type 4 = arme, Type 5 = armure/équipement
-	if (.@type == 4 || .@type == 5) {
-		.@unit_value = 500;
-	} else {
-		.@unit_value = 100;
-	}
-
-	.@total = .@unit_value * .@amount;
+	// Calcul des récompenses possibles
 	.@berry = .@total / 10000;
 	.@seed = .@total / 5000;
 
 	mes "[Chat Troc Ygg]";
-	mes "Résumé de l'échange :";
-	mes "Objet : ^00AAFF" + getitemname(.@item_id) + "^000000 x" + .@amount;
-	mes "Valeur unitaire : " + .@unit_value + " points";
-	mes "Total : ^00AAFF" + .@total + " points^000000";
+	mes "Valeur totale : ^00AAFF"+.@total+" points^000000.";
+	mes "Tu peux recevoir :";
+	mes "^FF0000"+.@berry+" Yggdrasil Berry^000000";
+	mes "ou";
+	mes "^00AA00"+.@seed+" Yggdrasil Seed^000000";
 	next;
 
-	mes "Tu peux obtenir :";
-	mes "- ^FF0000" + .@berry + " Yggdrasil Berry^000000";
-	mes "- ^00AA00" + .@seed + " Yggdrasil Seed^000000";
-	next;
-
-	switch(select("Recevoir des Berry:Recevoir des Seed:Annuler")) {
+	switch(select("Prendre des Berry:Prendre des Seed:Annuler")) {
 
 	case 1:
 		if (.@berry <= 0) {
 			mes "[Chat Troc Ygg]";
-			mes "Pas assez de points pour une Berry.";
+			mes "Tu n'as pas assez pour une Berry.";
 			close;
 		}
 
-		delitem .@item_id,.@amount;
 		getitem 607,.@berry;
-
 		mes "[Chat Troc Ygg]";
-		mes "Échange terminé.";
+		mes "Voici tes Yggdrasil Berry.";
 		close;
 
 	case 2:
 		if (.@seed <= 0) {
 			mes "[Chat Troc Ygg]";
-			mes "Pas assez de points pour une Seed.";
+			mes "Tu n'as pas assez pour une Seed.";
 			close;
 		}
 
-		delitem .@item_id,.@amount;
 		getitem 608,.@seed;
-
 		mes "[Chat Troc Ygg]";
-		mes "Échange terminé.";
+		mes "Voici tes Yggdrasil Seed.";
 		close;
 
 	case 3:
 		mes "[Chat Troc Ygg]";
-		mes "Échange annulé. Tes objets restent dans ton inventaire.";
+		mes "Trop tard, les objets sont déjà avalés par le chat fiscal.";
 		close;
 	}
 }
+
+// Shop caché obligatoire pour ouvrir la fenêtre de vente
+-	shop	chat_troc_ygg_shop	-1,909:1
