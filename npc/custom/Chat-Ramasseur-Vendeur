@@ -157,106 +157,102 @@ S_AddStock:
 	return;
 }
 
+///Chat Ygg
 
-//// Chat Yggdrassil
-prontera,156,196,4	script	Chat Troc Ygg	4_CAT_DOWN,{
+prontera,155,196,4	script	Chat Troc Ygg	4_CAT_DOWN,{
 
 	mes "[Chat Troc Ygg]";
-	mes "Mets tes objets dans la fenêtre de vente.";
-	mes "Ressources communes : 100 points/u.";
-	mes "Équipements : 500 points/u.";
+	mes "Je peux échanger tes objets contre des Yggdrasil Berry ou des Yggdrasil Seed.";
 	next;
 
-	mes "Une Yggdrasil Seed vaut 5000 points.";
-	mes "Une Yggdrasil Berry vaut 10000 points.";
-	close2;
+	mes "Valeurs :";
+	mes "- Ressource commune : 100 points/u";
+	mes "- Équipement : 500 points/u";
+	mes "- Yggdrasil Seed : 5000 points";
+	mes "- Yggdrasil Berry : 10000 points";
+	next;
 
-	// Ouvre la fenêtre de vente
-	callshop "chat_troc_ygg_shop",2;
-	end;
+	mes "Entre l'ID de l'objet que tu veux échanger.";
+	next;
+	input .@item_id;
 
-OnInit:
-	// Attache le shop caché à ce script
-	npcshopattach "chat_troc_ygg_shop";
-	end;
-
-OnSellItem:
-	// Si rien n'a été vendu, on arrête
-	if (!@sold_quantity) end;
-
-	.@total = 0;
-
-	// On parcourt tous les items mis dans la fenêtre de vente
-	for (.@i = 0; .@i < getarraysize(@sold_nameid); .@i++) {
-
-		.@item_id = @sold_nameid[.@i];
-		.@amount = @sold_quantity[.@i];
-
-		// Récupère le type de l'item
-		// Type 4 = arme
-		// Type 5 = armure / équipement
-		.@type = getiteminfo(.@item_id, ITEMINFO_TYPE);
-
-		// Si c'est un équipement, valeur 500/u
-		if (.@type == 4 || .@type == 5) {
-			.@value = 500;
-		}
-		// Sinon, considéré comme ressource commune, valeur 100/u
-		else {
-			.@value = 100;
-		}
-
-		// Ajoute la valeur au total
-		.@total += .@value * .@amount;
-
-		// Supprime réellement les items vendus au joueur
-		delitem .@item_id,.@amount;
+	if (countitem(.@item_id) <= 0) {
+		mes "[Chat Troc Ygg]";
+		mes "Tu ne possèdes pas cet objet.";
+		close;
 	}
 
-	// Calcul des récompenses possibles
+	mes "[Chat Troc Ygg]";
+	mes "Objet : ^00AAFF" + getitemname(.@item_id) + "^000000";
+	mes "Tu en possèdes : " + countitem(.@item_id);
+	mes "Combien veux-tu proposer ?";
+	next;
+	input .@amount;
+
+	if (.@amount <= 0 || .@amount > countitem(.@item_id)) {
+		mes "[Chat Troc Ygg]";
+		mes "Quantité invalide.";
+		close;
+	}
+
+	.@type = getiteminfo(.@item_id, ITEMINFO_TYPE);
+
+	// Type 4 = arme, Type 5 = armure/équipement
+	if (.@type == 4 || .@type == 5) {
+		.@unit_value = 500;
+	} else {
+		.@unit_value = 100;
+	}
+
+	.@total = .@unit_value * .@amount;
 	.@berry = .@total / 10000;
 	.@seed = .@total / 5000;
 
 	mes "[Chat Troc Ygg]";
-	mes "Valeur totale : ^00AAFF"+.@total+" points^000000.";
-	mes "Tu peux recevoir :";
-	mes "^FF0000"+.@berry+" Yggdrasil Berry^000000";
-	mes "ou";
-	mes "^00AA00"+.@seed+" Yggdrasil Seed^000000";
+	mes "Résumé de l'échange :";
+	mes "Objet : ^00AAFF" + getitemname(.@item_id) + "^000000 x" + .@amount;
+	mes "Valeur unitaire : " + .@unit_value + " points";
+	mes "Total : ^00AAFF" + .@total + " points^000000";
 	next;
 
-	switch(select("Prendre des Berry:Prendre des Seed:Annuler")) {
+	mes "Tu peux obtenir :";
+	mes "- ^FF0000" + .@berry + " Yggdrasil Berry^000000";
+	mes "- ^00AA00" + .@seed + " Yggdrasil Seed^000000";
+	next;
+
+	switch(select("Recevoir des Berry:Recevoir des Seed:Annuler")) {
 
 	case 1:
 		if (.@berry <= 0) {
 			mes "[Chat Troc Ygg]";
-			mes "Tu n'as pas assez pour une Berry.";
+			mes "Pas assez de points pour une Berry.";
 			close;
 		}
 
+		delitem .@item_id,.@amount;
 		getitem 607,.@berry;
+
 		mes "[Chat Troc Ygg]";
-		mes "Voici tes Yggdrasil Berry.";
+		mes "Échange terminé.";
 		close;
 
 	case 2:
 		if (.@seed <= 0) {
 			mes "[Chat Troc Ygg]";
-			mes "Tu n'as pas assez pour une Seed.";
+			mes "Pas assez de points pour une Seed.";
 			close;
 		}
 
+		delitem .@item_id,.@amount;
 		getitem 608,.@seed;
+
 		mes "[Chat Troc Ygg]";
-		mes "Voici tes Yggdrasil Seed.";
+		mes "Échange terminé.";
 		close;
 
 	case 3:
 		mes "[Chat Troc Ygg]";
-		mes "Trop tard, les objets sont déjà avalés par le chat fiscal.";
+		mes "Échange annulé. Tes objets restent dans ton inventaire.";
 		close;
 	}
 }
-
-// Shop caché obligatoire pour ouvrir la fenêtre de vente
--	shop	chat_troc_ygg_shop	-1,909:1
