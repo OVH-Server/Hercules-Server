@@ -157,26 +157,106 @@ S_AddStock:
 	return;
 }
 
-/////Poubelle
 
-prontera,156,196,4	script	Poubelle Greed	4_CAT_DOWN,{
+//// Chat Yggdrassil
+prontera,156,196,4	script	Chat Troc Ygg	4_CAT_DOWN,{
 
-	mes "[Poubelle]";
-	mes "Je ramasse les objets abandonnés autour de moi.";
-	close;
+	mes "[Chat Troc Ygg]";
+	mes "Mets tes objets dans la fenêtre de vente.";
+	mes "Ressources communes : 100 points/u.";
+	mes "Équipements : 500 points/u.";
+	next;
+
+	mes "Une Yggdrasil Seed vaut 5000 points.";
+	mes "Une Yggdrasil Berry vaut 10000 points.";
+	close2;
+
+	// Ouvre la fenêtre de vente
+	callshop "chat_troc_ygg_shop",2;
+	end;
 
 OnInit:
-	// Lance le timer au chargement du script
-	initnpctimer;
+	// Attache le shop caché à ce script
+	npcshopattach "chat_troc_ygg_shop";
 	end;
 
-OnTimer30000:
-	// Utilise Greed autour du PNJ
-	// 10 = niveau de la compétence, largement suffisant pour ce cirque
-	// BS_GREED = compétence Greed
-	unitskilluseid getnpcid(0),681,10;
+OnSellItem:
+	// Si rien n'a été vendu, on arrête
+	if (!@sold_quantity) end;
 
-	// Relance le timer
-	initnpctimer;
-	end;
+	.@total = 0;
+
+	// On parcourt tous les items mis dans la fenêtre de vente
+	for (.@i = 0; .@i < getarraysize(@sold_nameid); .@i++) {
+
+		.@item_id = @sold_nameid[.@i];
+		.@amount = @sold_quantity[.@i];
+
+		// Récupère le type de l'item
+		// Type 4 = arme
+		// Type 5 = armure / équipement
+		.@type = getiteminfo(.@item_id, ITEMINFO_TYPE);
+
+		// Si c'est un équipement, valeur 500/u
+		if (.@type == 4 || .@type == 5) {
+			.@value = 500;
+		}
+		// Sinon, considéré comme ressource commune, valeur 100/u
+		else {
+			.@value = 100;
+		}
+
+		// Ajoute la valeur au total
+		.@total += .@value * .@amount;
+
+		// Supprime réellement les items vendus au joueur
+		delitem .@item_id,.@amount;
+	}
+
+	// Calcul des récompenses possibles
+	.@berry = .@total / 10000;
+	.@seed = .@total / 5000;
+
+	mes "[Chat Troc Ygg]";
+	mes "Valeur totale : ^00AAFF"+.@total+" points^000000.";
+	mes "Tu peux recevoir :";
+	mes "^FF0000"+.@berry+" Yggdrasil Berry^000000";
+	mes "ou";
+	mes "^00AA00"+.@seed+" Yggdrasil Seed^000000";
+	next;
+
+	switch(select("Prendre des Berry:Prendre des Seed:Annuler")) {
+
+	case 1:
+		if (.@berry <= 0) {
+			mes "[Chat Troc Ygg]";
+			mes "Tu n'as pas assez pour une Berry.";
+			close;
+		}
+
+		getitem 607,.@berry;
+		mes "[Chat Troc Ygg]";
+		mes "Voici tes Yggdrasil Berry.";
+		close;
+
+	case 2:
+		if (.@seed <= 0) {
+			mes "[Chat Troc Ygg]";
+			mes "Tu n'as pas assez pour une Seed.";
+			close;
+		}
+
+		getitem 608,.@seed;
+		mes "[Chat Troc Ygg]";
+		mes "Voici tes Yggdrasil Seed.";
+		close;
+
+	case 3:
+		mes "[Chat Troc Ygg]";
+		mes "Trop tard, les objets sont déjà avalés par le chat fiscal.";
+		close;
+	}
 }
+
+// Shop caché obligatoire pour ouvrir la fenêtre de vente
+-	shop	chat_troc_ygg_shop	-1,909:1
