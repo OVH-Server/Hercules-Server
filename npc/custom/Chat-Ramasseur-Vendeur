@@ -66,20 +66,19 @@ OnInit:
 	end;
 
 OnTimer1000:
-	// Stoppe temporairement le timer pour éviter les doubles exécutions
+	// On stoppe le timer pendant le traitement
 	stopnpctimer;
 
-	// Si le chat est déjà en train d'aller chercher un objet, on ne fait rien
+	// Si le chat est déjà occupé, on relance juste le timer
 	if (.busy) {
 		initnpctimer;
 		end;
 	}
 
-	// Recherche les objets au sol dans un rayon de 100 cases autour du point de départ
+	// Recherche des items au sol autour de la position initiale
 	.@count = getunits(
 		BL_ITEM,
 		.@drops,
-		false,
 		.home_map$,
 		.home_x - .range,
 		.home_y - .range,
@@ -87,36 +86,40 @@ OnTimer1000:
 		.home_y + .range
 	);
 
-	// Si au moins un objet est trouvé
-	if (.@count > 0) {
-		.busy = 1;
-
-		// Récupère les informations du premier objet trouvé
-		getunitdata .@drops[0], .@data;
-
-		.@item_id = .@data[UDT_ITEMID];
-		.@amount = .@data[UDT_AMOUNT];
-		.@x = .@data[UDT_X];
-		.@y = .@data[UDT_Y];
-
-		// Le chat marche jusqu'à l'objet
-		npcwalkto .@x,.@y;
-		sleep 2000;
-
-		// Supprime l'objet au sol, comme s'il avait été ramassé
-		unitkill .@drops[0];
-
-		// Ajoute l'objet récupéré au stock de vente
-		callsub S_AddStock, .@item_id, .@amount;
-
-		// Le chat retourne à sa position initiale
-		npcwalkto .home_x,.home_y;
-		sleep 2000;
-
-		.busy = 0;
+	// Si aucun item trouvé, on relance le timer
+	if (.@count <= 0) {
+		initnpctimer;
+		end;
 	}
 
-	// Relance le timer de scan
+	// Le chat est occupé
+	.busy = 1;
+
+	// On récupère les infos du premier item trouvé
+	getunitdata .@drops[0], .@data;
+
+	.@item_id = .@data[UDT_ITEMID];
+	.@amount = .@data[UDT_AMOUNT];
+	.@x = .@data[UDT_X];
+	.@y = .@data[UDT_Y];
+
+	// Le chat va jusqu'à l'objet
+	npcwalkto .@x,.@y;
+	sleep 2000;
+
+	// On supprime l'objet au sol
+	unitkill .@drops[0];
+
+	// On ajoute l'objet au stock
+	callsub S_AddStock, .@item_id, .@amount;
+
+	// Le chat retourne à sa position de départ
+	npcwalkto .home_x,.home_y;
+	sleep 2000;
+
+	.busy = 0;
+
+	// On relance le timer
 	initnpctimer;
 	end;
 
