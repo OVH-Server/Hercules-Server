@@ -164,7 +164,7 @@ prt_fild05,270,212,5	script	Culvert Guardian	8W_SOLDIER,{
 }
 
 //== Ph.D Hat Quest :: npc_6cript ==========================
-prt_in,38,108,4	script	Teacher	1_M_INNKEEPER,{
+prontera,213,193,2	script	Teacher	1_M_INNKEEPER,{
 	if ((countitem(Illusion_Flower) > 0) && (countitem(Hinalle) > 0) && (countitem(Aloe) > 0) && (countitem(Ment) > 0)) {
 		mes "[Teacher]";
 		mes "Oh...";
