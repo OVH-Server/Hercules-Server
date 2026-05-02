@@ -404,7 +404,7 @@ yuno,300,188,5	script	Zhenbolt#1	4_M_MONK,{
 }
 
 //== Red Ribbon ============================================
-prontera,165,232,3	script	Nephia#1	4_F_ALCHE,{
+prontera,201,184,2	script	Nephia#1	4_F_ALCHE,{
 	disable_items;
 	if (checkweight(Knife,1) == 0) {
 		mes "- Wait a minute! -";
