@@ -26,12 +26,7 @@ prontera,164,171,5	script	Maitre Ribs	4_GEFFEN_10,{
 	// Apparition des deux Nacoruri derrière (gauche + droite)
 	enablenpc "Troupe_Nacoruri_Gauche";
 	enablenpc "Troupe_Nacoruri_Droite";
-
-	end;
-
-OnTimer15000:
-	npctalk "SALSA !";
-	initnpctimer;
+	npctalk "SALSA";
 	end;
 
 }
