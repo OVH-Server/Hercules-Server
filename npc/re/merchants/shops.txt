@@ -422,6 +422,8 @@ OnInit:
 }
 */
 
+////////Le NPC ne veut pas changer de position
+/*
 prt_in,128,71,5	trader	Tool Dealer#prt1	1_M_INNKEEPER,{
 OnInit:
 	sellitem Spectacles;
@@ -437,6 +439,8 @@ OnInit:
 	sellitem Wing_Of_Butterfly;
 	sellitem Booby_Trap;
 }
+/*
+
 
 prt_in,117,79,5	trader	Toy Supplier#prt	4_M_PIERROT,{
 OnInit:
