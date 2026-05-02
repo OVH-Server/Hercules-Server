@@ -39,7 +39,7 @@ prontera,154,211,6	script	PVP#8	4_M_GRANDMONK,{
 	end;
 
 OnInit:
-	waitingroom "PVP test",0;
+	waitingroom "PVP",0;
 	end;
 }
 
