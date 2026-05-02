@@ -1,6 +1,6 @@
 ///////////////////
 ////Panneau Forge
-prontera,178,189,1	script	Forge	4_BOARD3,{
+prontera,178,189,5	script	Forge	4_BOARD3,{
 	mes "^FF0000[ Informations ]^000000";
 	mes "-------------------------";
 	mes "- Refine";
@@ -13,7 +13,7 @@ prontera,178,189,1	script	Forge	4_BOARD3,{
 
 //////////////////
 ////Panneau Utilitaire
-prontera,134,188,0	script	Utilitaire	4_BOARD3,{
+prontera,134,188,5	script	Utilitaire	4_BOARD3,{
 	mes "^FF0000[ Informations ]^000000";
 	mes "-------------------------";
 	mes "- Mercenary rent";
@@ -26,7 +26,7 @@ prontera,134,188,0	script	Utilitaire	4_BOARD3,{
 
 //////////////////
 ////Panneau Economie
-prontera,138,223,2	script	Economie	4_BOARD3,{
+prontera,138,223,5	script	Economie	4_BOARD3,{
 	mes "^FF0000[ Informations ]^000000";
 	mes "-------------------------";
 	mes "- Bank";
@@ -38,7 +38,7 @@ prontera,138,223,2	script	Economie	4_BOARD3,{
 
 //////////////////
 ////Panneau Magasins
-prontera,173,221,1	script	Magasins	4_BOARD3,{
+prontera,173,221,5	script	Magasins	4_BOARD3,{
 	mes "^FF0000[ Informations ]^000000";
 	mes "-------------------------";
 	mes "- Equipments";
