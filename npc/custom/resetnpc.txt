@@ -13,7 +13,7 @@
 //= 1.3 All statuses removed upon skill reset. [Euphy]
 //============================================================
 
-prontera,154,171,4	script	Reset Girl	4_VR_BOOK_GREEN,{
+prt_in,43,95,4	script	Reset Girl	4_VR_BOOK_GREEN,{
 
 	set .@ResetStat,0;	// Zeny for stat reset
 	set .@ResetSkill,0;	// Zeny for skill reset
