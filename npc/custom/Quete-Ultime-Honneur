@@ -1,4 +1,4 @@
-prontera,155,198,4	script	??	4_WHITEKNIGHT,{
+prontera,155,203,4	script	??	4_WHITEKNIGHT,{
 	mes "^FF0000[??]^000000";
 	mes "^FF0000??^000000";
 	next;
