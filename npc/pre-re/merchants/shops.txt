@@ -47,7 +47,7 @@ OnInit:
 	sellitem Wing_Of_Butterfly;
 }
 
-prt_in,160,134,3	trader	Tool Dealer#prt1	1_M_INNKEEPER,{
+prt_in,160,134,1	trader	Tool Dealer#prt1	1_M_INNKEEPER,{
 OnInit:
 	sellitem Spectacles;
 	sellitem Arrow;
