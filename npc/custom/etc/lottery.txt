@@ -492,3 +492,6 @@ GMInput6:
 	set $L_Rigged,1;
 	close;
 }
+
+////Duplicate
+gon_in,182,18,1	duplicate(Lottery)	Lottery#gon	2_SLOT_MACHINE
