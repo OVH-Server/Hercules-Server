@@ -210,3 +210,7 @@ end;
 		}
 	}
 }// Ending bracket
+
+
+////Duplicate
+gon_in,150,18,3	duplicate(Survey NPC)	Survey NPC	TW_TOWER   //MaisonGM
