@@ -18,7 +18,7 @@
 //= 2.8 Clustered conditionals replaced with switch to include all Upper types. [Euphy]
 //============================================================
 
-prontera,154,168,6	script	Platinum Skill NPC	2_M_SAGE_OLD,{
+prt_in,46,97,4	script	Platinum Skill NPC	2_M_SAGE_OLD,{
 	mes "[Platinum Skill NPC]";
 	mes "I can give you the special skills available to your job.";
 	mes "Would you like these skills now?";
