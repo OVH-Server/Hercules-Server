@@ -499,7 +499,7 @@ nameless_n,259,213,4	duplicate(Warper)	Warper#nam	4_F_VALKYRIE
 niflheim,205,179,4	duplicate(Warper)	Warper#nif	4_F_VALKYRIE
 pay_arche,42,134,4	duplicate(Warper)	Warper#arc	4_F_VALKYRIE
 payon,182,108,4	duplicate(Warper)	Warper#pay	4_F_VALKYRIE
-prontera,154,196,4 	duplicate(Warper)	Warper#prt	4_4JOB_SEALSTONE
+prontera,154,196,4 	duplicate(Warper)	Warper#prt	4_4JOB_SEALSTONE    // Prontera Stone
 prt_fild05,279,223,6	duplicate(Warper)	Warper#cul	4_F_VALKYRIE
 rachel,135,116,4	duplicate(Warper)	Warper#rac	4_F_VALKYRIE
 splendide,205,153,4	duplicate(Warper)	Warper#spl	4_F_VALKYRIE
@@ -524,3 +524,8 @@ yuno,162,47,4	duplicate(Warper)	Warper#yuno	4_F_VALKYRIE
 // Custom ( Ajouté par nous )
 // --------------------------------------------------
 gon_in,152,35,4	duplicate(Warper)	Warper	4_ELEPHANT
+
+OnInit:
+	setnpcdisplay strnpcinfo(3), "Warper", 4_4JOB_SEALSTONE, 2;
+	end;
+}
