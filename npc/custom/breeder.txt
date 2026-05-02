@@ -10,7 +10,7 @@
 //= Fixed 'close' issues. [Joseph]
 //============================================================
 
-prontera,153,192,4	script	Universal Rental NPC	4_M_TWTEAMAN,{
+prontera,148,195,4	script	Universal Rental	4_M_TWTEAMAN,{
 	/* TODO: This can be optimized with just setmount(), as it can
 		 auto-detect the proper mount for the class/skills. */
 	if (hascashmount()) {
