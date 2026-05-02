@@ -1,5 +1,5 @@
 //===Transporteur Prontera vers place marchandes Alberta, Ayothaya et Lighthalzen
-prontera,165,197,4	script	Transporteur Prontera	1_F_MERCHANT_02,{
+prontera,165,197,4	script	^FF0000Transporteur Place Marchande^000000	1_F_MERCHANT_02,{
 
 	mes "[Transporteur ]";
 	mes "Ou souhaitez-vous aller ?";
