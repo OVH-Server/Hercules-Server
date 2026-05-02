@@ -13,7 +13,7 @@ prontera,178,189,1	script	Forge	4_BOARD3,{
 
 //////////////////
 ////Panneau Utilitaire
-prontera,134,188,1	script	Utilitaire	4_BOARD3,{
+prontera,134,188,0	script	Utilitaire	4_BOARD3,{
 	mes "^FF0000[ Informations ]^000000";
 	mes "-------------------------";
 	mes "- Mercenary rent";
