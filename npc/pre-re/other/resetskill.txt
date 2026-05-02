@@ -34,7 +34,7 @@
 //= 1.0
 //=========================================================================
 
-prontera,146,232,4	script	Hypnotist#2	4_F_TELEPORTER,{
+prt_in,47,133,5	script	Hypnotist#2	4_F_TELEPORTER,{
 	mes "[Hypnotist]";
 	mes "Greetings, adventurer.";
 	mes "I'm a member of the Hypnotist";
