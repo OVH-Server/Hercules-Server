@@ -1,4 +1,4 @@
-prontera,161,210,4	script	??	4_RUNESTONE,{
+prontera,162,210,4	script	??	4_RUNESTONE,{
 	mes "^FF0000[??]^000000";
 	mes "^FF0000??^000000";
 	next;
