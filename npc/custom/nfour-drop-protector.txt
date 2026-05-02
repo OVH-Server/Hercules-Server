@@ -122,7 +122,7 @@ prontera,159,174,6	script	Drop Protector#dprot	4_EP19_VOGLINDE,{
                 .@menu$ = .@menu$ + ":";
             .@menu$ = .@menu$ + "[" + .@unique_ids[.@i] + "] " + .@unique_names$[.@i];
         }
-        .@menu$ = .@menu$ + ":close";
+        .@menu$ = .@menu$ + ":Close";
 
 
         // update count with count unique
@@ -160,7 +160,7 @@ prontera,159,174,6	script	Drop Protector#dprot	4_EP19_VOGLINDE,{
             .@item_type = getiteminfo(.@drops[.@i], ITEMINFO_TYPE);
             // if item is weapon armor or card
             if (.@item_type >= 4 && .@item_type <= 6) {
-                mes(getitemname(.@drops[.@i]) + " Type: [" + item_type_id_to_item_type_name(.@item_type) + "]" + " ( " + .@drops_per[.@i] / 100 + "% )");
+                // mes(getitemname(.@drops[.@i]) + " Type: [" + item_type_id_to_item_type_name(.@item_type) + "]" + " ( " + .@drops_per[.@i] / 100 + "% )");
                 .@equip_and_card_item_only[.@count_item_card] = .@drops[.@i];
                 ++.@count_item_card;
             }
@@ -176,6 +176,7 @@ prontera,159,174,6	script	Drop Protector#dprot	4_EP19_VOGLINDE,{
             goto(exit_label);
         }
 
+        next();
 
         .@menu$ = "";
         for (.@i = 0; .@i < .@count; ++.@i) {
@@ -184,7 +185,10 @@ prontera,159,174,6	script	Drop Protector#dprot	4_EP19_VOGLINDE,{
            .@menu$ = .@menu$ + getitemname(.@drops[.@i]);
         }
         .@menu$ = .@menu$ + ":close";
+
+        mes("[Drop Protector]");
         mes("Choice item :");
+        mes("The NPC will ask you for ^0000FF350 Dawn Essence^000000 for equipment and ^0000FF500 Dawn Essence^000000 for a card.");
         next();
 
         .@choice = select(.@menu$) - 1;  // 0-based
@@ -249,12 +253,12 @@ prontera,159,174,6	script	Drop Protector#dprot	4_EP19_VOGLINDE,{
         } 
 
         .@essence_count = countitem(.@essence_id);
-        mes("You actualy had " + .@essence_count);
+        mes("You actualy had ^0000FF" + .@essence_count + " Dawn Essence^000000");
         if (.@essence_count < .@needed_essence_for_trade) {
             mes("You don't have any essence to trade item come when you have " + .@needed_essence_for_trade + " esssence");
             goto(exit_label);
         }
-        mes("Do you want to trade your essence against ^0000FF" + drop_protector_item$ + "^000000");
+        mes("Do you want to trade ^0000FF" + .@needed_essence_for_trade + " Dawn Essence^000000 against ^0000FF" + drop_protector_item$ + "^000000");
         
         switch(select("Yes", "No")) {
             case 1:
