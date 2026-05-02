@@ -226,7 +226,7 @@
 			close;
 	}
 }
-prontera,163,193,4	duplicate(Mercenary Manager#main)	Mercenary Manager#Spear	4_CAT_ADMIRAL
+prontera,145,198,4	duplicate(Mercenary Manager#main)	Mercenary Manager#Spear	4_CAT_ADMIRAL
 pay_arche,99,167,4	duplicate(Mercenary Manager#main)	Mercenary Manager#Bow	4_M_JOB_HUNTER
 
 //== Mercenary Merchant NPCs ===============================
