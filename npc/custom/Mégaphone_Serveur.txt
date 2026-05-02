@@ -1,5 +1,5 @@
-prontera,160,193,6	script	Le Maire	573,{
-	mes "[Le Maire]";
+prontera,148,195,5	script	Megaphone	4_CAT_MERMASTER,{
+	mes "[Megaphone]";
 	mes "Je peux diffuser ton message a tous les joueurs sur le serveur !";
 	mes "Prix : ^FF000010 000 zeny^000000.";
 	next;
@@ -11,7 +11,7 @@ prontera,160,193,6	script	Le Maire	573,{
 		close;
 	}
 
-	mes "[Le Maire]";
+	mes "[Megaphone]";
 	mes "Dans quel canal veux-tu envoyer ton message ?";
 	next;
 
@@ -25,12 +25,12 @@ prontera,160,193,6	script	Le Maire	573,{
 			break;
 
 		case 3:
-			mes "[Le Maire]";
+			mes "[Megaphone]";
 			mes "Annulé.";
 			close;
 	}
 
-	mes "[Le Maire]";
+	mes "[Megaphone]";
 	mes "Note ton message :";
 	next;
 
@@ -42,7 +42,7 @@ prontera,160,193,6	script	Le Maire	573,{
 		close;
 	}
 
-	mes "[Le Maire]";
+	mes "[Megaphone]";
 	mes "Ton message sera envoye dans le canal ^00AAFF" + .@channel$ + "^000000 :";
 	mes "\"" + .@message$ + "\"";
 	next;
@@ -54,7 +54,7 @@ prontera,160,193,6	script	Le Maire	573,{
 	}
 
 	if (Zeny < 10000) {
-		mes "[Le Maire]";
+		mes "[Megaphone]";
 		mes "Tu n'as plus assez de zeny.";
 		close;
 	}
@@ -67,7 +67,7 @@ prontera,160,193,6	script	Le Maire	573,{
 	announce "[Recrutement] " + strcharinfo(0) + " : " + .@message$, bc_all, 0x00FF00;
 }
 
-	mes "[Le Maire]";
+	mes "[Megaphone]";
 	mes "Message bien recu !";
 	close;
 }
