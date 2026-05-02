@@ -287,7 +287,7 @@ bat_room,148,150,5	script	Teleporter#Battlefield	4_F_TELEPORTER,{
 	end;
 }
 
-prontera,123,83,3	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit1	4_F_JOB_KNIGHT
+prontera,157,211,3	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit1	4_M_CRU_OLD
 moc_ruins,75,162,3	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit2	4_F_JOB_KNIGHT
 aldebaran,146,109,3	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit3	4_F_JOB_KNIGHT
 geffen,109,66,3	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit4	4_F_JOB_KNIGHT
