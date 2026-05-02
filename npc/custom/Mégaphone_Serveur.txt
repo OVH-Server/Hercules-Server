@@ -1,4 +1,4 @@
-prontera,148,195,5	script	Megaphone	4_CAT_MERMASTER,{
+prontera,148,195,3	script	Megaphone	4_CAT_MERMASTER,{
 	mes "[Megaphone]";
 	mes "Je peux diffuser ton message a tous les joueurs sur le serveur !";
 	mes "Prix : ^FF000010 000 zeny^000000.";
