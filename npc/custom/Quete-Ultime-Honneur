@@ -9,6 +9,6 @@ prontera,155,201,4	script	??	4_RUNESTONE,{
 	close;
 
 OnInit:
-	setnpcdisplay strnpcinfo(3), "??", 4_RUNESTONE, 3;
+	setnpcdisplay strnpcinfo(3), "??", 4_RUNESTONE, 2;
 	end;
 }
