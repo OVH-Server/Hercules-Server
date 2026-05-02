@@ -167,8 +167,12 @@
 /////Chat échangeur items contre Yggdrassil Berry ou Seed
 //////////////////////////////////////////////////////////
 
-prontera,159,145,4	script	Chat Troc Ygg	4_CAT_DOWN,{
+prontera,164,174,4	script	Chat Troc Ygg	4_CAT_DOWN,{
 
+OnInit:
+	waitingroom "Yggdrasil Berry & Seed Exchange",0;
+	end;
+}
 	mes "[Chat Troc Ygg]";
 	mes "Mets tes objets dans la fenêtre de vente.";
 	mes "Ressources communes : 100 points/u.";
