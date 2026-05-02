@@ -236,3 +236,6 @@ pvp_y_1-5,174,249,4	script	Finish Line#01	GUILD_FLAG,{
 pvp_y_1-5,174,238,4	script	Finish Line#02	GUILD_FLAG,{
 	end;
 }
+
+////Duplicate
+prontera,154,165,6	duplicate(Race Girl#01)	Race Girl#01#Prontera	4_F_KAFRA2
