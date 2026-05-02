@@ -8,62 +8,35 @@ prontera,164,168,4	script	Jean-Pierre Coffe	4_CAT_CHEF,{
 
 OnInit:
 	initnpctimer;
+	waitingroom "POTIONS",0;
 	end;
 
-OnTimer1000:
+OnTimer3000:
+	npcwalkto 156,183;
 	delwaitingroom;
 	waitingroom "POTIONS",0;
-	npcwalkto 176,204;
-	setnpctimer 7500;
 	end;
 
-OnTimer7500:
+OnTimer10000:
+	npcwalkto 176,204;
 	delwaitingroom;
 	waitingroom "Yellow Gemstone !",0;
-	npcwalkto 155,225;
-	setnpctimer 14000;
 	end;
 
-OnTimer14000:
+OnTimer17000:
+	npcwalkto 155,225;
 	delwaitingroom;
 	waitingroom "Star Crumb!",0;
+	end;
+
+OnTimer24000:
 	npcwalkto 135,203;
-	setnpctimer 20500;
+	delwaitingroom;
+	waitingroom "POTIONS",0;
 	end;
 
-OnTimer20500:
-	setnpctimer 1000;
-	end;
-
-	OnInit:
-	initnpctimer;
-	end;
-
-OnTimer1000:
-	// Aller au centre UNE SEULE FOIS
-	npcwalkto 156,183;
-	setnpctimer 8000; // temps pour arriver
-	end;
-
-OnTimer8000:
-	// Boucle autour de la fontaine
-	npcwalkto 176,204;
-	setnpctimer 15000;
-	end;
-
-OnTimer15000:
-	npcwalkto 155,225;
-	setnpctimer 22000;
-	end;
-
-OnTimer22000:
-	npcwalkto 135,203;
-	setnpctimer 29000;
-	end;
-
-OnTimer29000:
-	// relance la boucle
-	setnpctimer 8000;
+OnTimer31000:
+	setnpctimer 10000;
 	end;
 }
 
