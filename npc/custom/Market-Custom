@@ -1,6 +1,10 @@
 //===Transporteur Prontera vers place marchandes Alberta, Ayothaya et Lighthalzen
 prontera,165,197,4	script	Places marchandes	1_F_MERCHANT_02,{
 
+OnInit:
+	waitingroom "Places marchandes",0;
+	end;
+}
 	mes "[Transporteur ]";
 	mes "Ou souhaitez-vous aller ?";
 	next;
