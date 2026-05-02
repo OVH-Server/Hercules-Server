@@ -1,82 +1,39 @@
 prontera,164,168,4	script	Jean-Pierre Coffe	4_CAT_CHEF,{
 	mes "[Vendeur Ambulant]";
-	mes "Bonjour ! Et voila ca bouge tous seul !";
+	mes "Bonjour ! Et voila ca bouge tout seul !";
 	next;
 
 	callshop "Shop_RedPotion",1;
 	end;
 
 OnInit:
-	reload:
-	delwaitingroom;
-	waitingroom "POTIONS ",0;
-	sleep2 3000;
-	delwaitingroom;
-	waitingroom "Yellow Gemstone !",0;
-	sleep2 3000;
-	delwaitingroom;
-	waitingroom "Star Crumb!",0;
-	sleep2 3000;
-	goto reload;
-end;
-
-OnInit:
-	// Point de départ
-	set .startX,164;
-	set .startY,168;
-
-	// Point d'arrivée
-	set .destX,156;
-	set .destY,183;
-
-
-///////Deplacement autour de la fontaine
-	OnInit:
-	while (true) {
-		npcwalkto 176,204;
-		sleep 6500;
-
-		npcwalkto 155,225;
-		sleep 6500;
-
-		npcwalkto 135,203;
-		sleep 6500;
-	}
-	end;
-
-/*
-	// Zone de déplacement horizontal
-	set .leftX,156;
-	set .rightX,166; // +10 cases
-
-	set .phase,0;     // 0 = déplacement initial, 1 = patrouille
-	set .direction,0; // 0 = droite, 1 = gauche
-
 	initnpctimer;
 	end;
 
-OnTimer8000:
-	if (.phase == 0) {
-		npcwalkto .destX, .destY;
-		set .phase,1;
-		setnpctimer 0;
-		end;
-	}
-
-	if (.phase == 1) {
-		if (.direction == 0) {
-			npcwalkto .rightX, .destY;
-			set .direction,1;
-		} else {
-			npcwalkto .leftX, .destY;
-			set .direction,0;
-		}
-	}
-
-	setnpctimer 0;
+OnTimer1000:
+	delwaitingroom;
+	waitingroom "POTIONS",0;
+	npcwalkto 176,204;
+	setnpctimer 7500;
 	end;
-/*
 
+OnTimer7500:
+	delwaitingroom;
+	waitingroom "Yellow Gemstone !",0;
+	npcwalkto 155,225;
+	setnpctimer 14000;
+	end;
+
+OnTimer14000:
+	delwaitingroom;
+	waitingroom "Star Crumb!",0;
+	npcwalkto 135,203;
+	setnpctimer 20500;
+	end;
+
+OnTimer20500:
+	setnpctimer 1000;
+	end;
 }
 
 -	shop	Shop_RedPotion	-1,501:10,1000:10,715:10
