@@ -1,4 +1,4 @@
-prontera,159,157,4	script	Joueurs en ligne	4_MACHINE_DEVICE,{
+prontera,162,194,4	script	Joueurs en ligne	4_MACHINE_DEVICE,{
 	mes "[Joueurs en ligne]";
 	mes "Joueurs actuellement connecte :";
 	next;
