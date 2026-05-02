@@ -422,7 +422,7 @@ OnInit:
 }
 */
 
-prt_in,160,133,5	trader	Tool Dealer#prt1	1_M_INNKEEPER,{
+prt_in,128,71,5	trader	Tool Dealer#prt1	1_M_INNKEEPER,{
 OnInit:
 	sellitem Spectacles;
 	sellitem Arrow;
