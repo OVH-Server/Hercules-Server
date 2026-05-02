@@ -48,7 +48,7 @@ prontera,165,197,4	script	Places marchandes	1_F_MERCHANT_02,{
 alberta,210,53,4	script	Transporteur Alberta	1_F_MERCHANT_02,{
 
 	mes "[Transporteur]";
-	mes "Envie d'aller à Prontera ?";
+	mes "Envie de retourner a Prontera ?";
 	next;
 
 	if (select("Oui !.:Non merci.") == 2) {
@@ -61,7 +61,7 @@ alberta,210,53,4	script	Transporteur Alberta	1_F_MERCHANT_02,{
 	mes "Bon voyage !";
 	close2;
 
-	warp "prontera",157,160;
+	warp "prontera",165,193;
 
 	end;
 }
@@ -70,7 +70,7 @@ alberta,210,53,4	script	Transporteur Alberta	1_F_MERCHANT_02,{
 ayothaya,161,172,4	script	Transporteur Ayothaya	1_F_MERCHANT_02,{
 
 	mes "[Transporteur]";
-	mes "Envie d'aller à Prontera ?";
+	mes "Envie de retourner a Prontera ?";
 	next;
 
 	if (select("Oui !.:Non merci.") == 2) {
@@ -83,7 +83,7 @@ ayothaya,161,172,4	script	Transporteur Ayothaya	1_F_MERCHANT_02,{
 	mes "Bon voyage !";
 	close2;
 
-	warp "prontera",157,160;
+	warp "prontera",165,193;
 
 	end;
 }
@@ -92,7 +92,7 @@ ayothaya,161,172,4	script	Transporteur Ayothaya	1_F_MERCHANT_02,{
 lighthalzen,158,50,4	script	Transporteur Lighthalzen	1_F_MERCHANT_02,{
 
 	mes "[Transporteur]";
-	mes "Envie d'aller à Prontera ?";
+	mes "Envie de retourner a Prontera ?";
 	next;
 
 	if (select("Oui !.:Non merci.") == 2) {
@@ -105,7 +105,7 @@ lighthalzen,158,50,4	script	Transporteur Lighthalzen	1_F_MERCHANT_02,{
 	mes "Bon voyage !";
 	close2;
 
-	warp "prontera",157,160;
+	warp "prontera",165,193;
 
 	end;
 }
