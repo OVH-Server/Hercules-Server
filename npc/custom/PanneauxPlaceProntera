@@ -1,0 +1,11 @@
+prontera,178,189,1	script	Forge	4_BOARD3,{
+	mes "^FF0000[ Informations ]^000000";
+	mes "-------------------------";
+	mes " Forge ";
+	mes "- Refine";
+	mes "- Identifier";
+	mes "- Card Remover";
+	mes "- Etc...";
+	next;
+	close;
+}
