@@ -125,3 +125,6 @@ cmd_in02,182,126,2	script	Crazy Boris	4_M_03,{
 	}
 	end;
 }
+
+///Duplicate
+prontera,150,165,2	duplicate(Crazy Boris)	Crazy Boris#Prontera	4_M_03
