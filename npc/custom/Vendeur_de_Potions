@@ -34,6 +34,37 @@ OnTimer14000:
 OnTimer20500:
 	setnpctimer 1000;
 	end;
+
+	OnInit:
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	// Aller au centre UNE SEULE FOIS
+	npcwalkto 156,183;
+	setnpctimer 8000; // temps pour arriver
+	end;
+
+OnTimer8000:
+	// Boucle autour de la fontaine
+	npcwalkto 176,204;
+	setnpctimer 15000;
+	end;
+
+OnTimer15000:
+	npcwalkto 155,225;
+	setnpctimer 22000;
+	end;
+
+OnTimer22000:
+	npcwalkto 135,203;
+	setnpctimer 29000;
+	end;
+
+OnTimer29000:
+	// relance la boucle
+	setnpctimer 8000;
+	end;
 }
 
 -	shop	Shop_RedPotion	-1,501:10,1000:10,715:10
