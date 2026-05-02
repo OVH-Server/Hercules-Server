@@ -1,4 +1,4 @@
-prontera,155,203,1	script	??	4_WHITEKNIGHT,{
+prontera,155,203,1	script	??	4_RUNESTONE,{
 	mes "^FF0000[??]^000000";
 	mes "^FF0000??^000000";
 	next;
@@ -9,6 +9,6 @@ prontera,155,203,1	script	??	4_WHITEKNIGHT,{
 	close;
 
 OnInit:
-	setnpcdisplay strnpcinfo(3), "??", 4_WHITEKNIGHT, 2;
+	setnpcdisplay strnpcinfo(3), "??", 4_WHITEKNIGHT, 3;
 	end;
 }
