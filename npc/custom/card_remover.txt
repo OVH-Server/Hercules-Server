@@ -12,7 +12,7 @@
 //= 1.2a Added 'disable_items' command. [Euphy]
 //============================================================
 
-prontera,151,168,4	script	Card Remover	4_F_THAISHAMAN,{
+prt_in,23,72,4	script	Card Remover	4_F_THAISHAMAN,{
 
 	set .zenycost,0; // Set base cost in zeny of the card remover services
 	set .percardcost,0; // set cost per card of the card remover services
