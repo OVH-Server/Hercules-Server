@@ -524,8 +524,3 @@ yuno,162,47,4	duplicate(Warper)	Warper#yuno	4_F_VALKYRIE
 // Custom ( Ajouté par nous )
 // --------------------------------------------------
 gon_in,152,35,4	duplicate(Warper)	Warper	4_ELEPHANT
-
-OnInit:
-	setnpcdisplay strnpcinfo(3), "Warper", 4_4JOB_SEALSTONE, 2;
-	end;
-}
