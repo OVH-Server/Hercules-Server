@@ -499,7 +499,7 @@ nameless_n,259,213,4	duplicate(Warper)	Warper#nam	4_F_VALKYRIE
 niflheim,205,179,4	duplicate(Warper)	Warper#nif	4_F_VALKYRIE
 pay_arche,42,134,4	duplicate(Warper)	Warper#arc	4_F_VALKYRIE
 payon,182,108,4	duplicate(Warper)	Warper#pay	4_F_VALKYRIE
-prontera,154,187,4 	duplicate(Warper)	Warper#prt	4_4JOB_SEALSTONE
+prontera,154,198,4 	duplicate(Warper)	Warper#prt	4_4JOB_SEALSTONE
 prt_fild05,279,223,6	duplicate(Warper)	Warper#cul	4_F_VALKYRIE
 rachel,135,116,4	duplicate(Warper)	Warper#rac	4_F_VALKYRIE
 splendide,205,153,4	duplicate(Warper)	Warper#spl	4_F_VALKYRIE
