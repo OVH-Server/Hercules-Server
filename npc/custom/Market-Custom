@@ -189,7 +189,12 @@ lighthalzen,138,51,6	duplicate(AILEGAUCHE)	Aile gauche	4_BULLETIN_BOARD2
 lighthalzen,138,42,6	duplicate(AILEGAUCHE)	Aile gauche	4_BULLETIN_BOARD2
 
 
-//--- Bot Marchand Alberta " Il est frais mon poisson ! "
+////Duplicate
+gon_in,155,37,4	duplicate(Places marchandes)	Places marchandes#gon	1_F_MERCHANT_02
+
+
+////////////////////////////////////////////////////////////
+/////--- Bot Marchand Alberta " Il est frais mon poisson ! "
 alberta,214,38,6	script	Aladeen	4_M_ALADDIN,{
 
 	mes "[Aladeen]";
