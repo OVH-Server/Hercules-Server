@@ -1,0 +1,15 @@
+prontera,155,196,4	script	??	4_WHITEKNIGHT,{
+	mes "[??]";
+	mes "^FF0000??^000000";
+	next;
+
+	if (select("Aller à Yuno:Annuler") == 1) {
+		warp "yuno",362,170;
+	}
+	close;
+
+OnInit:
+	// Agrandit le sprite du PNJ si ton émulateur le supporte
+	setunitdata(getnpcid(0), UDT_SIZE, SZ_BIG);
+	end;
+}
