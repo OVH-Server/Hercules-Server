@@ -247,6 +247,7 @@ bat_room,148,150,5	script	Teleporter#Battlefield	4_F_TELEPORTER,{
 }
 
 -	script	Maroll Battle Recruiter::BatRecruit	4_F_JOB_KNIGHT,{
+	OnInit: waitingroom "Places Marchandes",0;
 	mes("[Maroll Battle Recruiter]");
 	mes("Good day, adventurer.");
 	mes("I'm a knight from a far country called Maroll Kingdom.");
