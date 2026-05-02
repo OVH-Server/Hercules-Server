@@ -1,4 +1,4 @@
-prontera,159,148,5	script	Maitre Ribs	4_GEFFEN_10,{
+prontera,164,171,5	script	Maitre Ribs	4_GEFFEN_10,{
 
 	mes "[Maitre Ribs]";
 	mes "Voulez-vous que je parte danser sur la place principale ?";
@@ -6,7 +6,7 @@ prontera,159,148,5	script	Maitre Ribs	4_GEFFEN_10,{
 
 	if (select("Oui, allez à la place principale.:Non, restez ici.") == 2) {
 		mes "[Maitre Ribs]";
-		mes "Très bien, je reste ici.";
+		mes "Tres bien, je reste ici.";
 		close;
 	}
 
@@ -15,7 +15,7 @@ prontera,159,148,5	script	Maitre Ribs	4_GEFFEN_10,{
 	close2;
 
 	// Déplacement du leader
-	npcwalkto 156,179;
+	npcwalkto 156,188;
 
 	// Attente du trajet
 	sleep 6500;
@@ -28,10 +28,16 @@ prontera,159,148,5	script	Maitre Ribs	4_GEFFEN_10,{
 	enablenpc "Troupe_Nacoruri_Droite";
 
 	end;
+
+OnTimer15000:
+	npctalk "SALSA !";
+	initnpctimer;
+	end;
+
 }
 
-// Derrière gauche du leader (156,179 → 155,178)
-prontera,155,178,5	script	Troupe_Nacoruri_Gauche	4_F_NACORURI,{
+// Derrière gauche du leader 
+prontera,155,188,5	script	Troupe_Nacoruri_Gauche	4_F_NACORURI,{
 	end;
 
 OnInit:
@@ -39,8 +45,8 @@ OnInit:
 	end;
 }
 
-// Derrière droite du leader (156,179 → 157,178)
-prontera,157,178,5	script	Troupe_Nacoruri_Droite	4_F_NACORURI,{
+// Derrière droite du leader 
+prontera,157,188,5	script	Troupe_Nacoruri_Droite	4_F_NACORURI,{
 	end;
 
 OnInit:
