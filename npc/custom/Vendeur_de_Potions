@@ -7,45 +7,44 @@ prontera,164,168,4	script	Jean-Pierre Coffe	4_CAT_CHEF,{
 	end;
 
 OnInit:
-	initnpctimer;
 	waitingroom "POTIONS",0;
+	initnpctimer;
 	end;
 
-// Aller au centre (point de base)
 OnTimer3000:
 	npcwalkto 156,183;
 	delwaitingroom;
 	waitingroom "POTIONS",0;
-	setnpctimer 10000;
 	end;
 
-// Début du tour
 OnTimer10000:
 	npcwalkto 176,204;
 	delwaitingroom;
 	waitingroom "Yellow Gemstone !",0;
-	setnpctimer 17000;
 	end;
 
 OnTimer17000:
 	npcwalkto 155,225;
 	delwaitingroom;
 	waitingroom "Star Crumb!",0;
-	setnpctimer 24000;
 	end;
 
 OnTimer24000:
 	npcwalkto 135,203;
 	delwaitingroom;
 	waitingroom "POTIONS",0;
-	setnpctimer 31000;
 	end;
 
-// Retour au centre
 OnTimer31000:
 	npcwalkto 156,183;
 	delwaitingroom;
 	waitingroom "POTIONS",0;
-	setnpctimer 10000; // relance le tour
+	end;
+
+OnTimer38000:
+	stopnpctimer;
+	initnpctimer;
 	end;
 }
+
+-	shop	Shop_RedPotion	-1,501:10,1000:10,715:10
