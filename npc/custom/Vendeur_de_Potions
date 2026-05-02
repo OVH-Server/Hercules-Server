@@ -1,4 +1,4 @@
-prontera,159,154,4	script	Jean-Pierre Coffe	4_CAT_CHEF,{
+prontera,164,168,4	script	Jean-Pierre Coffe	4_CAT_CHEF,{
 	mes "[Vendeur Ambulant]";
 	mes "Bonjour ! Et voila ca bouge tous seul !";
 	next;
@@ -7,14 +7,44 @@ prontera,159,154,4	script	Jean-Pierre Coffe	4_CAT_CHEF,{
 	end;
 
 OnInit:
+	reload:
+	delwaitingroom;
+	waitingroom "POTIONS ",0;
+	sleep2 3000;
+	delwaitingroom;
+	waitingroom "Yellow Gemstone !",0;
+	sleep2 3000;
+	delwaitingroom;
+	waitingroom "Star Crumb!",0;
+	sleep2 3000;
+	goto reload;
+end;
+
+OnInit:
 	// Point de départ
-	set .startX,159;
-	set .startY,154;
+	set .startX,164;
+	set .startY,168;
 
 	// Point d'arrivée
 	set .destX,156;
 	set .destY,183;
 
+
+///////Deplacement autour de la fontaine
+	OnInit:
+	while (true) {
+		npcwalkto 176,204;
+		sleep 6500;
+
+		npcwalkto 155,225;
+		sleep 6500;
+
+		npcwalkto 135,203;
+		sleep 6500;
+	}
+	end;
+
+/*
 	// Zone de déplacement horizontal
 	set .leftX,156;
 	set .rightX,166; // +10 cases
@@ -45,6 +75,8 @@ OnTimer8000:
 
 	setnpctimer 0;
 	end;
+/*
+
 }
 
 -	shop	Shop_RedPotion	-1,501:10,1000:10,715:10
