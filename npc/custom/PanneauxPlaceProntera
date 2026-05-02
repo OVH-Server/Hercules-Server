@@ -17,8 +17,10 @@ prontera,134,188,0	script	Utilitaire	4_BOARD3,{
 	mes "^FF0000[ Informations ]^000000";
 	mes "-------------------------";
 	mes "- Mercenary rent";
+	mes "- Hunting Missions";
 	mes "- Platinium Skills";
 	mes "- Universal Rental";
+	mes "- Reset NPC";
 	mes "- Etc...";
 	next;
 	close;
