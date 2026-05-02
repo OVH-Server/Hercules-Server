@@ -8,7 +8,7 @@
 // - Modification End -
 // -------------------------------------------------------------------------------------------------
 
-prontera,164,171,1	script	GM Support Assistant	4_M_FAIRYANG,{
+prontera,149,202,2	script	GM Support Assistant	4_M_FAIRYANG,{
 if(.GM_Online < 1  ){ mes "[ ^FF55FFGM Support Assistant^000000; ]"; mes "No available GMs."; close; }
 mes "[ ^FF55FFGM Support Assistant^000000; ]";
 mes "Number of GM(s) online: "+.GM_Online;
