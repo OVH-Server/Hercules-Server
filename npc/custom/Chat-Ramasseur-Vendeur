@@ -169,10 +169,6 @@
 
 prontera,164,174,4	script	Chat Troc Ygg	4_CAT_DOWN,{
 
-OnInit:
-	waitingroom "Yggdrasil Berry & Seed Exchange",0;
-	end;
-}
 	mes "[Chat Troc Ygg]";
 	mes "Mets tes objets dans la fenêtre de vente.";
 	mes "Ressources communes : 100 points/u.";
@@ -190,6 +186,7 @@ OnInit:
 OnInit:
 	// Attache le shop caché à ce script
 	npcshopattach "chat_troc_ygg_shop";
+	waitingroom "Yggdrasil Berry & Seed Exchange",0;
 	end;
 
 OnSellItem:
