@@ -22,7 +22,7 @@
 //= v1.5 - Fixed German wordings? [Mysterious]
 //= v1.6 - Cleaning [Mysterious]
 //============================================================
-prontera,149,205,2	script	Survey NPC	TW_TOWER,{
+prontera,149,205,3	script	Survey NPC	TW_TOWER,{
 
 set @np$,"[ ^7401DFSandra^000000 ]";
 if ( getgmlevel() == 99 ) {
