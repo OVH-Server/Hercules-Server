@@ -15,7 +15,7 @@
 // 1.4.4 Added Quest delay
 //============================================================
 
-prt_in,40,101,0	script	Questboard	4_BOARD3,{
+prt_in,40,101,3	script	Questboard	4_BOARD3,{
 	if(c_run==1){
 		mes "[^FF7700Questboard^000000]";
 		mes "^0000FF"+getd("." + currentquest$ + "_collectionname$")+"^000000";
