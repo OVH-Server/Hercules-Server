@@ -1,9 +1,9 @@
-prontera,155,203,4	script	??	4_WHITEKNIGHT,{
+prontera,155,203,1	script	??	4_WHITEKNIGHT,{
 	mes "^FF0000[??]^000000";
 	mes "^FF0000??^000000";
 	next;
 
-	if (select("^FF0000Aller à Yuno^000000:^FF0000Annuler^000000") == 1) {
+	if (select("^FF0000??^000000:^FF0000Annuler^000000") == 1) {
 		warp "yuno",362,170;
 	}
 	close;
