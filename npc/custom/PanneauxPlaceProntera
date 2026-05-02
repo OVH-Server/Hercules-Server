@@ -38,7 +38,7 @@ prontera,138,223,5	script	Economie	4_BOARD3,{
 
 //////////////////
 ////Panneau Magasins
-prontera,173,221,3	script	Magasins	4_BOARD3,{
+prontera,171,225,3	script	Magasins	4_BOARD3,{
 	mes "^FF0000[ Informations ]^000000";
 	mes "-------------------------";
 	mes "- Equipments";
