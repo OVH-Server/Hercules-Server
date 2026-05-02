@@ -1,10 +1,24 @@
+///////////////////
+////Panneau Forge
 prontera,178,189,1	script	Forge	4_BOARD3,{
 	mes "^FF0000[ Informations ]^000000";
 	mes "-------------------------";
-	mes " Forge ";
 	mes "- Refine";
 	mes "- Identifier";
 	mes "- Card Remover";
+	mes "- Etc...";
+	next;
+	close;
+}
+
+//////////////////
+////Panneau Utilitaire
+prontera,134,188,3	script	Utilitaire	4_BOARD3,{
+	mes "^FF0000[ Informations ]^000000";
+	mes "-------------------------";
+	mes "- Mercenary rent";
+	mes "- Platinium Skills";
+	mes "- Universal Rental";
 	mes "- Etc...";
 	next;
 	close;
