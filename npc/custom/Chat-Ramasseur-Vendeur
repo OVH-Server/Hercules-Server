@@ -2,6 +2,7 @@
 ///// Chat Rammasseur (OFF) qui vend les items trouvé par terre 
 ////////////////////////////////////////////////////////////////
 
+/*  /* = debut de commentaire 
 // prontera,155,196,4	script	Chat Ramasseur	4_CAT_DOWN,{
 
 // 	// Dialogue principal du PNJ vendeur
@@ -161,6 +162,7 @@
 // 	return;
 // }
 
+fin de commentaire = */
 
 
 //////////////////////////////////////////////////////////
