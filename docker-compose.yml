@@ -6,7 +6,8 @@ networks:
 services:
   hercule-db:
     image: mysql:8.0-bookworm
-    volumes:
+    restart: unless-stopped
+    volumes:/
       - ./:/home/hercuser/Hercules
       - ./init_db.sh:/docker-entrypoint-initdb.d/init_db.sh
       - ./check_script_end.sh:/check_script_end.sh
@@ -41,6 +42,7 @@ services:
 
   login-server:
     build: ./docker-builder
+    restart: unless-stopped
     volumes:
       - ./:/home/hercuser/Hercules
       - ./docker_start.sh/:/docker_start.sh
@@ -64,6 +66,7 @@ services:
 
   char-server:
     build: ./docker-builder
+    restart: unless-stopped
     volumes:
       - ./:/home/hercuser/Hercules
       - ./docker_start.sh/:/docker_start.sh
@@ -86,6 +89,7 @@ services:
 
   map-server:
     build: ./docker-builder
+    restart: unless-stopped
     volumes:
       - ./:/home/hercuser/Hercules
       - ./docker_start.sh/:/docker_start.sh
@@ -108,6 +112,7 @@ services:
 
   api-server:
     build: ./docker-builder
+    restart: unless-stopped
     volumes:
       - ./:/home/hercuser/Hercules
       - ./docker_start.sh/:/docker_start.sh
