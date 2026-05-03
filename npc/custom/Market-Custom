@@ -59,7 +59,7 @@ alberta,210,53,4	script	Transporteur Alberta	1_F_MERCHANT_02,{
 	mes "Bon voyage !";
 	close2;
 
-	warp "prontera",165,193;
+	warp "prontera",166,205;
 
 	end;
 }
@@ -81,7 +81,7 @@ ayothaya,161,172,4	script	Transporteur Ayothaya	1_F_MERCHANT_02,{
 	mes "Bon voyage !";
 	close2;
 
-	warp "prontera",165,193;
+	warp "prontera",166,205;
 
 	end;
 }
@@ -103,7 +103,7 @@ lighthalzen,158,50,4	script	Transporteur Lighthalzen	1_F_MERCHANT_02,{
 	mes "Bon voyage !";
 	close2;
 
-	warp "prontera",165,193;
+	warp "prontera",166,205;
 
 	end;
 }
@@ -190,6 +190,8 @@ lighthalzen,138,42,6	duplicate(AILEGAUCHE)	AILE GAUCHE	4_BULLETIN_BOARD2
 
 ////Duplicate
 gon_in,155,37,4	duplicate(Places marchandes)	Places marchandes#gon	1_F_MERCHANT_02
+
+
 
 
 ////////////////////////////////////////////////////////////
