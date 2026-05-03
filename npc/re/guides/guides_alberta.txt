@@ -229,5 +229,5 @@ alberta,23,238,4	script	Guide#01alberta::AlbertaGuide	8W_SOLDIER,{
 		}
 	}
 }
-alberta,120,60,3	duplicate(AlbertaGuide)	Guide#02alberta	8W_SOLDIER
+alberta,90,53,3	duplicate(AlbertaGuide)	Guide#02alberta	8W_SOLDIER
 alberta,184,143,4	duplicate(AlbertaGuide)	Guide#03alberta	8W_SOLDIER
