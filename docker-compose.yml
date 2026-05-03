@@ -7,7 +7,7 @@ services:
   hercule-db:
     image: mysql:8.0-bookworm
     restart: unless-stopped
-    volumes:/
+    volumes:
       - ./:/home/hercuser/Hercules
       - ./init_db.sh:/docker-entrypoint-initdb.d/init_db.sh
       - ./check_script_end.sh:/check_script_end.sh
