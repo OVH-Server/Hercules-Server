@@ -121,7 +121,7 @@ alberta,216,39,6	script	SUD	4_BULLETIN_BOARD2,{   // Panneau principal à Albert
 	close;
 }
 
-alberta,216,39,6	script	CENTRE	4_BULLETIN_BOARD2,{   // Panneau principal à Ayothaya
+ayothaya,143,172,6	script	CENTRE	4_BULLETIN_BOARD2,{   // Panneau principal à Ayothaya
 
 	mes "[Information]";
 	mes "^FF0000Place marchande d'Ayothaya.^000000";
@@ -130,7 +130,7 @@ alberta,216,39,6	script	CENTRE	4_BULLETIN_BOARD2,{   // Panneau principal à Ayo
 	close;
 }
 
-alberta,216,39,6	script	AILEGAUCHE	4_BULLETIN_BOARD2,{   // Panneau principal à Lightalzen
+lighthalzen,164,51,6	script	AILEGAUCHE	4_BULLETIN_BOARD2,{   // Panneau principal à Lightalzen
 
 	mes "[Information]";
 	mes "^FF0000Place marchande de Lighthalzen.^000000";
@@ -161,7 +161,6 @@ alberta,225,60,6	duplicate(SUD)	EST	4_BULLETIN_BOARD2
 alberta,229,60,6	duplicate(SUD)	EST	4_BULLETIN_BOARD2
 
 // Duplications panneaux Ayothaya
-ayothaya,143,172,6	duplicate(CENTRE)	CENTRE	4_BULLETIN_BOARD2
 ayothaya,158,172,6	duplicate(CENTRE)	CENTRE	4_BULLETIN_BOARD2
 ayothaya,143,160,6	duplicate(CENTRE)	CENTRE	4_BULLETIN_BOARD2
 ayothaya,143,148,6	duplicate(CENTRE)	CENTRE	4_BULLETIN_BOARD2
@@ -175,7 +174,6 @@ ayothaya,143,135,6	duplicate(CENTRE)	CENTRE	4_BULLETIN_BOARD2
 ayothaya,132,139,6	duplicate(CENTRE)	CENTRE	4_BULLETIN_BOARD2
 
 // Duplications panneaux Lighthalzen
-lighthalzen,164,51,6	duplicate(AILEGAUCHE)	Aile droite	4_BULLETIN_BOARD2
 lighthalzen,164,42,6	duplicate(AILEGAUCHE)	Aile droite	4_BULLETIN_BOARD2
 lighthalzen,175,42,6	duplicate(AILEGAUCHE)	Aile droite	4_BULLETIN_BOARD2
 lighthalzen,175,51,6	duplicate(AILEGAUCHE)	Aile droite	4_BULLETIN_BOARD2
