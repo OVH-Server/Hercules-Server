@@ -445,7 +445,8 @@ G6: Go("schg_dun01",200,124);
 // --------------------------------------------------
 	Instances:
 // --------------------------------------------------
-menu	//"Bakonawa Lake",I1, "Bangungot Hospital 2F",I2, "Buwaya Cave",I3,
+menu	"Bakonawa Lake",I1, // Map renewal 
+		//"Bangungot Hospital 2F",I2, "Buwaya Cave",I3,
 		"Endless Tower",I4,
 		//"Hazy Forest",I5, "Malangdo Culvert",I6, 
 		"Nidhoggur's Nest",I7,
