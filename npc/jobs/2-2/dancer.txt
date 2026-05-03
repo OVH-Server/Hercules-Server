@@ -63,7 +63,7 @@ comodo,180,153,4	script	Sonotora#1	4_F_01,{
 	close;
 }
 
-comodo,193,151,4	script	Bor Robin#1	4_M_04,{
+comodo,185,142,4	script	Bor Robin#1	4_M_04,{
 	mes "[Bor Robin]";
 	mes "Aah....";
 	mes "A prima donna";
