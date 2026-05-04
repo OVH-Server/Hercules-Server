@@ -57,7 +57,7 @@ amatsu,126,144,5	duplicate(PVP#8)	PVP_amatsu	4_M_GRANDMONK
 louyang,225,124,5	duplicate(PVP#8)	PVP_louyang	4_M_GRANDMONK
 rachel,101,138,5	duplicate(PVP#8)	PVP_rachel	4_M_GRANDMONK
 lighthalzen,175,80,5	duplicate(PVP#8)	PVP_lighthalzen	4_M_GRANDMONK
-thor_camp,151,199,5	duplicate(PVP#8)	PVP_thor	4_M_GRANDMONK
+thor_camp,154,199,5	duplicate(PVP#8)	PVP_thor	4_M_GRANDMONK
 
 payon,195,94,5	duplicate(PVP#8)	PVP_payon	4_M_GRANDMONK
 yuno,137,178,5	duplicate(PVP#8)	PVP_yuno	4_M_GRANDMONK	
