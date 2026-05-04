@@ -61,4 +61,4 @@ thor_camp,151,199,5	duplicate(PVP#8)	PVP_thor	4_M_GRANDMONK
 
 payon,195,94,5	duplicate(PVP#8)	PVP_payon	4_M_GRANDMONK
 yuno,137,178,5	duplicate(PVP#8)	PVP_yuno	4_M_GRANDMONK	
-geffen,101,71,5	duplicate(PVP#8)	PVP_geffen	4_M_GRANDMONK	
+geffen,127,49,5	duplicate(PVP#8)	PVP_geffen	4_M_GRANDMONK	
