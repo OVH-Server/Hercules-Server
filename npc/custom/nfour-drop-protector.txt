@@ -296,6 +296,7 @@ OnInit:
     drop_protector_monster_id = -1;
     drop_protector_item_id = -1;
     drop_protector_item_is_card = 0;
+    drop_protector_item_is_dropped = 0;
     end;
 }
 
