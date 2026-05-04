@@ -1,3 +1,4 @@
+//!rathena
 //prontera,155,175,4  script  Stylist#custom_stylist	2_M_DYEINGER,{
 
 function	script	item_type_id_to_item_type_name	{
