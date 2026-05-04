@@ -354,4 +354,4 @@ sF_P5cards:
 }
 
 ////Duplicate
-prontera,152,165,1	duplicate(Black Jack Dealer)	Black Jack Dealer#Prontera	1_M_LIBRARYMASTER
+prt_in,236,129,2	duplicate(Black Jack Dealer)	Black Jack Dealer#Prontera	4_F_TWMASKGIRL

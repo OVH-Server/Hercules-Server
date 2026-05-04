@@ -11,7 +11,7 @@
 //= 5.2 Fix a bug that causes this event run indefinitely [AnnieRuru]
 //============================================================
 
-prontera,139,183,1	script	Disguise Event	4_M_NFDEADMAN,{
+prontera,145,209,5	script	Disguise Event	4_M_GENIE,{
 
 	// Currently set to run every two hours.
 	// To change times, edit the OnClock labels below.

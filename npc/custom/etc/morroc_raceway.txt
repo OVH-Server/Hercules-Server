@@ -18,6 +18,7 @@
 //= 1.3 Replaced effect numerics with constants. [Samuray22]
 //============================================================
 
+/*
 //Warps you into race way
 morocc,166,105,6	script	Race Girl#01	4_F_KAFRA2,{
 	mes "[Race Girl]";
@@ -31,6 +32,9 @@ morocc,166,105,6	script	Race Girl#01	4_F_KAFRA2,{
 	warp "pvp_y_1-5",165,256;
 	close;
 }
+*/
+
+
 
 //Warps you out of raceway
 pvp_y_1-5,169,265,5	script	Race Girl#02	4_F_KAFRA2,{
@@ -238,4 +242,4 @@ pvp_y_1-5,174,238,4	script	Finish Line#02	GUILD_FLAG,{
 }
 
 ////Duplicate
-prontera,154,165,6	duplicate(Race Girl#01)	Race Girl#01#Prontera	4_F_KAFRA2
+prontera,248,129,6	duplicate(Race Girl#01)	Race Girl#01#Prontera	4_F_ROGUE
