@@ -18,9 +18,8 @@
 //= 1.3 Replaced effect numerics with constants. [Samuray22]
 //============================================================
 
-/*
 //Warps you into race way
-morocc,166,105,6	script	Race Girl#01	4_F_KAFRA2,{
+morocc,168,105,6	script	Race Girl#01	4_F_ROGUE,{
 	mes "[Race Girl]";
 	mes "Would you like to visit ^0000FFMorroc Raceway^000000?";
 	next;
@@ -32,12 +31,11 @@ morocc,166,105,6	script	Race Girl#01	4_F_KAFRA2,{
 	warp "pvp_y_1-5",165,256;
 	close;
 }
-*/
 
 
 
 //Warps you out of raceway
-pvp_y_1-5,169,265,5	script	Race Girl#02	4_F_KAFRA2,{
+pvp_y_1-5,169,265,5	script	Race Girl#02	4_F_ROGUE,{
 	mes "[Race Girl]";
 	mes "Welcome to Morroc Raceway!";
 	next;

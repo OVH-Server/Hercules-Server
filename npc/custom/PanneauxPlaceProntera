@@ -7,7 +7,6 @@ prontera,178,189,1	script	Forge	4_BOARD3,{
 	mes "- Identifier";
 	mes "- Card Remover";
 	mes "- Etc...";
-	next;
 	close;
 }
 
@@ -21,7 +20,6 @@ prontera,134,188,0	script	Utilitaire	4_BOARD3,{
 	mes "- Platinium Skills";
 	mes "- Universal Rental";
 	mes "- Reset NPC";
-	next;
 	close;
 }
 
@@ -32,7 +30,6 @@ prontera,138,223,5	script	Economie	4_BOARD3,{
 	mes "-------------------------";
 	mes "- Bank";
 	mes "- Action NPC";
-	next;
 	close;
 }
 
@@ -44,7 +41,6 @@ prontera,171,225,3	script	Magasins	4_BOARD3,{
 	mes "- Equipments";
 	mes "- Arrows/Ammos";
 	mes "- Tool dealer";
-	next;
 	close;
 }
 
@@ -59,8 +55,16 @@ prontera,110,216,1	script	Salle de Jeux	4_BOARD3,{
 	mes "- Pierre Feuille Papier";
 	mes "- Monster Arena";
 	mes "- Morroc Race";
-	next;
 	close;
 }
+// Panneau Direction Salle de Jeux 
+prontera,123,209,1	script	Salle de Jeux	2_BOARD1,{
+	mes "^FF0000[ Informations ]^000000";
+	mes "-------------------------";
+	mes " Direction Salle de Jeux ";
+	mes " <----";
+	close;
+}
+
 ////Duplicate
 prontera,104,208,6	duplicate(Salle de Jeux)	Salle de Jeux	4_BOARD3
