@@ -294,9 +294,9 @@ louyang,225,127,5	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit3	4_M
 rachel,100,136,5	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit5	4_M_CRU_OLD
 lighthalzen,179,80,5	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit8	4_M_CRU_OLD
 
-payon,199,95,5	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit4	4_M_CRU_OLD		// Duplicate ne fonctionnant pas
-yuno,141,178,5	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit6	4_M_CRU_OLD		// Duplicate ne fonctionnant pas
-geffen,104,72,5	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit7	4_M_CRU_OLD		// Duplicate ne fonctionnant pas
+payon,199,95,5	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit4	4_M_CRU_OLD		
+yuno,137,175,5	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit6	4_M_CRU_OLD		
+geffen,127,46,5	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit7	4_M_CRU_OLD		
 
 
 
