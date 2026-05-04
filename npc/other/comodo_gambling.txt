@@ -410,7 +410,7 @@ comodo,219,158,6	script	Kachua	4_F_02,{
 	end;
 }
 
-comodo,204,148,7	script	Devellin	4_F_01,{
+comodo,205,161,7	script	Devellin	4_F_01,{
 
 	mes "[Devellin]";
 	mes "It seems some traveller showed";

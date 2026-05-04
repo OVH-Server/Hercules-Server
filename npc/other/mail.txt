@@ -94,7 +94,7 @@ alberta,30,240,0	duplicate(MailBox)	Mailbox#2alb	2_POSTBOX
 aldebaran,135,122,0	duplicate(MailBox)	Mailbox#alde	2_POSTBOX
 
 //== Juno ==================================================
-yuno,166,187,0	duplicate(MailBox)	Mailbox#yuno	2_POSTBOX
+yuno,163,187,0	duplicate(MailBox)	Mailbox#yuno	2_POSTBOX
 yuno,332,108,0	duplicate(MailBox)	Mailbox#2yuno	2_POSTBOX
 
 //== Lightalzen ============================================
