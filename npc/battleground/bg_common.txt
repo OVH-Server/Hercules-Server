@@ -291,13 +291,17 @@ bat_room,148,150,5	script	Teleporter#Battlefield	4_F_TELEPORTER,{
 prontera,157,211,5	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit1	4_M_CRU_OLD
 amatsu,126,147,5	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit2	4_M_CRU_OLD
 louyang,225,127,5	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit3	4_M_CRU_OLD
-payon,199,95,5		duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit4	4_M_CRU_OLD
 rachel,100,136,5	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit5	4_M_CRU_OLD
-yuno,141,178,5		duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit6	4_M_CRU_OLD
-geffen,104,72,5		duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit7	4_M_CRU_OLD
 lighthalzen,179,80,5	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit8	4_M_CRU_OLD
-//moc_ruins,75,162,3	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit2	4_M_CRU_OLD
-//aldebaran,146,109,3	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit3	4_M_CRU_OLD
+
+payon,199,95,5	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit4	4_M_CRU_OLD		// Duplicate ne fonctionnant pas
+yuno,141,178,5	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit6	4_M_CRU_OLD		// Duplicate ne fonctionnant pas
+geffen,104,72,5	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit7	4_M_CRU_OLD		// Duplicate ne fonctionnant pas
+
+
+
+//moc_ruins,75,162,3	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit2	4_M_CRU_OLD		// Retirez
+//aldebaran,146,109,3	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit3	4_M_CRU_OLD		// Retirez
 
 
 //== Additional warps ======================================
