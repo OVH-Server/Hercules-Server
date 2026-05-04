@@ -242,4 +242,4 @@ pvp_y_1-5,174,238,4	script	Finish Line#02	GUILD_FLAG,{
 }
 
 ////Duplicate
-prontera,248,129,6	duplicate(Race Girl#01)	Race Girl#01#Prontera	4_F_ROGUE
+prt_in,248,129,6	duplicate(Race Girl#01)	Race Girl#01#Prontera	4_F_ROGUE
