@@ -26,6 +26,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+struct my_plugin_data {
+    int killer_char_id;
+    int item_id;
+    int mob_id;
+    int is_card;
+};
+
 HPExport struct hplugin_info pinfo = {
     "my_plugin",
     SERVER_TYPE_MAP,
@@ -33,89 +40,28 @@ HPExport struct hplugin_info pinfo = {
     HPM_VERSION,
 };
 
-
-// Syntax: getmobspawn(<mob_id>, <map_array>, <qty_array>)
-// Returns: number map of monster spawn
-static BUILDIN(getmobspawn) {
-    int mob_id;
-    struct script_data *map_data;
-    struct script_data *qty_data;
-    struct mob_db *mob_data;
-    int count = 0;
-    int i, j;
-
-    mob_id = script_getnum(st, 2);
-    map_data = script_getdata(st, 3);
-    qty_data = script_getdata(st, 4);
-
-    if (!data_isreference(map_data) || !data_isreference(qty_data)) {
-        ShowError("getmobspawn: Les paramètres 2 et 3 doivent être des arrays!\n");
-        script_pushint(st, 0);
-        return false;
-    }
-
-    // check mob exist
-    if (!mob->db_checkid(mob_id)) {
-        ShowError("getmobspawn: Mob ID %d invalide!\n", mob_id);
-        script_pushint(st, 0);
-        return false;
-    }
-
-    // get mob structure
-    mob_data = mob->db(mob_id);
-    if (!mob_data) {
-        ShowError("getmobspawn: Impossible de récupérer les données du mob %d!\n", mob_id);
-        script_pushint(st, 0);
-        return false;
-    }
-
-    // iter on mob spawn
-    for (i = 0; i <  ARRAYLENGTH(mob_data->spawn) && mob_data->spawn[i].qty; i++) {
-        j = map->mapindex2mapid(mob_data->spawn[i].mapindex);
-        
-        if (j < 0) {
-            continue; // invalid map
-        }
-
-        // store map name in array
-        script->set_reg(st, NULL, reference_uid(reference_getid(map_data), count), 
-                       map->list[j].name, map_data, NULL);
-        
-        // store qqty in array
-        script->set_reg(st, NULL, reference_uid(reference_getid(qty_data), count), 
-                       (const void *)(intptr_t)mob_data->spawn[i].qty, qty_data, NULL);
-        
-        count++;
-    }
-
-    ShowInfo("getmobspawn: Mob %d (%s) spawn on %d map(s)\n", 
-             mob_id, mob_data->name, count);
-
-    script_pushint(st, count);
-    return true;
-}
-
-// poring map @warp prt_fild08
-int check_drop_protector(int char_id, int mob_id) {
-    int protected_mob_id = 0;
+int get_npc_variable_data(int char_id, char *variable_to_read) {
+    int int_data = 0;
     
     if (SQL_ERROR == SQL->Query(map->mysql_handle, 
-        "SELECT `value` FROM `char_reg_num_db` WHERE `char_id` = '%d' AND `key` = 'drop_protector_monster_id' AND `index` = 0", 
-        char_id)) {
+        "SELECT `value` FROM `char_reg_num_db` WHERE `char_id` = '%d' AND `key` = '%s' AND `index` = 0", 
+        char_id, variable_to_read)) {
         Sql_ShowDebug(map->mysql_handle);
         ShowError("drop_protector: Error on request get drop_protector_monster_id\n");
         return 0;
     }
-    
     if (SQL_SUCCESS == SQL->NextRow(map->mysql_handle)) {
         char *data;
         SQL->GetData(map->mysql_handle, 0, &data, NULL);
-        protected_mob_id = atoi(data);
+        int_data = atoi(data);
     }
-    
     SQL->FreeResult(map->mysql_handle);
-    ShowInfo("drop_protector: Get mob id %d for char id %d, killed mob %d\n", protected_mob_id, char_id, mob_id);
-    return (protected_mob_id == mob_id) ? 1 : 0;
+    ShowInfo("drop_protector: Get %s ==> %d for char id %d\n", variable_to_read, int_data, char_id);
+    return (int_data);
+}
+
+int check_drop_protector(int char_id, int mob_id, struct my_plugin_data *mydata) {
+    return (mydata->mob_id == mob_id) ? 1 : 0;
 }
 
 int myplugin_custom_mob_dead_pre(struct mob_data **md, struct block_list **src, int *type) {
@@ -150,11 +96,24 @@ int myplugin_custom_mob_dead_pre(struct mob_data **md, struct block_list **src, 
         
         ShowInfo("drop_protector: Player %s (ID:%d) killed Mob ID %d\n", 
                  sd->status.name, char_id, mob_id);
+
+
+        struct my_plugin_data *mydata;
+        CREATE(mydata,struct my_plugin_data,1);
+        mydata->mob_id = get_npc_variable_data(char_id, "drop_protector_monster_id");
+        mydata->item_id = get_npc_variable_data(char_id, "drop_protector_item_id");
+        mydata->is_card = get_npc_variable_data(char_id, "drop_protector_item_is_card");
+        mydata->killer_char_id = sd->status.char_id;
         
-        if (check_drop_protector(char_id, mob_id)) {
+
+        if (check_drop_protector(char_id, mob_id, mydata)) {
             ShowInfo("drop_protector: DROP PROTECTOR ACTIVATED! Player %s has protection for Mob ID %d\n", 
                      sd->status.name, mob_id);
-            
+        
+            // add custom data to mob_data for next function
+            addToMSD(mob_data,mydata,0,true);
+            ShowInfo("drop_protector: Killer %s %d registered for Mob\n", sd->status.name, mydata->killer_char_id);
+
             struct item it;
             memset(&it, 0, sizeof(it));
             it.nameid = 7836; // Dawn essence (ID 7836)
@@ -175,9 +134,38 @@ int myplugin_custom_mob_dead_pre(struct mob_data **md, struct block_list **src, 
     return 0;
 }
 
-int myplugin_custom_mob_dead_post(int retVal___, struct mob_data *md, struct block_list *src, int type) {
-    ShowInfo("drop_protector: POST Mob Id [%d] RetVal: %d\n", md->db->mob_id, retVal___);
-    return retVal___;
+// poring map @warp prt_fild08
+
+void myplugin_custom_mob_item_drop_post(struct mob_data *md, struct item_drop_list *dlist, struct item_drop *ditem, int loot, int drop_rate, unsigned short flag) {
+    struct my_plugin_data *mydata;
+    struct item_drop *current;
+    int count = 0;
+
+    // get the custom data injected in the last function
+    if (!(mydata = getFromMSD(md, 0))) {
+        return; 
+    }
+
+    ShowInfo("drop_protector: --- Full Drop List for Mob %d (Killer: %d) loot: %d\n", md->db->mob_id, mydata->killer_char_id, loot);
+    
+    current = dlist->item;
+    while (current != NULL) {
+        struct item_data *id = itemdb->search(current->item_data.nameid);
+        
+        // ShowInfo("drop_protector: Drop #%d | ID: %d | Name: %s | Amount: %d\n", 
+        //             count,
+        //             current->item_data.nameid, 
+        //             id ? id->name : "Unknown",
+        //             current->item_data.amount);
+        
+        if (current->item_data.nameid == mydata->item_id) {
+            ShowInfo("drop_protector: ITEM DROPEEED\n");
+        }
+
+        current = current->next;
+        count++;
+    }
+    ShowInfo("drop_protector: --- End of List (%d items) ---\n", count);
 }
 
 HPExport void plugin_init(void) {
@@ -188,7 +176,7 @@ HPExport void plugin_init(void) {
     if (SERVER_TYPE == SERVER_TYPE_MAP) {
         ShowInfo("drop_protector: Adding hook function for mob_dead\n");
         addHookPre(mob, dead, myplugin_custom_mob_dead_pre);
-        addHookPost(mob, dead, myplugin_custom_mob_dead_post);
+        addHookPost(mob, item_drop, myplugin_custom_mob_item_drop_post);
     } else {
         ShowInfo("drop_protector: Unknown SERVERTYPE\n");
     }
