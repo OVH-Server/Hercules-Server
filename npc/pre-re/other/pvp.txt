@@ -61,3 +61,5 @@ yuno,139,175,3		duplicate(script)	PVP						4_M_CRU_OLD
 geffen,127,46,3		duplicate(script)	PVP						4_M_CRU_OLD
 lighthalzen,175,80,5		duplicate(script)	PVP						4_M_CRU_OLD
 thor_camp,151,199,5		duplicate(script)	PVP						4_M_CRU_OLD
+
+geffen,136,48,6	duplicate(PVP#8)	PVP#9	4_M_GRANDMONK
