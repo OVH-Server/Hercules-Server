@@ -37,7 +37,7 @@
 //= 1.8
 //=========================================================================
 
-prt_in,234,133,4	script	Nami	1_F_01,{
+prt_in,258,104,2	script	Nami	1_F_01,{
 	if ((Class == Job_Novice || Class == Job_Baby) && (JobLevel > 3 || BaseLevel > 11) && (skill_nov < 3)) {
 		mes "[Nami]";
 		mes "Hello!";

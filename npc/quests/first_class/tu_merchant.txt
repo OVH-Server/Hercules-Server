@@ -1261,7 +1261,7 @@ prontera,247,129,3	script	Jayon	4_M_03,{
 }
 
 //== Maos ==================================================
-prt_in,251,129,3	script	Maos	4_M_SEAMAN,{
+prt_in,247,102,4	script	Maos	4_M_SEAMAN,{
 	if(tu_merchant == 8){
 		mes "[Maos]";
 		mes "Don't say anything.";

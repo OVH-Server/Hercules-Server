@@ -43,8 +43,8 @@
 //- West Side Inn -
 prt_in,244,135,2	script	Inn Employee#Sammy	1_M_INNKEEPER,{
 
-	callfunc "F_InnMaid","[Employee Sammy]","Nenkaras","prt_in",238,130;
-	warp "prt_in",247,104; end;
+	callfunc "F_InnMaid","[Employee Sammy]","Nenkaras","prt_in",240,135;
+	warp "prt_in",233,99; end;
 }
 
 //- East Side Inn -

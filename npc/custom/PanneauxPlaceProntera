@@ -62,7 +62,7 @@ prontera,123,209,1	script	Salle de Jeux	2_BOARD1,{
 	mes "^FF0000[ Informations ]^000000";
 	mes "-------------------------";
 	mes " Direction Salle de Jeux ";
-	mes " <----";
+	mes " < ---";
 	close;
 }
 
