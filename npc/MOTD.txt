@@ -31,13 +31,13 @@
 -	script	HerculesMOTD	FAKE_NPC,{
 	message strcharinfo(PC_NAME),"TEST MESSAGE DU JOUR! Enjoy! Please report any bugs you find.";
 
-	.@format$ = "[ Drop protector ] Your selected item %s from monster %s";
-	dispbottom(sprintf(.@format$, drop_protector_item$, drop_protector_monster$), 0xFF0000);
 	
 	if (drop_protector_item_is_card==0) {
-	    message strcharinfo(PC_NAME),"[ Drop protector ] Your selected item " + drop_protector_item$ + " from monster " + drop_protector_monster$ ;
+		.@format$ = "[ Drop protector ] Your selected item %s from monster %s";
+		dispbottom(sprintf(.@format$, drop_protector_item$, drop_protector_monster$), 0xffa220);
     } else {
-        message strcharinfo(PC_NAME),"[ Drop protector ] Your selected item " + drop_protector_item$ ;
+		.@format$ = "[ Drop protector ] Your selected item %s";
+		dispbottom(sprintf(.@format$, drop_protector_item$), 0xffa220);
     }
 	end;
 }
