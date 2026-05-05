@@ -30,8 +30,12 @@
 // run when any character logs in, attached to them.
 -	script	HerculesMOTD	FAKE_NPC,{
 	message strcharinfo(PC_NAME),"TEST MESSAGE DU JOUR! Enjoy! Please report any bugs you find.";
+
+	.@format$ = "The %s contains %d monkeys";
+	dispbottom(sprintf(.@format$, "zoo", 5), 0xFF0000);
+	
 	if (drop_protector_item_is_card==0) {
-	    message strcharinfo(PC_NAME),"^0000FF[ Drop protector ]^000000 Your selected item " + drop_protector_item$ + " from monster " + drop_protector_monster$ ;
+	    message strcharinfo(PC_NAME),"[ Drop protector ] Your selected item " + drop_protector_item$ + " from monster " + drop_protector_monster$ ;
     } else {
         message strcharinfo(PC_NAME),"[ Drop protector ] Your selected item " + drop_protector_item$ ;
     }
