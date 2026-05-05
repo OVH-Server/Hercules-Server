@@ -38,7 +38,7 @@ function	script	item_type_id_to_item_type_name	{
 
 }
 
-prontera,159,174,6	script	Drop Protector#dprot	4_EP19_VOGLINDE,{
+prontera,160,193,3	script	Drop Protector#dprot	4_EP19_VOGLINDE,{
     mes("[Drop Protector]");
 
     .@essence_id = 7836; // dawn essence id
@@ -332,3 +332,9 @@ OnInit:
     drop_protector_essence_account = 0;
     end;
 }
+
+//Duplicate
+amatsu,99,156,3	duplicate(Drop Protector#dprot)	Drop Protector#dprot_amatsu	4_EP19_VOGLINDE
+lighthalzen,152,111,3 duplicate(Drop Protector#dprot) Drop Protector#dprot_light	4_EP19_VOGLINDE
+payon,185,105,3	duplicate(Drop Protector#dprot)	Drop Protector#dprot_payon	4_EP19_VOGLINDE
+yuno,154,191,3	duplicate(Drop Protector#dprot)	Drop Protector#dprot_yuno	4_EP19_VOGLINDE
