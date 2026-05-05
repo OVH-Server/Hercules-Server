@@ -338,4 +338,4 @@ amatsu,99,156,6	duplicate(Drop Protector#dprot)	Drop Protector#amatsu	4_EP19_VOG
 lighthalzen,165,109,6	duplicate(Drop Protector#dprot)	Drop Protector#lighthalzen	4_EP19_VOGLINDE
 payon,185,105,6	duplicate(Drop Protector#dprot)	Drop Protector#payon	4_EP19_VOGLINDE
 yuno,154,191,6	duplicate(Drop Protector#dprot)	Drop Protector#yuno	4_EP19_VOGLINDE
-gon_in,152,11,0	 duplicate(Drop Protector#dprot)	Drop Protector#MaisonGM	4_EP19_VOGLINDE //MaisonGM
+gon_in,152,11,0	duplicate(Drop Protector#dprot)	Drop Protector#maisongm	4_EP19_VOGLINDE //MaisonGM
