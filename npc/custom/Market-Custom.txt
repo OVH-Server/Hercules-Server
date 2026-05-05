@@ -280,3 +280,12 @@ S_GenerateStock:
 
 	return;
 }
+
+//Duplicate 
+amatsu,99,152,6	duplicate(Places marchandes#pm)	Places marchandes#amatsu	1_F_MERCHANT_02
+geffen,111,64,6	duplicate(Places marchandes#pm)	Places marchandes#geffen	1_F_MERCHANT_02
+lighthalzen,165,106,6	duplicate(Places marchandes#pm)	Places marchandes#lighthalzen	1_F_MERCHANT_02
+morroc,149,105,6	duplicate(Places marchandes#pm)	Places marchandes#morroc	1_F_MERCHANT_02
+payon,188,106,6	duplicate(Places marchandes#pm)	Places marchandes#payon	1_F_MERCHANT_02
+rachel,107,144,6	duplicate(Places marchandes#pm)	Places marchandes#rachel	1_F_MERCHANT_02
+yuno,145,190,6	duplicate(Places marchandes#pm)	Places marchandes#yuno	1_F_MERCHANT_02
