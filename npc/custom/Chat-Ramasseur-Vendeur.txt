@@ -4,6 +4,7 @@
 ///// Chat Rammasseur qui vend les items trouvé par terre 				(OFF)
 ////////////////////////////////////////////////////////////////
 
+/*
 prontera,155,196,4	script	Chat Ramasseur	4_CAT_DOWN,{
 
 	mes "[Chat Ramasseur]";
@@ -149,7 +150,7 @@ S_AddStock:
 
 	return;
 }
-
+*/
 
 //////////////////////////////////////////////////////////
 /////Chat échangeur items contre Yggdrassil Berry ou Seed
