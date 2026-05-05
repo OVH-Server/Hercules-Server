@@ -111,14 +111,14 @@ B_EXIT2:
 }
 
 prt_in,129,65,4	duplicate(bankg)	Bank Clerk#prontera	4_M_YURI
-alberta_in,68,147,0	duplicate(bankg)	Bank Clerk#alberta	4_M_YURI
+alberta_in,68,147,4	duplicate(bankg)	Bank Clerk#alberta	4_M_YURI
 ama_in01,27,17,6	duplicate(bankg)	Bank Clerk#amatsu	4_M_YURI
 hu_in01,242,374,2	duplicate(bankg)	Bank Clerk#hugel	4_M_YURI
-lzh_in02,240,265,1	duplicate(bankg)	Bank Clerk#lighthalzen	4_M_YURI
+lhz_in02,240,265,1	duplicate(bankg)	Bank Clerk#lighthalzen	4_M_YURI
 mosk_in,209,194,2	duplicate(bankg)	Bank Clerk#moscovia	4_M_YURI
-ra_in01,387,66,2	duplicate(bankg)	Bank Clerk#moscovia	4_M_YURI
-payon_in01,5,54,6	duplicate(bankg)	Bank Clerk#moscovia	4_M_YURI
-yuno_in04,37,126,1	duplicate(bankg)	Bank Clerk#moscovia	4_M_YURI
+ra_in01,387,66,2	duplicate(bankg)	Bank Clerk#rachel	4_M_YURI
+payon_in01,5,54,6	duplicate(bankg)	Bank Clerk#payon	4_M_YURI
+yuno_in04,37,126,2	duplicate(bankg)	Bank Clerk#yuno	4_M_YURI
 
 //geffen,125,73,3	duplicate(bankg)	Bank Clerk#2-1	4_M_YURI
 //izlude,145,107,1	duplicate(bankg)	Bank Clerk#3-1	4_M_YURI
