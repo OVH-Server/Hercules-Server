@@ -29,6 +29,6 @@
 
 // run when any character logs in, attached to them.
 -	script	HerculesMOTD	FAKE_NPC,{
-	message strcharinfo(PC_NAME),"TEST MESSAGE DU JOUR! Enjoy! Please report any bugs you find." + drop_protector_item$ ;
+	message strcharinfo(PC_NAME),"TEST MESSAGE DU JOUR! Enjoy! Please report any bugs you find.";
 	end;
 }
