@@ -43,6 +43,8 @@ HPExport struct hplugin_info pinfo = {
     HPM_VERSION,
 };
 
+#define DP_ORANGE_COLOR 0xffa220
+
 #define DAWN_ESSENCE_ID 7836
 
 #define SEND_SC_MSG(_sd_, _color_, _fmt_, ...)\
@@ -55,14 +57,14 @@ HPExport struct hplugin_info pinfo = {
 static int get_db_data_from_char_id(struct map_session_data *sd, char *variable_to_read) {
     int64 var_index = script->add_str(variable_to_read);
     int int_data = pc->readregistry(sd, var_index);
-    ShowInfo("drop_protector: Get %s ==> %d for char id %d\n", variable_to_read, int_data, sd->status.char_id);
+    // ShowInfo("drop_protector: Get %s ==> %d for char id %d\n", variable_to_read, int_data, sd->status.char_id);
     return (int_data);
 }
 
 static void set_db_data_for_char_id(struct map_session_data *sd, char *variable_name, int value) {
     int64 var_index = script->add_str(variable_name);
     pc->setregistry(sd, var_index, value);
-    ShowInfo("drop_protector: Set %s ==> %d for char id %d\n", variable_name, value, sd->status.char_id);
+    // ShowInfo("drop_protector: Set %s ==> %d for char id %d\n", variable_name, value, sd->status.char_id);
 }
 
 static int check_drop_protector(int char_id, int mob_id, DropProtectorData *mydata) {
@@ -103,8 +105,8 @@ static int drop_protector_custom_mob_dead_pre(struct mob_data **md, struct block
         int mob_id = mob_data->db->mob_id;
         int char_id = sd->status.char_id;
         
-        ShowInfo("drop_protector: Player %s (ID:%d) killed Mob ID %d\n", 
-                 sd->status.name, char_id, mob_id);
+        // ShowInfo("drop_protector: Player %s (ID:%d) killed Mob ID %d\n", 
+        //          sd->status.name, char_id, mob_id);
 
 
         DropProtectorData *mydata;
@@ -122,12 +124,12 @@ static int drop_protector_custom_mob_dead_pre(struct mob_data **md, struct block
         // script->set_reg
 
         if (check_drop_protector(char_id, mob_id, mydata)) {
-            ShowInfo("drop_protector: DROP PROTECTOR ACTIVATED! Player %s has protection for Mob ID %d\n", 
-                     sd->status.name, mob_id);
+            // ShowInfo("drop_protector: DROP PROTECTOR ACTIVATED! Player %s has protection for Mob ID %d\n", 
+            //          sd->status.name, mob_id);
         
             // add custom data to mob_data for next function
             addToMSD(mob_data,mydata,0,true);
-            ShowInfo("drop_protector: Killer %s %d registered for Mob\n", sd->status.name, mydata->killer_char_id);
+            // ShowInfo("drop_protector: Killer %s %d registered for Mob\n", sd->status.name, mydata->killer_char_id);
 
             struct item it;
             memset(&it, 0, sizeof(it));
@@ -139,10 +141,8 @@ static int drop_protector_custom_mob_dead_pre(struct mob_data **md, struct block
                 map->addflooritem(&mob_data->bl, &it, 1, mob_data->bl.m, 
                                  mob_data->bl.x, mob_data->bl.y, 
                                  sd->status.char_id, 0, 0, 4, true);
-                ShowInfo("drop_protector: Dawn Essence dropped on floor (inventory full)\n");
-            } else {
-                ShowInfo("drop_protector: Dawn Essence added to player inventory\n");
-            }
+                // ShowInfo("drop_protector: Dawn Essence dropped on floor (inventory full)\n");
+            } 
         }
     }
 
@@ -160,8 +160,8 @@ static int count_item_in_inventory(struct map_session_data *sd, int item_id) {
         }
     }
     
-    ShowInfo("drop_protector: Player %s has %d of item ID %d\n", 
-             sd->status.name, count, item_id);
+    // ShowInfo("drop_protector: Player %s has %d of item ID %d\n", 
+    //          sd->status.name, count, item_id);
     return count;
 }
 
@@ -178,21 +178,16 @@ static int remove_item_amount(struct map_session_data *sd, int item_id, int amou
             
             if (pc->delitem(sd, i, to_delete, 0, DELITEM_NORMAL, LOG_TYPE_SCRIPT) == 0) {
                 remaining -= to_delete;
-                ShowInfo("drop_protector: Removed %d of item ID %d from slot %d\n", 
-                         to_delete, item_id, i);
+                // ShowInfo("drop_protector: Removed %d of item ID %d from slot %d\n", 
+                //          to_delete, item_id, i);
             }
         }
     }
     
     if (remaining == 0) {
-        ShowInfo("drop_protector: Successfully removed %d of item ID %d\n", 
-                 amount_to_remove, item_id);
         return 1;
-    } else {
-        ShowWarning("drop_protector: Could only remove %d of %d items\n", 
-                    amount_to_remove - remaining, amount_to_remove);
-        return 0;
-    }
+    } 
+    return 0;
 }
 
 static void drop_protector_custom_mob_item_drop_post(struct mob_data *md, struct item_drop_list *dlist, struct item_drop *ditem, int loot, int drop_rate, unsigned short flag) {
@@ -205,10 +200,10 @@ static void drop_protector_custom_mob_item_drop_post(struct mob_data *md, struct
         return; 
     }
 
-    ShowInfo("drop_protector: --- Full Drop List for Mob %d (Killer: %d) loot: %d\n", md->db->mob_id, mydata->killer_char_id, loot);
+    // ShowInfo("drop_protector: --- Full Drop List for Mob %d (Killer: %d) loot: %d\n", md->db->mob_id, mydata->killer_char_id, loot);
     
     if (mydata->mob_id != md->db->mob_id) {
-        ShowInfo("drop_protector: Not targeted mob id return\n");
+        // ShowInfo("drop_protector: Not targeted mob id return\n");
         return ;
     }
 
@@ -235,9 +230,23 @@ static void drop_protector_custom_mob_item_drop_post(struct mob_data *md, struct
             int new_account_balance = current_account_balance + essence_to_add_account;
             set_db_data_for_char_id(mydata->sd, "drop_protector_essence_account", new_account_balance);
 
-            SEND_SC_MSG(mydata->sd, COLOR_CYAN, "[Drop Protector]: Protected Item Droped, remove %d Dawn essence from your inventory", amount_to_remove);
-            SEND_SC_MSG(mydata->sd, COLOR_CYAN, "[Drop Protector]: Credit %d Dawn essence to your account", essence_to_add_account);
-            SEND_SC_MSG(mydata->sd, COLOR_CYAN, "[Drop Protector]: New account balance %d Dawn essence", new_account_balance);
+
+
+            // truncate item name finish with '_'
+            char item_name[256] = {};
+            safestrncpy(item_name, itemdb_name(mydata->item_id), strlen(itemdb_name(mydata->item_id)));
+            int item_name_len = strlen(item_name);
+            if (item_name_len > 0 && item_name[item_name_len] == '_') {
+                item_name[item_name_len] = '\0';
+            }
+
+
+            SEND_SC_MSG(mydata->sd, DP_ORANGE_COLOR, "===================================================================");
+            SEND_SC_MSG(mydata->sd, DP_ORANGE_COLOR, "[Drop Protector]: Protected Item Droped: [%s]", item_name);
+            SEND_SC_MSG(mydata->sd, DP_ORANGE_COLOR, "[Drop Protector]: Remove %d Dawn essence from your inventory", amount_to_remove);
+            SEND_SC_MSG(mydata->sd, DP_ORANGE_COLOR, "[Drop Protector]: Credit %d Dawn essence to your account", essence_to_add_account);
+            SEND_SC_MSG(mydata->sd, DP_ORANGE_COLOR, "[Drop Protector]: New account balance %d Dawn essence", new_account_balance);
+            SEND_SC_MSG(mydata->sd, DP_ORANGE_COLOR, "===================================================================");
 
             remove_item_amount(mydata->sd, DAWN_ESSENCE_ID, amount_to_remove);
             break ;
@@ -249,26 +258,24 @@ static void drop_protector_custom_mob_item_drop_post(struct mob_data *md, struct
 }
 
 HPExport void plugin_init(void) {
-    ShowInfo("==========================================\n");
     ShowInfo("   [drop_protector] Initialisation... \n");
-    ShowInfo("==========================================\n");
 
     if (SERVER_TYPE == SERVER_TYPE_MAP) {
-        ShowInfo("drop_protector: Adding hook function for mob_dead\n");
+        ShowInfo("drop_protector: Adding pre hook function for mob->dead and pos hook function for mob->item_drop\n");
         addHookPre(mob, dead, drop_protector_custom_mob_dead_pre);
         addHookPost(mob, item_drop, drop_protector_custom_mob_item_drop_post);
     } else {
-        ShowInfo("drop_protector: Unknown SERVERTYPE\n");
+        ShowWarning("drop_protector: Unknown SERVERTYPE\n");
     }
 }
 
-HPExport void server_online(void) {
-    ShowInfo("drop_protector: Server is online\n");
-}
+// HPExport void server_online(void) {
+//     ShowInfo("drop_protector: Server is online\n");
+// }
 
-HPExport void server_ready(void) {
-    ShowInfo("drop_protector: Server is ready\n");
-}
+// HPExport void server_ready(void) {
+//     ShowInfo("drop_protector: Server is ready\n");
+// }
 
 
 /* Debug to display loot for drop_protector_custom_mob_item_drop_post loop */
