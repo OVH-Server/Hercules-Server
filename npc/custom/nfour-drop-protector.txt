@@ -320,6 +320,8 @@ prontera,159,174,6	script	Drop Protector#dprot	4_EP19_VOGLINDE,{
             break;
     }
     end;
+
+
 OnInit:
     drop_protector_item$ = "";
     drop_protector_monster$ = "";
@@ -332,3 +334,9 @@ OnInit:
 }
 
 
+///////////////////////////////////////////////////
+-   script   LoginHandler   -1,{
+OnPCLoginEvent:
+    message strcharinfo(PC_NAME),"TEST DROP PROTECTOR!";
+    end;
+}
