@@ -332,10 +332,3 @@ OnInit:
     drop_protector_essence_account = 0;
     end;
 }
-
-
-////////////////////////////////////////
--	script	HerculesMOTD	FAKE_NPC,{
-	message strcharinfo(PC_NAME),"TEST PROTECTOR";
-	end;
-}
