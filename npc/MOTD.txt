@@ -27,8 +27,10 @@
 //= Message of the Day script
 //=========================================================================
 
+/*
 // run when any character logs in, attached to them.
 -	script	HerculesMOTD	FAKE_NPC,{
 	message strcharinfo(PC_NAME),"TEST MESSAGE DU JOUR! Enjoy! Please report any bugs you find.";
 	end;
 }
+*/
