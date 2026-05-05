@@ -11,7 +11,6 @@ prontera,155,196,4	script	Chat Ramasseur	4_CAT_DOWN,{
 	next;
 
 	if (.stock_count <= 0) {
-		mes "[Chat Ramasseur]";
 		mes "Je n'ai rien à vendre pour le moment.";
 		close;
 	}
@@ -28,12 +27,6 @@ prontera,155,196,4	script	Chat Ramasseur	4_CAT_DOWN,{
 
 	if (.@choice == .stock_count)
 		close;
-
-	if (.stock_amount[.@choice] <= 0) {
-		mes "[Chat Ramasseur]";
-		mes "Cet objet n'est plus disponible.";
-		close;
-	}
 
 	if (Zeny < .stock_price[.@choice]) {
 		mes "[Chat Ramasseur]";
@@ -73,6 +66,9 @@ OnInit:
 	.stock_count = 0;
 	.busy = 0;
 
+	// Dernier item au sol déjà traité
+	.last_drop_gid = 0;
+
 	initnpctimer;
 	end;
 
@@ -85,30 +81,39 @@ OnTimer1000:
 		end;
 	}
 
-	.@count = getunits(BL_ITEM, .@drops, 1, .home_map$, .home_x - .range, .home_y - .range, .home_x + .range, .home_y + .range);
+	.@count = getunits(
+		BL_ITEM,
+		.@drops,
+		1,
+		.home_map$,
+		.home_x - .range,
+		.home_y - .range,
+		.home_x + .range,
+		.home_y + .range
+	);
 
 	if (.@count <= 0) {
+		.last_drop_gid = 0;
+		initnpctimer;
+		end;
+	}
+
+	// Si c'est le même item au sol que le précédent,
+	// on ne le traite pas une deuxième fois.
+	if (.@drops[0] == .last_drop_gid) {
 		initnpctimer;
 		end;
 	}
 
 	.busy = 1;
 
-	// ========================================================
-	// PROBLEME :
-	// Ici, Hercules sait qu'il y a un item au sol,
-	// mais selon ta version, il ne permet pas forcément
-	// de lire son item_id et sa quantité en script pur.
-	// ========================================================
+	// On mémorise le GID du drop pour éviter la boucle infinie
+	.last_drop_gid = .@drops[0];
 
-	// TEST TEMPORAIRE :
-	// Pour vérifier que le scan marche, on supprime le drop
-	// et on ajoute volontairement une Apple ID 512 au stock.
-	// Si ça marche, le système de scan fonctionne.
-	unitkill .@drops[0];
-
+	// TEST : ajoute une seule Apple par nouvel item détecté
 	callsub S_AddStock, 512, 1;
 
+	// Optionnel : effet visuel sur le NPC
 	specialeffect EF_STEAL;
 
 	.busy = 0;
