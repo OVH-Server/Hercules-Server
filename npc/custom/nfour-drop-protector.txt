@@ -334,9 +334,8 @@ OnInit:
 }
 
 
-///////////////////////////////////////////////////
--   script   LoginHandler   -1,{
-OnPCLoginEvent:
-    message strcharinfo(PC_NAME),"TEST DROP PROTECTOR!";
-    end;
+////////////////////////////////////////
+-	script	HerculesMOTD	FAKE_NPC,{
+	message strcharinfo(PC_NAME),"TEST PROTECTOR";
+	end;
 }
