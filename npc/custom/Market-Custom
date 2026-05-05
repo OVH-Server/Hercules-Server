@@ -1,11 +1,6 @@
 //===Transporteur Prontera vers place marchandes Alberta, Ayothaya et Lighthalzen
 prontera,163,205,4	script	Places marchandes	1_F_MERCHANT_02,{
 
--	script	marketcustom	FAKE_NPC,{
-	message strcharinfo(PC_NAME),"VENEZ DIRE BONJOUR AUX MARCHANDS";
-	end;
-}
-
 OnInit: waitingroom "Places Marchandes",0;
 
 	switch(select(
