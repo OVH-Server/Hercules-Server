@@ -1,5 +1,5 @@
 //!rathena
-//prontera,155,175,4  script  Stylist#custom_stylist	2_M_DYEINGER,{
+// The '//!rathena' is for plugin hightlight detection
 
 function	script	item_type_id_to_item_type_name	{
     .@item_type = getarg(0);
@@ -46,7 +46,8 @@ prontera,159,174,6	script	Drop Protector#dprot	4_EP19_VOGLINDE,{
 
 
     if (drop_protector_item_id == -1) {
-        mes("Select one monster then one item");
+        mes("Select one monster  then select one item");
+        mes("Your current essence account balance is [ ^FF0000" + drop_protector_essence_account + "^000000 ]");
         drop_protector_item$ = "";
         drop_protector_monster$ = "";
         drop_protector_monster_id = -1;
@@ -56,9 +57,7 @@ prontera,159,174,6	script	Drop Protector#dprot	4_EP19_VOGLINDE,{
         mes("Drop Choice!");
         mes("Your current Monster is ^0000FF" + drop_protector_monster$ + "^000000 ( ^FF0000" + drop_protector_monster_id + "^000000 )");
         mes("Your current Item choice is ^0000FF" + drop_protector_item$ + "^000000");
-        .@mab_array$ = "";
-        .@qty = "";
-        // getmobspawn(1002, .@mab_array$, .@qty);
+        mes("Your current essence account balance is [ ^FF0000" + drop_protector_essence_account + "^000000 ]");
     }
 
     next();
@@ -202,14 +201,32 @@ prontera,159,174,6	script	Drop Protector#dprot	4_EP19_VOGLINDE,{
 
         // here we need to remove the essence player have already drop, maybe open a submenu to ask for confirmation
         if (drop_protector_item_id != -1) {
-            mes("You are about to choose a new item. If you continue, you will lose all your essence. Are you sure you want to continue?");
+
             .@nb_essence_to_remove = countitem(.@essence_id);
-            mes("You will loose: " + .@nb_essence_to_remove + " dawn essence");
+            // Compute number of essence to add to account
+            .@nb_essence_to_add_acc = .@nb_essence_to_remove / 10;
+            .@nb_essence_modulo = .@nb_essence_to_remove % 10;
+            if (.@nb_essence_modulo != 0) {
+                .@nb_essence_to_add_acc += 1;
+            }
+
+
+            mes("You are about to choose a new item");
+
+            mes("You will loose: ^0000FF" + .@nb_essence_to_remove + " Dawn Essence^000000");
+
+            mes("^0000FF[ " + .@nb_essence_to_add_acc + " ] Dawn Essence^000000  will be added to your account");
+
+            .@futur_balance = drop_protector_essence_account + .@nb_essence_to_add_acc;
+            mes("Your futur account balance is ^0000FF" + .@futur_balance + " Dawn Essence^000000");
+
+            mes("Are you sure you want to continue?");
             switch(select("Yes", "No")) {
                 case 1:
                     // remove essence then continue
                     mes("You lost: " + .@nb_essence_to_remove + " dawn essence");
                     delitem(.@essence_id, .@nb_essence_to_remove);
+                    drop_protector_essence_account += .@nb_essence_to_add_acc;
                     next();
                     break ;
                 case 2:
@@ -254,19 +271,33 @@ prontera,159,174,6	script	Drop Protector#dprot	4_EP19_VOGLINDE,{
         } 
 
         .@essence_count = countitem(.@essence_id);
-        mes("You actualy had ^0000FF" + .@essence_count + " Dawn Essence^000000");
-        if (.@essence_count < .@needed_essence_for_trade) {
+        mes("You actualy had ^0000FF" + .@essence_count + " Dawn Essence^000000 in inventory");
+        mes("And ^0000FF" + drop_protector_essence_account + " Dawn Essence^000000 in your account");
+
+        if (.@essence_count + drop_protector_essence_account < .@needed_essence_for_trade) {
             mes("You don't have any essence to trade item come when you have " + .@needed_essence_for_trade + " esssence");
             goto(exit_label);
         }
         mes("Do you want to trade ^0000FF" + .@needed_essence_for_trade + " Dawn Essence^000000 against ^0000FF" + drop_protector_item$ + "^000000");
+        mes("Note: Your essence in inventory will be use first and essence account only if needed");
         
+        next();
+
         switch(select("Yes", "No")) {
             case 1:
                 mes("[Drop Protector]");
                 // do the trade remove .@needed_essence_for_trade essence then give the wanted item
-                delitem(.@essence_id, .@needed_essence_for_trade);
-                mes("Remove " + .@needed_essence_for_trade + " Essence from your inventory");
+                
+                delitem(.@essence_id, .@essence_count);
+                mes("Removed ^0000FF" + .@essence_count + " Dawn Essence^000000 from your inventory");
+                
+                if (.@essence_count < .@needed_essence_for_trade) {
+                    .@remove_from_account = .@needed_essence_for_trade - .@essence_count;
+                    drop_protector_essence_account -= .@remove_from_account;
+                    mes("Removed ^0000FF" + .@remove_from_account + " Dawn Essence^000000 from your account");
+                    mes("Your new essence account balance is [ ^FF0000" + drop_protector_essence_account + "^000000 ]");
+                }
+
                 getitem(drop_protector_item_id, 1);
                 mes("You receive ^0000FF" + drop_protector_item$ + "^000000");
                 // reset global variable
@@ -297,6 +328,7 @@ OnInit:
     drop_protector_item_id = -1;
     drop_protector_item_is_card = 0;
     drop_protector_item_is_dropped = 0;
+    drop_protector_essence_account = 0;
     end;
 }
 
