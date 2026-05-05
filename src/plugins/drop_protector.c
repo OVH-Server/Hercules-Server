@@ -26,6 +26,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+// poring map @warp prt_fild08
+
 typedef struct drop_protector_data {
     int killer_char_id;
     int item_id;
@@ -35,30 +37,39 @@ typedef struct drop_protector_data {
 } DropProtectorData ;
 
 HPExport struct hplugin_info pinfo = {
-    "my_plugin",
+    "drop_protector",
     SERVER_TYPE_MAP,
     "0.2",
     HPM_VERSION,
 };
 
-int get_db_data_from_char_id(struct map_session_data *sd, char *variable_to_read) {
+#define DAWN_ESSENCE_ID 7836
+
+#define SEND_SC_MSG(_sd_, _color_, _fmt_, ...)\
+    do {\
+        char _s_buff_[256] = {};\
+        snprintf(_s_buff_, sizeof(_s_buff_), (_fmt_), ##__VA_ARGS__);\
+        clif->messagecolor_self((_sd_)->fd, (_color_), _s_buff_);\
+    } while(0)\
+
+static int get_db_data_from_char_id(struct map_session_data *sd, char *variable_to_read) {
     int64 var_index = script->add_str(variable_to_read);
     int int_data = pc->readregistry(sd, var_index);
     ShowInfo("drop_protector: Get %s ==> %d for char id %d\n", variable_to_read, int_data, sd->status.char_id);
     return (int_data);
 }
 
-void set_db_data_for_char_id(struct map_session_data *sd, char *variable_name, int value) {
+static void set_db_data_for_char_id(struct map_session_data *sd, char *variable_name, int value) {
     int64 var_index = script->add_str(variable_name);
     pc->setregistry(sd, var_index, value);
     ShowInfo("drop_protector: Set %s ==> %d for char id %d\n", variable_name, value, sd->status.char_id);
 }
 
-int check_drop_protector(int char_id, int mob_id, DropProtectorData *mydata) {
+static int check_drop_protector(int char_id, int mob_id, DropProtectorData *mydata) {
     return (mydata->mob_id == mob_id) ? 1 : 0;
 }
 
-struct map_session_data *get_map_session_data_from_block_list(struct block_list *src_data) {
+static struct map_session_data *get_map_session_data_from_block_list(struct block_list *src_data) {
     if (src_data->type == BL_PC) {
         return (BL_CAST(BL_PC, src_data));
     } 
@@ -74,7 +85,7 @@ struct map_session_data *get_map_session_data_from_block_list(struct block_list 
     return (NULL);
 }
 
-int myplugin_custom_mob_dead_pre(struct mob_data **md, struct block_list **src, int *type) {
+static int drop_protector_custom_mob_dead_pre(struct mob_data **md, struct block_list **src, int *type) {
     struct mob_data *mob_data = *md;
     struct map_session_data *sd = NULL;
     struct block_list *src_data = NULL;
@@ -120,11 +131,11 @@ int myplugin_custom_mob_dead_pre(struct mob_data **md, struct block_list **src, 
 
             struct item it;
             memset(&it, 0, sizeof(it));
-            it.nameid = 7836; // Dawn essence (ID 7836)
+            it.nameid = DAWN_ESSENCE_ID;
             it.identify = 1;
             it.amount = 1;
             if (pc->additem(sd, &it, 1, LOG_TYPE_PICKDROP_MONSTER) != 0) {
-                // Si l'inventaire est plein, drop au sol
+                // if inventory is full drop item on floor
                 map->addflooritem(&mob_data->bl, &it, 1, mob_data->bl.m, 
                                  mob_data->bl.x, mob_data->bl.y, 
                                  sd->status.char_id, 0, 0, 4, true);
@@ -138,7 +149,6 @@ int myplugin_custom_mob_dead_pre(struct mob_data **md, struct block_list **src, 
     return 0;
 }
 
-// poring map @warp prt_fild08
 
 static int count_item_in_inventory(struct map_session_data *sd, int item_id) {
     int count = 0;
@@ -185,7 +195,7 @@ static int remove_item_amount(struct map_session_data *sd, int item_id, int amou
     }
 }
 
-void myplugin_custom_mob_item_drop_post(struct mob_data *md, struct item_drop_list *dlist, struct item_drop *ditem, int loot, int drop_rate, unsigned short flag) {
+static void drop_protector_custom_mob_item_drop_post(struct mob_data *md, struct item_drop_list *dlist, struct item_drop *ditem, int loot, int drop_rate, unsigned short flag) {
     DropProtectorData *mydata;
     struct item_drop *current;
     int count = 0;
@@ -214,7 +224,7 @@ void myplugin_custom_mob_item_drop_post(struct mob_data *md, struct item_drop_li
 
             mydata->mob_id = -1;
 
-            int amount_to_remove = count_item_in_inventory(mydata->sd, 7836);
+            int amount_to_remove = count_item_in_inventory(mydata->sd, DAWN_ESSENCE_ID);
 
             int essence_to_add_account = amount_to_remove / 10;
             int modulo_essence = amount_to_remove % 10;
@@ -225,19 +235,11 @@ void myplugin_custom_mob_item_drop_post(struct mob_data *md, struct item_drop_li
             int new_account_balance = current_account_balance + essence_to_add_account;
             set_db_data_for_char_id(mydata->sd, "drop_protector_essence_account", new_account_balance);
 
+            SEND_SC_MSG(mydata->sd, COLOR_CYAN, "[Drop Protector]: Protected Item Droped, remove %d Dawn essence from your inventory", amount_to_remove);
+            SEND_SC_MSG(mydata->sd, COLOR_CYAN, "[Drop Protector]: Credit %d Dawn essence to your account", essence_to_add_account);
+            SEND_SC_MSG(mydata->sd, COLOR_CYAN, "[Drop Protector]: New account balance %d Dawn essence", new_account_balance);
 
-            char message[256] = {};
-            char message_2[256] = {};
-            char message_3[256] = {};
-            snprintf(message, sizeof(message), "[Drop Protector]: Protected Item Droped, remove %d Dawn essence from your inventory", amount_to_remove);
-            snprintf(message_2, sizeof(message_2), "[Drop Protector]: Credit %d Dawn essence to your account", essence_to_add_account);
-            snprintf(message_3, sizeof(message_3), "[Drop Protector]: New account balance %d Dawn essence", new_account_balance);
-            
-            clif->messagecolor_self(mydata->sd->fd, COLOR_CYAN, message);
-            clif->messagecolor_self(mydata->sd->fd, COLOR_CYAN, message_2);
-            clif->messagecolor_self(mydata->sd->fd, COLOR_CYAN, message_3);
-
-            remove_item_amount(mydata->sd, 7836, amount_to_remove);
+            remove_item_amount(mydata->sd, DAWN_ESSENCE_ID, amount_to_remove);
             break ;
         }
 
@@ -248,13 +250,13 @@ void myplugin_custom_mob_item_drop_post(struct mob_data *md, struct item_drop_li
 
 HPExport void plugin_init(void) {
     ShowInfo("==========================================\n");
-    ShowInfo("   [My_Plugin drop_protector] Initialisation... \n");
+    ShowInfo("   [drop_protector] Initialisation... \n");
     ShowInfo("==========================================\n");
 
     if (SERVER_TYPE == SERVER_TYPE_MAP) {
         ShowInfo("drop_protector: Adding hook function for mob_dead\n");
-        addHookPre(mob, dead, myplugin_custom_mob_dead_pre);
-        addHookPost(mob, item_drop, myplugin_custom_mob_item_drop_post);
+        addHookPre(mob, dead, drop_protector_custom_mob_dead_pre);
+        addHookPost(mob, item_drop, drop_protector_custom_mob_item_drop_post);
     } else {
         ShowInfo("drop_protector: Unknown SERVERTYPE\n");
     }
@@ -269,7 +271,7 @@ HPExport void server_ready(void) {
 }
 
 
-/* Debug to display loot */
+/* Debug to display loot for drop_protector_custom_mob_item_drop_post loop */
 // struct item_data *id = itemdb->search(current->item_data.nameid);
 // ShowInfo("drop_protector: Drop #%d | ID: %d | Name: %s | Amount: %d\n", 
 //             count,
