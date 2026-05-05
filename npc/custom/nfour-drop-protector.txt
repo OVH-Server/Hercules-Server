@@ -334,7 +334,7 @@ OnInit:
 }
 
 //Duplicate
-amatsu,99,156,3	duplicate(Drop Protector#dprot)	Drop Protector#dprot_amatsu	4_EP19_VOGLINDE
-lighthalzen,152,111,3 duplicate(Drop Protector#dprot) Drop Protector#dprot_light	4_EP19_VOGLINDE
-payon,185,105,3	duplicate(Drop Protector#dprot)	Drop Protector#dprot_payon	4_EP19_VOGLINDE
-yuno,154,191,3	duplicate(Drop Protector#dprot)	Drop Protector#dprot_yuno	4_EP19_VOGLINDE
+amatsu,99,156,3 duplicate(Drop Protector#dprot)	    Drop Protector_amatsu   4_EP19_VOGLINDE
+lighthalzen,152,111,3   duplicate(Drop Protector#dprot)   Drop Protector_lighthalzen  4_EP19_VOGLINDE
+payon,185,105,3 duplicate(Drop Protector#dprot)	    Drop Protector_payon    4_EP19_VOGLINDE
+yuno,154,191,3  duplicate(Drop Protector#dprot)	    Drop Protector_yuno    4_EP19_VOGLINDE
