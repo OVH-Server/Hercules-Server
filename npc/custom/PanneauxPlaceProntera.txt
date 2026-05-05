@@ -1,3 +1,5 @@
+//===== Hercules Script ======================================
+
 ///////////////////
 ////Panneau Forge
 prontera,178,189,1	script	Forge	4_BOARD3,{

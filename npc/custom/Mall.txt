@@ -1,3 +1,5 @@
+//===== Hercules Script ======================================
+
 //The Warper to Mall
 
 prontera.gat,154,172,4	script	Mall	4_F_KAFRA6,{

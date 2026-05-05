@@ -1,3 +1,5 @@
+//===== Hercules Script ======================================
+
 prontera,164,168,4	script	Jean-Pierre Coffe	4_CAT_CHEF,{
 	mes "[Vendeur Ambulant]";
 	mes "Bonjour ! Et voila ca bouge tout seul !";

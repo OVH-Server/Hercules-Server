@@ -1,3 +1,5 @@
+//===== Hercules Script ======================================
+
 //----Identifier----
 
 prt_in,52,62,3	script	Identifier	4_M_KID2,{

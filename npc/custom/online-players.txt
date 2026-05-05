@@ -1,3 +1,5 @@
+//===== Hercules Script ======================================
+
 prontera,146,197,4	script	Joueurs en ligne	4_MACHINE_DEVICE,{
 	mes "[Joueurs en ligne]";
 	mes "Joueurs actuellement connecte :";

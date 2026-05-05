@@ -1,4 +1,4 @@
-//===== rAthena/Hercules Script ==============================
+//===== Hercules Script ======================================
 
 //= Hourly Bonus Script
 

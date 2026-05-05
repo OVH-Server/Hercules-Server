@@ -1,3 +1,5 @@
+//===== Hercules Script ======================================
+
 //===Panneau vers Yu Jiu Xia, Xue Bong et Mei Yen Fang
 //Les npc était present dans un batiment legerement au nord d'ou ils sont placés maintenant
 

@@ -1,3 +1,5 @@
+//===== Hercules Script ======================================
+
 prontera,148,195,3	script	Megaphone	4_CAT_MERMASTER,{
 	mes "[Megaphone]";
 	mes "Je peux diffuser ton message a tous les joueurs sur le serveur !";

@@ -1,3 +1,5 @@
+//===== Hercules Script ======================================
+
 prontera,164,171,5	script	Maitre Ribs	4_GEFFEN_10,{
 
 	mes "[Maitre Ribs]";

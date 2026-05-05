@@ -1,3 +1,5 @@
+//===== Hercules Script ======================================
+
 prontera,159,151,4	script	Daily Reward	4_VENDING_MACHINE,{
 	mes "[Recompense Journaliere]";
 

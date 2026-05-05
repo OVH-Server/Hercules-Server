@@ -1,3 +1,5 @@
+//===== Hercules Script ======================================
+
 //===Transporteur Prontera vers place marchandes Alberta, Ayothaya et Lighthalzen
 prontera,163,205,4	script	Places marchandes	1_F_MERCHANT_02,{
 
