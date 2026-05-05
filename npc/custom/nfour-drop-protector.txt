@@ -1,5 +1,4 @@
-//!rathena
-// The '//!rathena' is for plugin hightlight detection
+//===== Hercules Script ======================================
 
 function	script	item_type_id_to_item_type_name	{
     .@item_type = getarg(0);
