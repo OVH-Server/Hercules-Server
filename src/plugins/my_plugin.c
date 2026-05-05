@@ -211,8 +211,32 @@ void myplugin_custom_mob_item_drop_post(struct mob_data *md, struct item_drop_li
             set_db_data_for_char_id(mydata->sd, "drop_protector_item_is_card", 0);
             set_db_data_for_char_id(mydata->sd, "drop_protector_monster_id", -1);
             set_db_data_for_char_id(mydata->sd, "drop_protector_item_id", -1);
-            int amount_to_remove = count_item_in_inventory(sd, 7836);
-            // update essence account
+
+            mydata->mob_id = -1;
+
+            int amount_to_remove = count_item_in_inventory(mydata->sd, 7836);
+
+            int essence_to_add_account = amount_to_remove / 10;
+            int modulo_essence = amount_to_remove % 10;
+            if (modulo_essence != 0) {
+                essence_to_add_account += 1;
+            }
+            int current_account_balance = get_db_data_from_char_id(mydata->sd, "drop_protector_essence_account");
+            int new_account_balance = current_account_balance + essence_to_add_account;
+            set_db_data_for_char_id(mydata->sd, "drop_protector_essence_account", new_account_balance);
+
+
+            char message[256] = {};
+            char message_2[256] = {};
+            char message_3[256] = {};
+            snprintf(message, sizeof(message), "[Drop Protector]: Protected Item Droped, remove %d Dawn essence from your inventory", amount_to_remove);
+            snprintf(message_2, sizeof(message_2), "[Drop Protector]: Credit %d Dawn essence to your account", essence_to_add_account);
+            snprintf(message_3, sizeof(message_3), "[Drop Protector]: New account balance %d Dawn essence", new_account_balance);
+            
+            clif->messagecolor_self(mydata->sd->fd, COLOR_CYAN, message);
+            clif->messagecolor_self(mydata->sd->fd, COLOR_CYAN, message_2);
+            clif->messagecolor_self(mydata->sd->fd, COLOR_CYAN, message_3);
+
             remove_item_amount(mydata->sd, 7836, amount_to_remove);
             break ;
         }
