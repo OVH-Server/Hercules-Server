@@ -3,39 +3,46 @@
 //----Identifier----
 
 prt_in,52,62,3	script	Identifier	4_M_KID2,{
+	getinventorylist;
 
-	OnInit:
-	waitingroom "Identifier",0;
+	for (.@i = 0; .@i < @inventorylist_count; .@i++) {
+		if (@inventorylist_identify[.@i] == 1)
+			continue;
+
+		// Merchant's Identify skill
+		if (getskilllv(40) == 1 && Sp >= 10)
+			heal 0, -10;
+
+		// Magnifier
+		else if (countitem(611))
+			delitem 611, 1;
+
+		// Rogue's Compulsion Discount skill
+		else if (getskilllv(224) && Zeny >= (100 - (5 + 4 * getskilllv(224))) * 2 / 5)
+			Zeny -= (100 - (5 + 4 * getskilllv(224))) * 2 / 5;
+
+		// Merchant Discount skill
+		else if (getskilllv(37) && Zeny >= (100 - (5 + 2 * getskilllv(37))) * 2 / 5)
+			Zeny -= (100 - (5 + 2 * getskilllv(37))) * 2 / 5;
+
+		// Default cost
+		else if (Zeny >= 40)
+			Zeny -= 40;
+
+		else
+			break;
+
+		delitem2 @inventorylist_id[.@i], 1, 0, 0, 0, 0, 0, 0, 0;
+		getitem @inventorylist_id[.@i], 1;
+	}
+
+	close;
+
+OnInit:
+	waitingroom "Identifier", 0;
 	end;
 }
 
-	getinventorylist;
-	for( set .@i,0; .@i < @inventorylist_count; set .@i, .@i + 1 ) {
-		if ( @inventorylist_identify[.@i] == 1 ) continue;
-
-		// Merchant's Identify skill
-		if ( getskilllv(40) == 1 && sp >= 10 ) heal 0,-10;
-
-		// check if there is any Magnifier
-		else if ( countitem(611) ) delitem 611,1;
-
-		// base on Magnifier price, Rogue's Compulsion Discount skill
-		else if ( getskilllv(224) && zeny >= ( 100 - ( 5 + 4 * getskilllv(224) ) )* 2/5 )
-			set zeny, zeny - ( 100 - ( 5 + 4 * getskilllv(224) ) )* 2/5;
-
-		// base on Magnifier price, Merchants that not enough sp and learned Discount skill
-		else if ( getskilllv(37) && zeny >= ( 100 - ( 5 + 2 * getskilllv(37) ) )* 2/5 )
-			set zeny, zeny - ( 100 - ( 5 + 2 * getskilllv(37) ) )* 2/5;
-
-		// if none of the above, deduct the zeny
-		else if ( zeny >= 40 )  set zeny, zeny - 40;
-
-		// or stop the script if there the person not enough money
-		else break;
-		delitem2 @inventorylist_id[.@i],1,0,0,0,0,0,0,0;
-		getitem @inventorylist_id[.@i],1;
-	}
-}
 
 //Duplicate
 alberta_in,187,26,3	duplicate(Identifier)	Identifier#alberta	4_M_KID2
