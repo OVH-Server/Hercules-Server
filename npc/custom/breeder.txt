@@ -55,6 +55,16 @@ prt_in,42,115,4	script	Universal Rental	4_M_TWTEAMAN,{
 	end;
 }
 
+//Duplicate
+alberta,120,53,6	duplicate(Universal Rental)	Universal Rental#alberta	4_M_TWTEAMAN
+amatsu,99,145,6	duplicate(Universal Rental)	Universal Rental#amatsu	4_M_TWTEAMAN
+lighthalzen,172,110,6	duplicate(Universal Rental)	Universal Rental#lighthalzen	4_M_TWTEAMAN
+moscovia,232,200,6	duplicate(Universal Rental)	Universal Rental#moscovia	4_M_TWTEAMAN
+rachel,119,147,6	duplicate(Universal Rental)	Universal Rental#rachel	4_M_TWTEAMAN
+payon,192,110,6	duplicate(Universal Rental)	Universal Rental#payon	4_M_TWTEAMAN
+yuno,166,189,6	duplicate(Universal Rental)	Universal Rental#yuno	4_M_TWTEAMAN
+
+
 //============================================================
 // Old changelog
 //============================================================
