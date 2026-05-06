@@ -108,6 +108,10 @@ B_EXIT2:
 	mes"[Maniss]";
 	mes "Thank you for using our Bank Service. We hope to see you again soon.";
 	close;
+
+	OnInit:
+	waitingroom "Bank", 0;
+	end;
 }
 
 prt_in,129,65,4	duplicate(bankg)	Bank Clerk#prontera	4_M_YURI
