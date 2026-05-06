@@ -44,7 +44,7 @@ prontera,160,193,6	script	Drop Protector#dprot	4_EP19_VOGLINDE,{
     .@essence_id = 7836; // dawn essence id
 
 
-    if (drop_protector_item_id == -1) {
+    if (drop_protector_item$ == "" || drop_protector_item_id == -1) {
         mes("Select one monster  then select one item");
         mes("Your current essence account balance is [ ^FF0000" + drop_protector_essence_account + "^000000 ]");
         drop_protector_item$ = "";
@@ -323,13 +323,6 @@ prontera,160,193,6	script	Drop Protector#dprot	4_EP19_VOGLINDE,{
 
 
 OnInit:
-    drop_protector_item$ = "";
-    drop_protector_monster$ = "";
-    drop_protector_monster_id = -1;
-    drop_protector_item_id = -1;
-    drop_protector_item_is_card = 0;
-    drop_protector_item_is_dropped = 0;
-    drop_protector_essence_account = 0;
     end;
 }
 
