@@ -126,7 +126,7 @@ aldeba_in,96,181,4	script	Kafra Service	4_F_KAFRA5,{
 	end;
 }
 
-aldebaran,143,126,4	script	Kafra Employee::kaf_aldebaran	4_F_KAFRA1,{
+aldebaran,143,129,4	script	Kafra Employee::kaf_aldebaran	4_F_KAFRA1,{
 	cutin "kafra_05",2;
 	callfunc "F_KafSet";
 	mes "[Kafra Employee]";
@@ -311,7 +311,7 @@ prontera,146,89,6	script	Kafra Employee::kaf_prontera5	4_F_KAFRA1,{
 }
 
 //== Juno ==================================================
-yuno,153,187,4	script	Kafra Employee::kaf_yuno	4_F_KAFRA1,{
+yuno,150,187,4	script	Kafra Employee::kaf_yuno	4_F_KAFRA1,{
 	cutin "kafra_08",2;
 	callfunc "F_KafSet";
 	mes "[Kafra Employee]";
@@ -411,7 +411,7 @@ cmd_fild07,136,134,4	script	Kafra Employee::kaf_cmd_fild07	4_F_KAFRA2,{
 
 //== Izlude ================================================
 //== Izlude disabled =======================================
--	script	::kaf_izlude	FAKE_NPC,{
+/*-	script	::kaf_izlude	FAKE_NPC,{
 	cutin "kafra_01",2;
 	callfunc "F_KafSet";
 	mes "[Kafra Employee]";
@@ -427,6 +427,7 @@ cmd_fild07,136,134,4	script	Kafra Employee::kaf_cmd_fild07	4_F_KAFRA2,{
 		savepoint "izlude",94,103;
 	callfunc "F_KafEnd",0,1,"in the city of Izlude";
 }
+*/
 
 //== Moscovia ==============================================
 moscovia,230,195,3	script	Kafra Employee::kaf_mosk	4_F_KAFRA1,{
@@ -519,7 +520,7 @@ gonryun,159,122,4	script	Kafra Employee::kaf_gonryun	4_F_KAFRA1,{
 }
 
 //== Lighthalzen ===========================================
-lighthalzen,164,100,4	script	Kafra Employee::kaf_lighthalzen	4_F_KAFRA1,{
+lighthalzen,162,102,4	script	Kafra Employee::kaf_lighthalzen	4_F_KAFRA1,{
 	cutin "kafra_08",2;
 	mes "[Kafra Employee]";
 	mes "Welcome to the";
@@ -571,7 +572,7 @@ louyang,219,121,5	script	Kafra Employee::kaf_louyang	4_F_KAFRA1,{
 }
 
 //== Umbala ================================================
-umbala,102,148,4	script	Kafra Employee::kaf_umbala	4_F_KAFRA1,{
+umbala,106,150,4	script	Kafra Employee::kaf_umbala	4_F_KAFRA1,{
 	cutin "kafra_07",2;
 	callfunc "F_KafSet";
 	mes "[Kafra Employee]";

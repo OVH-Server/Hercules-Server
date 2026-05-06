@@ -495,7 +495,7 @@ S8: Go("turbo_room",99,114);
 // --------------------------------------------------
 alb2trea,57,70,6	duplicate(Warper)	Warper#tre	4_4JOB_SEALSTONE
 alberta,113,53,4	duplicate(Warper)	Warper#alb	4_4JOB_SEALSTONE
-aldebaran,143,129,4	duplicate(Warper)	Warper#alde	4_4JOB_SEALSTONE
+aldebaran,143,126,4	duplicate(Warper)	Warper#alde	4_4JOB_SEALSTONE
 amatsu,102,152,4	duplicate(Warper)	Warper#ama	4_4JOB_SEALSTONE
 ayothaya,209,169,6	duplicate(Warper)	Warper#ayo	4_4JOB_SEALSTONE
 comodo,194,158,4	duplicate(Warper)	Warper#com	4_4JOB_SEALSTONE
@@ -509,7 +509,7 @@ hugel,92,154,4	duplicate(Warper)	Warper#hug	4_4JOB_SEALSTONE
 izlu2dun,110,92,4	duplicate(Warper)	Warper#izd	4_4JOB_SEALSTONE
 izlude,134,150,4	duplicate(Warper)	Warper#izl	4_4JOB_SEALSTONE	//Pre-RE: (132,120)
 jawaii,158,114,4	duplicate(Warper)	Warper#jaw	4_4JOB_SEALSTONE
-lighthalzen,162,102,4	duplicate(Warper)	Warper#lhz	4_4JOB_SEALSTONE
+lighthalzen,164,100,4	duplicate(Warper)	Warper#lhz	4_4JOB_SEALSTONE
 louyang,216,121,6	duplicate(Warper)	Warper#lou	4_4JOB_SEALSTONE
 manuk,261,180,6	duplicate(Warper)	Warper#man	4_4JOB_SEALSTONE
 mid_camp,224,241,4	duplicate(Warper)	Warper#mid	4_4JOB_SEALSTONE
@@ -526,10 +526,10 @@ prt_fild05,279,223,6	duplicate(Warper)	Warper#cul	4_4JOB_SEALSTONE
 rachel,111,144,4	duplicate(Warper)	Warper#rac	4_4JOB_SEALSTONE
 splendide,181,172,4	duplicate(Warper)	Warper#spl	4_4JOB_SEALSTONE
 thor_camp,170,202,4	duplicate(Warper)	Warper#thor	4_4JOB_SEALSTONE
-umbala,106,150,3	duplicate(Warper)	Warper#umb	4_4JOB_SEALSTONE
+umbala,102,148,3	duplicate(Warper)	Warper#umb	4_4JOB_SEALSTONE
 veins,214,123,4	duplicate(Warper)	Warper#ve	4_4JOB_SEALSTONE
 xmas,150,136,6	duplicate(Warper)	Warper#xmas	4_4JOB_SEALSTONE
-yuno,150,187,4	duplicate(Warper)	Warper#yuno	4_4JOB_SEALSTONE
+yuno,153,187,4	duplicate(Warper)	Warper#yuno	4_4JOB_SEALSTONE
 
 // --------------------------------------------------
 //	Duplicates (Renewal):
