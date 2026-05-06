@@ -38,11 +38,11 @@ prt_in,52,62,3	script	Identifier	4_M_KID2,{
 }
 
 //Duplicate
-alberta_in,187,26,3	duplicate(Identifier)	Identifier#alberta	4_M_KID2,{
-ama_in01,27,26,3	duplicate(Identifier)	Identifier#amatsu	4_M_KID2,{
-hu_in01,239,372,3	duplicate(Identifier)	Identifier#hugel	4_M_KID2,{
-lhz_in02,246,272,3	duplicate(Identifier)	Identifier#lighthalzen	4_M_KID2,{
-mosk_in,146,208,3	duplicate(Identifier)	Identifier#moscovia	4_M_KID2,{
-ra_in01,384,68,3	duplicate(Identifier)	Identifier#rachel	4_M_KID2,{
-payon_in01,12,47,3	duplicate(Identifier)	Identifier#payon	4_M_KID2,{
-yuno_in04,26,120,3	duplicate(Identifier)	Identifier#yuno	4_M_KID2,{
+alberta_in,187,26,3	duplicate(Identifier)	Identifier#alberta	4_M_KID2
+ama_in01,27,26,3	duplicate(Identifier)	Identifier#amatsu	4_M_KID2
+hu_in01,239,372,3	duplicate(Identifier)	Identifier#hugel	4_M_KID2
+lhz_in02,246,272,3	duplicate(Identifier)	Identifier#lighthalzen	4_M_KID2
+mosk_in,146,208,3	duplicate(Identifier)	Identifier#moscovia	4_M_KID2
+ra_in01,384,68,3	duplicate(Identifier)	Identifier#rachel	4_M_KID2
+payon_in01,12,47,3	duplicate(Identifier)	Identifier#payon	4_M_KID2
+yuno_in04,26,120,3	duplicate(Identifier)	Identifier#yuno	4_M_KID2
