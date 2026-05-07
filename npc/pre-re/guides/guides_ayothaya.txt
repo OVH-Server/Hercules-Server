@@ -33,7 +33,7 @@
 //= 1.0
 //=========================================================================
 
-ayothaya,203,169,3	script	Noi#ayo	4_F_THAIGIRL,{
+ayothaya,195,180,3	script	Noi#ayo	4_F_THAIGIRL,{
 	mes "[Noi]";
 	mes "Welcome to Ayothaya.";
 	mes "Our beautiful village is built";

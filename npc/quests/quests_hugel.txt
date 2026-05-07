@@ -7670,7 +7670,7 @@ L_MilkCow:
 }
 
 //== Odin Temple Excavation Quest :: hg_tem ================
-hugel,91,152,1	script	Sign	2_BULLETIN_BOARD,{
+hugel,105,151,1	script	Sign	2_BULLETIN_BOARD,{
 	mes "**Recruitment Notice**";
 	mes " ";
 	if (hg_odin < 60) {

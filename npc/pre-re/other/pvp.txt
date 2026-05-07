@@ -34,12 +34,12 @@
 //=========================================================================
 
 //== PVP Warpers ===========================================
-prontera,150,191,4	script	Fight Square Reception#8	4_EXJOB_NINJA,{
+prontera,154,211,6	script	PVP#8	4_M_GRANDMONK,{
 	callfunc "F_PVP_FSRS";
 	end;
 
 OnInit:
-	waitingroom "PVP test",0;
+	waitingroom "PVP",0;
 	end;
 }
 
@@ -51,3 +51,14 @@ OnInit:
 	waitingroom "Free for all",0;
 	end;
 }
+
+////Duplicate
+amatsu,126,144,5	duplicate(PVP#8)	PVP#amatsu	4_M_GRANDMONK
+louyang,225,124,5	duplicate(PVP#8)	PVP#louyang	4_M_GRANDMONK
+rachel,101,138,5	duplicate(PVP#8)	PVP#rachel	4_M_GRANDMONK
+lighthalzen,175,80,5	duplicate(PVP#8)	PVP#lighthalzen	4_M_GRANDMONK
+thor_camp,154,199,5	duplicate(PVP#8)	PVP#thor	4_M_GRANDMONK
+
+payon,195,94,5	duplicate(PVP#8)	PVP#payon	4_M_GRANDMONK
+yuno,137,178,5	duplicate(PVP#8)	PVP#yuno	4_M_GRANDMONK	
+geffen,127,49,5	duplicate(PVP#8)	PVP#geffen	4_M_GRANDMONK	

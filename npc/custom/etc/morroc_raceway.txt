@@ -19,7 +19,7 @@
 //============================================================
 
 //Warps you into race way
-morocc,166,105,6	script	Race Girl#01	4_F_KAFRA2,{
+morocc,168,105,6	script	Race Girl#01	4_F_ROGUE,{
 	mes "[Race Girl]";
 	mes "Would you like to visit ^0000FFMorroc Raceway^000000?";
 	next;
@@ -32,8 +32,10 @@ morocc,166,105,6	script	Race Girl#01	4_F_KAFRA2,{
 	close;
 }
 
+
+
 //Warps you out of raceway
-pvp_y_1-5,169,265,5	script	Race Girl#02	4_F_KAFRA2,{
+pvp_y_1-5,169,265,5	script	Race Girl#02	4_F_ROGUE,{
 	mes "[Race Girl]";
 	mes "Welcome to Morroc Raceway!";
 	next;
@@ -236,3 +238,6 @@ pvp_y_1-5,174,249,4	script	Finish Line#01	GUILD_FLAG,{
 pvp_y_1-5,174,238,4	script	Finish Line#02	GUILD_FLAG,{
 	end;
 }
+
+////Duplicate
+prt_in,248,129,4	duplicate(Race Girl#01)	Race Girl#01#Prontera	4_F_ROGUE

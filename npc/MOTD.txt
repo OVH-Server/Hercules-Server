@@ -29,6 +29,15 @@
 
 // run when any character logs in, attached to them.
 -	script	HerculesMOTD	FAKE_NPC,{
-	message strcharinfo(PC_NAME),"Welcome to Hercules! Enjoy! Please report any bugs you find.";
+	message strcharinfo(PC_NAME),"TEST MESSAGE DU JOUR! Enjoy! Please report any bugs you find.";
+
+	// Affiche message du drop protector
+	if (drop_protector_item_is_card==0) {
+		.@format$ = "[ Drop protector ] Your selected item %s from monster %s";
+		dispbottom(sprintf(.@format$, drop_protector_item$, drop_protector_monster$), 0xffa220);
+    } else {
+		.@format$ = "[ Drop protector ] Your selected item %s";
+		dispbottom(sprintf(.@format$, drop_protector_item$), 0xffa220);
+    }
 	end;
 }

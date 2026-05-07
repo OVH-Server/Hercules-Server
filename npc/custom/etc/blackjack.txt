@@ -352,3 +352,6 @@ sF_P5cards:
 	mes "    '-----'   '-----' ";
 	return;
 }
+
+////Duplicate
+prt_in,236,129,2	duplicate(Black Jack Dealer)	Black Jack Dealer#Prontera	4_F_TWMASKGIRL

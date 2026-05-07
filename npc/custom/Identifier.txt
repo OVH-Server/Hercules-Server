@@ -1,0 +1,55 @@
+//===== Hercules Script ======================================
+
+//----Identifier----
+
+prt_in,52,62,3	script	Identifier	4_M_KID2,{
+	getinventorylist;
+
+	for (.@i = 0; .@i < @inventorylist_count; .@i++) {
+		if (@inventorylist_identify[.@i] == 1)
+			continue;
+
+		// Merchant's Identify skill
+		if (getskilllv(40) == 1 && Sp >= 10)
+			heal 0, -10;
+
+		// Magnifier
+		else if (countitem(611))
+			delitem 611, 1;
+
+		// Rogue's Compulsion Discount skill
+		else if (getskilllv(224) && Zeny >= (100 - (5 + 4 * getskilllv(224))) * 2 / 5)
+			Zeny -= (100 - (5 + 4 * getskilllv(224))) * 2 / 5;
+
+		// Merchant Discount skill
+		else if (getskilllv(37) && Zeny >= (100 - (5 + 2 * getskilllv(37))) * 2 / 5)
+			Zeny -= (100 - (5 + 2 * getskilllv(37))) * 2 / 5;
+
+		// Default cost
+		else if (Zeny >= 40)
+			Zeny -= 40;
+
+		else
+			break;
+
+		delitem2 @inventorylist_id[.@i], 1, 0, 0, 0, 0, 0, 0, 0;
+		getitem @inventorylist_id[.@i], 1;
+	}
+
+	close;
+
+OnInit:
+	waitingroom "Identifier", 0;
+	end;
+}
+
+
+//Duplicate
+alberta_in,187,26,3	duplicate(Identifier)	Identifier#alberta	4_M_KID2
+ama_in01,27,26,3	duplicate(Identifier)	Identifier#amatsu	4_M_KID2
+hu_in01,239,372,3	duplicate(Identifier)	Identifier#hugel	4_M_KID2
+lhz_in02,246,272,3	duplicate(Identifier)	Identifier#lighthalzen	4_M_KID2
+mosk_in,146,208,3	duplicate(Identifier)	Identifier#moscovia	4_M_KID2
+ra_in01,384,68,3	duplicate(Identifier)	Identifier#rachel	4_M_KID2
+payon_in01,12,47,3	duplicate(Identifier)	Identifier#payon	4_M_KID2
+yuno_in04,26,120,3	duplicate(Identifier)	Identifier#yuno	4_M_KID2

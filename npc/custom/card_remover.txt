@@ -12,7 +12,7 @@
 //= 1.2a Added 'disable_items' command. [Euphy]
 //============================================================
 
-prontera,151,168,4	script	Wise Old Woman#eAcustom	4_ENERGY_RED,{
+prt_in,23,72,4	script	Card Remover	4_F_THAISHAMAN,{
 
 	set .zenycost,0; // Set base cost in zeny of the card remover services
 	set .percardcost,0; // set cost per card of the card remover services
@@ -60,7 +60,7 @@ prontera,151,168,4	script	Wise Old Woman#eAcustom	4_ENERGY_RED,{
 			close;
 		}
 		mes "[Wise Old Woman]";
-		mes "Test message KOALA";
+		mes "Besoin : Yellow Gemstone et Star Crumb ";
 		next;
 		if(select("Very well. Do it.", "Nevermind.") == 2) {
 			mes "[Wise Old Woman]";

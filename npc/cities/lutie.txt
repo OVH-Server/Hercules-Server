@@ -786,7 +786,7 @@ xmas,134,112,4	script	Snowman	4_M_SNOWMAN,{
 		}
 }
 
-xmas,146,136,4	script	Hashokii	4_M_PIERROT,{
+xmas,140,127,4	script	Hashokii	4_M_PIERROT,{
 	mes "[Hashokii]";
 	mes "Meeee~RrrrrYYYY Christmas~!";
 	mes "La La La~!";

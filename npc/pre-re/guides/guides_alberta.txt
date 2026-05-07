@@ -172,4 +172,4 @@ alberta,23,238,4	script	Guide#alb::AlbGuide	8W_SOLDIER,{
 	end;
 }
 
-alberta,120,60,3	duplicate(AlbGuide)	Guide#2alb	8W_SOLDIER
+alberta,90,53,3	duplicate(AlbGuide)	Guide#2alb	8W_SOLDIER

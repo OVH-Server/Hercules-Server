@@ -498,7 +498,7 @@ aldebaran,212,122,4	script	Citizen#alde	4W_M_01,{
 	close;
 }
 
-aldebaran,146,124,4	script	Town Girl#alde	4W_F_01,{
+aldebaran,149,140,4	script	Town Girl#alde	4W_F_01,{
 	mes "[Nastasia]";
 	mes "Somewhere in the world there is an ^3355FFAssassin Guild^000000, where they teach people the subtle art of assassination.";
 	next;

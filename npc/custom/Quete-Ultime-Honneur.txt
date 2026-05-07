@@ -1,0 +1,16 @@
+//===== Hercules Script ======================================
+
+prontera,162,210,4	script	??	4_RUNESTONE,{
+	mes "^FF0000[??]^000000";
+	mes "^FF0000??^000000";
+	next;
+
+	if (select("^FF0000??^000000:^FF0000Annuler^000000") == 1) {
+		warp "yuno",362,170;
+	}
+	close;
+
+OnInit:
+	setnpcdisplay strnpcinfo(3), "??", 4_RUNESTONE, 2;
+	end;
+}

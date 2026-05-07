@@ -850,7 +850,7 @@ OnInit:
 	sellitem Repeting_CrossBow;
 }
 
-yuno,163,187,5	trader	Magical Item Seller#yuno	4_F_01,{
+yuno,172,188,5	trader	Magical Item Seller#yuno	4_F_01,{
 OnInit:
 	sellitem Blue_Gemstone;
 	sellitem Rod;
@@ -1808,7 +1808,7 @@ OnInit:
 	sellitem Delicious_Fish;
 }
 
-umbala,102,154,3	trader	Chef Assistant#um	4_M_01,{
+umbala,101,168,3	trader	Chef Assistant#um	4_M_01,{
 OnInit:
 	sellitem Red_Spice;
 	sellitem Grain;
@@ -1849,13 +1849,13 @@ OnInit:
 	sellitem Bread;
 }
 
-ayothaya,203,178,3	trader	Chef Assistant#ayo	4_M_01,{
+ayothaya,201,191,3	trader	Chef Assistant#ayo	4_M_01,{
 OnInit:
 	sellitem Hot_Sauce;
 	sellitem Grain;
 }
 
-xmas,152,137,5	trader	Chef Assistant#xmas	4_M_01,{
+xmas,164,127,5	trader	Chef Assistant#xmas	4_M_01,{
 OnInit:
 	sellitem Cooking_Oil;
 	sellitem Grain;

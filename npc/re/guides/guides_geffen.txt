@@ -185,6 +185,6 @@ L_Mark:
 	return;
 }
 
-geffen,118,62,0	duplicate(GuideGeffen)	Guide#02geffen	4_M_GEF_SOLDIER
+geffen,128,64,0	duplicate(GuideGeffen)	Guide#02geffen	4_M_GEF_SOLDIER
 geffen,36,123,6	duplicate(GuideGeffen)	Guide#03geffen	4_M_GEF_SOLDIER
 geffen,123,203,4	duplicate(GuideGeffen)	Guide#04geffen	4_M_GEF_SOLDIER

@@ -117,9 +117,9 @@
 }
 
 //== Additional Smile Assistance staff =====================
-alberta,113,53,4	duplicate(SmileHelper)	Smile Assistance#alb	4_F_03
+alberta,101,49,4	duplicate(SmileHelper)	Smile Assistance#alb	4_F_03
 aldebaran,136,135,4	duplicate(SmileHelper)	Smile Assistance#alde	4_F_03
 geffen,119,107,4	duplicate(SmileHelper)	Smile Assistance#gef	4_F_03
 moc_ruins,59,154,3	duplicate(SmileHelper)	Smile Assistance#moc	4_F_03
-payon,186,104,5	duplicate(SmileHelper)	Smile Assistance#pay	4_F_03
-prontera,164,174,4	duplicate(SmileHelper)	Smile Assistance#prt	4_EP20_LASGAND
+payon,196,119,5	duplicate(SmileHelper)	Smile Assistance#pay	4_F_03
+prontera,188,180,5	duplicate(SmileHelper)	Smile Assistance#prt	4_F_03

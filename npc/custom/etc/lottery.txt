@@ -86,7 +86,7 @@ L_Rigged_Draw:
 	goto L_Broadcast;
 }
 
-prontera,141,182,5	script	Lottery	1_F_ORIENT_02,{
+prt_in,233,136,5	script	Lottery	2_SLOT_MACHINE,{
 L_Begin:
 	mes "[Lottery]";
 	mes "Winning Lotto Numbers ("+$LID2+"):";
@@ -492,3 +492,6 @@ GMInput6:
 	set $L_Rigged,1;
 	close;
 }
+
+////Duplicate
+gon_in,182,18,1	duplicate(Lottery)	Lottery#gon	2_SLOT_MACHINE

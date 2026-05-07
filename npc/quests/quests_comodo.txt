@@ -1488,7 +1488,7 @@ cmd_in02,189,99,4	script	Manzi#cmd	4_M_03,{
 	close;
 }
 
-comodo,187,153,4	script	Hullaris#cmd	4_F_GODEMOM,{
+comodo,179,144,4	script	Hullaris#cmd	4_F_GODEMOM,{
 	switch (dmdswrd_Q) {
 	case 10:
 		mes "[Hullaris]";

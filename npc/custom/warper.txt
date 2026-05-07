@@ -121,67 +121,80 @@ function Restrict {
 	Towns:
 // --------------------------------------------------
 menu	"Prontera",T1, "Alberta",T2, "Aldebaran",T3, "Amatsu",T4, "Ayothaya",T5,
-		"Brasilis",T6, "Comodo",T7, "Dewata",T8, "Eclage",T9, "Einbech",T10,
-		"Einbroch",T11, "El Dicastes",T12, "Geffen",T13, "Gonryun",T14, "Hugel",T15,
+		//"Brasilis",T6,																	// = Map Renewal
+		"Comodo",T7, 
+		//"Dewata",T8, "Eclage",T9, 														// = Map Renewal
+		"Einbech",T10,
+		"Einbroch",T11, 
+		//"El Dicastes",T12,																// = Map Renewal
+		"Geffen",T13, "Gonryun",T14, "Hugel",T15,
 		"Izlude",T16, "Jawaii",T17, "Lighthalzen",T18, "Louyang",T19, "Lutie",T20,
-		"Malangdo",T21, "Malaya",T22, "Manuk",T23, "Midgarts Expedition Camp",T24,
-		"Mora",T25, "Morroc",T26, "Moscovia",T27, "Nameless Island",T28,
+		//"Malangdo",T21, "Malaya",T22,
+		"Manuk",T23, "Midgarts Expedition Camp",T24,
+		//"Mora",T25, 																		// = Map Renewal
+		"Morroc",T26, "Moscovia",T27, "Nameless Island",T28,
 		"Niflheim",T29, "Payon",T30, "Rachel",T31, "Splendide",T32, "Thor Camp",T33,
 		"Umbala",T34, "Veins",T35, "Yuno",T36;
 
-T1: Go("prontera",155,183);
-T2: Go("alberta",28,234);
-T3: Go("aldebaran",140,131);
-T4: Go("amatsu",198,84);
+T1: Go("prontera",155,189);
+T2: Go("alberta",116,56);
+T3: Go("aldebaran",140,125);
+T4: Go("amatsu",106,151);
 T5: Go("ayothaya",208,166);
 T6: Restrict("RE");
 	Go("brasilis",196,217);
-T7: Go("comodo",209,143);
+T7: Go("comodo",191,155);
 T8: Restrict("RE");
 	Go("dewata",200,180);
 T9: Restrict("RE");
 	Go("ecl_in01",48,53);
-T10: Go("einbech",63,35);
+T10: Go("einbech",196,129);
 T11: Go("einbroch",64,200);
 T12: Restrict("RE");
 	 Go("dicastes01",198,187);
 T13: Go("geffen",119,59);
 T14: Go("gonryun",160,120);
-T15: Go("hugel",96,145);
+T15: Go("hugel",94,153);
 T16: Go("izlude",128,(RENEWAL?146:114));
-T17: Go("jawaii",251,132);
+T17: Go("jawaii",158,118);
 T18: Go("lighthalzen",158,92);
-T19: Go("louyang",217,100);
+T19: Go("louyang",218,118);
 T20: Go("xmas",147,134);
 T21: Restrict("RE");
 	 Go("malangdo",140,114);
 T22: Restrict("RE");
 	 Go("malaya",231,200);
-T23: Go("manuk",282,138);
-T24: Go("mid_camp",210,288);
+T23: Go("manuk",263,177);
+T24: Go("mid_camp",221,236);
 T25: Restrict("RE");
 	 Go("mora",55,146);
 T26: Go("morocc",156,93);
-T27: Go("moscovia",223,184);
+T27: Go("moscovia",225,194);
 T28: Go("nameless_n",256,215);
-T29: Go("niflheim",202,174);
+T29: Go("niflheim",194,187);
 T30: Go("payon",179,100);
-T31: Go("rachel",130,110);
-T32: Go("splendide",201,147);
-T33: Go("thor_camp",246,68);
-T34: Go("umbala",97,153);
+T31: Go("rachel",114,141);
+T32: Go("splendide",184,169);
+T33: Go("thor_camp",173,199);
+T34: Go("umbala",102,150);
 T35: Go("veins",216,123);
-T36: Go("yuno",157,51);
+T36: Go("yuno",157,188);
 
 // --------------------------------------------------
 	Fields:
 // --------------------------------------------------
-menu	"Amatsu Fields",F1, "Ayothaya Fields",F2, "Bifrost Fields", F3,
-		"Brasilis Fields",F4, "Comodo Fields",F5, "Dewata Fields",F6,
-		"Eclage Fields",F7, "Einbroch Fields",F8, "El Dicastes Fields",F9,
+menu	"Amatsu Fields",F1, "Ayothaya Fields",F2,
+		//"Bifrost Fields", F3,													// = Map Renewal
+		//"Brasilis Fields",F4, 												// = Map Renewal
+		"Comodo Fields",F5,
+		//"Dewata Fields",F6,													// = Map Renewal
+		//"Eclage Fields",F7, 													// = Map Renewal
+		"Einbroch Fields",F8, 
+		//"El Dicastes Fields",F9,												// = Map Renewal
 		"Geffen Fields",F10, "Gonryun Fields",F11, "Hugel Fields",F12,
 		"Lighthalzen Fields",F13, "Louyang Field",F14, "Lutie Field",F15,
-		"Malaya Fields",F16, "Manuk Fields",F17, "Mjolnir Fields",F18,
+		//"Malaya Fields",F16,													// = Map Renewal
+		"Manuk Fields",F17, "Mjolnir Fields",F18,
 		"Moscovia Fields",F19, "Niflheim Fields",F20, "Payon Forests",F21,
 		"Prontera Fields",F22, "Rachel Fields",F23, "Sograt Deserts",F24,
 		"Splendide Fields",F25, "Umbala Fields",F26, "Veins Fields",F27,
@@ -263,16 +276,23 @@ F28: Restrict("Pre-RE",5,10);
 	Dungeons:
 // --------------------------------------------------
 menu	"Abyss Lakes",D1, "Amatsu Dungeon",D2, "Anthell",D3,
-		"Ayothaya Dungeon",D4, "Beach Dungeon",D5, "Bifrost Tower",D41,
-		"Bio Labs",D6, "Brasilis Dungeon",D7, "Byalan Dungeon",D8, "Clock Tower",D9,
-		"Coal Mines",D10, "Culvert",D11, "Cursed Abbey",D12, "Dewata Dungeon",D13,
+		"Ayothaya Dungeon",D4, "Beach Dungeon",D5,
+		//"Bifrost Tower",D41,																// = Map Renewal
+		"Bio Labs",D6,
+		//"Brasilis Dungeon",D7,															// = Map Renewal
+		"Byalan Dungeon",D8, "Clock Tower",D9,
+		"Coal Mines",D10, "Culvert",D11, "Cursed Abbey",D12,
+		//"Dewata Dungeon",D13,																// = Map Renewal
 		"Einbroch Dungeon",D14, "Gefenia",D15, "Geffen Dungeon",D16,
 		"Glast Heim",D17, "Gonryun Dungeon",D18, "Hidden Dungeon",D19,
 		"Ice Dungeon",D20, "Juperos",D21, "Kiel Dungeon",D22, "Louyang Dungeon",D23,
-		"Magma Dungeon",D24, "Malangdo Dungeon",D25, "Moscovia Dungeon",D26,
+		"Magma Dungeon",D24,
+		//"Malangdo Dungeon",D25,															// = Map Renewal
+		"Moscovia Dungeon",D26,
 		"Nidhogg's Dungeon",D27, "Odin Temple",D28, "Orc Dungeon",D29,
 		"Payon Dungeon",D30, "Pyramids",D31, "Rachel Sanctuary",D32,
-		"Scaraba Hole",D33, "Sphinx",D34, "Sunken Ship",D35, "Thanatos Tower",D36,
+		//"Scaraba Hole",D33,																// = Map Renewal
+		"Sphinx",D34, "Sunken Ship",D35, "Thanatos Tower",D36,
 		"Thor Volcano",D37, "Toy Factory",D38, "Turtle Dungeon",D39, "Umbala Dungeon",D40;
 
 D1: setarray @c[2],261,272,275,270,116,27;
@@ -425,10 +445,11 @@ G6: Go("schg_dun01",200,124);
 // --------------------------------------------------
 	Instances:
 // --------------------------------------------------
-menu	"Bakonawa Lake",I1, "Bangungot Hospital 2F",I2, "Buwaya Cave",I3,
-		"Endless Tower",I4, "Hazy Forest",I5, "Malangdo Culvert",I6, "Nidhoggur's Nest",I7,
-		"Octopus Cave",I8, "Old Glast Heim",I9, "Orc's Memory",I10, "Sealed Shrine",I11,
-		"Wolfchev's Laboratory",I12;
+// menu	"Bakonawa Lake",I1, "Bangungot Hospital 2F",I2, "Buwaya Cave",I3,  	     //                           = Map renewal 
+menu	"Endless Tower",I4, /*"Hazy Forest",I5, "Malangdo Culvert",I6, */			 // Hazy & Malangdo           = Map Renewal
+		"Nidhoggur's Nest",I7, /*"Octopus Cave",I8, "Old Glast Heim",I9,*/			 // Octopus & Old Glast Heim  = Map Renewal
+		"Orc's Memory",I10, "Sealed Shrine",I11;
+		// , "Wolfchev's Laboratory",I12;	 // Wolfchev 				  = Map Renewal
 
 I1: Restrict("RE");
 	Go("ma_scene01",172,175);
@@ -454,7 +475,8 @@ I12: Restrict("RE");
 // --------------------------------------------------
 	Special:
 // --------------------------------------------------
-menu	"Auction Hall",S1, "Battlegrounds",S2, "Casino",S3, "Eden Group Headquarters",S4,
+menu	"Auction Hall",S1, "Battlegrounds",S2, "Casino",S3,
+		//"Eden Group Headquarters",S4,
 		"Gonryun Arena",S5, "Izlude Arena",S6, "Monster Race Arena",S7, "Turbo Track",S8;
 
 S1: Go("auction_01",22,68);
@@ -471,51 +493,56 @@ S8: Go("turbo_room",99,114);
 // --------------------------------------------------
 //	Duplicates:
 // --------------------------------------------------
-alb2trea,57,70,6	duplicate(Warper)	Warper#tre	4_F_VALKYRIE
-alberta,28,240,4	duplicate(Warper)	Warper#alb	4_F_VALKYRIE
-aldebaran,145,118,4	duplicate(Warper)	Warper#alde	4_F_VALKYRIE
-amatsu,203,87,4	duplicate(Warper)	Warper#ama	4_F_VALKYRIE
-ayothaya,209,169,6	duplicate(Warper)	Warper#ayo	4_F_VALKYRIE
-comodo,194,158,4	duplicate(Warper)	Warper#com	4_F_VALKYRIE
-einbech,59,38,6	duplicate(Warper)	Warper#einbe	4_F_VALKYRIE
-einbroch,69,202,4	duplicate(Warper)	Warper#einbr	4_F_VALKYRIE
-gef_fild10,71,339,4	duplicate(Warper)	Warper#orc	4_F_VALKYRIE
-geffen,124,72,4	duplicate(Warper)	Warper#gef	4_F_VALKYRIE
-glast_01,372,308,4	duplicate(Warper)	Warper#glh	4_F_VALKYRIE
-gonryun,162,122,4	duplicate(Warper)	Warper#gon	4_F_VALKYRIE
-hugel,101,151,4	duplicate(Warper)	Warper#hug	4_F_VALKYRIE
-izlu2dun,110,92,4	duplicate(Warper)	Warper#izd	4_F_VALKYRIE
-izlude,134,150,4	duplicate(Warper)	Warper#izl	4_F_VALKYRIE	//Pre-RE: (132,120)
-jawaii,253,138,4	duplicate(Warper)	Warper#jaw	4_F_VALKYRIE
-lighthalzen,162,102,4	duplicate(Warper)	Warper#lhz	4_F_VALKYRIE
-louyang,208,103,6	duplicate(Warper)	Warper#lou	4_F_VALKYRIE
-manuk,274,146,6	duplicate(Warper)	Warper#man	4_F_VALKYRIE
-mid_camp,216,288,4	duplicate(Warper)	Warper#mid	4_F_VALKYRIE
-mjolnir_02,85,364,4	duplicate(Warper)	Warper#mjo	4_F_VALKYRIE
-moc_ruins,64,164,4	duplicate(Warper)	Warper#moc	4_F_VALKYRIE
-morocc,159,97,4	duplicate(Warper)	Warper#mor	4_F_VALKYRIE
-moscovia,229,191,4	duplicate(Warper)	Warper#mos	4_F_VALKYRIE
-nameless_n,259,213,4	duplicate(Warper)	Warper#nam	4_F_VALKYRIE
-niflheim,205,179,4	duplicate(Warper)	Warper#nif	4_F_VALKYRIE
-pay_arche,42,134,4	duplicate(Warper)	Warper#arc	4_F_VALKYRIE
-payon,182,108,4	duplicate(Warper)	Warper#pay	4_F_VALKYRIE
-prontera,154,187,4 	duplicate(Warper)	Warper#prt	4_4JOB_SEALSTONE
-prt_fild05,279,223,6	duplicate(Warper)	Warper#cul	4_F_VALKYRIE
-rachel,135,116,4	duplicate(Warper)	Warper#rac	4_F_VALKYRIE
-splendide,205,153,4	duplicate(Warper)	Warper#spl	4_F_VALKYRIE
-thor_camp,249,76,4	duplicate(Warper)	Warper#thor	4_F_VALKYRIE
-umbala,106,150,3	duplicate(Warper)	Warper#umb	4_F_VALKYRIE
-veins,214,123,4	duplicate(Warper)	Warper#ve	4_F_VALKYRIE
-xmas,150,136,6	duplicate(Warper)	Warper#xmas	4_F_VALKYRIE
-yuno,162,47,4	duplicate(Warper)	Warper#yuno	4_F_VALKYRIE
+alb2trea,57,70,6	duplicate(Warper)	Warper#tre	4_4JOB_SEALSTONE
+alberta,113,53,4	duplicate(Warper)	Warper#alb	4_4JOB_SEALSTONE
+aldebaran,143,126,4	duplicate(Warper)	Warper#alde	4_4JOB_SEALSTONE
+amatsu,102,152,4	duplicate(Warper)	Warper#ama	4_4JOB_SEALSTONE
+ayothaya,209,169,6	duplicate(Warper)	Warper#ayo	4_4JOB_SEALSTONE
+comodo,194,158,4	duplicate(Warper)	Warper#com	4_4JOB_SEALSTONE
+einbech,193,133,6	duplicate(Warper)	Warper#einbe	4_4JOB_SEALSTONE
+einbroch,69,202,4	duplicate(Warper)	Warper#einbr	4_4JOB_SEALSTONE
+gef_fild10,71,339,4	duplicate(Warper)	Warper#orc	4_4JOB_SEALSTONE
+geffen,119,56,4	duplicate(Warper)	Warper#gef	4_4JOB_SEALSTONE
+glast_01,372,308,4	duplicate(Warper)	Warper#glh	4_4JOB_SEALSTONE
+gonryun,162,122,4	duplicate(Warper)	Warper#gon	4_4JOB_SEALSTONE
+hugel,92,154,4	duplicate(Warper)	Warper#hug	4_4JOB_SEALSTONE
+izlu2dun,110,92,4	duplicate(Warper)	Warper#izd	4_4JOB_SEALSTONE
+izlude,134,150,4	duplicate(Warper)	Warper#izl	4_4JOB_SEALSTONE	//Pre-RE: (132,120)
+jawaii,158,114,4	duplicate(Warper)	Warper#jaw	4_4JOB_SEALSTONE
+lighthalzen,164,100,4	duplicate(Warper)	Warper#lhz	4_4JOB_SEALSTONE
+louyang,216,121,6	duplicate(Warper)	Warper#lou	4_4JOB_SEALSTONE
+manuk,261,180,6	duplicate(Warper)	Warper#man	4_4JOB_SEALSTONE
+mid_camp,224,241,4	duplicate(Warper)	Warper#mid	4_4JOB_SEALSTONE
+mjolnir_02,85,364,4	duplicate(Warper)	Warper#mjo	4_4JOB_SEALSTONE
+moc_ruins,64,164,4	duplicate(Warper)	Warper#moc	4_4JOB_SEALSTONE
+morocc,159,97,4	duplicate(Warper)	Warper#mor	4_4JOB_SEALSTONE
+moscovia,228,198,4	duplicate(Warper)	Warper#mos	4_4JOB_SEALSTONE
+nameless_n,259,213,4	duplicate(Warper)	Warper#nam	4_4JOB_SEALSTONE
+niflheim,201,189,4	duplicate(Warper)	Warper#nif	4_4JOB_SEALSTONE
+pay_arche,42,134,4	duplicate(Warper)	Warper#arc	4_4JOB_SEALSTONE
+payon,182,108,4	duplicate(Warper)	Warper#pay	4_4JOB_SEALSTONE
+prontera,154,196,4 	duplicate(Warper)	Warper#prt	4_4JOB_SEALSTONE    // Prontera 
+prt_fild05,279,223,6	duplicate(Warper)	Warper#cul	4_4JOB_SEALSTONE
+rachel,111,144,4	duplicate(Warper)	Warper#rac	4_4JOB_SEALSTONE
+splendide,181,172,4	duplicate(Warper)	Warper#spl	4_4JOB_SEALSTONE
+thor_camp,170,202,4	duplicate(Warper)	Warper#thor	4_4JOB_SEALSTONE
+umbala,102,148,3	duplicate(Warper)	Warper#umb	4_4JOB_SEALSTONE
+veins,214,123,4	duplicate(Warper)	Warper#ve	4_4JOB_SEALSTONE
+xmas,150,136,6	duplicate(Warper)	Warper#xmas	4_4JOB_SEALSTONE
+yuno,153,187,4	duplicate(Warper)	Warper#yuno	4_4JOB_SEALSTONE
 
 // --------------------------------------------------
 //	Duplicates (Renewal):
 // --------------------------------------------------
-brasilis,201,222,4	duplicate(Warper)	Warper#bra	4_F_VALKYRIE
-dewata,204,186,6	duplicate(Warper)	Warper#dew	4_F_VALKYRIE
-dicastes01,194,194,6	duplicate(Warper)	Warper#dic	4_F_VALKYRIE
-ecl_in01,51,60,4	duplicate(Warper)	Warper#ecl	4_F_VALKYRIE
-malangdo,134,117,6	duplicate(Warper)	Warper#mal	4_F_VALKYRIE
-malaya,231,204,4	duplicate(Warper)	Warper#ma	4_F_VALKYRIE
-mora,57,152,4	duplicate(Warper)	Warper#mora	4_F_VALKYRIE
+//brasilis,201,222,4	duplicate(Warper)	Warper#bra	4_F_VALKYRIE
+//dewata,204,186,6	duplicate(Warper)	Warper#dew	4_F_VALKYRIE
+//dicastes01,194,194,6	duplicate(Warper)	Warper#dic	4_F_VALKYRIE
+//ecl_in01,51,60,4	duplicate(Warper)	Warper#ecl	4_F_VALKYRIE
+//malangdo,134,117,6	duplicate(Warper)	Warper#mal	4_F_VALKYRIE
+//malaya,231,204,4	duplicate(Warper)	Warper#ma	4_F_VALKYRIE
+//mora,57,152,4	duplicate(Warper)	Warper#mora	4_F_VALKYRIE
+
+// --------------------------------------------------
+// Custom 
+// --------------------------------------------------
+gon_in,152,35,4	duplicate(Warper)	Warper	4_ELEPHANT		//Maison GM

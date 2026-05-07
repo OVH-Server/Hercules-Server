@@ -16,7 +16,7 @@
 //      Baby Novice job change. [Haru]
 //============================================================
 
-prontera,154,174,4	script	Job Master	4_F_SHAMAN,{
+gon_in,188,14,2	script	Job Master	4_F_SHAMAN,{
 	function Job_Menu; function A_An;
 
 	mes "[Job Master]";

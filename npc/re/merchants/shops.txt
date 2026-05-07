@@ -422,7 +422,8 @@ OnInit:
 }
 */
 
-prt_in,126,76,0	trader	Tool Dealer#prt1	1_M_INNKEEPER,{
+////////Pour modifier la position de ce npc : npc/pre-re/merchants/shops.txt  ligne 50
+prt_in,126,76,1	trader	Tool Dealer#prt1	1_M_INNKEEPER,{
 OnInit:
 	sellitem Spectacles;
 	sellitem Arrow;
@@ -437,6 +438,8 @@ OnInit:
 	sellitem Wing_Of_Butterfly;
 	sellitem Booby_Trap;
 }
+////////
+
 
 prt_in,117,79,5	trader	Toy Supplier#prt	4_M_PIERROT,{
 OnInit:

@@ -1,0 +1,75 @@
+//===== Hercules Script ======================================
+
+prontera,148,195,3	script	Megaphone	4_CAT_MERMASTER,{
+	mes "[Megaphone]";
+	mes "Je peux diffuser ton message a tous les joueurs sur le serveur !";
+	mes "Prix : ^FF000010 000 zeny^000000.";
+	next;
+
+	if (Zeny < 10000) {
+		mes "[Le Maire]";
+		mes "Tu n'as pas assez de zeny.";
+		mes "Salut byebye";
+		close;
+	}
+
+	mes "[Megaphone]";
+	mes "Dans quel canal veux-tu envoyer ton message ?";
+	next;
+
+	switch(select("Commerce:Recrutement:Annuler")) {
+		case 1:
+			set .@channel$, "Commerce";
+			break;
+
+		case 2:
+			set .@channel$, "Recrutement";
+			break;
+
+		case 3:
+			mes "[Megaphone]";
+			mes "Annulé.";
+			close;
+	}
+
+	mes "[Megaphone]";
+	mes "Note ton message :";
+	next;
+
+	input .@message$;
+
+	if (.@message$ == "") {
+		mes "[Le Maire]";
+		mes "Message vide annule.";
+		close;
+	}
+
+	mes "[Megaphone]";
+	mes "Ton message sera envoye dans le canal ^00AAFF" + .@channel$ + "^000000 :";
+	mes "\"" + .@message$ + "\"";
+	next;
+
+	if (select("Envoyer:Annuler") == 2) {
+		mes "[Le Maire]";
+		mes "Annule.";
+		close;
+	}
+
+	if (Zeny < 10000) {
+		mes "[Megaphone]";
+		mes "Tu n'as plus assez de zeny.";
+		close;
+	}
+
+	set Zeny, Zeny - 10000;
+
+	if (.@channel$ == "Commerce") {
+	announce "[Commerce] " + strcharinfo(0) + " : " + .@message$, bc_all, 0xFFA500;
+} else {
+	announce "[Recrutement] " + strcharinfo(0) + " : " + .@message$, bc_all, 0x00FF00;
+}
+
+	mes "[Megaphone]";
+	mes "Message bien recu !";
+	close;
+}

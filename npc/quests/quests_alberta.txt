@@ -517,7 +517,7 @@ alberta_in,122,53,4	script	Cherokee	1_M_01,{
 }
 
 //== 'Bao Bao', 'Crescent Hairpin', 'Fashionable Glasses', 'Heart Hairpin' Quest =
-alberta,120,53,1	script	Stylish Merchant#new30	1_M_BARD,{
+alberta,109,43,1	script	Stylish Merchant#new30	1_M_BARD,{
 	if ((countitem(Silk_Ribbon) > 0) && (countitem(Voucher_Of_Orcish_Hero) > 49)) {
 		mes "[Zic]";
 		mes "I know I know, you just want to get a Bao Bao of your own. But I can't concentrate on my work if you keep rushing me like this.";

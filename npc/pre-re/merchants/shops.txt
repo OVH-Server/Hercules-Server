@@ -47,7 +47,7 @@ OnInit:
 	sellitem Wing_Of_Butterfly;
 }
 
-prt_in,126,76,0	trader	Tool Dealer#prt1	1_M_INNKEEPER,{
+prt_in,160,134,1	trader	Tool Dealer#prt1	1_M_INNKEEPER,{
 OnInit:
 	sellitem Spectacles;
 	sellitem Arrow;
@@ -344,7 +344,7 @@ OnInit:
 }
 
 //== Cooking Addition ======================================
-prontera,156,212,1	trader	Chef Assistant#prt	8_F_GIRL,{
+prt_in,72,134,5	trader	Chef Assistant#prt	8_F_GIRL,{
 OnInit:
 	sellitem Plain_Sauce;
 	sellitem Red_Spice;

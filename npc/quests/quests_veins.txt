@@ -4981,7 +4981,7 @@ ve_fild07,235,42,3	script	Silk Sand Camel	4_DST_CAMEL,{
 	}
 }
 
-veins,221,120,5	script	Young Town Native	4_M_DESERT,{
+veins,232,124,5	script	Young Town Native	4_M_DESERT,{
 	if (rachel_camel == 3) {
 		mes "[Native Young Man]";
 		mes "My name is Toby.";

@@ -12,7 +12,7 @@
 //= 3.6a Slightly edited. [Euphy]
 //============================================================
 
-prontera,142,228,6	script	Find the Mushroom	BLACK_MUSHROOM,{
+gon_in,182,28,2	script	Mushroom Event	BLACK_MUSHROOM,{
 	mes "[ Find The Mushroom ]";
 	if (!.status)
 		mes "There is no event at the moment!";

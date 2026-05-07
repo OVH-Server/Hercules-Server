@@ -11,7 +11,7 @@
 //= 5.2 Fix a bug that causes this event run indefinitely [AnnieRuru]
 //============================================================
 
-prontera,160,155,4	script	Disguise Event	4_M_NFDEADMAN,{
+prontera,145,209,5	script	Disguise Event	4_M_GENIE,{
 
 	// Currently set to run every two hours.
 	// To change times, edit the OnClock labels below.
@@ -39,7 +39,7 @@ prontera,160,155,4	script	Disguise Event	4_M_NFDEADMAN,{
 				setnpctimer 0; stopnpctimer;
 				announce "A GM has decided to turn the Disguise Event off. As a result no further prizes will be given.",bc_map | bc_blue;
 				deletepset 1;
-				setnpcdisplay "Disguise Event", 4_M_NFDEADMAN;
+				setnpcdisplay "Disguise Event", 4_M_GENIE;
 				close;
 			}
 			set .EventON,1; set .Timer,1; setnpctimer 0; initnpctimer;
@@ -177,7 +177,7 @@ OnTimer10000:
 OnTimer30000:
 	if (.Timer) end;
 	set .Change,0;
-	setnpcdisplay "Disguise Event", 4_M_NFDEADMAN;
+	setnpcdisplay "Disguise Event", 4_M_GENIE;
 	npctalk "You took too long to guess what I was. Please wait 10 seconds while I disguise again.";
 	specialeffect EF_DETECT2;
 	set $MonsterName$,"";
@@ -186,7 +186,7 @@ OnTimer30000:
 	setnpctimer 0;
 	++.RoundCount;
 	if (.RoundCount >= .Rounds) {
-		setnpcdisplay "Disguise Event", 4_M_NFDEADMAN;
+		setnpcdisplay "Disguise Event", 4_M_GENIE;
 		.RoundCount = 0;
 		.Change = 0;
 		.EventON = 0;
@@ -245,13 +245,13 @@ iCorrect:
 	getitem .Prize,.PrizeAmt;
 	announce strcharinfo(PC_NAME)+" is correct! I was disguised as: "+$MonsterName$+"",bc_map | bc_blue;
 	if (.RoundCount>=.Rounds) {
-		setnpcdisplay "Disguise Event", 4_M_NFDEADMAN;
+		setnpcdisplay "Disguise Event", 4_M_GENIE;
 		set .RoundCount,0; set .Change,0; set .EventON,0;
 		setnpctimer 0; stopnpctimer;
 		npctalk "Thank you all for playing. That was the last round of the Disguise Event. Come play again later.";
 		end;
 	}
-	setnpcdisplay "Disguise Event", 4_M_NFDEADMAN;
+	setnpcdisplay "Disguise Event", 4_M_GENIE;
 	set .Change,0;
 	setnpctimer 0;
 	end;

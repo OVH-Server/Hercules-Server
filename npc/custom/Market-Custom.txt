@@ -1,0 +1,291 @@
+//===== Hercules Script ======================================
+
+//===Transporteur Prontera vers place marchandes Alberta, Ayothaya et Lighthalzen
+prontera,163,205,4	script	Places marchandes	1_F_MERCHANT_02,{
+
+OnInit: waitingroom "Places Marchandes",0;
+
+	switch(select(
+	"^FF0000Place marchande d'Alberta^000000:"
+	+"^FF0000Place marchande d'Ayothaya^000000:"
+	+"^FF0000Place marchande de Lighthalzen^000000:"
+	+"Annuler")) {
+
+	case 1:
+		mes "[Transporteur]";
+		mes "Direction ^FF0000la place marchande d'Alberta !^000000";
+		close2;
+		warp "alberta",212,51;
+		end;
+
+	case 2:
+		mes "[Transporteur]";
+		mes "Direction ^FF0000la place marchande d'Ayothaya !^000000";
+		close2;
+		warp "ayothaya",161,169;
+		end;
+
+	case 3:
+		mes "[Transporteur]";
+		mes "Direction ^FF0000la place marchande de Lighthalzen !^000000";
+		close2;
+		warp "lighthalzen",158,54;
+		end;
+
+	case 4:
+		mes "[Transporteur]";
+		mes "Tres bien.";
+		close;
+	}
+}
+
+
+///////////////////////////////////////////////////////////////////////////
+///////===Transporteur Retour vers Prontera 
+///////////////////////////////////////////////////////////////////////////
+
+//===Transporteur place marchande Alberta vers Prontera
+alberta,210,53,4	script	Transporteur Alberta	1_F_MERCHANT_02,{
+
+	mes "[Transporteur]";
+	mes "Envie de retourner a Prontera ?";
+	next;
+
+	if (select("Oui !.:Non merci.") == 2) {
+		mes "[Transporteur]";
+		mes "Tres bien.";
+		close;
+	}
+
+	mes "[Transporteur]";
+	mes "Bon voyage !";
+	close2;
+
+	warp "prontera",166,205;
+
+	end;
+}
+
+//=== Transporteur place marchande Ayothaya vers Prontera
+ayothaya,161,172,4	script	Transporteur Ayothaya	1_F_MERCHANT_02,{
+
+	mes "[Transporteur]";
+	mes "Envie de retourner a Prontera ?";
+	next;
+
+	if (select("Oui !.:Non merci.") == 2) {
+		mes "[Transporteur]";
+		mes "Tres bien.";
+		close;
+	}
+
+	mes "[Transporteur]";
+	mes "Bon voyage !";
+	close2;
+
+	warp "prontera",166,205;
+
+	end;
+}
+
+//===Transporteur place marchande Lighthalzen vers Prontera
+lighthalzen,158,50,4	script	Transporteur Lighthalzen	1_F_MERCHANT_02,{
+
+	mes "[Transporteur]";
+	mes "Envie de retourner a Prontera ?";
+	next;
+
+	if (select("Oui !.:Non merci.") == 2) {
+		mes "[Transporteur]";
+		mes "Tres bien.";
+		close;
+	}
+
+	mes "[Transporteur]";
+	mes "Bon voyage !";
+	close2;
+
+	warp "prontera",166,205;
+
+	end;
+}
+
+/////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+///====Panneaux Place marchande 
+alberta,216,39,6	script	SUD	4_BULLETIN_BOARD2,{   // Panneau principal à Alberta
+
+	mes "[Information]";
+	mes "^FF0000Place marchande d'Alberta.^000000";
+	mes "Veuillez installer vos stands entre les panneaux !";
+	mes "Bonnes ventes !";
+	close;
+}
+
+ayothaya,143,172,6	script	CENTRE	4_BULLETIN_BOARD2,{   // Panneau principal à Ayothaya
+
+	mes "[Information]";
+	mes "^FF0000Place marchande d'Ayothaya.^000000";
+	mes "Veuillez installer vos stands entre les panneaux !";
+	mes "Bonnes ventes !";
+	close;
+}
+
+lighthalzen,153,51,6	script	AILEGAUCHE	4_BULLETIN_BOARD2,{   // Panneau principal à Lightalzen
+
+	mes "[Information]";
+	mes "^FF0000Place marchande de Lighthalzen.^000000";
+	mes "Veuillez installer vos stands entre les panneaux !";
+	mes "Bonnes ventes !";
+	close;
+}
+
+// Duplications panneaux Alberta
+alberta,216,28,6	duplicate(SUD)	SUD	4_BULLETIN_BOARD2
+alberta,222,28,6	duplicate(SUD)	SUD	4_BULLETIN_BOARD2
+alberta,222,39,6	duplicate(SUD)	SUD	4_BULLETIN_BOARD2
+alberta,187,39,6	duplicate(SUD)	SUD	4_BULLETIN_BOARD2
+alberta,201,39,6	duplicate(SUD)	SUD	4_BULLETIN_BOARD2
+alberta,209,47,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+alberta,194,47,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+alberta,187,55,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+alberta,187,67,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+alberta,188,74,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+alberta,180,78,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+alberta,215,56,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+alberta,215,60,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+alberta,188,78,6	duplicate(SUD)	CENTRE	4_BULLETIN_BOARD2
+alberta,232,46,6	duplicate(SUD)	EST	4_BULLETIN_BOARD2
+alberta,229,46,6	duplicate(SUD)	EST	4_BULLETIN_BOARD2
+alberta,225,53,6	duplicate(SUD)	EST	4_BULLETIN_BOARD2
+alberta,225,60,6	duplicate(SUD)	EST	4_BULLETIN_BOARD2
+alberta,229,60,6	duplicate(SUD)	EST	4_BULLETIN_BOARD2
+
+// Duplications panneaux Ayothaya
+ayothaya,158,172,6	duplicate(CENTRE)	CENTRE	4_BULLETIN_BOARD2
+ayothaya,143,160,6	duplicate(CENTRE)	CENTRE	4_BULLETIN_BOARD2
+ayothaya,143,148,6	duplicate(CENTRE)	CENTRE	4_BULLETIN_BOARD2
+ayothaya,132,148,6	duplicate(CENTRE)	CENTRE	4_BULLETIN_BOARD2
+ayothaya,161,144,6	duplicate(CENTRE)	CENTRE	4_BULLETIN_BOARD2
+ayothaya,161,160,6	duplicate(CENTRE)	CENTRE	4_BULLETIN_BOARD2
+ayothaya,158,144,6	duplicate(CENTRE)	CENTRE	4_BULLETIN_BOARD2
+ayothaya,158,160,6	duplicate(CENTRE)	CENTRE	4_BULLETIN_BOARD2
+ayothaya,143,139,6	duplicate(CENTRE)	CENTRE	4_BULLETIN_BOARD2
+ayothaya,143,135,6	duplicate(CENTRE)	CENTRE	4_BULLETIN_BOARD2
+ayothaya,132,139,6	duplicate(CENTRE)	CENTRE	4_BULLETIN_BOARD2
+
+// Duplications panneaux Lighthalzen
+lighthalzen,164,42,6	duplicate(AILEGAUCHE)	AILE DROITE	4_BULLETIN_BOARD2
+lighthalzen,175,42,6	duplicate(AILEGAUCHE)	AILE DROITE	4_BULLETIN_BOARD2
+lighthalzen,175,51,6	duplicate(AILEGAUCHE)	AILE DROITE	4_BULLETIN_BOARD2
+lighthalzen,184,51,6	duplicate(AILEGAUCHE)	AILE DROITE	4_BULLETIN_BOARD2
+lighthalzen,184,42,6	duplicate(AILEGAUCHE)	AILE DROITE	4_BULLETIN_BOARD2
+lighthalzen,184,46,6	duplicate(AILEGAUCHE)	AILE DROITE	4_BULLETIN_BOARD2
+lighthalzen,164,46,6	duplicate(AILEGAUCHE)	AILE DROITE	4_BULLETIN_BOARD2
+lighthalzen,164,51,6	duplicate(AILEGAUCHE)	AILE DROITE	4_BULLETIN_BOARD2
+lighthalzen,153,42,6	duplicate(AILEGAUCHE)	AILE GAUCHE	4_BULLETIN_BOARD2
+lighthalzen,153,46,6	duplicate(AILEGAUCHE)	AILE GAUCHE	4_BULLETIN_BOARD2
+lighthalzen,122,42,6	duplicate(AILEGAUCHE)	AILE GAUCHE	4_BULLETIN_BOARD2
+lighthalzen,122,51,6	duplicate(AILEGAUCHE)	AILE GAUCHE	4_BULLETIN_BOARD2
+lighthalzen,122,46,6	duplicate(AILEGAUCHE)	AILE GAUCHE	4_BULLETIN_BOARD2
+lighthalzen,138,51,6	duplicate(AILEGAUCHE)	AILE GAUCHE	4_BULLETIN_BOARD2
+lighthalzen,138,42,6	duplicate(AILEGAUCHE)	AILE GAUCHE	4_BULLETIN_BOARD2
+
+
+////Duplicate
+gon_in,155,37,4	duplicate(Places marchandes)	Places marchandes#gon	1_F_MERCHANT_02
+
+
+
+
+////////////////////////////////////////////////////////////
+/////--- Bot Marchand Alberta " Il est frais mon poisson ! "
+alberta,214,38,6	script	Aladeen	4_M_ALADDIN,{
+
+	mes "[Aladeen]";
+
+	if (.stock_count <= 0) {
+		callsub S_GenerateStock;
+		mes "J'ai reçu une nouvelle cargaison.";
+		next;
+	}
+
+	mes "Voilà ce que je vends :";
+	next;
+
+	.@menu$ = "";
+
+	for (.@i = 0; .@i < .stock_count; .@i++) {
+		.@menu$ += getitemname(.stock_id[.@i])+" x"+.stock_amount[.@i]+" - "+.stock_price[.@i]+"z:";
+	}
+
+	.@menu$ += "Quitter";
+
+	.@choice = select(.@menu$) - 1;
+
+	if (.@choice == .stock_count) close;
+
+	if (Zeny < .stock_price[.@choice]) {
+		mes "[Aladeen]";
+		mes "Tu n'as pas assez de zeny.";
+		close;
+	}
+
+	set Zeny, Zeny - .stock_price[.@choice];
+	getitem .stock_id[.@choice],1;
+
+	.stock_amount[.@choice]--;
+
+	mes "[Aladeen]";
+	mes "Marché conclu.";
+	next;
+
+	if (.stock_amount[.@choice] <= 0) {
+		for (.@i = .@choice; .@i < .stock_count - 1; .@i++) {
+			.stock_id[.@i] = .stock_id[.@i+1];
+			.stock_price[.@i] = .stock_price[.@i+1];
+			.stock_amount[.@i] = .stock_amount[.@i+1];
+		}
+		.stock_count--;
+	}
+
+	close;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer15000:
+	npctalk "Il est frais mon poisson !";
+	initnpctimer;
+	end;
+
+S_GenerateStock:
+
+	deletearray .stock_id[0], getarraysize(.stock_id);
+	deletearray .stock_price[0], getarraysize(.stock_price);
+	deletearray .stock_amount[0], getarraysize(.stock_amount);
+
+	setarray .@pool[0],
+		909,910,911,912,913,914,915,938,942,943;
+
+	.stock_count = rand(5,10);
+
+	for (.@i = 0; .@i < .stock_count; .@i++) {
+		.stock_id[.@i] = .@pool[rand(getarraysize(.@pool))];
+		.stock_price[.@i] = rand(1,10) * 1000;
+		.stock_amount[.@i] = rand(1,99);
+	}
+
+	return;
+}
+
+//Duplicate 
+amatsu,99,152,6	duplicate(Places marchandes)	Places marchandes#amatsu	1_F_MERCHANT_02
+geffen,111,64,6	duplicate(Places marchandes)	Places marchandes#geffen	1_F_MERCHANT_02
+lighthalzen,165,106,6	duplicate(Places marchandes)	Places marchandes#lighthalzen	1_F_MERCHANT_02
+morocc,149,105,6	duplicate(Places marchandes)	Places marchandes#morroc	1_F_MERCHANT_02
+payon,188,106,6	duplicate(Places marchandes)	Places marchandes#payon	1_F_MERCHANT_02
+rachel,107,144,6	duplicate(Places marchandes)	Places marchandes#rachel	1_F_MERCHANT_02
+yuno,145,190,6	duplicate(Places marchandes)	Places marchandes#yuno	1_F_MERCHANT_02

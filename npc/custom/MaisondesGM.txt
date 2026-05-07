@@ -1,0 +1,93 @@
+//===== Hercules Script ======================================
+
+//===Panneau vers Yu Jiu Xia, Xue Bong et Mei Yen Fang
+//Les npc était present dans un batiment legerement au nord d'ou ils sont placés maintenant
+
+gonryun,197,125,4	script	Panneau Secret	2_BOARD1,{
+
+	mes "[Information]";
+	mes "Salle secrete, pas si secrete.";
+	mes "Retrouvez-y ^0000FFYu Jiu Xia^000000, ^0000FFXue Bong^000000 et ^0000FFMei Yen Fang^000000.";
+	mes "Direction sud.";
+	close;
+}
+
+//=======================================================
+//====================== MAISON GM ======================
+//=======================================================
+
+//======================
+// Gardien 1
+//======================
+gonryun,211,118,3	script	Gardien Sacré#1	4_M_CHNSOLDIER,{
+
+	mes "[Gardien Sacre]";
+	mes "Personne ne passe sans le mot de passe.";
+	next;
+
+	input .@pass$;
+
+	if (.@pass$ != "123") {
+		mes "[Gardien Sacre]";
+		mes "Mot de passe incorrect.";
+		close;
+	}
+
+	mes "[Gardien Sacre]";
+	mes "Tres bien. Tu as 10 secondes pour entrer.";
+	close2;
+
+	set #GonryunAccessTime, gettimetick(2) + 10;
+	end;
+}
+
+//======================
+// Gardien 2
+//======================
+gonryun,211,110,3	script	Gardien Sacré#2	4_M_CHNSOLDIER,{
+
+	mes "[Gardien Sacre]";
+	mes "Personne ne passe sans le mot de passe.";
+	next;
+
+	input .@pass$;
+
+	if (.@pass$ != "123") {
+		mes "[Gardien Sacre]";
+		mes "Mot de passe incorrect.";
+		close;
+	}
+
+	mes "[Gardien Sacre]";
+	mes "Tres bien. Tu as 10 secondes pour entrer.";
+	close2;
+
+	set #GonryunAccessTime, gettimetick(2) + 10;
+	end;
+}
+
+//======================
+// Zone de blocage 1
+//======================
+gonryun,210,118,0	script	BlockPassage1	-1,2,4,{
+
+OnTouch:
+	if (#GonryunAccessTime < gettimetick(2)) {
+		message strcharinfo(0), "Le gardien sacré vous bloque le passage.";
+		warp "gonryun",212,118;
+	}
+	end;
+}
+
+//======================
+// Zone de blocage 2
+//======================
+gonryun,210,110,0	script	BlockPassage2	-1,2,4,{
+
+OnTouch:
+	if (#GonryunAccessTime < gettimetick(2)) {
+		message strcharinfo(0), "Le gardien sacré vous bloque le passage.";
+		warp "gonryun",212,110;
+	}
+	end;
+}

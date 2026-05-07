@@ -20,7 +20,7 @@
 
 -	script	Bank Clerk::bankg	4_M_ZONDAOYAJI,{
 	mes"[Maniss]";
-	mes strcharinfo(PC_NAME)+", welcome to the 2nd Bank of Prontera!";
+	mes strcharinfo(PC_NAME)+", welcome to the Bank of Midgard !";
 
 	set @kb_int,(gettime(GETTIME_MONTH)*31)+gettime(GETTIME_DAYOFMONTH); //today's number
 	set @income,0;
@@ -108,9 +108,22 @@ B_EXIT2:
 	mes"[Maniss]";
 	mes "Thank you for using our Bank Service. We hope to see you again soon.";
 	close;
+
+	OnInit:
+	waitingroom "Bank", 0;
+	end;
 }
 
-prontera,147,168,4	duplicate(bankg)	Bank Clerk#1-1	4_M_ZONDAOYAJI
-geffen,125,73,3	duplicate(bankg)	Bank Clerk#2-1	4_M_ZONDAOYAJI
-izlude,145,107,1	duplicate(bankg)	Bank Clerk#3-1	4_M_ZONDAOYAJI
-morocc,147,84,7	duplicate(bankg)	Bank Clerk#4-1	4_M_ZONDAOYAJI
+prt_in,129,65,4	duplicate(bankg)	Bank Clerk#prontera	4_M_YURI
+alberta_in,176,28,4	duplicate(bankg)	Bank Clerk#alberta	4_M_YURI
+ama_in01,27,17,6	duplicate(bankg)	Bank Clerk#amatsu	4_M_YURI
+hu_in01,242,374,2	duplicate(bankg)	Bank Clerk#hugel	4_M_YURI
+lhz_in02,240,265,1	duplicate(bankg)	Bank Clerk#lighthalzen	4_M_YURI
+mosk_in,209,194,2	duplicate(bankg)	Bank Clerk#moscovia	4_M_YURI
+ra_in01,387,66,2	duplicate(bankg)	Bank Clerk#rachel	4_M_YURI
+payon_in01,5,54,6	duplicate(bankg)	Bank Clerk#payon	4_M_YURI
+yuno_in04,37,126,2	duplicate(bankg)	Bank Clerk#yuno	4_M_YURI
+
+//geffen,125,73,3	duplicate(bankg)	Bank Clerk#2-1	4_M_YURI
+//izlude,145,107,1	duplicate(bankg)	Bank Clerk#3-1	4_M_YURI
+//morocc,147,84,7	duplicate(bankg)	Bank Clerk#4-1	4_M_YURI
