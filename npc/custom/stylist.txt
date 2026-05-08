@@ -62,13 +62,13 @@ OnInit:
 	.minstyle[LOOK_HAIR_COLOR] = getbattleflag("min_hair_color");
 	.maxstyle[LOOK_HAIR_COLOR] = getbattleflag("max_hair_color");
 	.minstyle[LOOK_CLOTHES_COLOR] = getbattleflag("min_cloth_color");
-	.maxstyle[LOOK_CLOTHES_COLOR] = 3;
+	.maxstyle[LOOK_CLOTHES_COLOR] = 33;
 
 	.summoner_minstyle[LOOK_HAIR] = getbattleflag("min_hair_style");
 	.summoner_maxstyle[LOOK_HAIR] = getbattleflag("max_hair_style");
 	.summoner_minstyle[LOOK_HAIR_COLOR] = getbattleflag("min_hair_color");
 	.summoner_maxstyle[LOOK_HAIR_COLOR] = getbattleflag("max_hair_color");
 	.summoner_minstyle[LOOK_CLOTHES_COLOR] = getbattleflag("min_cloth_color");
-	.summoner_maxstyle[LOOK_CLOTHES_COLOR] = 3;
+	.summoner_maxstyle[LOOK_CLOTHES_COLOR] = 33;
 	end;
 }
