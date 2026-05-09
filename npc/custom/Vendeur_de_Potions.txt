@@ -9,28 +9,23 @@ prontera,156,355,4	script	Jean-Pierre Coffe	4_CAT_CHEF,{
 	end;
 
 OnInit:
-	waitingroom "Hear me, travelers!",0;
+	waitingroom "POTIONS",0;
 	initnpctimer;
 	end;
-
-
-//============================================================
-// Départ vers le sud
-//============================================================
 
 OnTimer3000:
 	delwaitingroom;
 
 	npcwalkto 156,324;
 	sleep 1500;
-
-	waitingroom "Finest materials and rare supplies !",0;
-	end;
+	waitingroom "Finest materials and rare supplies!",0;
+	sleep 1000;
+	delwaitingroom;
 
 	npcwalkto 147,290;
 	sleep 1500;
-
 	waitingroom "Do not miss this opportunity!",0;
+	sleep 1000;
 	end;
 
 OnTimer6000:
@@ -38,17 +33,15 @@ OnTimer6000:
 
 	npcwalkto 155,266;
 	sleep 1500;
-
-	waitingroom "Finest materials and rare supplies !",0;
-	end;
+	waitingroom "Finest materials and rare supplies!",0;
+	sleep 1000;
+	delwaitingroom;
 
 	npcwalkto 155,230;
 	sleep 1500;
-
 	waitingroom "Do not miss this opportunity!",0;
+	sleep 1000;
 	end;
-
-
 
 OnTimer42000:
 	stopnpctimer;
