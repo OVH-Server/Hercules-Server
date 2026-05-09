@@ -1,8 +1,8 @@
 //===== Hercules Script ======================================
 
-prontera,164,168,4	script	Jean-Pierre Coffe	4_CAT_CHEF,{
-	mes "[Vendeur Ambulant]";
-	mes "Bonjour ! Et voila ca bouge tout seul !";
+prontera,156,355,4	script	Jean-Pierre Coffe	4_CAT_CHEF,{
+	mes "[Gioviani]";
+	mes "Hear me, travelers! Finest materials and rare supplies gathered from every corner of Midgard! Do not miss this opportunity!";
 	next;
 
 	callshop "Shop_RedPotion",1;
@@ -14,31 +14,31 @@ OnInit:
 	end;
 
 OnTimer3000:
-	npcwalkto 156,183;
+	npcwalkto 155,228;
 	delwaitingroom;
 	waitingroom "POTIONS",0;
 	end;
 
 OnTimer10000:
-	npcwalkto 176,204;
+	npcwalkto 155,174;
 	delwaitingroom;
 	waitingroom "Yellow Gemstone !",0;
 	end;
 
 OnTimer17000:
-	npcwalkto 155,225;
+	npcwalkto 155,119;
 	delwaitingroom;
 	waitingroom "Star Crumb!",0;
 	end;
 
 OnTimer24000:
-	npcwalkto 135,203;
+	npcwalkto 155,25;
 	delwaitingroom;
 	waitingroom "POTIONS",0;
 	end;
 
 OnTimer31000:
-	npcwalkto 156,183;
+	npcwalkto 146,28;
 	delwaitingroom;
 	waitingroom "POTIONS",0;
 	end;
