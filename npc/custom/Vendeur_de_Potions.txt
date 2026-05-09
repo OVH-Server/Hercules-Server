@@ -9,7 +9,7 @@ prontera,156,355,4	script	Jean-Pierre Coffe	4_CAT_CHEF,{
 	end;
 
 OnInit:
-	waitingroom "POTIONS",0;
+	waitingroom "Hear me, travelers!",0;
 	initnpctimer;
 	end;
 
@@ -21,90 +21,34 @@ OnInit:
 OnTimer3000:
 	delwaitingroom;
 
-	npcwalkto 156,340;
-	sleep 1500;
-
 	npcwalkto 156,324;
 	sleep 1500;
 
-	waitingroom "POTIONS",0;
+	waitingroom "Finest materials and rare supplies !",0;
 	end;
-
-
-//============================================================
-// Route vers le centre-ville
-//============================================================
-
-OnTimer10000:
-	delwaitingroom;
-
-	npcwalkto 152,310;
-	sleep 1500;
 
 	npcwalkto 147,290;
 	sleep 1500;
 
-	waitingroom "Yellow Gemstone!",0;
+	waitingroom "Do not miss this opportunity!",0;
 	end;
 
-
-//============================================================
-// Route vers la place centrale
-//============================================================
-
-OnTimer17000:
+OnTimer6000:
 	delwaitingroom;
 
-	npcwalkto 150,260;
+	npcwalkto 155,266;
 	sleep 1500;
 
-	npcwalkto 155,228;
+	waitingroom "Finest materials and rare supplies !",0;
+	end;
+
+	npcwalkto 155,230;
 	sleep 1500;
 
-	waitingroom "Star Crumb!",0;
+	waitingroom "Do not miss this opportunity!",0;
 	end;
 
 
-//============================================================
-// Descente principale
-//============================================================
-
-OnTimer24000:
-	delwaitingroom;
-
-	npcwalkto 156,205;
-	sleep 1500;
-
-	npcwalkto 156,174;
-	sleep 1500;
-
-	waitingroom "POTIONS",0;
-	end;
-
-
-//============================================================
-// Route finale
-//============================================================
-
-OnTimer31000:
-	delwaitingroom;
-
-	npcwalkto 156,120;
-	sleep 1500;
-
-	npcwalkto 156,70;
-	sleep 1500;
-
-	npcwalkto 156,31;
-	sleep 1500;
-
-	waitingroom "Last Potions!",0;
-	end;
-
-
-//============================================================
-// Disparition
-//============================================================
 
 OnTimer42000:
 	stopnpctimer;
