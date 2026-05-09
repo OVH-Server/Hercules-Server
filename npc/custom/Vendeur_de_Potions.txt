@@ -13,28 +13,17 @@ OnInit:
 	initnpctimer;
 	end;
 
-//============================================================
-// Départ vers le sud
-//============================================================
-
 OnTimer3000:
 	npcwalkto 156,324;
+	delwaitingroom;
 	waitingroom "POTIONS",0;
 	end;
 
-//============================================================
-// Route vers le centre-ville
-//============================================================
-
 OnTimer10000:
 	npcwalkto 147,290;
-	delwaitingroom;	
-	waitingroom "Yellow Gemstone!",0;
+	delwaitingroom;
+	waitingroom "Yellow Gemstone !",0;
 	end;
-
-//============================================================
-// Route vers la place centrale
-//============================================================
 
 OnTimer17000:
 	npcwalkto 155,228;
@@ -42,31 +31,19 @@ OnTimer17000:
 	waitingroom "Star Crumb!",0;
 	end;
 
-//============================================================
-// Descente principale
-//============================================================
-
 OnTimer24000:
 	npcwalkto 156,174;
 	delwaitingroom;
 	waitingroom "POTIONS",0;
 	end;
 
-//============================================================
-// Route finale
-//============================================================
-
 OnTimer31000:
 	npcwalkto 156,31;
 	delwaitingroom;
-	waitingroom "Last Potions!",0;
+	waitingroom "POTIONS",0;
 	end;
 
-//============================================================
-// Disparition
-//============================================================
-
-OnTimer42000:
+OnTimer38000:
 	stopnpctimer;
 	delwaitingroom;
 	disablenpc strnpcinfo(3);
