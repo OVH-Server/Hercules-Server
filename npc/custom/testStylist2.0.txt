@@ -18,7 +18,7 @@
 //= 1.1.1 Hair style of 0 now defaults to 1. Body dye of 1 will now default to 0.
 //= This is due to how certain style and dye values are not usable officially. [Rytech]
 //============================================================
-prontera,162,184,4	script	Super Stylist	509,{
+prontera,162,184,4	script	Super Stylist	4_ELEPHANT,{
 Lintro:
 	mes "[Super Stylist]";
 	mes "Hey there. Im a super stylist. Want to try out my services?";
