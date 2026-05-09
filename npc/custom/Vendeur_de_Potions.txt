@@ -19,6 +19,7 @@ OnInit:
 //============================================================
 
 OnTimer3000:
+	npcwalkto 156,340;
 	npcwalkto 156,324;
 	delwaitingroom;	
 	waitingroom "POTIONS",0;
