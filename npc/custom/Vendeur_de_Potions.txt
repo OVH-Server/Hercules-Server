@@ -14,39 +14,39 @@ OnInit:
 	end;
 
 OnTimer3000:
-	npcwalkto 155,228;
+	npcwalkto 156,324;
 	delwaitingroom;
 	waitingroom "POTIONS",0;
 	end;
 
 OnTimer10000:
-	npcwalkto 155,174;
+	npcwalkto 147,290;
 	delwaitingroom;
 	waitingroom "Yellow Gemstone !",0;
 	end;
 
 OnTimer17000:
-	npcwalkto 155,119;
+	npcwalkto 155,228;
 	delwaitingroom;
 	waitingroom "Star Crumb!",0;
 	end;
 
 OnTimer24000:
-	npcwalkto 155,25;
+	npcwalkto 156,174;
 	delwaitingroom;
 	waitingroom "POTIONS",0;
 	end;
 
 OnTimer31000:
-	npcwalkto 146,28;
+	npcwalkto 156,31;
 	delwaitingroom;
 	waitingroom "POTIONS",0;
 	end;
 
-OnTimer38000:
-	stopnpctimer;
-	initnpctimer;
-	end;
+//OnTimer38000:
+//	stopnpctimer;
+//	initnpctimer;
+//	end;
 }
 
 -	shop	Shop_RedPotion	-1,501:10,1000:10,715:10
