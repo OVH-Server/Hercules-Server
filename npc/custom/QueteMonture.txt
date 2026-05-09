@@ -4,82 +4,104 @@
 // Prontera 161,185
 //============================================================
 
-prontera,161,185,4	script	Chasseuse de Monture	4_F_DOMINO,{
-	mes "[Chasseuse de Monture]";
+//============================================================
+// Quête Halter Lead
+// Prontera 161,185
+//============================================================
 
+prontera,161,185,4	script	Mount Hunter	4_F_DOMINO,{
+	mes "[Mount Hunter]";
+
+	// Vérifie si la récompense a déjà été obtenue
 	if (#HalterQuest_Done) {
-		mes "Tu as déjà reçu ta récompense spéciale.";
+		mes "You have already received your special reward.";
 		close;
 	}
 
+	// Début de quête
 	if (!#HalterQuest_Start) {
-		mes "Tu veux obtenir une récompense spéciale ?";
-		mes "Alors va tuer :";
+		mes "Do you want to obtain a special reward?";
+		mes "Then go kill:";
 		mes "- 10 Poring";
 		mes "- 10 Archer Skeleton";
 		mes "- 10 Les";
 		next;
 
-		if (select("Accepter:Refuser") == 2) {
-			mes "[Chasseuse de Monture]";
-			mes "Reviens quand tu seras prêt.";
+		if (select("Accept:Decline") == 2) {
+			mes "[Mount Hunter]";
+			mes "Come back when you are ready.";
 			close;
 		}
 
+		// Initialisation des variables de progression
 		#HalterQuest_Start = 1;
 		#HalterQuest_Poring = 0;
 		#HalterQuest_Archer = 0;
 		#HalterQuest_Les = 0;
 
-		mes "[Chasseuse de Monture]";
-		mes "Très bien. Reviens quand tu auras terminé.";
+		mes "[Mount Hunter]";
+		mes "Very well. Come back when you have finished.";
 		close;
 	}
 
-	mes "Progression actuelle :";
-	mes "Poring : " + #HalterQuest_Poring + "/10";
-	mes "Archer Skeleton : " + #HalterQuest_Archer + "/10";
-	mes "Les : " + #HalterQuest_Les + "/10";
+	// Affichage de la progression actuelle
+	mes "Current progress:";
+	mes "Poring: " + #HalterQuest_Poring + "/10";
+	mes "Archer Skeleton: " + #HalterQuest_Archer + "/10";
+	mes "Les: " + #HalterQuest_Les + "/10";
 	next;
 
+	// Vérifie si tous les objectifs sont remplis
 	if (#HalterQuest_Poring >= 10 && #HalterQuest_Archer >= 10 && #HalterQuest_Les >= 10) {
-		mes "[Chasseuse de Monture]";
-		mes "Tu as rempli les conditions.";
-		mes "Voici ta récompense spéciale.";
+		mes "[Mount Hunter]";
+		mes "You have completed the challenge.";
+		mes "Here is your special reward.";
+
+		// Don de la récompense : Halter Lead
 		getitem 12622,1;
 
 		#HalterQuest_Done = 1;
 		close;
 	}
 
-	mes "[Chasseuse de Monture]";
-	mes "Il te manque encore quelques monstres.";
+	mes "[Mount Hunter]";
+	mes "You still have monsters left to kill.";
 	close;
 
 
 OnNPCKillEvent:
+
+	// Empêche le comptage si la quête n'a pas commencé
+	// ou si elle est déjà terminée
 	if (!#HalterQuest_Start || #HalterQuest_Done)
 		end;
 
+	// Poring
 	if (killedrid == 1002 && #HalterQuest_Poring < 10) {
 		#HalterQuest_Poring++;
-		message strcharinfo(PC_NAME), "Quête Halter Lead : Poring " + #HalterQuest_Poring + "/10";
+
+		message strcharinfo(PC_NAME),
+		"Halter Lead Quest: Poring " + #HalterQuest_Poring + "/10";
 		end;
 	}
 
+	// Archer Skeleton
 	if (killedrid == 1016 && #HalterQuest_Archer < 10) {
 		#HalterQuest_Archer++;
-		message strcharinfo(PC_NAME), "Quête Halter Lead : Archer Skeleton " + #HalterQuest_Archer + "/10";
+
+		message strcharinfo(PC_NAME),
+		"Halter Lead Quest: Archer Skeleton " + #HalterQuest_Archer + "/10";
 		end;
 	}
 
+	// Les
 	if (killedrid == 1881 && #HalterQuest_Les < 10) {
 		#HalterQuest_Les++;
-		message strcharinfo(PC_NAME), "Quête Halter Lead : Les " + #HalterQuest_Les + "/10";
+
+		message strcharinfo(PC_NAME),
+		"Halter Lead Quest: Les " + #HalterQuest_Les + "/10";
 		end;
 	}
 
 	end;
 }
-
-
