@@ -22,7 +22,7 @@ OnTimer3000:
 OnTimer10000:
 	npcwalkto 147,290;
 	delwaitingroom;
-	waitingroom "Yellow Gemstone !",0;
+	waitingroom "Yellow Gemstone!",0;
 	end;
 
 OnTimer17000:
@@ -43,10 +43,11 @@ OnTimer31000:
 	waitingroom "POTIONS",0;
 	end;
 
-//OnTimer38000:
-//	stopnpctimer;
-//	initnpctimer;
-//	end;
+OnTimer38000:
+	stopnpctimer;
+	delwaitingroom;
+	disablenpc strnpcinfo(3);
+	end;
 }
 
 -	shop	Shop_RedPotion	-1,501:10,1000:10,715:10
