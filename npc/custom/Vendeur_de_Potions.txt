@@ -44,6 +44,12 @@ OnTimer10000:
 	npcwalkto 147,290;
 	sleep 1500;
 
+	npcwalkto 150,260;
+	sleep 1500;
+
+	npcwalkto 155,228;
+	sleep 1500;
+
 	waitingroom "Yellow Gemstone!",0;
 	end;
 
