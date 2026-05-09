@@ -4,22 +4,17 @@
 // Prontera 161,185
 //============================================================
 
-//============================================================
-// Quête Halter Lead
-// Prontera 161,185
-//============================================================
-
 prontera,161,185,4	script	Mount Hunter	4_F_DOMINO,{
 	mes "[Mount Hunter]";
 
-	// Vérifie si la récompense a déjà été obtenue
-	if (#HalterQuest_Done) {
+	// Vérifie si la récompense a déjà été obtenue par ce personnage
+	if (HalterQuest_Done) {
 		mes "You have already received your special reward.";
 		close;
 	}
 
 	// Début de quête
-	if (!#HalterQuest_Start) {
+	if (!HalterQuest_Start) {
 		mes "Do you want to obtain a special reward?";
 		mes "Then go kill:";
 		mes "- 10 Poring";
@@ -33,11 +28,11 @@ prontera,161,185,4	script	Mount Hunter	4_F_DOMINO,{
 			close;
 		}
 
-		// Initialisation des variables de progression
-		#HalterQuest_Start = 1;
-		#HalterQuest_Poring = 0;
-		#HalterQuest_Archer = 0;
-		#HalterQuest_Les = 0;
+		// Initialisation des variables de progression liées au personnage
+		HalterQuest_Start = 1;
+		HalterQuest_Poring = 0;
+		HalterQuest_Archer = 0;
+		HalterQuest_Les = 0;
 
 		mes "[Mount Hunter]";
 		mes "Very well. Come back when you have finished.";
@@ -46,13 +41,13 @@ prontera,161,185,4	script	Mount Hunter	4_F_DOMINO,{
 
 	// Affichage de la progression actuelle
 	mes "Current progress:";
-	mes "Poring: " + #HalterQuest_Poring + "/10";
-	mes "Archer Skeleton: " + #HalterQuest_Archer + "/10";
-	mes "Les: " + #HalterQuest_Les + "/10";
+	mes "Poring: " + HalterQuest_Poring + "/10";
+	mes "Archer Skeleton: " + HalterQuest_Archer + "/10";
+	mes "Les: " + HalterQuest_Les + "/10";
 	next;
 
 	// Vérifie si tous les objectifs sont remplis
-	if (#HalterQuest_Poring >= 10 && #HalterQuest_Archer >= 10 && #HalterQuest_Les >= 10) {
+	if (HalterQuest_Poring >= 10 && HalterQuest_Archer >= 10 && HalterQuest_Les >= 10) {
 		mes "[Mount Hunter]";
 		mes "You have completed the challenge.";
 		mes "Here is your special reward.";
@@ -60,7 +55,7 @@ prontera,161,185,4	script	Mount Hunter	4_F_DOMINO,{
 		// Don de la récompense : Halter Lead
 		getitem 12622,1;
 
-		#HalterQuest_Done = 1;
+		HalterQuest_Done = 1;
 		close;
 	}
 
@@ -73,33 +68,33 @@ OnNPCKillEvent:
 
 	// Empêche le comptage si la quête n'a pas commencé
 	// ou si elle est déjà terminée
-	if (!#HalterQuest_Start || #HalterQuest_Done)
+	if (!HalterQuest_Start || HalterQuest_Done)
 		end;
 
 	// Poring
-	if (killedrid == 1002 && #HalterQuest_Poring < 10) {
-		#HalterQuest_Poring++;
+	if (killedrid == 1002 && HalterQuest_Poring < 10) {
+		HalterQuest_Poring++;
 
 		message strcharinfo(PC_NAME),
-		"Halter Lead Quest: Poring " + #HalterQuest_Poring + "/10";
+		"Halter Lead Quest: Poring " + HalterQuest_Poring + "/10";
 		end;
 	}
 
 	// Archer Skeleton
-	if (killedrid == 1016 && #HalterQuest_Archer < 10) {
-		#HalterQuest_Archer++;
+	if (killedrid == 1016 && HalterQuest_Archer < 10) {
+		HalterQuest_Archer++;
 
 		message strcharinfo(PC_NAME),
-		"Halter Lead Quest: Archer Skeleton " + #HalterQuest_Archer + "/10";
+		"Halter Lead Quest: Archer Skeleton " + HalterQuest_Archer + "/10";
 		end;
 	}
 
 	// Les
-	if (killedrid == 1881 && #HalterQuest_Les < 10) {
-		#HalterQuest_Les++;
+	if (killedrid == 1881 && HalterQuest_Les < 10) {
+		HalterQuest_Les++;
 
 		message strcharinfo(PC_NAME),
-		"Halter Lead Quest: Les " + #HalterQuest_Les + "/10";
+		"Halter Lead Quest: Les " + HalterQuest_Les + "/10";
 		end;
 	}
 
