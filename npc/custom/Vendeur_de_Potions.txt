@@ -13,14 +13,12 @@ OnInit:
 	initnpctimer;
 	end;
 
-
 //============================================================
 // Départ vers le sud
 //============================================================
 
 OnTimer3000:
 	npcwalkto 156,324;
-	delwaitingroom;	
 	waitingroom "POTIONS",0;
 	end;
 
