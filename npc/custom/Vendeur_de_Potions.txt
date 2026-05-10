@@ -99,18 +99,71 @@ OnTimer3000:
 
 	delwaitingroom;
 
-	// 10eme déplacement
+	// 10eme déplacement = Arrivé à la place centrale SPANW coté SUD
 	npcwalkto 156,176;
-	sleep 10000;
+	sleep 8000;
 
-	waitingroom "10",0;
+	waitingroom "Finest materials and rare supplies",0;
 	sleep 1000;
 
 	delwaitingroom;
 
+	// 11eme déplacement
+	npcwalkto 156,146;
+	sleep 3000;
+
+	waitingroom "11",0;
+	sleep 1000;
+
+	delwaitingroom;
+
+	// 12eme déplacement
+	npcwalkto 156,122;
+	sleep 3000;
+
+	waitingroom "12",0;
+	sleep 1000;
+
+	delwaitingroom;
+
+	// 13eme déplacement
+	npcwalkto 156,95;
+	sleep 3000;
+
+	waitingroom "13",0;
+	sleep 1000;
+
+	delwaitingroom;
+
+	// 14eme déplacement
+	npcwalkto 156,66;
+	sleep 3000;
+
+	waitingroom "14",0;
+	sleep 1000;
+
+	delwaitingroom;
+
+	// 15eme déplacement
+	npcwalkto 156,28;
+	sleep 3000;
+
+	waitingroom "15",0;
+	sleep 1000;
+
+	delwaitingroom;
+
+	// 16eme déplacement = Sortie de trajet
+	npcwalkto 156,22;
+	sleep 3000;
+
+	waitingroom "See you tommorow !",0;
+	sleep 1000;
+
+	delwaitingroom;
 	end;
 
-OnTimer70000:
+OnTimer80000:
 	stopnpctimer;
 	delwaitingroom;
 
