@@ -66,7 +66,7 @@ OnTimer3000:
 	npcwalkto 155,251;
 	sleep 3000;
 
-	waitingroom "5",0;
+	waitingroom "6",0;
 	sleep 1000;
 
 	delwaitingroom;
@@ -75,7 +75,7 @@ OnTimer3000:
 	npcwalkto 155,228;
 	sleep 3000;
 
-	waitingroom "5",0;
+	waitingroom "7",0;
 	sleep 1000;
 
 	delwaitingroom;
@@ -87,7 +87,7 @@ OnTimer3000:
 
 
 
-OnTimer30000:
+OnTimer40000:
 	stopnpctimer;
 	delwaitingroom;
 
