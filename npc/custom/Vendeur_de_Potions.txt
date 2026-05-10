@@ -62,7 +62,7 @@ OnTimer3000:
 	delwaitingroom;
 	end;
 
-OnTimer15000:
+OnTimer30000:
 	stopnpctimer;
 	delwaitingroom;
 
