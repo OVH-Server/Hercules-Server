@@ -91,7 +91,7 @@ OnTimer3000:
 	delwaitingroom;
 
 	// 9eme déplacement
-	npcwalkto 155,177;
+	npcwalkto 144,191;
 	sleep 3000;
 
 	waitingroom "9",0;
@@ -99,6 +99,14 @@ OnTimer3000:
 
 	delwaitingroom;
 
+	// 10eme déplacement
+	npcwalkto 156,176;
+	sleep 3000;
+
+	waitingroom "10",0;
+	sleep 1000;
+
+	delwaitingroom;
 
 	end;
 
