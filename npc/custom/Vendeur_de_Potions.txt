@@ -16,11 +16,20 @@ OnInit:
 OnTimer3000:
 	delwaitingroom;
 
-	// Le PNJ descend depuis son point de spawn jusqu'à 156,322
+	// Premier déplacement
 	npcwalkto 156,330;
 	sleep 3000;
 
 	waitingroom "POTIONS",0;
+	sleep 1000;
+
+	delwaitingroom;
+
+	// Deuxième déplacement
+	npcwalkto 156,307;
+	sleep 3000;
+
+	waitingroom "Yellow Gemstone!",0;
 	end;
 
 OnTimer10000:
