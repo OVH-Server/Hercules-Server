@@ -60,7 +60,32 @@ OnTimer3000:
 	sleep 1000;
 
 	delwaitingroom;
+
+
+	// 6eme déplacement
+	npcwalkto 155,251;
+	sleep 3000;
+
+	waitingroom "5",0;
+	sleep 1000;
+
+	delwaitingroom;
+
+	// 7eme déplacement = Arrivé à la place centrale coté NORD
+	npcwalkto 155,228;
+	sleep 3000;
+
+	waitingroom "5",0;
+	sleep 1000;
+
+	delwaitingroom;
 	end;
+
+
+
+
+
+
 
 OnTimer30000:
 	stopnpctimer;
