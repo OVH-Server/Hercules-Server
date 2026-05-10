@@ -14,38 +14,20 @@ OnInit:
 	end;
 
 OnTimer3000:
-	npcwalkto 156,324;
 	delwaitingroom;
+
+	// Le PNJ descend depuis son point de spawn jusqu'à 156,322
+	npcwalkto 156,322;
+	sleep 3000;
+
 	waitingroom "POTIONS",0;
 	end;
 
 OnTimer10000:
-	npcwalkto 147,290;
-	delwaitingroom;
-	waitingroom "Yellow Gemstone !",0;
-	end;
-
-OnTimer17000:
-	npcwalkto 155,228;
-	delwaitingroom;
-	waitingroom "Star Crumb!",0;
-	end;
-
-OnTimer24000:
-	npcwalkto 156,174;
-	delwaitingroom;
-	waitingroom "POTIONS",0;
-	end;
-
-OnTimer31000:
-	npcwalkto 156,31;
-	delwaitingroom;
-	waitingroom "POTIONS",0;
-	end;
-
-OnTimer38000:
 	stopnpctimer;
 	delwaitingroom;
+
+	// Le PNJ disparaît après son arrêt
 	disablenpc strnpcinfo(3);
 	end;
 }
