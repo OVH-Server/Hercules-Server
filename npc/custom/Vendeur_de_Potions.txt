@@ -17,7 +17,7 @@ OnTimer3000:
 	delwaitingroom;
 
 	// Le PNJ descend depuis son point de spawn jusqu'à 156,322
-	npcwalkto 156,342;
+	npcwalkto 156,327;
 	sleep 3000;
 
 	waitingroom "POTIONS",0;
