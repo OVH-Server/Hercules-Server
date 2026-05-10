@@ -118,7 +118,7 @@ OnTimer3000:
 	delwaitingroom;
 
 	// 12eme déplacement
-	npcwalkto 156,122;
+	npcwalkto 156,126;
 	sleep 3000;
 
 	waitingroom "12",0;
@@ -127,7 +127,7 @@ OnTimer3000:
 	delwaitingroom;
 
 	// 13eme déplacement
-	npcwalkto 156,95;
+	npcwalkto 156,103;
 	sleep 3000;
 
 	waitingroom "13",0;
@@ -136,7 +136,7 @@ OnTimer3000:
 	delwaitingroom;
 
 	// 14eme déplacement
-	npcwalkto 156,66;
+	npcwalkto 156,80;
 	sleep 3000;
 
 	waitingroom "14",0;
@@ -145,7 +145,7 @@ OnTimer3000:
 	delwaitingroom;
 
 	// 15eme déplacement
-	npcwalkto 156,28;
+	npcwalkto 156,56;
 	sleep 3000;
 
 	waitingroom "15",0;
@@ -154,7 +154,16 @@ OnTimer3000:
 	delwaitingroom;
 
 	// 16eme déplacement = Sortie de trajet
-	npcwalkto 156,22;
+	npcwalkto 156,34;
+	sleep 3000;
+
+	waitingroom "16",0;
+	sleep 1000;
+
+	delwaitingroom;
+
+	// 16eme déplacement = Sortie de trajet
+	npcwalkto 156,21;
 	sleep 3000;
 
 	waitingroom "See you tommorow !",0;
