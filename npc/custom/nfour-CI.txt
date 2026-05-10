@@ -180,12 +180,15 @@ OnCombatEnd:
     // Teleport all players to center (below the central square)
     instance_warpall(.@map$, 100, 50);
     
+    sleep(5000);
+
+
     // Spawn Yggdrasil Berries around players, don't work for now need to debug it
-    // for (.@i = 0; .@i < 10; ++.@i) {
-    //     makeitem(Yggdrasil_Berry, 1, .@map$, 100 + rand(10), 50 + rand(10));
-    // }
+    for (.@i = 0; .@i < 10; ++.@i) {
+        makeitem("Yggdrasilberry", 1, .@map$, 100 + rand(10), 50 + rand(10));
+        sleep(1000);
+    }
     
-    sleep(1000);
     // announce("1 minute remaining before the end of the instant battle!", bc_all, 0xFF0000);
     
     // Final countdown (reduced to 10 seconds for testing)
