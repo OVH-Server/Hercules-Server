@@ -16,23 +16,53 @@ OnInit:
 OnTimer3000:
 	delwaitingroom;
 
-	// Premier déplacement
+	// 1er déplacement
 	npcwalkto 156,330;
-	
+	sleep 3000;
 
-	waitingroom "POTIONS",0;
-
+	waitingroom "1",0;
+	sleep 1000;
 
 	delwaitingroom;
 
-	// Deuxième déplacement
+	// 2eme déplacement
 	npcwalkto 156,307;
-	
+	sleep 3000;
 
-	waitingroom "Yellow Gemstone!",0;
+	waitingroom "2",0;
+	sleep 1000;
+
+	delwaitingroom;
+
+	// 3eme déplacement
+	npcwalkto 146,292;
+	sleep 3000;
+
+	waitingroom "3",0;
+	sleep 1000;
+
+	delwaitingroom;
+
+	// 4eme déplacement
+	npcwalkto 146,292;
+	sleep 3000;
+
+	waitingroom "4",0;
+	sleep 1000;
+
+	delwaitingroom;
+
+	// 5eme déplacement
+	npcwalkto 155,272;
+	sleep 3000;
+
+	waitingroom "5",0;
+	sleep 1000;
+
+	delwaitingroom;
 	end;
 
-OnTimer150000:
+OnTimer15000:
 	stopnpctimer;
 	delwaitingroom;
 
