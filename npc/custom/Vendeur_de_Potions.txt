@@ -101,7 +101,7 @@ OnTimer3000:
 
 	// 10eme déplacement
 	npcwalkto 156,176;
-	sleep 3000;
+	sleep 10000;
 
 	waitingroom "10",0;
 	sleep 1000;
@@ -110,7 +110,7 @@ OnTimer3000:
 
 	end;
 
-OnTimer50000:
+OnTimer70000:
 	stopnpctimer;
 	delwaitingroom;
 
