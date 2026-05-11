@@ -18,165 +18,165 @@ OnTimer3000:
 
 	// 1er déplacement
 	npcwalkto 156,330;
-	sleep 3000;
+	// sleep 3000;
 
 	waitingroom "1",0;
-	sleep 1000;
+	// sleep 1000;
 
 	delwaitingroom;
 
 	// 2eme déplacement
 	npcwalkto 156,307;
-	sleep 3000;
+	// sleep 3000;
 
 	waitingroom "2",0;
-	sleep 1000;
+	// sleep 1000;
 
 	delwaitingroom;
 
 	// 3eme déplacement
 	npcwalkto 146,292;
-	sleep 3000;
+	// sleep 3000;
 
 	waitingroom "3",0;
-	sleep 1000;
+	// sleep 1000;
 
 	delwaitingroom;
 
 	// 4eme déplacement
 	npcwalkto 146,292;
-	sleep 3000;
+	// sleep 3000;
 
 	waitingroom "4",0;
-	sleep 1000;
+	// sleep 1000;
 
 	delwaitingroom;
 
 	// 5eme déplacement
 	npcwalkto 155,272;
-	sleep 3000;
+	// sleep 3000;
 
 	waitingroom "5",0;
-	sleep 1000;
+	// sleep 1000;
 
 	delwaitingroom;
 
 
 	// 6eme déplacement
 	npcwalkto 155,251;
-	sleep 3000;
+	// sleep 3000;
 
 	waitingroom "6",0;
-	sleep 1000;
+	// sleep 1000;
 
 	delwaitingroom;
 
 	// 7eme déplacement = Arrivé à la place centrale coté NORD
 	npcwalkto 155,228;
-	sleep 3000;
+	// sleep 3000;
 
 	waitingroom "7",0;
-	sleep 1000;
+	// sleep 1000;
 
 	delwaitingroom;
 	
 
 	// 8eme déplacement
 	npcwalkto 134,204;
-	sleep 3000;
+	// sleep 3000;
 
 	waitingroom "8",0;
-	sleep 1000;
+	// sleep 1000;
 
 	delwaitingroom;
 
 	// 9eme déplacement
 	npcwalkto 144,191;
-	sleep 3000;
+	// sleep 3000;
 
 	waitingroom "9",0;
-	sleep 1000;
+	// sleep 1000;
 
 	delwaitingroom;
 
 	// 10eme déplacement = Arrivé à la place centrale SPANW coté SUD
 	npcwalkto 156,176;
-	sleep 8000;
+	// sleep 8000;
 
 	waitingroom "Finest materials and rare supplies",0;
-	sleep 1000;
+	// sleep 1000;
 
 	delwaitingroom;
 
 	// 11eme déplacement
 	npcwalkto 156,146;
-	sleep 3000;
+	// sleep 3000;
 
 	waitingroom "11",0;
-	sleep 1000;
+	// sleep 1000;
 
 	delwaitingroom;
 
 	// 12eme déplacement
 	npcwalkto 156,126;
-	sleep 3000;
+	// sleep 3000;
 
 	waitingroom "12",0;
-	sleep 1000;
+	// sleep 1000;
 
 	delwaitingroom;
 
 	// 13eme déplacement
 	npcwalkto 156,109;
-	sleep 3000;
+	// sleep 3000;
 
 	waitingroom "13",0;
-	sleep 1000;
+	// sleep 1000;
 
 	delwaitingroom;
 
 	// 14eme déplacement
 	npcwalkto 156,93;
-	sleep 3000;
+	// sleep 3000;
 
 	waitingroom "14",0;
-	sleep 1000;
+	// sleep 1000;
 
 	delwaitingroom;
 
 	// 15eme déplacement
 	npcwalkto 156,71;
-	sleep 3000;
+	// sleep 3000;
 
 	waitingroom "15",0;
-	sleep 1000;
+	// sleep 1000;
 
 	delwaitingroom;
 
 	// 16eme déplacement 
 	npcwalkto 156,51;
-	sleep 3000;
+	// sleep 3000;
 
 	waitingroom "16",0;
-	sleep 1000;
+	// sleep 1000;
 
 	delwaitingroom;
 
 	// 17eme déplacement 
 	npcwalkto 156,29;
-	sleep 3000;
+	// sleep 3000;
 
 	waitingroom "17",0;
-	sleep 1000;
+	// sleep 1000;
 
 	delwaitingroom;
 
 	// 18eme déplacement = Sortie de Trajet
 	npcwalkto 156,21;
-	sleep 3000;
+	// sleep 3000;
 
 	waitingroom "See you tommorow !",0;
-	sleep 1000;
+	// sleep 1000;
 
 	delwaitingroom;
 	end;
