@@ -6,13 +6,18 @@ prontera,150,185,0	script	InstantCbt	4_M_ROGUE,{
     .@party_id = 4444;
     .@md_name$ = _("Combat Instance");
 
+	if ($ci_is_open == 0) {
+		mes("[InstantCbt]");
+        mes("Instance combat is not open");
+		close();
+	}
+
 
     donpcevent("InstantCbt::OnStart");
 
     .@str$ = sprintf(_$("Enter to the %s"), .@md_name$);
     switch (select(.@str$, "Cancel")) {
     case 1:
-
         mes("[InstantCbt]");
         mesf("Current instance with id: %d", $ci_instance_id);
         next();
