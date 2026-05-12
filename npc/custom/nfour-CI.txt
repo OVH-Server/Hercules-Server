@@ -7,7 +7,6 @@ prontera,150,185,0	script	InstantCbt	4_M_ROGUE,{
     .@p_name$ = getpartyname(.@party_id);
     .@md_name$ = _("Combat Instance");
 
-    .@instance_map_name$ = "moc_pryd04";
 
     .@str$ = sprintf(_$("Enter to the %s"), .@md_name$);
     switch (select(.@str$, "Cancel")) {
@@ -17,7 +16,7 @@ prontera,150,185,0	script	InstantCbt	4_M_ROGUE,{
         mes("[InstantCbt]");
         mesf("Current instance with id: %d", $ci_instance_id);
         next();
-        if ($ci_instance_id != -1 && has_instance(.@instance_map_name$, $ci_instance_id) != "") {
+        if ($ci_instance_id != -1 && has_instance($ci_instance_map_name$, $ci_instance_id) != "") {
             mes("[InstantCbt]");
             mesf("Instance Already exist with id: %d", $ci_instance_id);
             next();
@@ -25,7 +24,7 @@ prontera,150,185,0	script	InstantCbt	4_M_ROGUE,{
         }
 
         $ci_instance_id = instance_create(.@md_name$, .@party_id, IOT_NONE);
-        if (instance_attachmap(.@instance_map_name$, $ci_instance_id, true, "combat") == "") {
+        if (instance_attachmap($ci_instance_map_name$, $ci_instance_id, true, "combat") == "") {
             mes("[InstantCbt]");
             mesf("Instance: %s already exist press next to enter", .@p_name$);
             next();
@@ -42,7 +41,7 @@ prontera,150,185,0	script	InstantCbt	4_M_ROGUE,{
     }
 
     // Dungeon access
-    if (has_instance(.@instance_map_name$) == "") {
+    if (has_instance($ci_instance_map_name$) == "") {
         mes("[InstantCbt]");
         mesf("Instance %s does not exist.", .@md_name$);
         close();
@@ -108,7 +107,13 @@ OnInit:
     /* Number second before starting */
     $ci_nb_second_before_start = 10;
 
+    $ci_instance_map_name$ = "moc_pryd04";
 
+    if ($ci_instance_id != -1 && has_instance($ci_instance_map_name$, $ci_instance_id) != "") {
+        announce("[CI] On init destroy instance" , bc_all, 0xFF0000);
+        instance_destroy($ci_instance_id);
+    }
+    announce("[CI] On init NO destroy current id : " + $ci_instance_id , bc_all, 0xFF0000);
     $ci_instance_id = -1;
     end;
 
@@ -226,8 +231,11 @@ OnCombatEnd:
     
     // Destroy instance after a delay
     sleep(5000);
-    announce("[DEBUG] Destroying instance", bc_all, 0x0000FF);
-    instance_destroy();
+    if ($ci_instance_id != -1 && has_instance($ci_instance_map_name$, $ci_instance_id) != "") {
+        announce("[CI] OnCombatEnd destroy instance" , bc_all, 0xFF0000);
+        instance_destroy($ci_instance_id);
+        $ci_instance_id = -1;
+    }
     end;
 }
 
