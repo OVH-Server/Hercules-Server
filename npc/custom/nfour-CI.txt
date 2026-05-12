@@ -6,39 +6,16 @@ prontera,150,185,0	script	InstantCbt	4_M_ROGUE,{
     .@party_id = 4444;
     .@md_name$ = _("Combat Instance");
 
+
+    donpcevent("InstantCbt::OnStart");
+
     .@str$ = sprintf(_$("Enter to the %s"), .@md_name$);
     switch (select(.@str$, "Cancel")) {
     case 1:
 
-
         mes("[InstantCbt]");
         mesf("Current instance with id: %d", $ci_instance_id);
         next();
-        if ($ci_instance_id != -1 && has_instance($ci_instance_map_name$, $ci_instance_id) != "") {
-            mes("[InstantCbt]");
-            mesf("Instance Already exist with id: %d", $ci_instance_id);
-            next();
-            break ;
-        }
-
-        $ci_instance_id = instance_create(.@md_name$, .@party_id, IOT_NONE);
-        if ($ci_instance_id < 0) {
-            mes("[InstantCbt]");
-            mesf("Failed to create instance code: %d", $ci_instance_id );
-            next();
-            break ;
-        }
-        if (instance_attachmap($ci_instance_map_name$, $ci_instance_id, true, "combat") == "") {
-            mes("[InstantCbt]");
-            mesf("Instance: %s already exist press next to enter", .@md_name$);
-            next();
-            break ;
-        }
-        mes("[InstantCbt]");
-        mesf("Instance Created with id: %d", $ci_instance_id);
-        next();
-        instance_set_timeout(7200, 300, $ci_instance_id);
-        instance_init($ci_instance_id);
         break;
     case 2:
         close();
@@ -55,6 +32,22 @@ prontera,150,185,0	script	InstantCbt	4_M_ROGUE,{
     .@map$ = instance_mapname("moc_pryd04", $ci_instance_id);
     announce("[DEBUG] Warping to: " + .@map$, bc_self, 0x00FF00);
     warp(.@map$, $ci_player_starting_pos_x, $ci_player_starting_pos_y);
+    end;
+
+OnStart:
+    if ($ci_instance_id != -1 && has_instance($ci_instance_map_name$, $ci_instance_id) != "") {
+        return ;
+    }
+
+    $ci_instance_id = instance_create(.@md_name$, .@party_id, IOT_NONE);
+    if ($ci_instance_id < 0) {
+        return ;
+    }
+    if (instance_attachmap($ci_instance_map_name$, $ci_instance_id, true, "combat") == "") {
+        return ;
+    }
+    instance_set_timeout(7200, 300, $ci_instance_id);
+    instance_init($ci_instance_id);
     end;
 
 OnInit:
