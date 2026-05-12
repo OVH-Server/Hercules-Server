@@ -3,7 +3,7 @@
 // The global configutation of the CI, can be edited in the OnInit section of this NPC
 prontera,150,185,0	script	InstantCbt	4_M_ROGUE,{
 
-    .@party_id = getcharid(CHAR_ID_PARTY);
+    .@party_id = 4444;
     .@p_name$ = getpartyname(.@party_id);
     .@md_name$ = _("Combat Instance");
 
@@ -12,15 +12,30 @@ prontera,150,185,0	script	InstantCbt	4_M_ROGUE,{
     .@str$ = sprintf(_$("Enter to the %s"), .@md_name$);
     switch (select(.@str$, "Cancel")) {
     case 1:
-        .@instance = instance_create(.@md_name$, .@party_id);
-        if (instance_attachmap(.@instance_map_name$, .@instance, true, "combat") == "") {
+
+
+        mes("[InstantCbt]");
+        mesf("Current instance with id: %d", $ci_instance_id);
+        next();
+        if ($ci_instance_id != -1 && has_instance(.@instance_map_name$, $ci_instance_id) != "") {
+            mes("[InstantCbt]");
+            mesf("Instance Already exist with id: %d", $ci_instance_id);
+            next();
+            break ;
+        }
+
+        $ci_instance_id = instance_create(.@md_name$, .@party_id, IOT_NONE);
+        if (instance_attachmap(.@instance_map_name$, $ci_instance_id, true, "combat") == "") {
             mes("[InstantCbt]");
             mesf("Instance: %s already exist press next to enter", .@p_name$);
             next();
             break ;
         }
-        instance_set_timeout(7200, 300, .@instance);
-        instance_init(.@instance);
+        mes("[InstantCbt]");
+        mesf("Instance Created with id: %d", $ci_instance_id);
+        next();
+        instance_set_timeout(7200, 300, $ci_instance_id);
+        instance_init($ci_instance_id);
         break;
     case 2:
         close();
@@ -34,7 +49,7 @@ prontera,150,185,0	script	InstantCbt	4_M_ROGUE,{
     }
 
     mapannounce("prontera", sprintf(_$("%s of the party, %s is entering the %s."), strcharinfo(PC_NAME), .@p_name$, .@md_name$), bc_all, C_SPRINGGREEN);
-    .@map$ = instance_mapname("moc_pryd04", .@instance_id);
+    .@map$ = instance_mapname("moc_pryd04", $ci_instance_id);
     announce("[DEBUG] Warping to: " + .@map$, bc_self, 0x00FF00);
     warp(.@map$, $ci_player_starting_pos_x, $ci_player_starting_pos_y);
     end;
@@ -93,6 +108,8 @@ OnInit:
     /* Number second before starting */
     $ci_nb_second_before_start = 10;
 
+
+    $ci_instance_id = -1;
     end;
 
 }
