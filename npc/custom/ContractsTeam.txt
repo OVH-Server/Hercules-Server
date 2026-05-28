@@ -11,8 +11,13 @@
 // Skin: 4_F_VALKYRIE
 // =====================================================
 
-prontera,152,166,4	script	TeamContracts#Main	4_F_VALKYRIE,{
+prontera,152,166,4	script	TeamContracts	4_F_VALKYRIE,{
+	goto Start;
 
+OnTouch:
+	goto Start;
+
+Start:
 	mes("[Team Contracts]");
 	mes("Welcome to the Team Contract Board.");
 	mes("Anyone can view the missions.");
@@ -55,7 +60,6 @@ prontera,152,166,4	script	TeamContracts#Main	4_F_VALKYRIE,{
 
 		Zeny += 10000;
 		getexp 10000,0;
-
 		specialeffect2 EF_LEVEL99_3;
 		skilleffect AL_BLESSING,0;
 
@@ -157,16 +161,12 @@ prontera,152,166,4	script	TeamContracts#Main	4_F_VALKYRIE,{
 
 	if (.@quest == 1 && (BaseJob == Job_Swordman || BaseJob == Job_Acolyte))
 		.@class_ok = 1;
-
 	if (.@quest == 2 && (BaseJob == Job_Archer || BaseJob == Job_Mage))
 		.@class_ok = 1;
-
 	if (.@quest == 3 && (BaseJob == Job_Merchant || BaseJob == Job_Thief))
 		.@class_ok = 1;
-
 	if (.@quest == 4 && (BaseJob == Job_Swordman || BaseJob == Job_Acolyte || BaseJob == Job_Archer))
 		.@class_ok = 1;
-
 	if (.@quest == 5 && (BaseJob == Job_Swordman || BaseJob == Job_Archer || BaseJob == Job_Mage || BaseJob == Job_Acolyte || BaseJob == Job_Thief || BaseJob == Job_Merchant))
 		.@class_ok = 1;
 
