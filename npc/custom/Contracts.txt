@@ -5,7 +5,7 @@
 // NPC: prontera 159 173
 // =====================================================
 
-prontera,159,173,4	script	Prontera Contracts	4_F_VALKYRIE,{
+prontera,152,172,4	script	Prontera Contracts	4_F_VALKYRIE,{
 	mes("[Prontera Contracts]");
 
 	if ($Prontera_Territory_Level >= 2) {
@@ -133,7 +133,7 @@ OnNPCKillEvent:
 // NPC: prontera 161 173
 // =====================================================
 
-prontera,161,173,4	script	Prontera Supply Vendor	4_F_VALKYRIE,{
+prontera,149,172,4	script	Prontera Supply Vendor	4_F_VALKYRIE,{
 	mes("[Prontera Supply Vendor]");
 
 	if ($Prontera_Territory_Level < 1) {
