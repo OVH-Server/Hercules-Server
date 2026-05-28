@@ -1,6 +1,6 @@
 //===== Hercules Script ======================================
 
-prontera,130,195,4	script	Pillar of Ascension	4_M_FAIRYANG,{
+prontera,148,189,4	script	Pillar of Ascension	4_M_FAIRYANG,{
 	mes("[Pillar of Ascension]");
 
 	if ($AscensionPillar_Level >= 2) {
