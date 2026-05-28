@@ -1,0 +1,244 @@
+//===== Hercules Script ======================================
+
+// =====================================================
+// Team Contract NPC
+// Prontera 
+// =====================================================
+
+prontera,152,166,4	script	TeamContracts	4_F_VALKYRIE,{
+
+	mes("[Team Contracts]");
+	mes("Choose a team contract.");
+	mes("You can view requirements even if your class is not eligible.");
+	next();
+
+	switch(select(
+		"Quest 1 - Payon Dungeon 00",
+		"Quest 2 - Moscovia Field 01",
+		"Quest 3 - Einbroch Field 04",
+		"Quest 4 - Payon Dungeon 01",
+		"Quest 5 - Orc Field",
+		"Quest 6 - Coming soon",
+		"Quest 7 - Coming soon",
+		"Quest 8 - Coming soon",
+		"Quest 9 - Coming soon",
+		"Quest 10 - Coming soon",
+		"Validate current contract",
+		"Leave"
+	)) {
+		case 1:
+			callsub S_ShowQuest,1,"Swordman + Acolyte","Kill 10 Zombies and 10 Poporings in Payon Dungeon 00.",1015,1031,"Zombie","Poporing","pay_dun00";
+			end;
+
+		case 2:
+			callsub S_ShowQuest,2,"Archer + Mage","Kill 10 Les and 10 Wood Goblins in Moscovia Field 01.",1881,1880,"Les","Wood Goblin","mosk_fild01";
+			end;
+
+		case 3:
+			callsub S_ShowQuest,3,"Merchant + Thief","Kill 10 Metalings and 10 Mols in Einbroch Field 04.",1613,1629,"Metaling","Mol","ein_fild04";
+			end;
+
+		case 4:
+			callsub S_ShowQuest,4,"Swordman + Acolyte + Archer","Kill 10 Archer Skeletons and 10 Soldier Skeletons in Payon Dungeon 01.",1016,1028,"Archer Skeleton","Soldier Skeleton","pay_dun01";
+			end;
+
+		case 5:
+			callsub S_ShowQuest,5,"Swordman + Archer + Mage + Acolyte + Thief + Merchant","Kill 20 Orc Warriors and 20 Orc Ladies in Gefen Field 10.",1023,1273,"Orc Warrior","Orc Lady","gef_fild10";
+			end;
+
+		case 6:
+		case 7:
+		case 8:
+		case 9:
+		case 10:
+			mes("[Team Contracts]");
+			mes("This contract is not available yet.");
+			close();
+
+		case 11:
+			callsub S_Validate;
+			end;
+
+		case 12:
+			close();
+	}
+
+S_ShowQuest:
+	.@qid = getarg(0);
+	.@classes$ = getarg(1);
+	.@desc$ = getarg(2);
+	.@mob1 = getarg(3);
+	.@mob2 = getarg(4);
+	.@mob1$ = getarg(5);
+	.@mob2$ = getarg(6);
+	.@map$ = getarg(7);
+
+	mes("[Team Contracts]");
+	mes("Contract #" + .@qid);
+	mes("Required classes:");
+	mes("^00FF00" + .@classes$ + "^000000");
+	mes("");
+	mes("Objective:");
+	mes(.@desc$);
+	mes("");
+	mes("Reward:");
+	mes("^00FF0010,000 Base EXP");
+	mes("10,000 Zeny^000000");
+	next();
+
+	if (#TeamContract_Active) {
+		mes("[Team Contracts]");
+		mes("You already have an active contract.");
+		close();
+	}
+
+	if (!callsub(S_CheckClassRequirement,.@qid)) {
+		mes("[Team Contracts]");
+		mes("Your current class cannot accept this contract.");
+		close();
+	}
+
+	if (!callsub(S_CheckPartyRequirement,.@qid)) {
+		mes("[Team Contracts]");
+		mes("Your party does not have the required classes.");
+		close();
+	}
+
+	if (select("Accept contract:Leave") == 1) {
+		#TeamContract_Active = 1;
+		#TeamContract_ID = .@qid;
+		#TeamContract_Mob1 = .@mob1;
+		#TeamContract_Mob2 = .@mob2;
+		#TeamContract_Mob1_Kill = 0;
+		#TeamContract_Mob2_Kill = 0;
+		#TeamContract_Amount = (.@qid == 5 ? 20 : 10);
+
+		mes("[Team Contracts]");
+		mes("Contract accepted.");
+		mes("Go to ^00FF00" + .@map$ + "^000000.");
+		close();
+	}
+
+	close();
+
+S_Validate:
+	if (!#TeamContract_Active) {
+		mes("[Team Contracts]");
+		mes("You do not have an active contract.");
+		close();
+	}
+
+	mes("[Team Contracts]");
+	mes("Current progress:");
+	mes("Monster 1: " + #TeamContract_Mob1_Kill + "/" + #TeamContract_Amount);
+	mes("Monster 2: " + #TeamContract_Mob2_Kill + "/" + #TeamContract_Amount);
+	next();
+
+	if (#TeamContract_Mob1_Kill < #TeamContract_Amount || #TeamContract_Mob2_Kill < #TeamContract_Amount) {
+		mes("[Team Contracts]");
+		mes("The contract is not complete yet.");
+		close();
+	}
+
+	#TeamContract_Active = 0;
+	#TeamContract_ID = 0;
+	#TeamContract_Mob1 = 0;
+	#TeamContract_Mob2 = 0;
+	#TeamContract_Mob1_Kill = 0;
+	#TeamContract_Mob2_Kill = 0;
+	#TeamContract_Amount = 0;
+
+	Zeny += 10000;
+	getexp 10000,0;
+
+	specialeffect2 EF_LEVEL99_3;
+	skilleffect AL_BLESSING,0;
+
+	mes("[Team Contracts]");
+	mes("Contract completed!");
+	mes("You received:");
+	mes("^00FF0010,000 Base EXP");
+	mes("10,000 Zeny^000000");
+	close();
+
+S_CheckClassRequirement:
+	.@qid = getarg(0);
+
+	if (.@qid == 1 && (BaseJob == Job_Swordman || BaseJob == Job_Acolyte)) return 1;
+	if (.@qid == 2 && (BaseJob == Job_Archer || BaseJob == Job_Mage)) return 1;
+	if (.@qid == 3 && (BaseJob == Job_Merchant || BaseJob == Job_Thief)) return 1;
+	if (.@qid == 4 && (BaseJob == Job_Swordman || BaseJob == Job_Acolyte || BaseJob == Job_Archer)) return 1;
+	if (.@qid == 5 && (BaseJob == Job_Swordman || BaseJob == Job_Archer || BaseJob == Job_Mage || BaseJob == Job_Acolyte || BaseJob == Job_Thief || BaseJob == Job_Merchant)) return 1;
+
+	return 0;
+
+S_CheckPartyRequirement:
+	.@qid = getarg(0);
+
+	if (getcharid(CHAR_ID_PARTY) <= 0)
+		return 0;
+
+	getpartymember getcharid(CHAR_ID_PARTY),1;
+
+	.@hasSword = 0;
+	.@hasAco = 0;
+	.@hasArcher = 0;
+	.@hasMage = 0;
+	.@hasMerchant = 0;
+	.@hasThief = 0;
+	.@myaid = getcharid(CHAR_ID_ACCOUNT);
+
+	for (.@i = 0; .@i < $@partymembercount; .@i++) {
+		if (isloggedin($@partymemberaid[.@i])) {
+			attachrid $@partymemberaid[.@i];
+
+			if (BaseJob == Job_Swordman) .@hasSword = 1;
+			if (BaseJob == Job_Acolyte) .@hasAco = 1;
+			if (BaseJob == Job_Archer) .@hasArcher = 1;
+			if (BaseJob == Job_Mage) .@hasMage = 1;
+			if (BaseJob == Job_Merchant) .@hasMerchant = 1;
+			if (BaseJob == Job_Thief) .@hasThief = 1;
+		}
+	}
+
+	attachrid .@myaid;
+
+	if (.@qid == 1 && .@hasSword && .@hasAco) return 1;
+	if (.@qid == 2 && .@hasArcher && .@hasMage) return 1;
+	if (.@qid == 3 && .@hasMerchant && .@hasThief) return 1;
+	if (.@qid == 4 && .@hasSword && .@hasAco && .@hasArcher) return 1;
+	if (.@qid == 5 && .@hasSword && .@hasArcher && .@hasMage && .@hasAco && .@hasThief && .@hasMerchant) return 1;
+
+	return 0;
+
+OnNPCKillEvent:
+	if (!#TeamContract_Active)
+		end;
+
+	if (killedrid == #TeamContract_Mob1 && #TeamContract_Mob1_Kill < #TeamContract_Amount) {
+		#TeamContract_Mob1_Kill++;
+		dispbottom "Team Contract progress: " + #TeamContract_Mob1_Kill + "/" + #TeamContract_Amount;
+	}
+
+	if (killedrid == #TeamContract_Mob2 && #TeamContract_Mob2_Kill < #TeamContract_Amount) {
+		#TeamContract_Mob2_Kill++;
+		dispbottom "Team Contract progress: " + #TeamContract_Mob2_Kill + "/" + #TeamContract_Amount;
+	}
+
+	end;
+}
+
+
+// =====================================================
+// Level 50 Team Gear Vendor
+// Prontera
+// Shop window, fixed 10,000 zeny
+// =====================================================
+
+prontera,149,166,4	shop	Team Gear Vendor	4_F_VALKYRIE,\
+1108:10000,2314:10000,\
+1714:10000,2330:10000,\
+1610:10000,2321:10000,\
+1519:10000,2325:10000,\
+1222:10000,2337:10000,\
+1354:10000,2316:10000
