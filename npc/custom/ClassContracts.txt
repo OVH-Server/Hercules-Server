@@ -1,0 +1,197 @@
+//===== Hercules Script ======================================
+
+prontera,152,169,4	script	ClassContracts	4_F_VALKYRIE,{
+	mes("[Class Contracts]");
+
+	if (BaseJob == Job_Swordman) {
+		.@mob = 1002; .@mob$ = "Poring"; .@reward = 1101; .@reward$ = "Sword";
+	} else if (BaseJob == Job_Archer) {
+		.@mob = 1063; .@mob$ = "Lunatic"; .@reward = 1701; .@reward$ = "Bow";
+	} else if (BaseJob == Job_Acolyte) {
+		.@mob = 1076; .@mob$ = "Skeleton"; .@reward = 1501; .@reward$ = "Mace";
+	} else if (BaseJob == Job_Thief) {
+		.@mob = 1113; .@mob$ = "Drops"; .@reward = 1201; .@reward$ = "Knife";
+	} else if (BaseJob == Job_Merchant) {
+		.@mob = 1031; .@mob$ = "Poporing"; .@reward = 1301; .@reward$ = "Axe";
+	} else if (BaseJob == Job_Mage) {
+		.@mob = 1008; .@mob$ = "Pupa"; .@reward = 1601; .@reward$ = "Rod";
+	} else {
+		mes("Your class has no contract available.");
+		close();
+	}
+
+	mes("Class points: " + #ClassContract_Points + "/2");
+
+	if (#ClassContract_Active == 0) {
+		mes("Your class contract is:");
+		mes("Hunt ^FF00001 " + .@mob$ + "^000000.");
+		next();
+
+		if (select("Accept contract:Leave") == 1) {
+			#ClassContract_Active = 1;
+			#ClassContract_Target = .@mob;
+			#ClassContract_Kill = 0;
+
+			mes("[Class Contracts]");
+			mes("Contract accepted.");
+			mes("Target: ^FF00001 " + .@mob$ + "^000000.");
+			close();
+		}
+		close();
+	}
+
+	if (#ClassContract_Kill < 1) {
+		mes("You already have an active contract.");
+		mes("Target: ^FF00001 " + .@mob$ + "^000000.");
+		mes("Progress: " + #ClassContract_Kill + "/1");
+		close();
+	}
+
+	mes("Your contract is complete.");
+	mes("Validate it now?");
+	next();
+
+	if (select("Validate contract:Leave") == 1) {
+		#ClassContract_Active = 0;
+		#ClassContract_Target = 0;
+		#ClassContract_Kill = 0;
+		#ClassContract_Points++;
+
+		getitem .@reward,1;
+
+		mes("[Class Contracts]");
+		mes("Contract validated.");
+		mes("You received: ^00FF001 " + .@reward$ + "^000000.");
+		mes("Class points: " + #ClassContract_Points + "/2");
+
+		if (#ClassContract_Points == 2) {
+			next();
+			mes("[Class Contracts]");
+			mes("You have unlocked your class equipment vendor.");
+			mes("Class equipment is now available for ^00FF001 zeny^000000.");
+		}
+		close();
+	}
+	close();
+
+OnNPCKillEvent:
+	if (#ClassContract_Active == 0)
+		end;
+
+	if (#ClassContract_Kill >= 1)
+		end;
+
+	if (killedrid == #ClassContract_Target) {
+		#ClassContract_Kill = 1;
+		dispbottom "Class contract completed. Return to the Class Contracts NPC.";
+	}
+	end;
+}
+
+
+// =====================================================
+// Class Gear Vendor
+// =====================================================
+
+prontera,149,169,4	script	ClassGearVendor	4_F_VALKYRIE,{
+	mes("[Class Gear Vendor]");
+
+	if (#ClassContract_Points < 2) {
+		mes("You need ^FF00002 class contract points^000000 to buy class equipment.");
+		mes("Current points: " + #ClassContract_Points + "/2");
+		close();
+	}
+
+	mes("Class equipment unlocked.");
+	mes("Every item costs ^00FF001 zeny^000000.");
+	next();
+
+	if (BaseJob == Job_Swordman) {
+		switch(select("Sword:Blade:Ring Pommel Saber:Leave")) {
+			case 1: callfunc("F_ClassGearBuy",1101,"Sword"); close();
+			case 2: callfunc("F_ClassGearBuy",1107,"Blade"); close();
+			case 3: callfunc("F_ClassGearBuy",1122,"Ring Pommel Saber"); close();
+			case 4: close();
+		}
+	}
+
+	if (BaseJob == Job_Archer) {
+		switch(select("Bow:Composite Bow:Crossbow:Leave")) {
+			case 1: callfunc("F_ClassGearBuy",1701,"Bow"); close();
+			case 2: callfunc("F_ClassGearBuy",1704,"Composite Bow"); close();
+			case 3: callfunc("F_ClassGearBuy",1710,"Crossbow"); close();
+			case 4: close();
+		}
+	}
+
+	if (BaseJob == Job_Acolyte) {
+		switch(select("Mace:Chain:Stunner:Leave")) {
+			case 1: callfunc("F_ClassGearBuy",1501,"Mace"); close();
+			case 2: callfunc("F_ClassGearBuy",1519,"Chain"); close();
+			case 3: callfunc("F_ClassGearBuy",1522,"Stunner"); close();
+			case 4: close();
+		}
+	}
+
+	if (BaseJob == Job_Thief) {
+		switch(select("Knife:Cutter:Main Gauche:Leave")) {
+			case 1: callfunc("F_ClassGearBuy",1201,"Knife"); close();
+			case 2: callfunc("F_ClassGearBuy",1204,"Cutter"); close();
+			case 3: callfunc("F_ClassGearBuy",1207,"Main Gauche"); close();
+			case 4: close();
+		}
+	}
+
+	if (BaseJob == Job_Merchant) {
+		switch(select("Axe:Battle Axe:Hammer:Leave")) {
+			case 1: callfunc("F_ClassGearBuy",1301,"Axe"); close();
+			case 2: callfunc("F_ClassGearBuy",1351,"Battle Axe"); close();
+			case 3: callfunc("F_ClassGearBuy",1354,"Hammer"); close();
+			case 4: close();
+		}
+	}
+
+	if (BaseJob == Job_Mage) {
+		switch(select("Rod:Wand:Staff:Leave")) {
+			case 1: callfunc("F_ClassGearBuy",1601,"Rod"); close();
+			case 2: callfunc("F_ClassGearBuy",1604,"Wand"); close();
+			case 3: callfunc("F_ClassGearBuy",1607,"Staff"); close();
+			case 4: close();
+		}
+	}
+
+	mes("Your class has no equipment available.");
+	close();
+}
+
+
+// =====================================================
+// Buy Function
+// =====================================================
+
+function	script	F_ClassGearBuy	{
+	.@item = getarg(0);
+	.@name$ = getarg(1);
+
+	mes("[Class Gear Vendor]");
+	mes("Item: ^00FF00" + .@name$ + "^000000");
+	mes("Price: ^00FF001 zeny^000000");
+	next();
+
+	if (select("Buy:Cancel") == 1) {
+		if (Zeny < 1) {
+			mes("[Class Gear Vendor]");
+			mes("You do not have enough zeny.");
+			close();
+		}
+
+		Zeny -= 1;
+		getitem .@item,1;
+
+		mes("[Class Gear Vendor]");
+		mes("Purchase complete.");
+		mes("You received ^00FF001 " + .@name$ + "^000000.");
+		close();
+	}
+	close();
+}
