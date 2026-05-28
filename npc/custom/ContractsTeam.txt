@@ -15,7 +15,8 @@ prontera,152,166,4	script	TeamContracts#Main	4_F_VALKYRIE,{
 
 	mes("[Team Contracts]");
 	mes("Welcome to the Team Contract Board.");
-	mes("You can view every mission, but only the required classes can accept them.");
+	mes("Anyone can view the missions.");
+	mes("Class restrictions only apply when accepting a mission.");
 	next();
 
 	.@menu = select("Quest 1 - Payon Dungeon 00:Quest 2 - Moscovia Field 01:Quest 3 - Einbroch Field 04:Quest 4 - Payon Dungeon 01:Quest 5 - Orc Field:Validate current contract:Cancel current contract:Leave");
@@ -23,9 +24,6 @@ prontera,152,166,4	script	TeamContracts#Main	4_F_VALKYRIE,{
 	if (.@menu == 8)
 		close();
 
-	// =========================
-	// VALIDATE CONTRACT
-	// =========================
 	if (.@menu == 6) {
 		if (#TC_Active == 0) {
 			mes("[Team Contracts]");
@@ -63,15 +61,10 @@ prontera,152,166,4	script	TeamContracts#Main	4_F_VALKYRIE,{
 
 		mes("[Team Contracts]");
 		mes("Contract completed!");
-		mes("Reward:");
-		mes("^00FF0010,000 Base EXP");
-		mes("10,000 Zeny^000000");
+		mes("Reward: 10,000 Base EXP and 10,000 Zeny.");
 		close();
 	}
 
-	// =========================
-	// CANCEL CONTRACT
-	// =========================
 	if (.@menu == 7) {
 		#TC_Active = 0;
 		#TC_Quest = 0;
@@ -88,9 +81,6 @@ prontera,152,166,4	script	TeamContracts#Main	4_F_VALKYRIE,{
 		close();
 	}
 
-	// =========================
-	// QUEST DATA
-	// =========================
 	if (.@menu == 1) {
 		.@quest = 1;
 		.@classes$ = "Swordman + Acolyte";
@@ -146,24 +136,15 @@ prontera,152,166,4	script	TeamContracts#Main	4_F_VALKYRIE,{
 		.@need = 20;
 	}
 
-	// =========================
-	// SHOW QUEST INFO
-	// =========================
 	mes("[Team Contracts]");
 	mes("Contract #" + .@quest);
 	mes("Required classes:");
 	mes("^00FF00" + .@classes$ + "^000000");
-	mes("");
-	mes("Location:");
-	mes("^00FF00" + .@map$ + "^000000");
-	mes("");
+	mes("Location: ^00FF00" + .@map$ + "^000000");
 	mes("Objective:");
 	mes("Kill " + .@need + " " + .@mob1_name$ + ".");
 	mes("Kill " + .@need + " " + .@mob2_name$ + ".");
-	mes("");
-	mes("Reward:");
-	mes("^00FF0010,000 Base EXP");
-	mes("10,000 Zeny^000000");
+	mes("Reward: ^00FF0010,000 Base EXP and 10,000 Zeny^000000");
 	next();
 
 	if (#TC_Active == 1) {
@@ -172,9 +153,6 @@ prontera,152,166,4	script	TeamContracts#Main	4_F_VALKYRIE,{
 		close();
 	}
 
-	// =========================
-	// CHECK PLAYER CLASS
-	// =========================
 	.@class_ok = 0;
 
 	if (.@quest == 1 && (BaseJob == Job_Swordman || BaseJob == Job_Acolyte))
@@ -198,9 +176,6 @@ prontera,152,166,4	script	TeamContracts#Main	4_F_VALKYRIE,{
 		close();
 	}
 
-	// =========================
-	// ACCEPT QUEST
-	// =========================
 	if (select("Accept contract:Leave") == 2)
 		close();
 
@@ -235,18 +210,3 @@ OnNPCKillEvent:
 
 	end;
 }
-
-
-// =====================================================
-// TEAM GEAR VENDOR
-// NPC: prontera 149 166
-// Fixed price: 10,000 zeny
-// =====================================================
-
-prontera,149,166,4	shop	Team Gear Vendor#Main	4_F_VALKYRIE,\
-1108:10000,2314:10000,\
-1714:10000,2330:10000,\
-1610:10000,2321:10000,\
-1519:10000,2325:10000,\
-1222:10000,2337:10000,\
-1354:10000,2316:10000
