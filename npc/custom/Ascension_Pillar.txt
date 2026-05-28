@@ -7,7 +7,8 @@ prontera,148,189,4	script	Pillar of Ascension	4_MACHINE_DEVICE,{
 		mes("The pillar shines with its full power.");
 		mes("Receive the blessing of ascension.");
 		sc_start(SC_BLESSING, 300000, 5);
-		sc_start(SC_INCREASEAGI, 300000, 5);
+		sc_start SC_INC_AGI,300000,5;
+        skilleffect AL_INCAGI,0;
 		close();
 	}
 
@@ -21,7 +22,8 @@ prontera,148,189,4	script	Pillar of Ascension	4_MACHINE_DEVICE,{
 				mes("[Pillar of Ascension]");
 				mes("Receive the blessing of ascension.");
 				sc_start(SC_BLESSING, 300000, 3);
-				sc_start(SC_INCREASEAGI, 300000, 3);
+				sc_start SC_INC_AGI,300000,3;
+                skilleffect AL_INCAGI,0;
 				close();
 
 			case 2:
