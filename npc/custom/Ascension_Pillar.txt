@@ -1,0 +1,96 @@
+//===== Hercules Script ======================================
+
+prontera,130,195,4	script	Pillar of Ascension	4_M_FAIRYANG,{
+	mes("[Pillar of Ascension]");
+
+	if ($AscensionPillar_Level >= 2) {
+		mes("The pillar shines with its full power.");
+		mes("Receive the blessing of ascension.");
+		sc_start(SC_BLESSING, 300000, 5);
+		sc_start(SC_INCREASEAGI, 300000, 5);
+		close();
+	}
+
+	if ($AscensionPillar_Level == 1) {
+		mes("The pillar has awakened.");
+		mes("You may receive its current blessing, or feed it to unlock greater power.");
+		next();
+
+		switch(select("Receive the blessing.:Feed the pillar.:Leave.")) {
+			case 1:
+				mes("[Pillar of Ascension]");
+				mes("Receive the blessing of ascension.");
+				sc_start(SC_BLESSING, 300000, 3);
+				sc_start(SC_INCREASEAGI, 300000, 3);
+				close();
+
+			case 2:
+				mes("[Pillar of Ascension]");
+				mes("The pillar requires ^FF00001 Bloody Rune^000000.");
+				mes("Progress: " + $AscensionPillar_FeedCount + "/20");
+				next();
+
+				if (countitem(7563) < 1) {
+					mes("[Pillar of Ascension]");
+					mes("You do not have a Bloody Rune.");
+					close();
+				}
+
+				delitem 7563,1;
+				$AscensionPillar_FeedCount++;
+
+				mes("[Pillar of Ascension]");
+				mes("You have fed the pillar.");
+				mes("Progress: " + $AscensionPillar_FeedCount + "/20");
+
+				if ($AscensionPillar_FeedCount >= 20) {
+					$AscensionPillar_Level = 2;
+					$AscensionPillar_FeedCount = 0;
+					next();
+					mes("[Pillar of Ascension]");
+					mes("The pillar has reached its final form.");
+					mes("All players may now receive Blessing Lv.5 and Increase Agility Lv.5.");
+				}
+				close();
+
+			case 3:
+				close();
+		}
+	}
+
+	mes("The pillar is dormant.");
+	mes("It must be fed ^FF000010 times^000000 before it can grant its blessing.");
+	mes("Required item: ^FF00001 Bloody Rune^000000.");
+	mes("Progress: " + $AscensionPillar_FeedCount + "/10");
+	next();
+
+	switch(select("Feed the pillar.:Leave.")) {
+		case 1:
+			if (countitem(7563) < 1) {
+				mes("[Pillar of Ascension]");
+				mes("You do not have a Bloody Rune.");
+				close();
+			}
+
+			delitem 7563,1;
+			$AscensionPillar_FeedCount++;
+
+			mes("[Pillar of Ascension]");
+			mes("You have fed the pillar.");
+			mes("Progress: " + $AscensionPillar_FeedCount + "/10");
+
+			if ($AscensionPillar_FeedCount >= 10) {
+				$AscensionPillar_Level = 1;
+				$AscensionPillar_FeedCount = 0;
+				next();
+				mes("[Pillar of Ascension]");
+				mes("The pillar has awakened.");
+				mes("All players may now receive Blessing Lv.3 and Increase Agility Lv.3.");
+			}
+			close();
+
+		case 2:
+			close();
+	}
+}
+
