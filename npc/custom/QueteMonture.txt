@@ -4,7 +4,7 @@
 // Prontera 161,185
 //============================================================
 
-prontera,161,184,4	script	Mount Hunter	4_F_DOMINO,{
+prontera,159,176,4	script	Mount Hunter	4_F_DOMINO,{
 	mes "[Mount Hunter]";
 
 	// Vérifie si la récompense a déjà été obtenue par ce personnage

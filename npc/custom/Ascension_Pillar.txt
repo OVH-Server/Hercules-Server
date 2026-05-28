@@ -1,37 +1,68 @@
 //===== Hercules Script ======================================
 
-prontera,148,189,4	script	Pillar of Ascension	4_MACHINE_DEVICE,{
+prontera,152,175,4	script	Pillar of Ascension	4_F_VALKYRIE,{
 	mes("[Pillar of Ascension]");
 
-	if ($AscensionPillar_Level >= 2) {
-		mes("The pillar shines with its full power.");
-		mes("Receive the blessing of ascension.");
-		sc_start(SC_BLESSING, 300000, 5);
-		sc_start SC_INC_AGI,300000,5;
-        skilleffect AL_INCAGI,0;
+	if ($AscensionPillar_Level >= 3) {
+		mes("The pillar shines with divine power.");
+		mes("Cost: ^FF00001 Bloody Rune^000000");
+		mes("Effect: Blessing Lv.10, Increase Agility Lv.10 and Assumptio Lv.10 for 10 minutes.");
+		next();
+
+		if (select("Receive the blessing.:Leave.") == 1) {
+			if (countitem(7563) < 1) {
+				mes("[Pillar of Ascension]");
+				mes("You do not have a Bloody Rune.");
+				close();
+			}
+
+			delitem 7563,1;
+
+			sc_start SC_BLESSING,600000,10;
+			skilleffect AL_BLESSING,0;
+			sc_start SC_INC_AGI,600000,10;
+			skilleffect AL_INCAGI,0;
+			sc_start SC_ASSUMPTIO,600000,10;
+			skilleffect HP_ASSUMPTIO,0;
+
+			mes("[Pillar of Ascension]");
+			mes("The final blessing of ascension flows through you.");
+			close();
+		}
 		close();
 	}
 
-	if ($AscensionPillar_Level == 1) {
-		mes("The pillar has awakened.");
-		mes("You may receive its current blessing, or feed it to unlock greater power.");
+	if ($AscensionPillar_Level == 2) {
+		mes("The pillar has reached its second stage.");
+		mes("You may receive its blessing, or feed it to unlock its final power.");
+		mes("Current Progress: " + $AscensionPillar_FeedCount + "/1");
 		next();
 
 		switch(select("Receive the blessing.:Feed the pillar.:Leave.")) {
 			case 1:
 				mes("[Pillar of Ascension]");
-				mes("Receive the blessing of ascension.");
-				sc_start(SC_BLESSING, 300000, 3);
-				sc_start SC_INC_AGI,300000,3;
-                skilleffect AL_INCAGI,0;
+				mes("Cost: ^FF00001 Bloody Rune^000000");
+				mes("Effect: Blessing Lv.7 and Increase Agility Lv.7 for 10 minutes.");
+				next();
+
+				if (countitem(7563) < 1) {
+					mes("[Pillar of Ascension]");
+					mes("You do not have a Bloody Rune.");
+					close();
+				}
+
+				delitem 7563,1;
+
+				sc_start SC_BLESSING,600000,7;
+				skilleffect AL_BLESSING,0;
+				sc_start SC_INC_AGI,600000,7;
+				skilleffect AL_INCAGI,0;
+
+				mes("[Pillar of Ascension]");
+				mes("The pillar grants you its second blessing.");
 				close();
 
 			case 2:
-				mes("[Pillar of Ascension]");
-				mes("The pillar requires ^FF00001 Bloody Rune^000000.");
-				mes("Progress: " + $AscensionPillar_FeedCount + "/20");
-				next();
-
 				if (countitem(7563) < 1) {
 					mes("[Pillar of Ascension]");
 					mes("You do not have a Bloody Rune.");
@@ -43,15 +74,74 @@ prontera,148,189,4	script	Pillar of Ascension	4_MACHINE_DEVICE,{
 
 				mes("[Pillar of Ascension]");
 				mes("You have fed the pillar.");
-				mes("Progress: " + $AscensionPillar_FeedCount + "/20");
+				mes("Progress: " + $AscensionPillar_FeedCount + "/1");
 
-				if ($AscensionPillar_FeedCount >= 20) {
+				if ($AscensionPillar_FeedCount >= 1) {
+					$AscensionPillar_Level = 3;
+					$AscensionPillar_FeedCount = 0;
+					next();
+					announce "The Pillar of Ascension has reached its final form!",bc_all;
+					mes("[Pillar of Ascension]");
+					mes("The final blessing has been unlocked.");
+				}
+				close();
+
+			case 3:
+				close();
+		}
+	}
+
+	if ($AscensionPillar_Level == 1) {
+		mes("The pillar has awakened.");
+		mes("You may receive its blessing, or feed it to unlock greater power.");
+		mes("Current Progress: " + $AscensionPillar_FeedCount + "/1");
+		next();
+
+		switch(select("Receive the blessing.:Feed the pillar.:Leave.")) {
+			case 1:
+				mes("[Pillar of Ascension]");
+				mes("Cost: ^FF00001 Bloody Rune^000000");
+				mes("Effect: Blessing Lv.3 and Increase Agility Lv.3 for 5 minutes.");
+				next();
+
+				if (countitem(7563) < 1) {
+					mes("[Pillar of Ascension]");
+					mes("You do not have a Bloody Rune.");
+					close();
+				}
+
+				delitem 7563,1;
+
+				sc_start SC_BLESSING,300000,3;
+				skilleffect AL_BLESSING,0;
+				sc_start SC_INC_AGI,300000,3;
+				skilleffect AL_INCAGI,0;
+
+				mes("[Pillar of Ascension]");
+				mes("The pillar grants you its first blessing.");
+				close();
+
+			case 2:
+				if (countitem(7563) < 1) {
+					mes("[Pillar of Ascension]");
+					mes("You do not have a Bloody Rune.");
+					close();
+				}
+
+				delitem 7563,1;
+				$AscensionPillar_FeedCount++;
+
+				mes("[Pillar of Ascension]");
+				mes("You have fed the pillar.");
+				mes("Progress: " + $AscensionPillar_FeedCount + "/1");
+
+				if ($AscensionPillar_FeedCount >= 1) {
 					$AscensionPillar_Level = 2;
 					$AscensionPillar_FeedCount = 0;
 					next();
+					announce "The Pillar of Ascension has reached its second stage!",bc_all;
 					mes("[Pillar of Ascension]");
-					mes("The pillar has reached its final form.");
-					mes("All players may now receive Blessing Lv.5 and Increase Agility Lv.5.");
+					mes("Blessing Lv.7 and Increase Agility Lv.7 have been unlocked.");
 				}
 				close();
 
@@ -61,9 +151,9 @@ prontera,148,189,4	script	Pillar of Ascension	4_MACHINE_DEVICE,{
 	}
 
 	mes("The pillar is dormant.");
-	mes("It must be fed ^FF000010 times^000000 before it can grant its blessing.");
-	mes("Required item: ^FF00001 Bloody Rune^000000.");
-	mes("Progress: " + $AscensionPillar_FeedCount + "/10");
+	mes("It must be fed ^FF00001 time^000000 before it can grant its first blessing.");
+	mes("Required item: ^FF00001 Bloody Rune^000000");
+	mes("Progress: " + $AscensionPillar_FeedCount + "/1");
 	next();
 
 	switch(select("Feed the pillar.:Leave.")) {
@@ -79,15 +169,15 @@ prontera,148,189,4	script	Pillar of Ascension	4_MACHINE_DEVICE,{
 
 			mes("[Pillar of Ascension]");
 			mes("You have fed the pillar.");
-			mes("Progress: " + $AscensionPillar_FeedCount + "/10");
+			mes("Progress: " + $AscensionPillar_FeedCount + "/1");
 
-			if ($AscensionPillar_FeedCount >= 10) {
+			if ($AscensionPillar_FeedCount >= 1) {
 				$AscensionPillar_Level = 1;
 				$AscensionPillar_FeedCount = 0;
 				next();
+				announce "The Pillar of Ascension has awakened!",bc_all;
 				mes("[Pillar of Ascension]");
-				mes("The pillar has awakened.");
-				mes("All players may now receive Blessing Lv.3 and Increase Agility Lv.3.");
+				mes("Blessing Lv.3 and Increase Agility Lv.3 have been unlocked.");
 			}
 			close();
 
@@ -95,4 +185,3 @@ prontera,148,189,4	script	Pillar of Ascension	4_MACHINE_DEVICE,{
 			close();
 	}
 }
-

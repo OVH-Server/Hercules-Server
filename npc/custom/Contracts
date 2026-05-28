@@ -1,0 +1,261 @@
+//===== Hercules Script ======================================
+
+// =====================================================
+// Prontera Territory Contracts
+// NPC: prontera 159 173
+// =====================================================
+
+prontera,159,173,4	script	Prontera Contracts	4_F_VALKYRIE,{
+	mes("[Prontera Contracts]");
+
+	if ($Prontera_Territory_Level >= 2) {
+		mes("Prontera territory has reached Level 2.");
+		mes("Current bonus:");
+		mes("^00FF0025% discount^000000 at the Prontera Supply Vendor.");
+		close();
+	}
+
+	mes("Prontera territory level: " + $Prontera_Territory_Level);
+	mes("Territory points: " + $Prontera_Territory_Points + "/2");
+
+	if ($Prontera_Territory_Level == 0) {
+		mes("Reward at Level 1:");
+		mes("^00FF0010% discount^000000 at the Prontera Supply Vendor.");
+	} else {
+		mes("Reward at Level 2:");
+		mes("^00FF0025% discount^000000 at the Prontera Supply Vendor.");
+	}
+	next();
+
+	if (#Prontera_Contract == 0) {
+		mes("[Prontera Contracts]");
+		mes("Choose a contract.");
+		next();
+
+		switch(select("Hunt 1 Poring:Hunt 1 Lunatic:Hunt 1 Drops:Leave")) {
+			case 1:
+				#Prontera_Contract = 1002;
+				#Prontera_Contract_Kill = 0;
+				mes("[Prontera Contracts]");
+				mes("Contract accepted:");
+				mes("Hunt ^FF00001 Poring^000000.");
+				close();
+
+			case 2:
+				#Prontera_Contract = 1063;
+				#Prontera_Contract_Kill = 0;
+				mes("[Prontera Contracts]");
+				mes("Contract accepted:");
+				mes("Hunt ^FF00001 Lunatic^000000.");
+				close();
+
+			case 3:
+				#Prontera_Contract = 1113;
+				#Prontera_Contract_Kill = 0;
+				mes("[Prontera Contracts]");
+				mes("Contract accepted:");
+				mes("Hunt ^FF00001 Drops^000000.");
+				close();
+
+			case 4:
+				close();
+		}
+	}
+
+	if (#Prontera_Contract_Kill < 1) {
+		mes("[Prontera Contracts]");
+		mes("You already have an active contract.");
+		mes("Progress: " + #Prontera_Contract_Kill + "/1");
+		close();
+	}
+
+	mes("[Prontera Contracts]");
+	mes("Your contract is complete.");
+	mes("Validate it now?");
+	next();
+
+	if (select("Validate contract:Leave") == 1) {
+		#Prontera_Contract = 0;
+		#Prontera_Contract_Kill = 0;
+
+		$Prontera_Territory_Points++;
+
+		mes("[Prontera Contracts]");
+		mes("Contract validated.");
+		mes("Prontera gained ^00FF001 territory point^000000.");
+		mes("Current points: " + $Prontera_Territory_Points + "/2");
+
+		if ($Prontera_Territory_Points >= 2) {
+			$Prontera_Territory_Level++;
+			$Prontera_Territory_Points = 0;
+
+			next();
+
+			if ($Prontera_Territory_Level == 1) {
+				announce "Prontera territory has reached Level 1! Supply discount is now 10%.",bc_all;
+				mes("[Prontera Contracts]");
+				mes("Prontera territory is now Level 1.");
+				mes("The Supply Vendor now offers ^00FF0010% discount^000000.");
+			}
+
+			if ($Prontera_Territory_Level == 2) {
+				announce "Prontera territory has reached Level 2! Supply discount is now 25%.",bc_all;
+				mes("[Prontera Contracts]");
+				mes("Prontera territory is now Level 2.");
+				mes("The Supply Vendor now offers ^00FF0025% discount^000000.");
+			}
+		}
+		close();
+	}
+
+	close();
+
+OnNPCKillEvent:
+	if ($Prontera_Territory_Level >= 2)
+		end;
+
+	if (#Prontera_Contract == 0)
+		end;
+
+	if (#Prontera_Contract_Kill >= 1)
+		end;
+
+	if (killedrid == #Prontera_Contract) {
+		#Prontera_Contract_Kill = 1;
+		dispbottom "Prontera contract completed. Return to the Contract Manager.";
+	}
+	end;
+}
+
+
+// =====================================================
+// Prontera Supply Vendor
+// NPC: prontera 161 173
+// =====================================================
+
+prontera,161,173,4	script	Prontera Supply Vendor	4_F_VALKYRIE,{
+	mes("[Prontera Supply Vendor]");
+
+	if ($Prontera_Territory_Level < 1) {
+		mes("Prontera territory must reach Level 1 before I can offer discounts.");
+		close();
+	}
+
+	.@discount = 10;
+
+	if ($Prontera_Territory_Level >= 2)
+		.@discount = 25;
+
+	mes("Prontera territory level: " + $Prontera_Territory_Level);
+	mes("Current discount: ^00FF00" + .@discount + "%^000000");
+	next();
+
+	switch(select(
+		"Red Potion",
+		"Orange Potion",
+		"Yellow Potion",
+		"White Potion",
+		"Green Potion",
+		"Fly Wing",
+		"Butterfly Wing",
+		"Magnifier",
+		"Arrow",
+		"Silver Arrow",
+		"Fire Arrow",
+		"Leave"
+	)) {
+		case 1:
+			callfunc("F_PronteraDiscountBuy", 501, "Red Potion", 50, .@discount);
+			close();
+
+		case 2:
+			callfunc("F_PronteraDiscountBuy", 502, "Orange Potion", 200, .@discount);
+			close();
+
+		case 3:
+			callfunc("F_PronteraDiscountBuy", 503, "Yellow Potion", 550, .@discount);
+			close();
+
+		case 4:
+			callfunc("F_PronteraDiscountBuy", 504, "White Potion", 1200, .@discount);
+			close();
+
+		case 5:
+			callfunc("F_PronteraDiscountBuy", 506, "Green Potion", 40, .@discount);
+			close();
+
+		case 6:
+			callfunc("F_PronteraDiscountBuy", 601, "Fly Wing", 60, .@discount);
+			close();
+
+		case 7:
+			callfunc("F_PronteraDiscountBuy", 602, "Butterfly Wing", 300, .@discount);
+			close();
+
+		case 8:
+			callfunc("F_PronteraDiscountBuy", 611, "Magnifier", 40, .@discount);
+			close();
+
+		case 9:
+			callfunc("F_PronteraDiscountBuy", 1750, "Arrow", 1, .@discount);
+			close();
+
+		case 10:
+			callfunc("F_PronteraDiscountBuy", 1751, "Silver Arrow", 3, .@discount);
+			close();
+
+		case 11:
+			callfunc("F_PronteraDiscountBuy", 1752, "Fire Arrow", 3, .@discount);
+			close();
+
+		case 12:
+			close();
+	}
+}
+
+
+// =====================================================
+// Discount Buy Function
+// =====================================================
+
+function	script	F_PronteraDiscountBuy	{
+	.@item_id = getarg(0);
+	.@item_name$ = getarg(1);
+	.@base_price = getarg(2);
+	.@discount = getarg(3);
+
+	.@price = .@base_price - ((.@base_price * .@discount) / 100);
+
+	mes("[Prontera Supply Vendor]");
+	mes("Item: ^00FF00" + .@item_name$ + "^000000");
+	mes("Base price: " + .@base_price + " zeny");
+	mes("Discounted price: ^00FF00" + .@price + " zeny^000000");
+	mes("How many do you want to buy?");
+	next();
+
+	input .@amount;
+
+	if (.@amount <= 0) {
+		mes("[Prontera Supply Vendor]");
+		mes("Transaction cancelled.");
+		close();
+	}
+
+	.@total = .@price * .@amount;
+
+	if (Zeny < .@total) {
+		mes("[Prontera Supply Vendor]");
+		mes("You do not have enough zeny.");
+		mes("Total required: " + .@total + " zeny.");
+		close();
+	}
+
+	Zeny -= .@total;
+	getitem .@item_id, .@amount;
+
+	mes("[Prontera Supply Vendor]");
+	mes("Purchase complete.");
+	mes("You bought " + .@amount + "x " + .@item_name$ + ".");
+	mes("Total paid: " + .@total + " zeny.");
+	close();
+}
