@@ -2,7 +2,7 @@
 
 // =====================================================
 // Team Contract NPC
-// Prontera 
+// Prontera
 // =====================================================
 
 prontera,152,166,4	script	TeamContracts	4_F_VALKYRIE,{
@@ -12,20 +12,22 @@ prontera,152,166,4	script	TeamContracts	4_F_VALKYRIE,{
 	mes("You can view requirements even if your class is not eligible.");
 	next();
 
-	switch(select(
-		"Quest 1 - Payon Dungeon 00",
-		"Quest 2 - Moscovia Field 01",
-		"Quest 3 - Einbroch Field 04",
-		"Quest 4 - Payon Dungeon 01",
-		"Quest 5 - Orc Field",
-		"Quest 6 - Coming soon",
-		"Quest 7 - Coming soon",
-		"Quest 8 - Coming soon",
-		"Quest 9 - Coming soon",
-		"Quest 10 - Coming soon",
-		"Validate current contract",
+	.@menu = select(
+		"Quest 1 - Payon Dungeon 00:"+
+		"Quest 2 - Moscovia Field 01:"+
+		"Quest 3 - Einbroch Field 04:"+
+		"Quest 4 - Payon Dungeon 01:"+
+		"Quest 5 - Orc Field:"+
+		"Quest 6 - Coming soon:"+
+		"Quest 7 - Coming soon:"+
+		"Quest 8 - Coming soon:"+
+		"Quest 9 - Coming soon:"+
+		"Quest 10 - Coming soon:"+
+		"Validate current contract:"+
 		"Leave"
-	)) {
+	);
+
+	switch(.@menu) {
 		case 1:
 			callsub S_ShowQuest,1,"Swordman + Acolyte","Kill 10 Zombies and 10 Poporings in Payon Dungeon 00.",1015,1031,"Zombie","Poporing","pay_dun00";
 			end;
@@ -92,13 +94,15 @@ S_ShowQuest:
 		close();
 	}
 
-	if (!callsub(S_CheckClassRequirement,.@qid)) {
+	.@class_ok = callsub(S_CheckClassRequirement, .@qid);
+	if (!.@class_ok) {
 		mes("[Team Contracts]");
 		mes("Your current class cannot accept this contract.");
 		close();
 	}
 
-	if (!callsub(S_CheckPartyRequirement,.@qid)) {
+	.@party_ok = callsub(S_CheckPartyRequirement, .@qid);
+	if (!.@party_ok) {
 		mes("[Team Contracts]");
 		mes("Your party does not have the required classes.");
 		close();
