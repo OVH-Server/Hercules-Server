@@ -1,0 +1,159 @@
+//===== Hercules Script ======================================
+
+prontera,152,166,4	script	Mission Contracts	4_F_VALKYRIE,{
+
+	mes("[Mission Contracts]");
+	mes("Post or browse player mission contracts.");
+	next();
+
+	switch(select("Post a mission contract:View active contracts:Leave")) {
+
+	case 1:
+		callsub S_CreateContract;
+		end;
+
+	case 2:
+		callsub S_ListContracts;
+		end;
+
+	case 3:
+		close();
+	}
+
+S_CreateContract:
+	mes("[Mission Contracts]");
+	mes("Which monster do you need help killing?");
+	mes("Enter the monster ID.");
+	next();
+	input .@mob_id;
+
+	if (.@mob_id <= 0) {
+		mes("[Mission Contracts]");
+		mes("Invalid monster ID.");
+		close();
+	}
+
+	mes("[Mission Contracts]");
+	mes("Write the monster name.");
+	next();
+	input .@mob_name$;
+
+	mes("[Mission Contracts]");
+	mes("Write your mission message.");
+	mes("Example: Need help farming this monster.");
+	next();
+	input .@message$;
+
+	mes("[Mission Contracts]");
+	mes("When do you want to do this?");
+	next();
+
+	.@time_choice = select("Now:Later");
+
+	if (.@time_choice == 1) {
+		.@time_text$ = "Now";
+	} else {
+		mes("[Mission Contracts]");
+		mes("Write the planned time.");
+		mes("Example: Today 20:00 server time");
+		next();
+		input .@time_text$;
+	}
+
+	mes("[Mission Contracts]");
+	mes("Choose contract duration.");
+	next();
+
+	switch(select("1 hour:3 hours:9 hours")) {
+		case 1:
+			.@duration = 3600;
+			.@duration$ = "1 hour";
+			break;
+
+		case 2:
+			.@duration = 10800;
+			.@duration$ = "3 hours";
+			break;
+
+		case 3:
+			.@duration = 32400;
+			.@duration$ = "9 hours";
+			break;
+	}
+
+	mes("[Mission Contracts]");
+	mes("What reward do you offer?");
+	mes("Example: 100,000 zeny / item / service");
+	next();
+	input .@reward$;
+
+	.@slot = -1;
+	.@now = gettimetick(2);
+
+	for (.@i = 0; .@i < 20; .@i++) {
+		if ($MissionContract_Expire[.@i] <= .@now) {
+			.@slot = .@i;
+			break;
+		}
+	}
+
+	if (.@slot < 0) {
+		mes("[Mission Contracts]");
+		mes("The contract board is full.");
+		mes("Please wait until a contract expires.");
+		close();
+	}
+
+	$MissionContract_Active[.@slot] = 1;
+	$MissionContract_Owner$[.@slot] = strcharinfo(PC_NAME);
+	$MissionContract_MobID[.@slot] = .@mob_id;
+	$MissionContract_MobName$[.@slot] = .@mob_name$;
+	$MissionContract_Message$[.@slot] = .@message$;
+	$MissionContract_TimeText$[.@slot] = .@time_text$;
+	$MissionContract_Reward$[.@slot] = .@reward$;
+	$MissionContract_Duration$[.@slot] = .@duration$;
+	$MissionContract_Expire[.@slot] = .@now + .@duration;
+
+	announce "[Mission Contract] " + strcharinfo(PC_NAME) + " needs help killing " + .@mob_name$ + ". Visit the Mission Contracts NPC in Prontera to view details.",bc_all;
+
+	mes("[Mission Contracts]");
+	mes("Your mission contract has been posted.");
+	mes("Monster: " + .@mob_name$ + " ID " + .@mob_id);
+	mes("Time: " + .@time_text$);
+	mes("Duration: " + .@duration$);
+	mes("Reward: " + .@reward$);
+	close();
+
+S_ListContracts:
+	.@now = gettimetick(2);
+	.@found = 0;
+
+	mes("[Mission Contracts]");
+	mes("Active mission contracts:");
+	next();
+
+	for (.@i = 0; .@i < 20; .@i++) {
+		if ($MissionContract_Active[.@i] && $MissionContract_Expire[.@i] > .@now) {
+			.@found = 1;
+
+			mes("[Contract #" + (.@i + 1) + "]");
+			mes("Player: ^00FF00" + $MissionContract_Owner$[.@i] + "^000000");
+			mes("Monster: " + $MissionContract_MobName$[.@i] + " ID " + $MissionContract_MobID[.@i]);
+			mes("Time: " + $MissionContract_TimeText$[.@i]);
+			mes("Duration: " + $MissionContract_Duration$[.@i]);
+			mes("Reward: " + $MissionContract_Reward$[.@i]);
+			mes("Message: " + $MissionContract_Message$[.@i]);
+			next();
+		}
+	}
+
+	if (!.@found) {
+		mes("[Mission Contracts]");
+		mes("There are no active mission contracts.");
+		close();
+	}
+
+	mes("[Mission Contracts]");
+	mes("End of active contracts.");
+	close();
+}
