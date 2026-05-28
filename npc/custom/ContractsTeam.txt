@@ -1,29 +1,294 @@
 //===== Hercules Script ======================================
 
-prontera,152,166,4	script	TeamContractsFixed#TC01	4_F_VALKYRIE,{
+// =====================================================
+// TEAM CONTRACTS NPC - FULL FIXED VERSION
+// SAFE / CLICKABLE VERSION
+// =====================================================
+
+prontera,152,166,4	script	TeamContracts#001	100,{
 
 	mes("[Team Contracts]");
-	mes("Welcome.");
-	mes("Choose a team contract.");
+	mes("Welcome to the Team Contract Board.");
+	mes("Choose a contract.");
 	next();
 
-	.@s = select("Quest 1 - Zombie/Poporing:Quest 2 - Les/Wood Goblin:Quest 3 - Metaling/Mol:Quest 4 - Skeletons:Quest 5 - Orcs:Validate:Cancel:Leave");
+	.@menu = select(
+		"Quest 1 - Zombie & Poporing:"+
+		"Quest 2 - Les & Wood Goblin:"+
+		"Quest 3 - Metaling & Mol:"+
+		"Quest 4 - Skeleton Squad:"+
+		"Quest 5 - Orc Squad:"+
+		"Validate Current Contract:"+
+		"Cancel Current Contract:"+
+		"Leave"
+	);
 
-	if (.@s == 8) close();
+	// =====================================================
+	// QUEST 1
+	// =====================================================
 
-	if (.@s == 7) {
-		#TC_Active = 0;
-		#TC_Mob1 = 0;
-		#TC_Mob2 = 0;
+	if (.@menu == 1) {
+
+		mes("[Quest 1]");
+		mes("Recommended Classes:");
+		mes("^00FF00Swordman + Acolyte^000000");
+		mes("");
+		mes("Location:");
+		mes("^00FF00pay_dun00^000000");
+		mes("");
+		mes("Objectives:");
+		mes("- Kill 10 Zombies");
+		mes("- Kill 10 Poporings");
+		mes("");
+		mes("Reward:");
+		mes("10,000 Base EXP");
+		mes("10,000 Zeny");
+		next();
+
+		if (!(BaseJob == Job_Swordman || BaseJob == Job_Acolyte)) {
+			mes("[Quest 1]");
+			mes("Your class cannot accept this contract.");
+			close();
+		}
+
+		if (#TC_Active) {
+			mes("[Team Contracts]");
+			mes("You already have an active contract.");
+			close();
+		}
+
+		if (select("Accept:Leave") == 2)
+			close();
+
+		#TC_Active = 1;
+		#TC_Quest = 1;
+		#TC_Mob1 = 1015;
+		#TC_Mob2 = 1031;
+		#TC_Name1$ = "Zombie";
+		#TC_Name2$ = "Poporing";
 		#TC_Kill1 = 0;
 		#TC_Kill2 = 0;
-		#TC_Need = 0;
-		mes("[Team Contracts]");
-		mes("Your contract has been cancelled.");
+		#TC_Need = 10;
+
+		mes("[Quest 1]");
+		mes("Contract accepted.");
 		close();
 	}
 
-	if (.@s == 6) {
+	// =====================================================
+	// QUEST 2
+	// =====================================================
+
+	if (.@menu == 2) {
+
+		mes("[Quest 2]");
+		mes("Recommended Classes:");
+		mes("^00FF00Archer + Mage^000000");
+		mes("");
+		mes("Location:");
+		mes("^00FF00mosk_fild01^000000");
+		mes("");
+		mes("Objectives:");
+		mes("- Kill 10 Les");
+		mes("- Kill 10 Wood Goblins");
+		mes("");
+		mes("Reward:");
+		mes("10,000 Base EXP");
+		mes("10,000 Zeny");
+		next();
+
+		if (!(BaseJob == Job_Archer || BaseJob == Job_Mage)) {
+			mes("[Quest 2]");
+			mes("Your class cannot accept this contract.");
+			close();
+		}
+
+		if (#TC_Active) {
+			mes("[Team Contracts]");
+			mes("You already have an active contract.");
+			close();
+		}
+
+		if (select("Accept:Leave") == 2)
+			close();
+
+		#TC_Active = 1;
+		#TC_Quest = 2;
+		#TC_Mob1 = 1881;
+		#TC_Mob2 = 1880;
+		#TC_Name1$ = "Les";
+		#TC_Name2$ = "Wood Goblin";
+		#TC_Kill1 = 0;
+		#TC_Kill2 = 0;
+		#TC_Need = 10;
+
+		mes("[Quest 2]");
+		mes("Contract accepted.");
+		close();
+	}
+
+	// =====================================================
+	// QUEST 3
+	// =====================================================
+
+	if (.@menu == 3) {
+
+		mes("[Quest 3]");
+		mes("Recommended Classes:");
+		mes("^00FF00Merchant + Thief^000000");
+		mes("");
+		mes("Location:");
+		mes("^00FF00ein_fild04^000000");
+		mes("");
+		mes("Objectives:");
+		mes("- Kill 10 Metalings");
+		mes("- Kill 10 Mols");
+		mes("");
+		mes("Reward:");
+		mes("10,000 Base EXP");
+		mes("10,000 Zeny");
+		next();
+
+		if (!(BaseJob == Job_Merchant || BaseJob == Job_Thief)) {
+			mes("[Quest 3]");
+			mes("Your class cannot accept this contract.");
+			close();
+		}
+
+		if (#TC_Active) {
+			mes("[Team Contracts]");
+			mes("You already have an active contract.");
+			close();
+		}
+
+		if (select("Accept:Leave") == 2)
+			close();
+
+		#TC_Active = 1;
+		#TC_Quest = 3;
+		#TC_Mob1 = 1613;
+		#TC_Mob2 = 1629;
+		#TC_Name1$ = "Metaling";
+		#TC_Name2$ = "Mol";
+		#TC_Kill1 = 0;
+		#TC_Kill2 = 0;
+		#TC_Need = 10;
+
+		mes("[Quest 3]");
+		mes("Contract accepted.");
+		close();
+	}
+
+	// =====================================================
+	// QUEST 4
+	// =====================================================
+
+	if (.@menu == 4) {
+
+		mes("[Quest 4]");
+		mes("Recommended Classes:");
+		mes("^00FF00Swordman + Acolyte + Archer^000000");
+		mes("");
+		mes("Location:");
+		mes("^00FF00pay_dun01^000000");
+		mes("");
+		mes("Objectives:");
+		mes("- Kill 10 Archer Skeleton");
+		mes("- Kill 10 Soldier Skeleton");
+		mes("");
+		mes("Reward:");
+		mes("10,000 Base EXP");
+		mes("10,000 Zeny");
+		next();
+
+		if (!(BaseJob == Job_Swordman || BaseJob == Job_Acolyte || BaseJob == Job_Archer)) {
+			mes("[Quest 4]");
+			mes("Your class cannot accept this contract.");
+			close();
+		}
+
+		if (#TC_Active) {
+			mes("[Team Contracts]");
+			mes("You already have an active contract.");
+			close();
+		}
+
+		if (select("Accept:Leave") == 2)
+			close();
+
+		#TC_Active = 1;
+		#TC_Quest = 4;
+		#TC_Mob1 = 1016;
+		#TC_Mob2 = 1028;
+		#TC_Name1$ = "Archer Skeleton";
+		#TC_Name2$ = "Soldier Skeleton";
+		#TC_Kill1 = 0;
+		#TC_Kill2 = 0;
+		#TC_Need = 10;
+
+		mes("[Quest 4]");
+		mes("Contract accepted.");
+		close();
+	}
+
+	// =====================================================
+	// QUEST 5
+	// =====================================================
+
+	if (.@menu == 5) {
+
+		mes("[Quest 5]");
+		mes("Recommended Classes:");
+		mes("^00FF00All Basic Classes^000000");
+		mes("");
+		mes("Location:");
+		mes("^00FF00gef_fild10^000000");
+		mes("");
+		mes("Objectives:");
+		mes("- Kill 20 Orc Warriors");
+		mes("- Kill 20 Orc Ladies");
+		mes("");
+		mes("Reward:");
+		mes("10,000 Base EXP");
+		mes("10,000 Zeny");
+		next();
+
+		if (!(BaseJob == Job_Swordman || BaseJob == Job_Acolyte || BaseJob == Job_Archer || BaseJob == Job_Mage || BaseJob == Job_Thief || BaseJob == Job_Merchant)) {
+			mes("[Quest 5]");
+			mes("Your class cannot accept this contract.");
+			close();
+		}
+
+		if (#TC_Active) {
+			mes("[Team Contracts]");
+			mes("You already have an active contract.");
+			close();
+		}
+
+		if (select("Accept:Leave") == 2)
+			close();
+
+		#TC_Active = 1;
+		#TC_Quest = 5;
+		#TC_Mob1 = 1023;
+		#TC_Mob2 = 1273;
+		#TC_Name1$ = "Orc Warrior";
+		#TC_Name2$ = "Orc Lady";
+		#TC_Kill1 = 0;
+		#TC_Kill2 = 0;
+		#TC_Need = 20;
+
+		mes("[Quest 5]");
+		mes("Contract accepted.");
+		close();
+	}
+
+	// =====================================================
+	// VALIDATE
+	// =====================================================
+
+	if (.@menu == 6) {
+
 		if (!#TC_Active) {
 			mes("[Team Contracts]");
 			mes("You have no active contract.");
@@ -31,18 +296,19 @@ prontera,152,166,4	script	TeamContractsFixed#TC01	4_F_VALKYRIE,{
 		}
 
 		mes("[Team Contracts]");
-		mes("Progress:");
+		mes("Current progress:");
 		mes(#TC_Name1$ + ": " + #TC_Kill1 + "/" + #TC_Need);
 		mes(#TC_Name2$ + ": " + #TC_Kill2 + "/" + #TC_Need);
 		next();
 
 		if (#TC_Kill1 < #TC_Need || #TC_Kill2 < #TC_Need) {
 			mes("[Team Contracts]");
-			mes("Contract not completed yet.");
+			mes("Contract not completed.");
 			close();
 		}
 
 		#TC_Active = 0;
+		#TC_Quest = 0;
 		#TC_Mob1 = 0;
 		#TC_Mob2 = 0;
 		#TC_Kill1 = 0;
@@ -51,92 +317,49 @@ prontera,152,166,4	script	TeamContractsFixed#TC01	4_F_VALKYRIE,{
 
 		Zeny += 10000;
 		getexp 10000,0;
+
 		specialeffect2 EF_LEVEL99_3;
 
 		mes("[Team Contracts]");
 		mes("Contract completed!");
-		mes("Reward: 10,000 EXP and 10,000 Zeny.");
+		mes("Reward received.");
 		close();
 	}
 
-	if (#TC_Active) {
+	// =====================================================
+	// CANCEL
+	// =====================================================
+
+	if (.@menu == 7) {
+
+		#TC_Active = 0;
+		#TC_Quest = 0;
+		#TC_Mob1 = 0;
+		#TC_Mob2 = 0;
+		#TC_Kill1 = 0;
+		#TC_Kill2 = 0;
+		#TC_Need = 0;
+
 		mes("[Team Contracts]");
-		mes("You already have an active contract.");
+		mes("Your contract has been cancelled.");
 		close();
 	}
 
-	if (.@s == 1) {
-		.@classes$ = "Swordman + Acolyte";
-		.@mob1 = 1015; .@mob2 = 1031;
-		.@name1$ = "Zombie"; .@name2$ = "Poporing";
-		.@map$ = "pay_dun00";
-		.@need = 10;
-	}
-	if (.@s == 2) {
-		.@classes$ = "Archer + Mage";
-		.@mob1 = 1881; .@mob2 = 1880;
-		.@name1$ = "Les"; .@name2$ = "Wood Goblin";
-		.@map$ = "mosk_fild01";
-		.@need = 10;
-	}
-	if (.@s == 3) {
-		.@classes$ = "Merchant + Thief";
-		.@mob1 = 1613; .@mob2 = 1629;
-		.@name1$ = "Metaling"; .@name2$ = "Mol";
-		.@map$ = "ein_fild04";
-		.@need = 10;
-	}
-	if (.@s == 4) {
-		.@classes$ = "Swordman + Acolyte + Archer";
-		.@mob1 = 1016; .@mob2 = 1028;
-		.@name1$ = "Archer Skeleton"; .@name2$ = "Soldier Skeleton";
-		.@map$ = "pay_dun01";
-		.@need = 10;
-	}
-	if (.@s == 5) {
-		.@classes$ = "Swordman + Archer + Mage + Acolyte + Thief + Merchant";
-		.@mob1 = 1023; .@mob2 = 1273;
-		.@name1$ = "Orc Warrior"; .@name2$ = "Orc Lady";
-		.@map$ = "gef_fild10";
-		.@need = 20;
-	}
-
-	mes("[Team Contracts]");
-	mes("Required classes:");
-	mes("^00FF00" + .@classes$ + "^000000");
-	mes("Map: ^00FF00" + .@map$ + "^000000");
-	mes("Objective:");
-	mes("Kill " + .@need + " " + .@name1$ + ".");
-	mes("Kill " + .@need + " " + .@name2$ + ".");
-	mes("Reward: 10,000 EXP and 10,000 Zeny.");
-	next();
-
-	if (select("Accept:Leave") == 2) close();
-
-	#TC_Active = 1;
-	#TC_Mob1 = .@mob1;
-	#TC_Mob2 = .@mob2;
-	#TC_Name1$ = .@name1$;
-	#TC_Name2$ = .@name2$;
-	#TC_Kill1 = 0;
-	#TC_Kill2 = 0;
-	#TC_Need = .@need;
-
-	mes("[Team Contracts]");
-	mes("Contract accepted.");
 	close();
 
 OnNPCKillEvent:
-	if (!#TC_Active) end;
+
+	if (!#TC_Active)
+		end;
 
 	if (killedrid == #TC_Mob1 && #TC_Kill1 < #TC_Need) {
 		#TC_Kill1++;
-		dispbottom "Team Contract: " + #TC_Name1$ + " " + #TC_Kill1 + "/" + #TC_Need;
+		dispbottom #TC_Name1$ + ": " + #TC_Kill1 + "/" + #TC_Need;
 	}
 
 	if (killedrid == #TC_Mob2 && #TC_Kill2 < #TC_Need) {
 		#TC_Kill2++;
-		dispbottom "Team Contract: " + #TC_Name2$ + " " + #TC_Kill2 + "/" + #TC_Need;
+		dispbottom #TC_Name2$ + ": " + #TC_Kill2 + "/" + #TC_Need;
 	}
 
 	end;
