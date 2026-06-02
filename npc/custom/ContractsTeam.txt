@@ -1,92 +1,387 @@
 //===== Hercules Script ======================================
+// Team Contracts
+// Fixed board of 5 team contracts.
+//
+// Rules:
+// - Everyone can view the 5 contracts.
+// - Only a party leader can accept a team contract.
+// - The leader must be one of the required base classes.
+// - The party must contain all required base classes.
+// - Progress is shared by the party.
+// - The leader validates the contract and online party members receive reward.
+//============================================================
 
-// =====================================================
-// TEAM CONTRACTS NPC - FULL FIXED VERSION
-// SAFE / CLICKABLE VERSION
-// =====================================================
+prontera,152,166,4	script	Team Contracts	4_F_VALKYRIE,{
+	mes "[Team Contracts]";
+	mes "Welcome to the Team Contract Board.";
+	mes "These contracts require a party with specific classes.";
+	next;
 
-// =====================================================
-// TEAM CONTRACTS - PRONTERA
-// NPC: prontera 152 166
-// Skin: 4_F_VALKYRIE
-// =====================================================
+	switch(select("View team contracts:Validate current contract:Cancel current contract:Leave")) {
+	case 1:
+		callsub S_ListContracts;
+		close;
 
-prontera,152,166,4	script	TeamContracts	4_F_VALKYRIE,{
-	goto Start;
+	case 2:
+		callsub S_ValidateContract;
+		close;
 
-OnTouch:
-	goto Start;
+	case 3:
+		callsub S_CancelContract;
+		close;
 
-Start:
-	mes("[Team Contracts]");
-	mes("Welcome to the Team Contract Board.");
-	mes("Anyone can view the missions.");
-	mes("Class restrictions only apply when accepting a mission.");
-	next();
-
-	.@menu = select("Quest 1 - Payon Dungeon 00:Quest 2 - Moscovia Field 01:Quest 3 - Einbroch Field 04:Quest 4 - Payon Dungeon 01:Quest 5 - Orc Field:Validate current contract:Cancel current contract:Leave");
-
-	if (.@menu == 8)
-		close();
-
-	if (.@menu == 6) {
-		if (#TC_Active == 0) {
-			mes("[Team Contracts]");
-			mes("You have no active contract.");
-			close();
-		}
-
-		mes("[Team Contracts]");
-		mes("Current progress:");
-		mes(#TC_Mob1_Name$ + ": " + #TC_Kill1 + "/" + #TC_Need);
-		mes(#TC_Mob2_Name$ + ": " + #TC_Kill2 + "/" + #TC_Need);
-		next();
-
-		if (#TC_Kill1 < #TC_Need || #TC_Kill2 < #TC_Need) {
-			mes("[Team Contracts]");
-			mes("The contract is not complete yet.");
-			close();
-		}
-
-		#TC_Active = 0;
-		#TC_Quest = 0;
-		#TC_Mob1 = 0;
-		#TC_Mob2 = 0;
-		#TC_Mob1_Name$ = "";
-		#TC_Mob2_Name$ = "";
-		#TC_Kill1 = 0;
-		#TC_Kill2 = 0;
-		#TC_Need = 0;
-
-		Zeny += 10000;
-		getexp 10000,0;
-		specialeffect2 EF_LEVEL99_3;
-		skilleffect AL_BLESSING,0;
-
-		mes("[Team Contracts]");
-		mes("Contract completed!");
-		mes("Reward: 10,000 Base EXP and 10,000 Zeny.");
-		close();
+	case 4:
+		close;
 	}
 
-	if (.@menu == 7) {
-		#TC_Active = 0;
-		#TC_Quest = 0;
-		#TC_Mob1 = 0;
-		#TC_Mob2 = 0;
-		#TC_Mob1_Name$ = "";
-		#TC_Mob2_Name$ = "";
-		#TC_Kill1 = 0;
-		#TC_Kill2 = 0;
-		#TC_Need = 0;
+S_ListContracts:
+	mes "[Team Contracts]";
+	mes "Available team contracts:";
+	next;
 
-		mes("[Team Contracts]");
-		mes("Your current contract has been cancelled.");
-		close();
+	for (.@i = 1; .@i <= 5; .@i++) {
+		callsub S_LoadContract,.@i;
+
+		mes "[Contract #" + .@quest + "]";
+		mes "Name: ^00FF00" + .@title$ + "^000000";
+		mes "Required team:";
+		mes "^00FF00" + .@classes$ + "^000000";
+		mes "Location: ^00FF00" + .@map$ + "^000000";
+		mes "Objectives:";
+		mes "- " + .@need + " " + .@mob1_name$;
+		mes "- " + .@need + " " + .@mob2_name$;
+		mes "Reward: " + .@reward_exp + " Base EXP and " + .@reward_zeny + " Zeny.";
+		next;
 	}
 
-	if (.@menu == 1) {
-		.@quest = 1;
+	mes "[Team Contracts]";
+	mes "Which contract do you want to inspect?";
+	next;
+
+	.@choice = select("Contract 1:Contract 2:Contract 3:Contract 4:Contract 5:Leave");
+	if (.@choice == 6)
+		return;
+
+	callsub S_ShowContract,.@choice;
+	return;
+
+S_ShowContract:
+	callsub S_LoadContract,getarg(0);
+
+	mes "[Team Contracts]";
+	mes "Contract #" + .@quest + ": ^00FF00" + .@title$ + "^000000";
+	mes "Required team: " + .@classes$;
+	mes "Location: " + .@map$;
+	mes "Kill " + .@need + " " + .@mob1_name$ + ".";
+	mes "Kill " + .@need + " " + .@mob2_name$ + ".";
+	next;
+
+	if (select("Accept this team contract:Back") == 2)
+		return;
+
+	callsub S_AcceptContract,.@quest;
+	return;
+
+S_AcceptContract:
+	callsub S_LoadContract,getarg(0);
+
+	.@party_id = getcharid(CHAR_ID_PARTY);
+	if (!.@party_id) {
+		mes "[Team Contracts]";
+		mes "You need to create a party before accepting a team contract.";
+		close;
+	}
+
+	if (getpartyleader(.@party_id,2) != getcharid(CHAR_ID_CHAR)) {
+		mes "[Team Contracts]";
+		mes "Only the party leader can accept a team contract.";
+		close;
+	}
+
+	callsub S_IsClassAllowed,.@quest,BaseClass;
+	if (!.@allowed) {
+		mes "[Team Contracts]";
+		mes "Your class cannot accept this contract.";
+		mes "Required class group:";
+		mes "^FF0000" + .@classes$ + "^000000";
+		close;
+	}
+
+	callsub S_FindPartySlot,.@party_id;
+	if (.@slot >= 0) {
+		mes "[Team Contracts]";
+		mes "Your party already has an active team contract.";
+		callsub S_ShowProgress,.@slot;
+		close;
+	}
+
+	callsub S_CheckPartyClasses,.@party_id,.@req_swordman,.@req_archer,.@req_mage,.@req_acolyte,.@req_thief,.@req_merchant;
+	if (!.@party_ok) {
+		mes "[Team Contracts]";
+		mes "Your party does not contain all required classes.";
+		mes "Required: ^FF0000" + .@classes$ + "^000000";
+		mes "Missing: ^FF0000" + .@missing$ + "^000000";
+		close;
+	}
+
+	callsub S_FindFreeSlot;
+	if (.@slot < 0) {
+		mes "[Team Contracts]";
+		mes "The team contract board is full.";
+		mes "Please wait until another party completes or cancels a contract.";
+		close;
+	}
+
+	$TC_Active[.@slot] = 1;
+	$TC_PartyId[.@slot] = .@party_id;
+	$TC_LeaderCharId[.@slot] = getcharid(CHAR_ID_CHAR);
+	$TC_LeaderName$[.@slot] = strcharinfo(PC_NAME);
+	$TC_Quest[.@slot] = .@quest;
+	$TC_Title$[.@slot] = .@title$;
+	$TC_Map$[.@slot] = .@map$;
+	$TC_Mob1[.@slot] = .@mob1;
+	$TC_Mob2[.@slot] = .@mob2;
+	$TC_Mob1_Name$[.@slot] = .@mob1_name$;
+	$TC_Mob2_Name$[.@slot] = .@mob2_name$;
+	$TC_Kill1[.@slot] = 0;
+	$TC_Kill2[.@slot] = 0;
+	$TC_Need[.@slot] = .@need;
+	$TC_RewardExp[.@slot] = .@reward_exp;
+	$TC_RewardZeny[.@slot] = .@reward_zeny;
+	$TC_CompleteNotice[.@slot] = 0;
+
+	callsub S_MessageParty,.@party_id,"[Team Contract] " + .@title$ + " accepted by " + strcharinfo(PC_NAME) + ".";
+
+	mes "[Team Contracts]";
+	mes "Contract accepted for your party.";
+	mes "Go to ^00FF00" + .@map$ + "^000000.";
+	close;
+
+S_ValidateContract:
+	.@party_id = getcharid(CHAR_ID_PARTY);
+	if (!.@party_id) {
+		mes "[Team Contracts]";
+		mes "You are not in a party.";
+		return;
+	}
+
+	callsub S_FindPartySlot,.@party_id;
+	if (.@slot < 0) {
+		mes "[Team Contracts]";
+		mes "Your party has no active team contract.";
+		return;
+	}
+
+	if (getpartyleader(.@party_id,2) != getcharid(CHAR_ID_CHAR)) {
+		mes "[Team Contracts]";
+		mes "Only the party leader can validate the team contract.";
+		callsub S_ShowProgress,.@slot;
+		return;
+	}
+
+	mes "[Team Contracts]";
+	callsub S_ShowProgress,.@slot;
+	next;
+
+	if ($TC_Kill1[.@slot] < $TC_Need[.@slot] || $TC_Kill2[.@slot] < $TC_Need[.@slot]) {
+		mes "[Team Contracts]";
+		mes "The contract is not complete yet.";
+		return;
+	}
+
+	.@party_id = $TC_PartyId[.@slot];
+	.@reward_exp = $TC_RewardExp[.@slot];
+	.@reward_zeny = $TC_RewardZeny[.@slot];
+	.@title$ = $TC_Title$[.@slot];
+
+	getpartymember(.@party_id, PT_MEMBER_CHARID, .@charid);
+	.@count = getpartymember(.@party_id, PT_MEMBER_ACCID, .@accid);
+
+	.@original_aid = getcharid(CHAR_ID_ACCOUNT);
+	for (.@i = 0; .@i < .@count; .@i++) {
+		if (!isloggedin(.@accid[.@i],.@charid[.@i]))
+			continue;
+
+		if (!attachrid(.@accid[.@i]))
+			continue;
+
+		if (getcharid(CHAR_ID_CHAR) != .@charid[.@i])
+			continue;
+
+		Zeny += .@reward_zeny;
+		getexp .@reward_exp,0;
+		message strcharinfo(PC_NAME), "[Team Contract] " + .@title$ + " completed. Reward received.";
+	}
+	attachrid .@original_aid;
+
+	callsub S_ClearSlot,.@slot;
+
+	mes "[Team Contracts]";
+	mes "Contract completed.";
+	mes "Online party members received the reward.";
+	return;
+
+S_CancelContract:
+	.@party_id = getcharid(CHAR_ID_PARTY);
+	if (!.@party_id) {
+		mes "[Team Contracts]";
+		mes "You are not in a party.";
+		return;
+	}
+
+	callsub S_FindPartySlot,.@party_id;
+	if (.@slot < 0) {
+		mes "[Team Contracts]";
+		mes "Your party has no active team contract.";
+		return;
+	}
+
+	if (getpartyleader(.@party_id,2) != getcharid(CHAR_ID_CHAR)) {
+		mes "[Team Contracts]";
+		mes "Only the party leader can cancel the team contract.";
+		return;
+	}
+
+	callsub S_ClearSlot,.@slot;
+	callsub S_MessageParty,.@party_id,"[Team Contract] Current team contract cancelled by " + strcharinfo(PC_NAME) + ".";
+
+	mes "[Team Contracts]";
+	mes "Your party contract has been cancelled.";
+	return;
+
+S_ShowProgress:
+	.@slot = getarg(0);
+	mes "Contract: ^00FF00" + $TC_Title$[.@slot] + "^000000";
+	mes $TC_Mob1_Name$[.@slot] + ": " + $TC_Kill1[.@slot] + "/" + $TC_Need[.@slot];
+	mes $TC_Mob2_Name$[.@slot] + ": " + $TC_Kill2[.@slot] + "/" + $TC_Need[.@slot];
+	return;
+
+S_FindPartySlot:
+	.@slot = -1;
+	for (.@i = 0; .@i < 20; .@i++) {
+		if ($TC_Active[.@i] && $TC_PartyId[.@i] == getarg(0)) {
+			.@slot = .@i;
+			return;
+		}
+	}
+	return;
+
+S_FindFreeSlot:
+	.@slot = -1;
+	for (.@i = 0; .@i < 20; .@i++) {
+		if (!$TC_Active[.@i]) {
+			.@slot = .@i;
+			return;
+		}
+	}
+	return;
+
+S_ClearSlot:
+	.@slot = getarg(0);
+	$TC_Active[.@slot] = 0;
+	$TC_PartyId[.@slot] = 0;
+	$TC_LeaderCharId[.@slot] = 0;
+	$TC_LeaderName$[.@slot] = "";
+	$TC_Quest[.@slot] = 0;
+	$TC_Title$[.@slot] = "";
+	$TC_Map$[.@slot] = "";
+	$TC_Mob1[.@slot] = 0;
+	$TC_Mob2[.@slot] = 0;
+	$TC_Mob1_Name$[.@slot] = "";
+	$TC_Mob2_Name$[.@slot] = "";
+	$TC_Kill1[.@slot] = 0;
+	$TC_Kill2[.@slot] = 0;
+	$TC_Need[.@slot] = 0;
+	$TC_RewardExp[.@slot] = 0;
+	$TC_RewardZeny[.@slot] = 0;
+	$TC_CompleteNotice[.@slot] = 0;
+	return;
+
+S_MessageParty:
+	.@party_id = getarg(0);
+	.@msg$ = getarg(1);
+	getpartymember(.@party_id, PT_MEMBER_CHARID, .@charid);
+	.@count = getpartymember(.@party_id, PT_MEMBER_ACCID, .@accid);
+
+	for (.@i = 0; .@i < .@count; .@i++) {
+		if (isloggedin(.@accid[.@i],.@charid[.@i]))
+			message .@accid[.@i], .@msg$;
+	}
+	return;
+
+S_CheckPartyClasses:
+	.@party_id = getarg(0);
+	.@req_swordman = getarg(1);
+	.@req_archer = getarg(2);
+	.@req_mage = getarg(3);
+	.@req_acolyte = getarg(4);
+	.@req_thief = getarg(5);
+	.@req_merchant = getarg(6);
+
+	.@has_swordman = 0;
+	.@has_archer = 0;
+	.@has_mage = 0;
+	.@has_acolyte = 0;
+	.@has_thief = 0;
+	.@has_merchant = 0;
+
+	getpartymember(.@party_id, PT_MEMBER_CHARID, .@charid);
+	.@count = getpartymember(.@party_id, PT_MEMBER_ACCID, .@accid);
+
+	.@original_aid = getcharid(CHAR_ID_ACCOUNT);
+	for (.@i = 0; .@i < .@count; .@i++) {
+		if (!isloggedin(.@accid[.@i],.@charid[.@i]))
+			continue;
+
+		if (!attachrid(.@accid[.@i]))
+			continue;
+
+		if (getcharid(CHAR_ID_CHAR) != .@charid[.@i])
+			continue;
+
+		if (BaseClass == Job_Swordman) .@has_swordman = 1;
+		if (BaseClass == Job_Archer) .@has_archer = 1;
+		if (BaseClass == Job_Mage) .@has_mage = 1;
+		if (BaseClass == Job_Acolyte) .@has_acolyte = 1;
+		if (BaseClass == Job_Thief) .@has_thief = 1;
+		if (BaseClass == Job_Merchant) .@has_merchant = 1;
+	}
+	attachrid .@original_aid;
+
+	.@missing$ = "";
+	if (.@req_swordman && !.@has_swordman) .@missing$ = .@missing$ + "Swordman ";
+	if (.@req_archer && !.@has_archer) .@missing$ = .@missing$ + "Archer ";
+	if (.@req_mage && !.@has_mage) .@missing$ = .@missing$ + "Mage ";
+	if (.@req_acolyte && !.@has_acolyte) .@missing$ = .@missing$ + "Acolyte ";
+	if (.@req_thief && !.@has_thief) .@missing$ = .@missing$ + "Thief ";
+	if (.@req_merchant && !.@has_merchant) .@missing$ = .@missing$ + "Merchant ";
+
+	.@party_ok = (.@missing$ == "");
+	return;
+
+S_IsClassAllowed:
+	.@quest = getarg(0);
+	.@baseclass = getarg(1);
+	.@allowed = 0;
+
+	if (.@quest == 1 && (.@baseclass == Job_Swordman || .@baseclass == Job_Acolyte))
+		.@allowed = 1;
+	if (.@quest == 2 && (.@baseclass == Job_Archer || .@baseclass == Job_Mage))
+		.@allowed = 1;
+	if (.@quest == 3 && (.@baseclass == Job_Merchant || .@baseclass == Job_Thief))
+		.@allowed = 1;
+	if (.@quest == 4 && (.@baseclass == Job_Swordman || .@baseclass == Job_Acolyte || .@baseclass == Job_Archer))
+		.@allowed = 1;
+	if (.@quest == 5 && (.@baseclass == Job_Swordman || .@baseclass == Job_Archer || .@baseclass == Job_Mage || .@baseclass == Job_Acolyte || .@baseclass == Job_Thief || .@baseclass == Job_Merchant))
+		.@allowed = 1;
+
+	return;
+
+S_LoadContract:
+	.@quest = getarg(0);
+
+	if (.@quest == 1) {
+		.@title$ = "Payon Dungeon 00";
 		.@classes$ = "Swordman + Acolyte";
 		.@map$ = "pay_dun00";
 		.@mob1 = 1015;
@@ -94,10 +389,19 @@ Start:
 		.@mob1_name$ = "Zombie";
 		.@mob2_name$ = "Poporing";
 		.@need = 10;
+		.@reward_exp = 10000;
+		.@reward_zeny = 10000;
+		.@req_swordman = 1;
+		.@req_archer = 0;
+		.@req_mage = 0;
+		.@req_acolyte = 1;
+		.@req_thief = 0;
+		.@req_merchant = 0;
+		return;
 	}
 
-	if (.@menu == 2) {
-		.@quest = 2;
+	if (.@quest == 2) {
+		.@title$ = "Moscovia Field 01";
 		.@classes$ = "Archer + Mage";
 		.@map$ = "mosk_fild01";
 		.@mob1 = 1881;
@@ -105,10 +409,19 @@ Start:
 		.@mob1_name$ = "Les";
 		.@mob2_name$ = "Wood Goblin";
 		.@need = 10;
+		.@reward_exp = 10000;
+		.@reward_zeny = 10000;
+		.@req_swordman = 0;
+		.@req_archer = 1;
+		.@req_mage = 1;
+		.@req_acolyte = 0;
+		.@req_thief = 0;
+		.@req_merchant = 0;
+		return;
 	}
 
-	if (.@menu == 3) {
-		.@quest = 3;
+	if (.@quest == 3) {
+		.@title$ = "Einbroch Field 04";
 		.@classes$ = "Merchant + Thief";
 		.@map$ = "ein_fild04";
 		.@mob1 = 1613;
@@ -116,10 +429,19 @@ Start:
 		.@mob1_name$ = "Metaling";
 		.@mob2_name$ = "Mol";
 		.@need = 10;
+		.@reward_exp = 10000;
+		.@reward_zeny = 10000;
+		.@req_swordman = 0;
+		.@req_archer = 0;
+		.@req_mage = 0;
+		.@req_acolyte = 0;
+		.@req_thief = 1;
+		.@req_merchant = 1;
+		return;
 	}
 
-	if (.@menu == 4) {
-		.@quest = 4;
+	if (.@quest == 4) {
+		.@title$ = "Payon Dungeon 01";
 		.@classes$ = "Swordman + Acolyte + Archer";
 		.@map$ = "pay_dun01";
 		.@mob1 = 1016;
@@ -127,10 +449,19 @@ Start:
 		.@mob1_name$ = "Archer Skeleton";
 		.@mob2_name$ = "Soldier Skeleton";
 		.@need = 10;
+		.@reward_exp = 15000;
+		.@reward_zeny = 15000;
+		.@req_swordman = 1;
+		.@req_archer = 1;
+		.@req_mage = 0;
+		.@req_acolyte = 1;
+		.@req_thief = 0;
+		.@req_merchant = 0;
+		return;
 	}
 
-	if (.@menu == 5) {
-		.@quest = 5;
+	if (.@quest == 5) {
+		.@title$ = "Orc Field";
 		.@classes$ = "Swordman + Archer + Mage + Acolyte + Thief + Merchant";
 		.@map$ = "gef_fild10";
 		.@mob1 = 1023;
@@ -138,74 +469,41 @@ Start:
 		.@mob1_name$ = "Orc Warrior";
 		.@mob2_name$ = "Orc Lady";
 		.@need = 20;
+		.@reward_exp = 25000;
+		.@reward_zeny = 25000;
+		.@req_swordman = 1;
+		.@req_archer = 1;
+		.@req_mage = 1;
+		.@req_acolyte = 1;
+		.@req_thief = 1;
+		.@req_merchant = 1;
+		return;
 	}
 
-	mes("[Team Contracts]");
-	mes("Contract #" + .@quest);
-	mes("Required classes:");
-	mes("^00FF00" + .@classes$ + "^000000");
-	mes("Location: ^00FF00" + .@map$ + "^000000");
-	mes("Objective:");
-	mes("Kill " + .@need + " " + .@mob1_name$ + ".");
-	mes("Kill " + .@need + " " + .@mob2_name$ + ".");
-	mes("Reward: ^00FF0010,000 Base EXP and 10,000 Zeny^000000");
-	next();
-
-	if (#TC_Active == 1) {
-		mes("[Team Contracts]");
-		mes("You already have an active contract.");
-		close();
-	}
-
-	.@class_ok = 0;
-
-	if (.@quest == 1 && (BaseJob == Job_Swordman || BaseJob == Job_Acolyte))
-		.@class_ok = 1;
-	if (.@quest == 2 && (BaseJob == Job_Archer || BaseJob == Job_Mage))
-		.@class_ok = 1;
-	if (.@quest == 3 && (BaseJob == Job_Merchant || BaseJob == Job_Thief))
-		.@class_ok = 1;
-	if (.@quest == 4 && (BaseJob == Job_Swordman || BaseJob == Job_Acolyte || BaseJob == Job_Archer))
-		.@class_ok = 1;
-	if (.@quest == 5 && (BaseJob == Job_Swordman || BaseJob == Job_Archer || BaseJob == Job_Mage || BaseJob == Job_Acolyte || BaseJob == Job_Thief || BaseJob == Job_Merchant))
-		.@class_ok = 1;
-
-	if (.@class_ok == 0) {
-		mes("[Team Contracts]");
-		mes("You can view this contract, but your class cannot accept it.");
-		close();
-	}
-
-	if (select("Accept contract:Leave") == 2)
-		close();
-
-	#TC_Active = 1;
-	#TC_Quest = .@quest;
-	#TC_Mob1 = .@mob1;
-	#TC_Mob2 = .@mob2;
-	#TC_Mob1_Name$ = .@mob1_name$;
-	#TC_Mob2_Name$ = .@mob2_name$;
-	#TC_Kill1 = 0;
-	#TC_Kill2 = 0;
-	#TC_Need = .@need;
-
-	mes("[Team Contracts]");
-	mes("Contract accepted.");
-	mes("Go to ^00FF00" + .@map$ + "^000000.");
-	close();
+	return;
 
 OnNPCKillEvent:
-	if (#TC_Active == 0)
+	.@party_id = getcharid(CHAR_ID_PARTY);
+	if (!.@party_id)
 		end;
 
-	if (killedrid == #TC_Mob1 && #TC_Kill1 < #TC_Need) {
-		#TC_Kill1++;
-		dispbottom "Team Contract: " + #TC_Mob1_Name$ + " " + #TC_Kill1 + "/" + #TC_Need;
+	callsub S_FindPartySlot,.@party_id;
+	if (.@slot < 0)
+		end;
+
+	if (killedrid == $TC_Mob1[.@slot] && $TC_Kill1[.@slot] < $TC_Need[.@slot]) {
+		$TC_Kill1[.@slot]++;
+		callsub S_MessageParty,.@party_id,"[Team Contract] " + $TC_Mob1_Name$[.@slot] + " " + $TC_Kill1[.@slot] + "/" + $TC_Need[.@slot] + ".";
 	}
 
-	if (killedrid == #TC_Mob2 && #TC_Kill2 < #TC_Need) {
-		#TC_Kill2++;
-		dispbottom "Team Contract: " + #TC_Mob2_Name$ + " " + #TC_Kill2 + "/" + #TC_Need;
+	if (killedrid == $TC_Mob2[.@slot] && $TC_Kill2[.@slot] < $TC_Need[.@slot]) {
+		$TC_Kill2[.@slot]++;
+		callsub S_MessageParty,.@party_id,"[Team Contract] " + $TC_Mob2_Name$[.@slot] + " " + $TC_Kill2[.@slot] + "/" + $TC_Need[.@slot] + ".";
+	}
+
+	if ($TC_Kill1[.@slot] >= $TC_Need[.@slot] && $TC_Kill2[.@slot] >= $TC_Need[.@slot] && !$TC_CompleteNotice[.@slot]) {
+		$TC_CompleteNotice[.@slot] = 1;
+		callsub S_MessageParty,.@party_id,"[Team Contract] Objectives complete. Party leader can validate at Team Contracts.";
 	}
 
 	end;
