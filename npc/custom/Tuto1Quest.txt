@@ -17,6 +17,7 @@
 // Tuto1_Poring, Tuto1_Lunatic: chat progress counters only
 // Tuto1_Checkpoint: checkpoint progress
 // Tuto1_Jellopy_Last, Tuto1_Jellopy_Timer: live Jellopy chat progress
+// Tuto1_Poring_Done, Tuto1_Lunatic_Done, Tuto1_First_Done, Tuto1_Jellopy_Done: one-time notices
 
 //============================================================
 // NPC 1 - Olga
@@ -61,6 +62,10 @@ new_1-3,99,30,4	script	Olga	4_F_KAFRA1,{
 		Tuto1_Checkpoint = 0;
 		Tuto1_Jellopy_Last = -1;
 		Tuto1_Jellopy_Timer = 0;
+		Tuto1_Poring_Done = 0;
+		Tuto1_Lunatic_Done = 0;
+		Tuto1_First_Done = 0;
+		Tuto1_Jellopy_Done = 0;
 
 		setquest 65000;
 
@@ -111,6 +116,7 @@ new_1-3,99,30,4	script	Olga	4_F_KAFRA1,{
 		Tuto1_State = 40;
 		Tuto1_Jellopy_Timer = 0;
 		Tuto1_Jellopy_Last = -1;
+		Tuto1_Jellopy_Done = 1;
 
 		completequest 65002;
 
@@ -200,6 +206,10 @@ OnTouch:
 	if (Tuto1_State == 10 && Tuto1_Checkpoint < 1) {
 		Tuto1_Checkpoint = 1;
 		message strcharinfo(PC_NAME), "Main Quest Tuto 1: Location visited 1/1.";
+		if (Tuto1_Poring >= 2 && Tuto1_Lunatic >= 2 && !Tuto1_First_Done) {
+			Tuto1_First_Done = 1;
+			message strcharinfo(PC_NAME), "Main Quest Tuto 1: all objectives complete. Go validate with Olgi.";
+		}
 	}
 	end;
 }
@@ -271,16 +281,24 @@ OnNPCKillEvent:
 
 	if (killedrid == 1002 && Tuto1_Poring < 2) {
 		Tuto1_Poring++;
-		message strcharinfo(PC_NAME), "Main Quest Tuto 1: Poring " + Tuto1_Poring + "/2.";
+		if (Tuto1_Poring >= 2 && !Tuto1_Poring_Done) {
+			Tuto1_Poring_Done = 1;
+			message strcharinfo(PC_NAME), "Main Quest Tuto 1: Poring complete 2/2.";
+		}
 	}
 
 	if (killedrid == 1063 && Tuto1_Lunatic < 2) {
 		Tuto1_Lunatic++;
-		message strcharinfo(PC_NAME), "Main Quest Tuto 1: Lunatic " + Tuto1_Lunatic + "/2.";
+		if (Tuto1_Lunatic >= 2 && !Tuto1_Lunatic_Done) {
+			Tuto1_Lunatic_Done = 1;
+			message strcharinfo(PC_NAME), "Main Quest Tuto 1: Lunatic complete 2/2.";
+		}
 	}
 
-	if (Tuto1_Poring >= 2 && Tuto1_Lunatic >= 2 && Tuto1_Checkpoint >= 1)
-		message strcharinfo(PC_NAME), "Main Quest Tuto 1: objectives complete. Go validate with Olgi.";
+	if (Tuto1_Poring >= 2 && Tuto1_Lunatic >= 2 && Tuto1_Checkpoint >= 1 && !Tuto1_First_Done) {
+		Tuto1_First_Done = 1;
+		message strcharinfo(PC_NAME), "Main Quest Tuto 1: all objectives complete. Go validate with Olgi.";
+	}
 
 	end;
 
@@ -300,6 +318,10 @@ OnJellopyCheck:
 	}
 
 	if (.@jellopy >= 5) {
+		if (Tuto1_Jellopy_Done)
+			end;
+
+		Tuto1_Jellopy_Done = 1;
 		message strcharinfo(PC_NAME), "Main Quest Tuto 1: Jellopy complete. Return to Olga.";
 		Tuto1_Jellopy_Timer = 0;
 		end;
