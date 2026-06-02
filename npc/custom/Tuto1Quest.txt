@@ -22,7 +22,7 @@
 // NPC 1 - Olga
 //============================================================
 
-new_1-3,99,30,4	script	Olga	4_F_KAFRA1,2,2,{
+new_1-3,99,30,4	script	Olga	4_F_KAFRA1,{
 	if (#DebugConsole)
 		dispbottom "[DEBUG][Olga] Click. State=" + Tuto1_State;
 
@@ -134,7 +134,7 @@ new_1-3,99,30,4	script	Olga	4_F_KAFRA1,2,2,{
 // NPC 2 - Olgi
 //============================================================
 
-new_1-3,99,32,4	script	Olgi	4_M_03,2,2,{
+new_1-3,99,32,4	script	Olgi	4_M_03,{
 	if (#DebugConsole)
 		dispbottom "[DEBUG][Olgi] Click. State=" + Tuto1_State + " Poring=" + Tuto1_Poring + " Lunatic=" + Tuto1_Lunatic + " Checkpoint=" + Tuto1_Checkpoint;
 
@@ -150,11 +150,11 @@ new_1-3,99,32,4	script	Olgi	4_M_03,2,2,{
 		mes "Let me check your progress.";
 		next;
 
-		.@hunt = questprogress(65000,HUNTING);
-		if (.@hunt != 2 || Tuto1_Checkpoint < 1) {
+		if (Tuto1_Poring < 2 || Tuto1_Lunatic < 2 || Tuto1_Checkpoint < 1) {
 			mes "[Olgi]";
 			mes "You are not done yet.";
-			mes "Monster hunt state: " + .@hunt + "/2";
+			mes "Poring: " + Tuto1_Poring + "/2";
+			mes "Lunatic: " + Tuto1_Lunatic + "/2";
 			mes "Location: " + Tuto1_Checkpoint + "/1";
 			close;
 		}
@@ -208,7 +208,7 @@ OnTouch:
 // NPC 3 - Olgu
 //============================================================
 
-new_1-3,116,45,4	script	Olgu	4_M_02,2,2,{
+new_1-3,116,45,4	script	Olgu	4_M_02,{
 	if (#DebugConsole)
 		dispbottom "[DEBUG][Olgu] Click. State=" + Tuto1_State;
 
