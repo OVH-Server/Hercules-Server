@@ -13,17 +13,17 @@
 
 new_1-3,99,30,4	script	Olga#Tuto1	4_F_KAFRA1,{
 
-	callfunc "F_DebugConsole","Olga","Click. State=" + Tuto1_State;
+	if (#DebugConsole) dispbottom "[DEBUG][Olga] Click. State=" + Tuto1_State;
 	mes "[Olga]";
 
 	if (Tuto1_State >= 4) {
-		callfunc "F_DebugConsole","Olga","Branch completed.";
+		if (#DebugConsole) dispbottom "[DEBUG][Olga] Branch completed.";
 		mes "You already completed Main Quest Tuto 1.";
 		close;
 	}
 
 	if (Tuto1_State == 0) {
-		callfunc "F_DebugConsole","Olga","Branch start quest.";
+		if (#DebugConsole) dispbottom "[DEBUG][Olga] Branch start quest.";
 		mes "Welcome.";
 		mes "This is Main Quest Tuto 1.";
 		mes "Your first mission is simple:";
@@ -34,13 +34,13 @@ new_1-3,99,30,4	script	Olga#Tuto1	4_F_KAFRA1,{
 		next;
 
 		if (select("Accept:Decline") == 2) {
-			callfunc "F_DebugConsole","Olga","Player declined.";
+			if (#DebugConsole) dispbottom "[DEBUG][Olga] Player declined.";
 			mes "[Olga]";
 			mes "Come back when you are ready.";
 			close;
 		}
 
-		callfunc "F_DebugConsole","Olga","Player accepted. Init variables.";
+		if (#DebugConsole) dispbottom "[DEBUG][Olga] Player accepted. Init variables.";
 		Tuto1_State = 1;
 		Tuto1_Poring = 0;
 		Tuto1_Lunatic = 0;
@@ -54,15 +54,15 @@ new_1-3,99,30,4	script	Olga#Tuto1	4_F_KAFRA1,{
 		mes "Once everything is done, go validate it with Olgi.";
 		close2;
 
-		callfunc "F_DebugConsole","Olga","Calling setquest 65000.";
+		if (#DebugConsole) dispbottom "[DEBUG][Olga] Calling setquest 65000.";
 		setquest 65000;
-		callfunc "F_DebugConsole","Olga","setquest 65000 done.";
+		if (#DebugConsole) dispbottom "[DEBUG][Olga] setquest 65000 done.";
 		message strcharinfo(PC_NAME), "Main Quest Tuto 1: Poring 0/2, Lunatic 0/2, Location 0/1.";
 		end;
 	}
 
 	if (Tuto1_State == 1) {
-		callfunc "F_DebugConsole","Olga","Branch objectives. Poring=" + Tuto1_Poring + " Lunatic=" + Tuto1_Lunatic + " Checkpoint=" + Tuto1_Checkpoint;
+		if (#DebugConsole) dispbottom "[DEBUG][Olga] Branch objectives. Poring=" + Tuto1_Poring + " Lunatic=" + Tuto1_Lunatic + " Checkpoint=" + Tuto1_Checkpoint;
 		mes "Current objective:";
 		mes "Kill 2 Poring: " + Tuto1_Poring + "/2";
 		mes "Kill 2 Lunatic: " + Tuto1_Lunatic + "/2";
@@ -72,14 +72,14 @@ new_1-3,99,30,4	script	Olga#Tuto1	4_F_KAFRA1,{
 	}
 
 	if (Tuto1_State == 2) {
-		callfunc "F_DebugConsole","Olga","Branch go Olgu.";
+		if (#DebugConsole) dispbottom "[DEBUG][Olga] Branch go Olgu.";
 		mes "You already validated your first task.";
 		mes "Go speak with Olgu.";
 		close;
 	}
 
 	if (Tuto1_State == 3) {
-		callfunc "F_DebugConsole","Olga","Branch final Jellopy.";
+		if (#DebugConsole) dispbottom "[DEBUG][Olga] Branch final Jellopy.";
 		if (!Tuto1_Jellopy_Timer) {
 			Tuto1_Jellopy_Timer = 1;
 			addtimer 2000, "Tuto1_KillTracker::OnJellopyCheck";
@@ -95,13 +95,13 @@ new_1-3,99,30,4	script	Olga#Tuto1	4_F_KAFRA1,{
 		next;
 
 		if (countitem(909) < 5) {
-			callfunc "F_DebugConsole","Olga","Not enough Jellopy. Count=" + countitem(909);
+			if (#DebugConsole) dispbottom "[DEBUG][Olga] Not enough Jellopy. Count=" + countitem(909);
 			mes "[Olga]";
 			mes "You do not have 5 Jellopy yet.";
 			close;
 		}
 
-		callfunc "F_DebugConsole","Olga","Reward path. Deleting Jellopy and completing quest.";
+		if (#DebugConsole) dispbottom "[DEBUG][Olga] Reward path. Deleting Jellopy and completing quest.";
 		delitem 909,5;
 		Zeny += 100000;
 		getitem 12622,1;
@@ -110,9 +110,9 @@ new_1-3,99,30,4	script	Olga#Tuto1	4_F_KAFRA1,{
 		Tuto1_Jellopy_Last = -1;
 		Tuto1_Jellopy_Timer = 0;
 
-		callfunc "F_DebugConsole","Olga","Calling completequest 65002.";
+		if (#DebugConsole) dispbottom "[DEBUG][Olga] Calling completequest 65002.";
 		completequest 65002;
-		callfunc "F_DebugConsole","Olga","completequest 65002 done.";
+		if (#DebugConsole) dispbottom "[DEBUG][Olga] completequest 65002 done.";
 
 		specialeffect2 EF_LEVEL99_3;
 		skilleffect AL_BLESSING,0;
@@ -127,7 +127,7 @@ new_1-3,99,30,4	script	Olga#Tuto1	4_F_KAFRA1,{
 		close;
 	}
 
-	callfunc "F_DebugConsole","Olga","Invalid state. Resetting.";
+	if (#DebugConsole) dispbottom "[DEBUG][Olga] Invalid state. Resetting.";
 	mes "Your quest state was invalid.";
 	mes "I reset it. Please speak with me again.";
 	Tuto1_State = 0;
@@ -142,7 +142,7 @@ new_1-3,99,30,4	script	Olga#Tuto1	4_F_KAFRA1,{
 
 new_1-3,101,30,4	script	Olgi#Tuto1	4_F_KAFRA1,{
 
-	callfunc "F_DebugConsole","Olgi","Click. State=" + Tuto1_State + " Poring=" + Tuto1_Poring + " Lunatic=" + Tuto1_Lunatic + " Checkpoint=" + Tuto1_Checkpoint;
+	if (#DebugConsole) dispbottom "[DEBUG][Olgi] Click. State=" + Tuto1_State + " Poring=" + Tuto1_Poring + " Lunatic=" + Tuto1_Lunatic + " Checkpoint=" + Tuto1_Checkpoint;
 	mes("[Olgi]");
 
 	if (Tuto1_State == 0) {
@@ -171,11 +171,11 @@ new_1-3,101,30,4	script	Olgi#Tuto1	4_F_KAFRA1,{
 
 		Tuto1_State = 2;
 
-		callfunc "F_DebugConsole","Olgi","Calling completequest 65000.";
+		if (#DebugConsole) dispbottom "[DEBUG][Olgi] Calling completequest 65000.";
 		completequest 65000;
-		callfunc "F_DebugConsole","Olgi","Calling setquest 65001.";
+		if (#DebugConsole) dispbottom "[DEBUG][Olgi] Calling setquest 65001.";
 		setquest 65001;
-		callfunc "F_DebugConsole","Olgi","Validation done.";
+		if (#DebugConsole) dispbottom "[DEBUG][Olgi] Validation done.";
 
 		message strcharinfo(PC_NAME), "Main Quest Tuto 1: first task validated. Go speak with Olgu.";
 
@@ -232,7 +232,7 @@ OnTouch:
 
 new_1-3,116,45,4	script	Olgu#Tuto1	4_F_KAFRA1,{
 
-	callfunc "F_DebugConsole","Olgu","Click. State=" + Tuto1_State;
+	if (#DebugConsole) dispbottom "[DEBUG][Olgu] Click. State=" + Tuto1_State;
 	mes("[Olgu]");
 
 	if (Tuto1_State < 2) {
@@ -250,11 +250,11 @@ new_1-3,116,45,4	script	Olgu#Tuto1	4_F_KAFRA1,{
 		Tuto1_Jellopy_Last = -1;
 		Tuto1_Jellopy_Timer = 1;
 
-		callfunc "F_DebugConsole","Olgu","Calling completequest 65001.";
+		if (#DebugConsole) dispbottom "[DEBUG][Olgu] Calling completequest 65001.";
 		completequest 65001;
-		callfunc "F_DebugConsole","Olgu","Calling setquest 65002.";
+		if (#DebugConsole) dispbottom "[DEBUG][Olgu] Calling setquest 65002.";
 		setquest 65002;
-		callfunc "F_DebugConsole","Olgu","Jellopy stage started.";
+		if (#DebugConsole) dispbottom "[DEBUG][Olgu] Jellopy stage started.";
 
 		message strcharinfo(PC_NAME), "Main Quest Tuto 1: Collect Jellopy 0/5, then return to Olga.";
 		addtimer 2000, "Tuto1_KillTracker::OnJellopyCheck";
@@ -298,13 +298,13 @@ OnNPCKillEvent:
 
 	if (killedrid == 1002 && Tuto1_Poring < 2) {
 		Tuto1_Poring++;
-		callfunc "F_DebugConsole","Tuto1_Kill","Poring killed. Progress=" + Tuto1_Poring + "/2.";
+		if (#DebugConsole) dispbottom "[DEBUG][Tuto1_Kill] Poring killed. Progress=" + Tuto1_Poring + "/2.";
 		message strcharinfo(PC_NAME), "Main Quest Tuto 1: Poring " + Tuto1_Poring + "/2.";
 	}
 
 	if (killedrid == 1063 && Tuto1_Lunatic < 2) {
 		Tuto1_Lunatic++;
-		callfunc "F_DebugConsole","Tuto1_Kill","Lunatic killed. Progress=" + Tuto1_Lunatic + "/2.";
+		if (#DebugConsole) dispbottom "[DEBUG][Tuto1_Kill] Lunatic killed. Progress=" + Tuto1_Lunatic + "/2.";
 		message strcharinfo(PC_NAME), "Main Quest Tuto 1: Lunatic " + Tuto1_Lunatic + "/2.";
 	}
 
@@ -325,7 +325,7 @@ OnJellopyCheck:
 
 	if (Tuto1_Jellopy_Last != .@jellopy) {
 		Tuto1_Jellopy_Last = .@jellopy;
-		callfunc "F_DebugConsole","Tuto1_Jellopy","Count=" + .@jellopy + "/5.";
+		if (#DebugConsole) dispbottom "[DEBUG][Tuto1_Jellopy] Count=" + .@jellopy + "/5.";
 		message strcharinfo(PC_NAME), "Main Quest Tuto 1: Jellopy " + .@jellopy + "/5.";
 	}
 

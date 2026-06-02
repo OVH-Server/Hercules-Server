@@ -22,7 +22,20 @@ prontera,159,185,4	script	CONSOLE DEBUG	4_F_KAFRA1,{
 	dispbottom "[DEBUG] Player: " + strcharinfo(PC_NAME);
 	dispbottom "[DEBUG] Map: " + strcharinfo(PC_MAP);
 	dispbottom "[DEBUG] Tuto1_State=" + Tuto1_State + " Poring=" + Tuto1_Poring + " Lunatic=" + Tuto1_Lunatic + " Checkpoint=" + Tuto1_Checkpoint;
-	close;
+	close2;
+	addtimer 5000, "DebugConsoleController::OnDebugPulse";
+	end;
+}
+
+-	script	DebugConsoleController	FAKE_NPC,{
+OnDebugPulse:
+	if (!#DebugConsole)
+		end;
+
+	dispbottom "[DEBUG] Pulse: console active. Map=" + strcharinfo(PC_MAP) + " Tuto1_State=" + Tuto1_State;
+	dispbottom "[DEBUG] Tuto1: Poring=" + Tuto1_Poring + "/2 Lunatic=" + Tuto1_Lunatic + "/2 Checkpoint=" + Tuto1_Checkpoint + "/1 Jellopy=" + countitem(909) + "/5";
+	addtimer 5000, "DebugConsoleController::OnDebugPulse";
+	end;
 }
 
 function	script	F_DebugConsole	{
