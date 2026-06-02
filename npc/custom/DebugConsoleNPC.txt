@@ -1,0 +1,34 @@
+//===== Hercules Script ======================================
+// In-game debug console toggle.
+// This does not read the real map-server window; it displays script debug
+// messages in chat when scripts call F_DebugConsole.
+//============================================================
+
+prontera,159,185,4	script	CONSOLE DEBUG	4_F_KAFRA1,{
+	mes "[CONSOLE DEBUG]";
+
+	if (#DebugConsole) {
+		#DebugConsole = 0;
+		mes "Debug console disabled.";
+		dispbottom "[DEBUG] Console disabled.";
+		close;
+	}
+
+	#DebugConsole = 1;
+	mes "Debug console enabled.";
+	mes "Debug lines will now appear in your chat.";
+	mes "Speak to me again to disable it.";
+	dispbottom "[DEBUG] Console enabled.";
+	dispbottom "[DEBUG] Player: " + strcharinfo(PC_NAME);
+	dispbottom "[DEBUG] Map: " + strcharinfo(PC_MAP);
+	dispbottom "[DEBUG] Tuto1_State=" + Tuto1_State + " Poring=" + Tuto1_Poring + " Lunatic=" + Tuto1_Lunatic + " Checkpoint=" + Tuto1_Checkpoint;
+	close;
+}
+
+function	script	F_DebugConsole	{
+	if (!#DebugConsole)
+		return;
+
+	dispbottom "[DEBUG][" + getarg(0) + "] " + getarg(1);
+	return;
+}
