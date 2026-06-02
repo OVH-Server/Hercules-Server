@@ -137,10 +137,10 @@ new_1-3,99,30,4	script	Olga#Tuto1	4_F_KAFRA1,{
 
 // ==========================
 // NPC 2 - OLGI
-// new_1-3,101,30
+// new_1-3,99,32
 // ==========================
 
-new_1-3,101,30,4	script	Olgi#Tuto1	4_F_KAFRA1,{
+new_1-3,99,32,4	script	Olgi#Tuto1	4_F_KAFRA1,{
 
 	if (#DebugConsole) dispbottom "[DEBUG][Olgi] Click. State=" + Tuto1_State + " Poring=" + Tuto1_Poring + " Lunatic=" + Tuto1_Lunatic + " Checkpoint=" + Tuto1_Checkpoint;
 	mes("[Olgi]");
