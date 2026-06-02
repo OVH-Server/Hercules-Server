@@ -1,43 +1,88 @@
 //===== Hercules Script ======================================
+// Daily account reward
+// Gives 10,000 Zeny and 1 random headgear once per server day.
+//============================================================
 
-prontera,159,151,4	script	Daily Reward	4_VENDING_MACHINE,{
+prontera,159,170,4	script	Recompense Journaliere	4_VENDING_MACHINE,{
 	mes "[Recompense Journaliere]";
 
-	// Jour actuel basé sur le timestamp serveur
-	set .@today, gettimetick(2) / 86400;
-
-	// Vérifie si le compte a déjà récupéré sa récompense aujourd'hui
+	.@today = gettimetick(2) / 86400;
 	if (#DailyReward_LastDay == .@today) {
-		mes "Tu as déjà récupéré ta récompense journalière aujourd'hui.";
-		mes "Reviens demain, champion de la patience.";
+		mes "Tu as deja recupere ta recompense journaliere aujourd'hui.";
+		mes "Reviens demain.";
 		close;
 	}
 
-	// Liste des récompenses
-	setarray .@item_id[0], 501, 607, 5171;
-	setarray .@item_amount[0], 1, 1, 1;
+	callsub S_RandomHat;
+	.@hat_id = .RandomHat;
 
-	// Sécurité : si l'index est hors limite, on repart à 0
-	if (#DailyReward_Index < 0 || #DailyReward_Index > 2) {
-		set #DailyReward_Index, 0;
+	if (!checkweight(.@hat_id,1)) {
+		mes "Ton inventaire est trop lourd.";
+		mes "Reviens avec un peu de place pour recevoir ton hat.";
+		close;
 	}
 
-	// Donne la récompense du jour
-	getitem .@item_id[#DailyReward_Index], .@item_amount[#DailyReward_Index];
+	Zeny += 10000;
+	getitem .@hat_id,1;
+	#DailyReward_LastDay = .@today;
 
 	mes "Voici ta recompense journaliere :";
-	mes "^00AAFF" + getitemname(.@item_id[#DailyReward_Index]) + "^000000 x" + .@item_amount[#DailyReward_Index];
-
-	// Sauvegarde que le compte a récupéré aujourd'hui
-	set #DailyReward_LastDay, .@today;
-
-	// Passe à la récompense suivante
-	set #DailyReward_Index, #DailyReward_Index + 1;
-
-	// Si on dépasse le dernier item, on recommence au début
-	if (#DailyReward_Index > 2) {
-		set #DailyReward_Index, 0;
-	}
-
+	mes "^00AAFF10,000 Zeny^000000";
+	mes "^00AAFF" + getitemname(.@hat_id) + "^000000 x1";
+	dispbottom "[Recompense Journaliere] Tu as recu 10,000 Zeny et " + getitemname(.@hat_id) + ".";
 	close;
+
+OnPCLoginEvent:
+	callsub S_NotifyPlayer;
+	end;
+
+OnInit:
+	.HatLocMask = EQP_HEAD_LOW | EQP_HEAD_MID | EQP_HEAD_TOP | EQP_COSTUME_HEAD_LOW | EQP_COSTUME_HEAD_MID | EQP_COSTUME_HEAD_TOP;
+	.HatMin = 500;
+	.HatMax = 100000;
+	.FallbackHat = 2201;
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	callsub S_NotifyOnlinePlayers;
+	setnpctimer 0;
+	end;
+
+S_RandomHat:
+	.RandomHat = .FallbackHat;
+
+	for (.@try = 0; .@try < 1000; .@try++) {
+		.@id = rand(.HatMin,.HatMax);
+		if (getiteminfo(.@id, ITEMINFO_TYPE) != IT_ARMOR)
+			continue;
+
+		.@loc = getiteminfo(.@id, ITEMINFO_LOC);
+		if (!(.@loc & .HatLocMask))
+			continue;
+
+		.RandomHat = .@id;
+		return;
+	}
+	return;
+
+S_NotifyOnlinePlayers:
+	.@count = getunits(BL_PC, .@players, false);
+	for (.@i = 0; .@i < .@count; .@i++) {
+		if (!attachrid(.@players[.@i]))
+			continue;
+
+		callsub S_NotifyPlayer;
+	}
+	detachrid;
+	return;
+
+S_NotifyPlayer:
+	.@today = gettimetick(2) / 86400;
+	if (#DailyReward_LastDay != .@today) {
+		.@msg$ = "[Recompense Journaliere] Ta recompense journaliere est disponible a Prontera 159 170.";
+		message getcharid(CHAR_ID_ACCOUNT), .@msg$;
+		dispbottom .@msg$;
+	}
+	return;
 }
