@@ -96,16 +96,29 @@ S_AcceptContract:
 		close;
 	}
 
-	callsub S_IsClassAllowed,.@quest,BaseClass;
-	if (!.@allowed) {
+	.@leader_ok = 0;
+	.@baseclass = BaseClass;
+	.@basejob = BaseJob;
+	.@eac = eaclass();
+
+	if (.ReqSwordman[.@quest] && (.@baseclass == Job_Swordman || .@basejob == Job_Swordman || (.@eac&EAJ_BASEMASK) == EAJ_SWORDMAN)) .@leader_ok = 1;
+	if (.ReqArcher[.@quest] && (.@baseclass == Job_Archer || .@basejob == Job_Archer || (.@eac&EAJ_BASEMASK) == EAJ_ARCHER)) .@leader_ok = 1;
+	if (.ReqMage[.@quest] && (.@baseclass == Job_Mage || .@basejob == Job_Mage || (.@eac&EAJ_BASEMASK) == EAJ_MAGE)) .@leader_ok = 1;
+	if (.ReqAcolyte[.@quest] && (.@baseclass == Job_Acolyte || .@basejob == Job_Acolyte || (.@eac&EAJ_BASEMASK) == EAJ_ACOLYTE)) .@leader_ok = 1;
+	if (.ReqThief[.@quest] && (.@baseclass == Job_Thief || .@basejob == Job_Thief || (.@eac&EAJ_BASEMASK) == EAJ_THIEF)) .@leader_ok = 1;
+	if (.ReqMerchant[.@quest] && (.@baseclass == Job_Merchant || .@basejob == Job_Merchant || (.@eac&EAJ_BASEMASK) == EAJ_MERCHANT)) .@leader_ok = 1;
+
+	if (!.@leader_ok) {
 		mes "[Team Contracts]";
 		mes "Your class cannot accept this contract.";
-		mes "Required class group:";
+		mes "Leader class detected: ^0000FF" + jobname(Class) + "^000000";
+		mes "The party leader must be one of:";
 		mes "^FF0000" + .Classes$[.@quest] + "^000000";
 		close;
 	}
 
 	callsub S_FindPartySlot,.@party_id;
+	.@slot = .FindSlot;
 	if (.@slot >= 0) {
 		mes "[Team Contracts]";
 		mes "Your party already has an active team contract.";
@@ -114,16 +127,17 @@ S_AcceptContract:
 	}
 
 	callsub S_CheckPartyClasses,.@party_id,.ReqSwordman[.@quest],.ReqArcher[.@quest],.ReqMage[.@quest],.ReqAcolyte[.@quest],.ReqThief[.@quest],.ReqMerchant[.@quest];
-	if (!.@party_ok) {
+	if (!.PartyOk) {
 		mes "[Team Contracts]";
 		mes "Your party does not contain all required classes.";
 		mes "Required: ^FF0000" + .Classes$[.@quest] + "^000000";
-		mes "Detected: ^0000FF" + .@detected$ + "^000000";
-		mes "Missing: ^FF0000" + .@missing$ + "^000000";
+		mes "Detected: ^0000FF" + .Detected$ + "^000000";
+		mes "Missing: ^FF0000" + .Missing$ + "^000000";
 		close;
 	}
 
 	callsub S_FindFreeSlot;
+	.@slot = .FindSlot;
 	if (.@slot < 0) {
 		mes "[Team Contracts]";
 		mes "The team contract board is full.";
@@ -165,6 +179,7 @@ S_ValidateContract:
 	}
 
 	callsub S_FindPartySlot,.@party_id;
+	.@slot = .FindSlot;
 	if (.@slot < 0) {
 		mes "[Team Contracts]";
 		mes "Your party has no active team contract.";
@@ -229,6 +244,7 @@ S_CancelContract:
 	}
 
 	callsub S_FindPartySlot,.@party_id;
+	.@slot = .FindSlot;
 	if (.@slot < 0) {
 		mes "[Team Contracts]";
 		mes "Your party has no active team contract.";
@@ -256,20 +272,20 @@ S_ShowProgress:
 	return;
 
 S_FindPartySlot:
-	.@slot = -1;
+	.FindSlot = -1;
 	for (.@i = 0; .@i < 20; .@i++) {
 		if ($TC_Active[.@i] && $TC_PartyId[.@i] == getarg(0)) {
-			.@slot = .@i;
+			.FindSlot = .@i;
 			return;
 		}
 	}
 	return;
 
 S_FindFreeSlot:
-	.@slot = -1;
+	.FindSlot = -1;
 	for (.@i = 0; .@i < 20; .@i++) {
 		if (!$TC_Active[.@i]) {
-			.@slot = .@i;
+			.FindSlot = .@i;
 			return;
 		}
 	}
@@ -348,40 +364,24 @@ S_CheckPartyClasses:
 	}
 	attachrid .@original_aid;
 
-	.@detected$ = "";
-	if (.@has_swordman) .@detected$ = .@detected$ + "Swordman ";
-	if (.@has_archer) .@detected$ = .@detected$ + "Archer ";
-	if (.@has_mage) .@detected$ = .@detected$ + "Mage ";
-	if (.@has_acolyte) .@detected$ = .@detected$ + "Acolyte ";
-	if (.@has_thief) .@detected$ = .@detected$ + "Thief ";
-	if (.@has_merchant) .@detected$ = .@detected$ + "Merchant ";
-	if (.@detected$ == "") .@detected$ = "None";
+	.Detected$ = "";
+	if (.@has_swordman) .Detected$ = .Detected$ + "Swordman ";
+	if (.@has_archer) .Detected$ = .Detected$ + "Archer ";
+	if (.@has_mage) .Detected$ = .Detected$ + "Mage ";
+	if (.@has_acolyte) .Detected$ = .Detected$ + "Acolyte ";
+	if (.@has_thief) .Detected$ = .Detected$ + "Thief ";
+	if (.@has_merchant) .Detected$ = .Detected$ + "Merchant ";
+	if (.Detected$ == "") .Detected$ = "None";
 
-	.@missing$ = "";
-	if (.@req_swordman && !.@has_swordman) .@missing$ = .@missing$ + "Swordman ";
-	if (.@req_archer && !.@has_archer) .@missing$ = .@missing$ + "Archer ";
-	if (.@req_mage && !.@has_mage) .@missing$ = .@missing$ + "Mage ";
-	if (.@req_acolyte && !.@has_acolyte) .@missing$ = .@missing$ + "Acolyte ";
-	if (.@req_thief && !.@has_thief) .@missing$ = .@missing$ + "Thief ";
-	if (.@req_merchant && !.@has_merchant) .@missing$ = .@missing$ + "Merchant ";
+	.Missing$ = "";
+	if (.@req_swordman && !.@has_swordman) .Missing$ = .Missing$ + "Swordman ";
+	if (.@req_archer && !.@has_archer) .Missing$ = .Missing$ + "Archer ";
+	if (.@req_mage && !.@has_mage) .Missing$ = .Missing$ + "Mage ";
+	if (.@req_acolyte && !.@has_acolyte) .Missing$ = .Missing$ + "Acolyte ";
+	if (.@req_thief && !.@has_thief) .Missing$ = .Missing$ + "Thief ";
+	if (.@req_merchant && !.@has_merchant) .Missing$ = .Missing$ + "Merchant ";
 
-	.@party_ok = (.@missing$ == "");
-	return;
-
-S_IsClassAllowed:
-	.@quest = getarg(0);
-	.@baseclass = getarg(1);
-	.@basejob = BaseJob;
-	.@eac = eaclass();
-	.@allowed = 0;
-
-	if (.ReqSwordman[.@quest] && (.@baseclass == Job_Swordman || .@basejob == Job_Swordman || (.@eac&EAJ_BASEMASK) == EAJ_SWORDMAN)) .@allowed = 1;
-	if (.ReqArcher[.@quest] && (.@baseclass == Job_Archer || .@basejob == Job_Archer || (.@eac&EAJ_BASEMASK) == EAJ_ARCHER)) .@allowed = 1;
-	if (.ReqMage[.@quest] && (.@baseclass == Job_Mage || .@basejob == Job_Mage || (.@eac&EAJ_BASEMASK) == EAJ_MAGE)) .@allowed = 1;
-	if (.ReqAcolyte[.@quest] && (.@baseclass == Job_Acolyte || .@basejob == Job_Acolyte || (.@eac&EAJ_BASEMASK) == EAJ_ACOLYTE)) .@allowed = 1;
-	if (.ReqThief[.@quest] && (.@baseclass == Job_Thief || .@basejob == Job_Thief || (.@eac&EAJ_BASEMASK) == EAJ_THIEF)) .@allowed = 1;
-	if (.ReqMerchant[.@quest] && (.@baseclass == Job_Merchant || .@basejob == Job_Merchant || (.@eac&EAJ_BASEMASK) == EAJ_MERCHANT)) .@allowed = 1;
-
+	.PartyOk = (.Missing$ == "");
 	return;
 
 OnNPCKillEvent:
@@ -390,6 +390,7 @@ OnNPCKillEvent:
 		end;
 
 	callsub S_FindPartySlot,.@party_id;
+	.@slot = .FindSlot;
 	if (.@slot < 0)
 		end;
 
