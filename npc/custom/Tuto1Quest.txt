@@ -1,0 +1,213 @@
+//===== Hercules Script ======================================
+
+// =====================================================
+// MAIN QUEST TUTO 1
+// Olga -> Olgi -> Kill Poring/Lunatic -> Checkpoint -> Olgu -> Olgi
+// =====================================================
+
+
+// ==========================
+// NPC 1 - OLGA
+// new_1-3,99,30
+// ==========================
+
+new_1-3,99,30,4	script	Olga#Tuto1	4_F_KAFRA1,{
+
+	mes("[Olga]");
+	
+	if (Tuto1_State == 0) {
+		mes("Welcome.");
+		mes("This is Main Quest Tuto 1.");
+		mes("Please go speak with Olgi.");
+		mes("You can find him nearby.");
+		next();
+
+		Tuto1_State = 1;
+
+		mes("[Olga]");
+		mes("Quest started:");
+		mes("^00FF00Main Quest Tuto 1^000000");
+		close();
+	}
+
+	if (Tuto1_State >= 1) {
+		mes("You already started Main Quest Tuto 1.");
+		mes("Go speak with Olgi.");
+		close();
+	}
+}
+
+
+// ==========================
+// NPC 2 - OLGI
+// new_1-3,101,34
+// ==========================
+
+new_1-3,101,34,4	script	Olgi#Tuto1	4_F_KAFRA1,{
+
+	mes("[Olgi]");
+
+	if (Tuto1_State == 0) {
+		mes("You should speak with Olga first.");
+		close();
+	}
+
+	if (Tuto1_State == 1) {
+		mes("Olga sent you?");
+		mes("Good.");
+		mes("Go kill:");
+		mes("^FF00001 Poring^000000");
+		mes("^FF00001 Lunatic^000000");
+		mes("Then go to the marked location:");
+		mes("^00FF00new_1-3,87,32^000000");
+		next();
+
+		Tuto1_State = 2;
+		Tuto1_Poring = 0;
+		Tuto1_Lunatic = 0;
+		Tuto1_Checkpoint = 0;
+
+		mes("[Olgi]");
+		mes("Come back later when Olgu tells you to return with 5 Jellopy.");
+		close();
+	}
+
+	if (Tuto1_State == 2) {
+		mes("Current objective:");
+		mes("Kill 1 Poring: " + Tuto1_Poring + "/1");
+		mes("Kill 1 Lunatic: " + Tuto1_Lunatic + "/1");
+		mes("Visit location new_1-3,87,32: " + Tuto1_Checkpoint + "/1");
+		close();
+	}
+
+	if (Tuto1_State == 3) {
+		mes("You must speak with Olgu first.");
+		close();
+	}
+
+	if (Tuto1_State == 4) {
+		mes("Olgu sent you back?");
+		mes("Bring me ^FF00005 Jellopy^000000.");
+		next();
+
+		if (countitem(909) < 5) {
+			mes("[Olgi]");
+			mes("You do not have 5 Jellopy.");
+			close();
+		}
+
+		delitem 909,5;
+		Zeny += 100000;
+		getitem 12622,1;
+
+		Tuto1_State = 5;
+
+		specialeffect2 EF_LEVEL99_3;
+		skilleffect AL_BLESSING,0;
+
+		mes("[Olgi]");
+		mes("Quest complete.");
+		mes("You received:");
+		mes("^00FF00100,000 Zeny");
+		mes("1 reward item.^000000");
+		close();
+	}
+
+	if (Tuto1_State >= 5) {
+		mes("You already completed Main Quest Tuto 1.");
+		close();
+	}
+}
+
+
+// ==========================
+// CHECKPOINT
+// new_1-3,87,32
+// Invisible position trigger
+// ==========================
+
+new_1-3,87,32,0	script	Tuto1_Checkpoint#01	HIDDEN_NPC,2,2,{
+
+OnTouch:
+	if (Tuto1_State == 2) {
+		Tuto1_Checkpoint = 1;
+		dispbottom "Main Quest Tuto 1: Location visited.";
+	}
+	end;
+}
+
+
+// ==========================
+// NPC 3 - OLGU
+// new_1-3,116,45
+// ==========================
+
+new_1-3,116,45,4	script	Olgu#Tuto1	4_F_KAFRA1,{
+
+	mes("[Olgu]");
+
+	if (Tuto1_State < 2) {
+		mes("You are not ready for me yet.");
+		close();
+	}
+
+	if (Tuto1_State == 2) {
+		mes("Did you kill the monsters and visit the indicated place?");
+		next();
+
+		if (select("Yes:No") == 2) {
+			mes("[Olgu]");
+			mes("Goodbye.");
+			close();
+		}
+
+		if (Tuto1_Poring < 1 || Tuto1_Lunatic < 1 || Tuto1_Checkpoint < 1) {
+			mes("[Olgu]");
+			mes("No, you did not complete everything.");
+			mes("Goodbye.");
+			close();
+		}
+
+		Tuto1_State = 4;
+
+		mes("[Olgu]");
+		mes("Ok, good.");
+		mes("Now bring 5 Jellopy back to Olgi.");
+		mes("And yes, make sure you came to see me first.");
+		close();
+	}
+
+	if (Tuto1_State == 4) {
+		mes("Go back to Olgi with 5 Jellopy.");
+		close();
+	}
+
+	if (Tuto1_State >= 5) {
+		mes("You already completed this tutorial.");
+		close();
+	}
+}
+
+
+// ==========================
+// KILL TRACKER
+// ==========================
+
+-	script	Tuto1_KillTracker#01	FAKE_NPC,{
+
+OnNPCKillEvent:
+	if (Tuto1_State != 2)
+		end;
+
+	if (killedrid == 1002 && Tuto1_Poring < 1) {
+		Tuto1_Poring = 1;
+		dispbottom "Main Quest Tuto 1: Poring killed 1/1.";
+	}
+
+	if (killedrid == 1063 && Tuto1_Lunatic < 1) {
+		Tuto1_Lunatic = 1;
+		dispbottom "Main Quest Tuto 1: Lunatic killed 1/1.";
+	}
+
+	end;
+}
