@@ -13,27 +13,27 @@
 
 new_1-3,99,30,4	script	Olga#Tuto1	4_F_KAFRA1,{
 
-	mes("[Olga]");
+	mes "[Olga]";
 
 	if (Tuto1_State >= 4) {
-		mes("You already completed Main Quest Tuto 1.");
-		close();
+		mes "You already completed Main Quest Tuto 1.";
+		close;
 	}
 
 	if (Tuto1_State == 0) {
-		mes("Welcome.");
-		mes("This is Main Quest Tuto 1.");
-		mes("Your first mission is simple:");
-		mes("^FF00002 Poring^000000");
-		mes("^FF00002 Lunatic^000000");
-		mes("Then visit the marked location:");
-		mes("^00FF00new_1-3,87,32^000000");
-		next();
+		mes "Welcome.";
+		mes "This is Main Quest Tuto 1.";
+		mes "Your first mission is simple:";
+		mes "^FF00002 Poring^000000";
+		mes "^FF00002 Lunatic^000000";
+		mes "Then visit the marked location:";
+		mes "^00FF00new_1-3,87,32^000000";
+		next;
 
 		if (select("Accept:Decline") == 2) {
-			mes("[Olga]");
-			mes("Come back when you are ready.");
-			close();
+			mes "[Olga]";
+			mes "Come back when you are ready.";
+			close;
 		}
 
 		Tuto1_State = 1;
@@ -43,30 +43,30 @@ new_1-3,99,30,4	script	Olga#Tuto1	4_F_KAFRA1,{
 		Tuto1_Jellopy_Last = -1;
 		Tuto1_Jellopy_Timer = 0;
 
+		mes "[Olga]";
+		mes "Quest started:";
+		mes "^00FF00Main Quest Tuto 1^000000";
+		mes "Once everything is done, go validate it with Olgi.";
+		close2;
+
 		setquest 65000;
-
 		message strcharinfo(PC_NAME), "Main Quest Tuto 1: Poring 0/2, Lunatic 0/2, Location 0/1.";
-
-		mes("[Olga]");
-		mes("Quest started:");
-		mes("^00FF00Main Quest Tuto 1^000000");
-		mes("Once everything is done, go validate it with Olgi.");
-		close();
+		end;
 	}
 
 	if (Tuto1_State == 1) {
-		mes("Current objective:");
-		mes("Kill 2 Poring: " + Tuto1_Poring + "/2");
-		mes("Kill 2 Lunatic: " + Tuto1_Lunatic + "/2");
-		mes("Visit location new_1-3,87,32: " + Tuto1_Checkpoint + "/1");
-		mes("Then go validate with Olgi.");
-		close();
+		mes "Current objective:";
+		mes "Kill 2 Poring: " + Tuto1_Poring + "/2";
+		mes "Kill 2 Lunatic: " + Tuto1_Lunatic + "/2";
+		mes "Visit location new_1-3,87,32: " + Tuto1_Checkpoint + "/1";
+		mes "Then go validate with Olgi.";
+		close;
 	}
 
 	if (Tuto1_State == 2) {
-		mes("You already validated your first task.");
-		mes("Go speak with Olgu.");
-		close();
+		mes "You already validated your first task.";
+		mes "Go speak with Olgu.";
+		close;
 	}
 
 	if (Tuto1_State == 3) {
@@ -79,15 +79,15 @@ new_1-3,99,30,4	script	Olga#Tuto1	4_F_KAFRA1,{
 		if (.@jellopy > 5)
 			.@jellopy = 5;
 
-		mes("Olgu sent you back?");
-		mes("Bring me ^FF00005 Jellopy^000000.");
-		mes("Current progress: " + .@jellopy + "/5");
-		next();
+		mes "Olgu sent you back?";
+		mes "Bring me ^FF00005 Jellopy^000000.";
+		mes "Current progress: " + .@jellopy + "/5";
+		next;
 
 		if (countitem(909) < 5) {
-			mes("[Olga]");
-			mes("You do not have 5 Jellopy yet.");
-			close();
+			mes "[Olga]";
+			mes "You do not have 5 Jellopy yet.";
+			close;
 		}
 
 		delitem 909,5;
@@ -98,21 +98,25 @@ new_1-3,99,30,4	script	Olga#Tuto1	4_F_KAFRA1,{
 		Tuto1_Jellopy_Last = -1;
 		Tuto1_Jellopy_Timer = 0;
 
-		if (questprogress(65002))
-			completequest 65002;
+		completequest 65002;
 
 		specialeffect2 EF_LEVEL99_3;
 		skilleffect AL_BLESSING,0;
 
 		message strcharinfo(PC_NAME), "Main Quest Tuto 1: completed.";
 
-		mes("[Olga]");
-		mes("Quest complete.");
-		mes("You received:");
-		mes("^00FF00100,000 Zeny^000000");
-		mes("^00FF001 Halter Lead^000000");
-		close();
+		mes "[Olga]";
+		mes "Quest complete.";
+		mes "You received:";
+		mes "^00FF00100,000 Zeny^000000";
+		mes "^00FF001 Halter Lead^000000";
+		close;
 	}
+
+	mes "Your quest state was invalid.";
+	mes "I reset it. Please speak with me again.";
+	Tuto1_State = 0;
+	close;
 }
 
 
