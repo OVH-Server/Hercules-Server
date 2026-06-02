@@ -24,8 +24,7 @@
 //============================================================
 
 new_1-3,99,30,4	script	Olga	4_F_KAFRA1,{
-	if (#DebugConsole)
-		dispbottom "[DEBUG][Olga] Click. State=" + Tuto1_State;
+	callfunc "F_DebugConsole","Olga","Click. State=" + Tuto1_State;
 
 	mes "[Olga]";
 
@@ -141,8 +140,7 @@ new_1-3,99,30,4	script	Olga	4_F_KAFRA1,{
 //============================================================
 
 new_1-3,99,32,4	script	Olgi	4_M_03,{
-	if (#DebugConsole)
-		dispbottom "[DEBUG][Olgi] Click. State=" + Tuto1_State + " Poring=" + Tuto1_Poring + " Lunatic=" + Tuto1_Lunatic + " Checkpoint=" + Tuto1_Checkpoint;
+	callfunc "F_DebugConsole","Olgi","Click. State=" + Tuto1_State + " Poring=" + Tuto1_Poring + " Lunatic=" + Tuto1_Lunatic + " Checkpoint=" + Tuto1_Checkpoint;
 
 	mes "[Olgi]";
 
@@ -219,8 +217,7 @@ OnTouch:
 //============================================================
 
 new_1-3,116,45,4	script	Olgu	4_M_02,{
-	if (#DebugConsole)
-		dispbottom "[DEBUG][Olgu] Click. State=" + Tuto1_State;
+	callfunc "F_DebugConsole","Olgu","Click. State=" + Tuto1_State;
 
 	mes "[Olgu]";
 

@@ -1,30 +1,65 @@
 //===== Hercules Script ======================================
-// In-game debug console toggle.
-// This does not read the real map-server window; it displays script debug
-// messages in chat when scripts call F_DebugConsole.
+// Generic in-game debug console.
+//
+// Limitation:
+// This NPC cannot read the real map-server console and cannot catch a script
+// before it starts executing. A future script must call F_DebugConsole to send
+// debug lines to the player chat.
+//
+// Usage in any NPC script:
+//   callfunc "F_DebugConsole","NPC_NAME","message";
+//   callfunc "F_DebugConsole","Olga","State=" + Tuto1_State;
+//
+// Optional value helper:
+//   callfunc "F_DebugValue","Olga","Tuto1_State",Tuto1_State;
 //============================================================
 
 prontera,159,185,4	script	CONSOLE DEBUG	4_F_KAFRA1,{
 	mes "[CONSOLE DEBUG]";
+	mes "Generic debug console.";
+	mes "Status: " + (#DebugConsole ? "enabled" : "disabled");
+	next;
 
-	if (#DebugConsole) {
-		#DebugConsole = 0;
-		mes "Debug console disabled.";
-		dispbottom "[DEBUG] Console disabled.";
+	switch(select((#DebugConsole ? "Disable" : "Enable"), "Show status", "How to use", "Cancel")) {
+	case 1:
+		if (#DebugConsole) {
+			#DebugConsole = 0;
+			mes "[CONSOLE DEBUG]";
+			mes "Debug console disabled.";
+			dispbottom "[DEBUG] Console disabled.";
+			close;
+		}
+
+		#DebugConsole = 1;
+		mes "[CONSOLE DEBUG]";
+		mes "Debug console enabled.";
+		mes "Scripts that call F_DebugConsole will now write in your chat.";
+		dispbottom "[DEBUG] Console enabled for " + strcharinfo(PC_NAME) + ".";
+		callfunc "F_DebugStatus";
+		close2;
+		addtimer 10000, "DebugConsoleController::OnDebugPulse";
+		end;
+
+	case 2:
+		callfunc "F_DebugStatus";
+		mes "[CONSOLE DEBUG]";
+		mes "Status printed in your chat.";
+		close;
+
+	case 3:
+		mes "[CONSOLE DEBUG]";
+		mes "Add this line inside any NPC you want to inspect:";
+		mes "callfunc \"F_DebugConsole\",\"NPC\",\"step reached\";";
+		next;
+		mes "[CONSOLE DEBUG]";
+		mes "For a variable:";
+		mes "callfunc \"F_DebugValue\",\"NPC\",\"Var\",Var;";
+		mes "Only players who enabled this console will see the lines.";
+		close;
+
+	case 4:
 		close;
 	}
-
-	#DebugConsole = 1;
-	mes "Debug console enabled.";
-	mes "Debug lines will now appear in your chat.";
-	mes "Speak to me again to disable it.";
-	dispbottom "[DEBUG] Console enabled.";
-	dispbottom "[DEBUG] Player: " + strcharinfo(PC_NAME);
-	dispbottom "[DEBUG] Map: " + strcharinfo(PC_MAP);
-	dispbottom "[DEBUG] Tuto1_State=" + Tuto1_State + " Poring=" + Tuto1_Poring + " Lunatic=" + Tuto1_Lunatic + " Checkpoint=" + Tuto1_Checkpoint;
-	close2;
-	addtimer 5000, "DebugConsoleController::OnDebugPulse";
-	end;
 }
 
 -	script	DebugConsoleController	FAKE_NPC,{
@@ -32,9 +67,8 @@ OnDebugPulse:
 	if (!#DebugConsole)
 		end;
 
-	dispbottom "[DEBUG] Pulse: console active. Map=" + strcharinfo(PC_MAP) + " Tuto1_State=" + Tuto1_State;
-	dispbottom "[DEBUG] Tuto1: Poring=" + Tuto1_Poring + "/2 Lunatic=" + Tuto1_Lunatic + "/2 Checkpoint=" + Tuto1_Checkpoint + "/1 Jellopy=" + countitem(909) + "/5";
-	addtimer 5000, "DebugConsoleController::OnDebugPulse";
+	callfunc "F_DebugStatus";
+	addtimer 10000, "DebugConsoleController::OnDebugPulse";
 	end;
 }
 
@@ -43,5 +77,22 @@ function	script	F_DebugConsole	{
 		return;
 
 	dispbottom "[DEBUG][" + getarg(0) + "] " + getarg(1);
+	return;
+}
+
+function	script	F_DebugValue	{
+	if (!#DebugConsole)
+		return;
+
+	dispbottom "[DEBUG][" + getarg(0) + "] " + getarg(1) + "=" + getarg(2);
+	return;
+}
+
+function	script	F_DebugStatus	{
+	if (!#DebugConsole)
+		return;
+
+	getmapxy(.@map$,.@x,.@y,UNITTYPE_PC);
+	dispbottom "[DEBUG] Player=" + strcharinfo(PC_NAME) + " Map=" + .@map$ + " X=" + .@x + " Y=" + .@y;
 	return;
 }
