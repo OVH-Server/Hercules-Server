@@ -8,7 +8,32 @@
 prontera,159,160,4	script	Valkyrie Tuto 4	4_F_VALKYRIE,{
 	mes "[Valkyrie]";
 
-	if (Tuto4_State == 0) {
+	if (Tuto4_State == 1 && !#Tuto4_RewardClaimed) {
+		mes "Le voyage a ete bon ?";
+		next;
+
+		if (select("Oui:Non") == 2) {
+			mes "[Valkyrie]";
+			mes "D'accord. Reviens me voir quand tu voudras recevoir ta recompense.";
+			close;
+		}
+
+		Zeny += 100000;
+		getexp 100000,100000;
+		getitem 607,1;
+		#Tuto4_RewardClaimed = 1;
+		Tuto4_State = 0;
+
+		mes "[Valkyrie]";
+		mes "Excellent. Voici ta recompense.";
+		mes "100 000 Zeny, 100 000 Base EXP, 100 000 Job EXP et une Yggdrasil Berry.";
+		close;
+	}
+
+	if (Tuto4_State == 1 && #Tuto4_RewardClaimed)
+		Tuto4_State = 0;
+
+	if (Tuto4_State != 1) {
 		mes "Veux-tu aller quelque part ?";
 		next;
 
@@ -83,47 +108,31 @@ prontera,159,160,4	script	Valkyrie Tuto 4	4_F_VALKYRIE,{
 		callsub S_MoveTo, 154, 164, 900;
 		callsub S_MoveTo, 156, 157, 1200;
 
-		unitwarp(getcharid(CHAR_ID_ACCOUNT), "prontera", 156, 157);
 		sc_end(SC_ALL_RIDING);
 		if (countitem(12622) > 0)
 			delitem 12622,1;
 
-		Tuto4_State = 1;
+		if (#Tuto4_RewardClaimed)
+			Tuto4_State = 0;
+		else
+			Tuto4_State = 1;
+
 		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, false);
 		$Tuto4_RiderBusy = 0;
-		message strcharinfo(PC_NAME), "Valkyrie Tuto 4: le voyage est termine. Retourne parler a la Valkyrie.";
+		if (#Tuto4_RewardClaimed)
+			message strcharinfo(PC_NAME), "Valkyrie Tuto 4: le voyage est termine. Tu peux le refaire quand tu veux.";
+		else
+			message strcharinfo(PC_NAME), "Valkyrie Tuto 4: le voyage est termine. Retourne parler a la Valkyrie.";
 		end;
 	}
 
-	if (Tuto4_State == 1) {
-		mes "Le voyage a ete bon ?";
-		next;
-
-		if (select("Oui:Non") == 2) {
-			mes "[Valkyrie]";
-			mes "D'accord. Reviens me voir quand tu voudras recevoir ta recompense.";
-			close;
-		}
-
-		Zeny += 100000;
-		getexp 100000,100000;
-		getitem 607,1;
-		Tuto4_State = 2;
-
-		mes "[Valkyrie]";
-		mes "Excellent. Voici ta recompense.";
-		mes "100 000 Zeny, 100 000 Base EXP, 100 000 Job EXP et une Yggdrasil Berry.";
-		close;
-	}
-
-	mes "Tu as deja termine ce voyage.";
+	mes "Retourne me voir apres ton voyage.";
 	close;
 
 S_MoveTo:
+	navigateto("prontera", getarg(0), getarg(1), NAV_NONE, 1);
 	unitwalk(getcharid(CHAR_ID_ACCOUNT), getarg(0), getarg(1));
 	sleep2 getarg(2);
-	unitwarp(getcharid(CHAR_ID_ACCOUNT), "prontera", getarg(0), getarg(1));
-	sleep2 150;
 	return;
 
 OnPCLogoutEvent:
