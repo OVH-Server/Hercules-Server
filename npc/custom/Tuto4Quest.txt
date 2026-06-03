@@ -84,13 +84,39 @@ prontera,159,160,4	script	Valkyrie Tuto 4	4_F_VALKYRIE,{
 		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, true);
 		sleep2 800;
 
-		callsub S_MoveTo, 158, 167, 5000;
-		callsub S_MoveTo, 148, 187, 9000;
-		callsub S_MoveTo, 128, 216, 12000;
-		callsub S_MoveTo, 105, 250, 14000;
-		callsub S_MoveTo, 80, 294, 16000;
-		callsub S_MoveTo, 55, 335, 16000;
-		callsub S_MoveTo, 47, 343, 8000;
+		callsub S_MoveTo, 158, 164, 1800;
+		callsub S_MoveTo, 156, 168, 1800;
+		callsub S_MoveTo, 154, 172, 1800;
+		callsub S_MoveTo, 151, 176, 1800;
+		callsub S_MoveTo, 148, 180, 1800;
+		callsub S_MoveTo, 144, 184, 1800;
+		callsub S_MoveTo, 140, 190, 2200;
+		callsub S_MoveTo, 136, 196, 2200;
+		callsub S_MoveTo, 132, 202, 2200;
+		callsub S_MoveTo, 128, 208, 2200;
+		callsub S_MoveTo, 124, 214, 2200;
+		callsub S_MoveTo, 120, 220, 2200;
+		callsub S_MoveTo, 116, 226, 2200;
+		callsub S_MoveTo, 112, 232, 2200;
+		callsub S_MoveTo, 108, 238, 2200;
+		callsub S_MoveTo, 104, 244, 2200;
+		callsub S_MoveTo, 100, 250, 2200;
+		callsub S_MoveTo, 96, 256, 2200;
+		callsub S_MoveTo, 92, 262, 2200;
+		callsub S_MoveTo, 88, 268, 2200;
+		callsub S_MoveTo, 84, 274, 2200;
+		callsub S_MoveTo, 80, 280, 2200;
+		callsub S_MoveTo, 76, 286, 2200;
+		callsub S_MoveTo, 72, 292, 2200;
+		callsub S_MoveTo, 68, 298, 2200;
+		callsub S_MoveTo, 64, 304, 2200;
+		callsub S_MoveTo, 60, 310, 2200;
+		callsub S_MoveTo, 56, 316, 2200;
+		callsub S_MoveTo, 52, 322, 2200;
+		callsub S_MoveTo, 49, 328, 2200;
+		callsub S_MoveTo, 47, 334, 2200;
+		callsub S_MoveTo, 47, 339, 1800;
+		callsub S_MoveTo, 47, 343, 1800;
 
 		sc_end(SC_ALL_RIDING);
 		if (countitem(12622) > 0)
@@ -122,7 +148,7 @@ S_MoveTo:
 	sleep2 100;
 	.@elapsed += 100;
 
-	while (unitiswalking(.@pc_gid) == 1 && .@elapsed < .@timeout) {
+	while (.@elapsed < .@timeout) {
 		getmapxy(.@map$, .@x, .@y, UNITTYPE_PC);
 		.@dx = getarg(0) - .@x;
 		.@dy = getarg(1) - .@y;
@@ -131,6 +157,9 @@ S_MoveTo:
 		if (.@dy < 0)
 			.@dy = -.@dy;
 		if (.@dx <= 1 && .@dy <= 1)
+			return;
+
+		if (unitiswalking(.@pc_gid) != 1)
 			return;
 
 		sleep2 100;
