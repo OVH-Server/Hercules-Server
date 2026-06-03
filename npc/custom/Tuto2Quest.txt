@@ -1,0 +1,99 @@
+//===== Hercules Script ======================================
+// Main Quest Tuto 2
+// Valkyrie starts the quest and calls a merchant taxi.
+// The taxi appears beside her, walks to the target, warps the player,
+// then disappears.
+//============================================================
+
+// Quest ID:
+// 65010 = taxi introduction
+
+// Character variables:
+// Tuto2_State: 0 none, 10 taxi ride done
+
+//============================================================
+// NPC 1 - Valkyrie
+//============================================================
+
+prontera,159,167,4	script	Valkyrie Tuto 2	4_F_VALKYRIE,{
+	callfunc "F_DebugConsole","Valkyrie Tuto 2","Click. State=" + Tuto2_State;
+
+	mes "[Valkyrie]";
+
+	if (Tuto2_State >= 10 || questprogress(65010) == 2) {
+		mes "Tu as deja termine cette etape.";
+		close;
+	}
+
+	mes "Bienvenue dans la suite de ton entrainement.";
+	mes "Un taxi marchand peut t'emmener plus loin dans Prontera.";
+	mes "Es-tu pret a partir ?";
+	next;
+
+	if (select("Oui je suis pret:Pas encore") == 2) {
+		mes "[Valkyrie]";
+		mes "Reviens me voir quand tu seras pret.";
+		close;
+	}
+
+	if ($Tuto2_TaxiBusy) {
+		mes "[Valkyrie]";
+		mes "Le taxi est deja en route.";
+		mes "Attends quelques secondes puis reessaie.";
+		close;
+	}
+
+	if (questprogress(65010))
+		erasequest 65010;
+
+	$Tuto2_TaxiBusy = getcharid(CHAR_ID_ACCOUNT);
+	Tuto2_State = 1;
+	setquest 65010;
+
+	mes "[Valkyrie]";
+	mes "Parfait. Monte dans le taxi, il va t'emmener.";
+	close2;
+
+	unitwarp(getnpcid("Taxi Marchand#tuto2"), "prontera", 160, 167);
+	enablenpc "Taxi Marchand#tuto2";
+	specialeffect(EF_READYPORTAL, AREA, playerattached());
+	npctalk "En route pour le nord de Prontera !", "Taxi Marchand#tuto2";
+
+	donpcevent "Taxi Marchand#tuto2::OnStartRide";
+	sleep2 6500;
+
+	if (strcharinfo(PC_MAP) == "prontera") {
+		specialeffect(EF_TELEPORTATION, AREA, playerattached());
+		Tuto2_State = 10;
+		completequest 65010;
+		message strcharinfo(PC_NAME), "Main Quest Tuto 2: taxi ride complete.";
+		disablenpc "Taxi Marchand#tuto2";
+		$Tuto2_TaxiBusy = 0;
+		warp "prontera",155,190;
+		end;
+	}
+
+	disablenpc "Taxi Marchand#tuto2";
+	$Tuto2_TaxiBusy = 0;
+	end;
+}
+
+//============================================================
+// Taxi merchant
+//============================================================
+
+prontera,160,167,4	script	Taxi Marchand#tuto2	4_M_HUMERCHANT,{
+	mes "[Taxi Marchand]";
+	mes "Je suis le taxi de la Valkyrie.";
+	mes "Parle-lui pour lancer le trajet.";
+	close;
+
+OnStartRide:
+	npcspeed 80;
+	npcwalkto 155,190;
+	end;
+
+OnInit:
+	disablenpc "Taxi Marchand#tuto2";
+	end;
+}

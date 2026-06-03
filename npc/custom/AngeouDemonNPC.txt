@@ -1,0 +1,71 @@
+//===== Hercules Script ======================================
+
+prontera,159,160,4	script	Valkyrie du Destin::AngelDemon	4_F_VALKYRIE,{
+	mes "[Valkyrie du Destin]";
+
+	if (#Faction == 1) {
+		mes "Vous avez déjà choisi la voie des Anges.";
+		close;
+	}
+
+	if (#Faction == 2) {
+		mes "Vous avez déjà choisi la voie des Démons.";
+		close;
+	}
+
+	mes "Mortel...";
+	mes "Quelle voie désirez-vous suivre ?";
+	next;
+
+	switch(select("Ange:Démon")) {
+
+	case 1:
+		mes "[Valkyrie du Destin]";
+		mes "Une fois votre choix effectué, il sera définitif.";
+		next;
+
+		if(select("Je deviens un Ange:Annuler") == 2)
+			close;
+
+		#Faction = 1;
+
+		sc_end SC_ALL;
+		sc_start SC_ASPERSIO,2147483647,5;
+
+		specialeffect EF_ANGELUS;
+
+		mes "[Valkyrie du Destin]";
+		mes "Les ailes de la lumière vous accompagnent désormais.";
+		close;
+
+	case 2:
+		mes "[Valkyrie du Destin]";
+		mes "Une fois votre choix effectué, il sera définitif.";
+		next;
+
+		if(select("Je deviens un Démon:Annuler") == 2)
+			close;
+
+		#Faction = 2;
+
+		sc_end SC_ALL;
+		sc_start SC_SHADOWFORM,2147483647,5;
+
+		specialeffect EF_CURSEATTACK;
+
+		mes "[Valkyrie du Destin]";
+		mes "Les ténèbres vous reconnaissent comme l'un des leurs.";
+		close;
+	}
+	end;
+
+OnPCLoginEvent:
+	if (#Faction == 1) {
+		sc_start SC_ASPERSIO,2147483647,5;
+	}
+
+	if (#Faction == 2) {
+		sc_start SC_SHADOWFORM,2147483647,5;
+	}
+	end;
+}

@@ -1,0 +1,132 @@
+//===== Hercules Script ======================================
+
+prontera,159,163,4	script	Recycleur de Valkyrie::Recycler	4_F_VALKYRIE,{
+	mes "[Recycleur de Valkyrie]";
+	mes "Déposez vos objets pour alimenter le recycleur.";
+	next;
+
+	if (.Charge >= 20) {
+		mes "Le recycleur est plein.";
+		close;
+	}
+
+	getinventorylist;
+
+	.@menu$ = "";
+	deletearray .@itemid[0], getarraysize(.@itemid);
+
+	for (.@i = 0; .@i < @inventorylist_count; .@i++) {
+
+		if (@inventorylist_amount[.@i] <= 0)
+			continue;
+
+		if (@inventorylist_equip[.@i])
+			.@value = 5;
+		else if (getiteminfo(@inventorylist_id[.@i], ITEMINFO_TYPE) == IT_CARD)
+			.@value = 10;
+		else if (
+			getiteminfo(@inventorylist_id[.@i], ITEMINFO_TYPE) == IT_HEALING ||
+			getiteminfo(@inventorylist_id[.@i], ITEMINFO_TYPE) == IT_USABLE
+		)
+			.@value = 2;
+		else
+			.@value = 1;
+
+		if (.Charge + .@value > 20)
+			continue;
+
+		.@menu$ += getitemname(@inventorylist_id[.@i]) + ":";
+		.@itemid[getarraysize(.@itemid)] = @inventorylist_id[.@i];
+	}
+
+	if (.@menu$ == "") {
+		mes "Aucun objet recyclable.";
+		close;
+	}
+
+	.@s = select(.@menu$);
+
+	.@item = .@itemid[.@s-1];
+
+	if (#RecycleDaily[.@item] == gettime(DT_DAYOFYEAR)) {
+		mes "Cet objet a déjà été recyclé aujourd'hui.";
+		close;
+	}
+
+	if (countitem(.@item) < 1) {
+		close;
+	}
+
+	if (isequipped(.@item))
+		.@gain = 5;
+	else if (getiteminfo(.@item, ITEMINFO_TYPE) == IT_CARD)
+		.@gain = 10;
+	else if (
+		getiteminfo(.@item, ITEMINFO_TYPE) == IT_HEALING ||
+		getiteminfo(.@item, ITEMINFO_TYPE) == IT_USABLE
+	)
+		.@gain = 2;
+	else
+		.@gain = 1;
+
+	if (.Charge + .@gain > 20) {
+		mes "Capacité maximale atteinte.";
+		close;
+	}
+
+	delitem .@item,1;
+
+	#RecycleDaily[.@item] = gettime(DT_DAYOFYEAR);
+
+	.Charge += .@gain;
+
+	getitem 909,.@gain;
+
+	if (.Charge >= 20) {
+		specialeffect EF_LEVEL99;
+		.Ready = 1;
+		mapannounce "prontera","Le Recycleur de Valkyrie est chargé à 100% !",bc_all;
+	}
+
+	mes "Objet recyclé.";
+	mes "Charge : "+.Charge+"/20";
+	close;
+
+OnInit:
+	.Charge = 0;
+	.Ready = 0;
+	.HP = 1000;
+	end;
+
+OnTouch:
+	end;
+}
+
+prontera,150,180,4	script	Noyau du Recycleur::RecyclerCore	HIDDEN_NPC,3,3,{
+	end;
+
+OnNPCHit:
+	if (!getvariableofnpc(.Ready,"Recycler"))
+		end;
+
+	.@hp = getvariableofnpc(.HP,"Recycler");
+
+	.@hp -= 10;
+
+	set getvariableofnpc(.HP,"Recycler"), .@hp;
+
+	if (.@hp <= 0) {
+
+		set getvariableofnpc(.HP,"Recycler"),1000;
+		set getvariableofnpc(.Charge,"Recycler"),0;
+		set getvariableofnpc(.Ready,"Recycler"),0;
+
+		areamonster "prontera",145,175,155,185,"--ja--",1002,10;
+
+		mapannounce "prontera","Le Recycleur de Valkyrie a explosé et libère ses ressources !",bc_all;
+
+		specialeffect EF_BANGBANG;
+	}
+
+	end;
+}
