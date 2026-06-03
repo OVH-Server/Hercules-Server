@@ -103,7 +103,7 @@ OnPCLogoutEvent:
 // Taxi merchant
 //============================================================
 
-prontera,160,167,4	script	Taxi Marchand#tuto2	1_M_MERCHANT,{
+prontera,160,167,4	script	Taxi Marchand#tuto2	1_F_MERCHANT_02,{
 	mes "[Taxi Marchand]";
 	mes "Je suis le taxi de la Valkyrie.";
 	mes "Parle-lui pour lancer le trajet.";

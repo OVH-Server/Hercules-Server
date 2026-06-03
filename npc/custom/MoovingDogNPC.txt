@@ -1,15 +1,18 @@
 //===== Hercules Script ======================================
+// Walking dog that appears on reload, walks, then disappears.
+//============================================================
 
-prontera,161,170,4	script	Walking Dog::WalkingDog	4_DOG01,{
+prontera,161,170,4	script	Walking Dog#move	4_DOG01,{
 	end;
 
 OnInit:
 	npcspeed 120;
-	enablenpc "Walking Dog";
+	disablenpc strnpcinfo(NPC_NAME);
 	initnpctimer;
 	end;
 
 OnTimer1000:
+	enablenpc strnpcinfo(NPC_NAME);
 	npcwalkto 157,194;
 	end;
 
@@ -22,7 +25,7 @@ OnTimer24000:
 	end;
 
 OnTimer52000:
-	disablenpc "Walking Dog";
+	disablenpc strnpcinfo(NPC_NAME);
 	stopnpctimer;
 	end;
 }

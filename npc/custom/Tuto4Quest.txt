@@ -84,8 +84,18 @@ prontera,159,160,4	script	Valkyrie Tuto 4	4_F_VALKYRIE,{
 		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, true);
 		sleep2 800;
 
-		warp "prt_in",84,103;
-		sleep2 300;
+		callsub S_MoveTo, 158, 167, 5000;
+		callsub S_MoveTo, 148, 187, 9000;
+		callsub S_MoveTo, 128, 216, 12000;
+		callsub S_MoveTo, 105, 250, 14000;
+		callsub S_MoveTo, 80, 294, 16000;
+		callsub S_MoveTo, 55, 335, 16000;
+		callsub S_MoveTo, 45, 346, 8000;
+		sleep2 800;
+
+		warp "prt_in",80,110;
+		sleep2 500;
+		callsub S_MoveTo, 84, 103, 5000;
 
 		sc_end(SC_ALL_RIDING);
 		if (countitem(12622) > 0)
@@ -107,6 +117,32 @@ prontera,159,160,4	script	Valkyrie Tuto 4	4_F_VALKYRIE,{
 
 	mes "Retourne me voir apres ton voyage.";
 	close;
+
+S_MoveTo:
+	.@pc_gid = getcharid(CHAR_ID_ACCOUNT);
+	.@timeout = getarg(2);
+	.@elapsed = 0;
+
+	unitwalk(.@pc_gid, getarg(0), getarg(1));
+	sleep2 100;
+	.@elapsed += 100;
+
+	while (unitiswalking(.@pc_gid) == 1 && .@elapsed < .@timeout) {
+		getmapxy(.@map$, .@x, .@y, UNITTYPE_PC);
+		.@dx = getarg(0) - .@x;
+		.@dy = getarg(1) - .@y;
+		if (.@dx < 0)
+			.@dx = -.@dx;
+		if (.@dy < 0)
+			.@dy = -.@dy;
+		if (.@dx <= 1 && .@dy <= 1)
+			return;
+
+		sleep2 100;
+		.@elapsed += 100;
+	}
+
+	return;
 
 OnPCLogoutEvent:
 	if ($Tuto4_RiderBusy == getcharid(CHAR_ID_ACCOUNT)) {
