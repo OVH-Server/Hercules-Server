@@ -84,29 +84,31 @@ prontera,159,160,4	script	Valkyrie Tuto 4	4_F_VALKYRIE,{
 		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, true);
 		sleep2 800;
 
-		callsub S_MoveTo, 163, 170, 900;
-		callsub S_MoveTo, 166, 180, 900;
-		callsub S_MoveTo, 170, 190, 900;
-		callsub S_MoveTo, 176, 203, 1200;
+		callsub S_MoveTo, 160, 165, 5000;
+		callsub S_MoveTo, 162, 172, 5000;
+		callsub S_MoveTo, 164, 179, 5000;
+		callsub S_MoveTo, 167, 186, 5000;
+		callsub S_MoveTo, 170, 193, 5000;
+		callsub S_MoveTo, 176, 203, 7000;
 		sleep2 2000;
 		unittalk(getcharid(CHAR_ID_ACCOUNT), "Aouuuhhh", false);
 		sleep2 800;
 
-		callsub S_MoveTo, 171, 209, 900;
-		callsub S_MoveTo, 166, 214, 900;
-		callsub S_MoveTo, 161, 219, 900;
-		callsub S_MoveTo, 156, 224, 1200;
+		callsub S_MoveTo, 171, 209, 5000;
+		callsub S_MoveTo, 166, 214, 5000;
+		callsub S_MoveTo, 161, 219, 5000;
+		callsub S_MoveTo, 156, 224, 7000;
 
-		callsub S_MoveTo, 151, 219, 900;
-		callsub S_MoveTo, 146, 214, 900;
-		callsub S_MoveTo, 141, 209, 900;
-		callsub S_MoveTo, 136, 204, 1200;
+		callsub S_MoveTo, 151, 219, 5000;
+		callsub S_MoveTo, 146, 214, 5000;
+		callsub S_MoveTo, 141, 209, 5000;
+		callsub S_MoveTo, 136, 204, 7000;
 
-		callsub S_MoveTo, 140, 194, 900;
-		callsub S_MoveTo, 145, 184, 900;
-		callsub S_MoveTo, 150, 174, 900;
-		callsub S_MoveTo, 154, 164, 900;
-		callsub S_MoveTo, 156, 157, 1200;
+		callsub S_MoveTo, 140, 194, 5000;
+		callsub S_MoveTo, 145, 184, 5000;
+		callsub S_MoveTo, 150, 174, 5000;
+		callsub S_MoveTo, 154, 164, 5000;
+		callsub S_MoveTo, 156, 157, 7000;
 
 		sc_end(SC_ALL_RIDING);
 		if (countitem(12622) > 0)
@@ -130,9 +132,20 @@ prontera,159,160,4	script	Valkyrie Tuto 4	4_F_VALKYRIE,{
 	close;
 
 S_MoveTo:
-	navigateto("prontera", getarg(0), getarg(1), NAV_NONE, 1);
-	unitwalk(getcharid(CHAR_ID_ACCOUNT), getarg(0), getarg(1));
-	sleep2 getarg(2);
+	.@pc_gid = getcharid(CHAR_ID_ACCOUNT);
+	.@timeout = getarg(2);
+	.@elapsed = 0;
+
+	unitwalk(.@pc_gid, getarg(0), getarg(1));
+	sleep2 250;
+	.@elapsed += 250;
+
+	while (unitiswalking(.@pc_gid) == 1 && .@elapsed < .@timeout) {
+		sleep2 250;
+		.@elapsed += 250;
+	}
+
+	sleep2 150;
 	return;
 
 OnPCLogoutEvent:
