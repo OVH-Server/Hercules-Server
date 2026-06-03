@@ -1,57 +1,109 @@
 //===== Hercules Script ======================================
+// Angel / Demon faction choice
+//
+// Character variable:
+// Faction: 0 = none, 1 = Angel, 2 = Demon
+//
+// Note:
+// The exact status text shown in the right buff bar is client-side.
+// These statuses are used only as harmless visual indicators.
+//============================================================
 
 prontera,159,160,4	script	Valkyrie of Destiny::AngelDemon	4_F_VALKYRIE,{
 	mes "[Valkyrie of Destiny]";
 
 	if (Faction == 1) {
-		mes "You have already chosen the Angel path.";
+		mes "You are already part of the Angel faction.";
+		callfunc "F_AngelDemon_ApplyIndicator";
 		close;
 	}
 
 	if (Faction == 2) {
-		mes "You have already chosen the Demon path.";
+		mes "You are already part of the Demon faction.";
+		callfunc "F_AngelDemon_ApplyIndicator";
 		close;
 	}
 
-	mes "Choose your destiny.";
+	mes "Choose your faction.";
+	mes "This choice is permanent.";
 	next;
 
-	switch(select("Angel:Demon:Cancel")) {
+	.@choice = select("Angel:Demon:Cancel");
 
-	case 1:
-		mes "[Valkyrie of Destiny]";
-		mes "This choice is permanent.";
+	if (.@choice == 3)
+		close;
+
+	mes "[Valkyrie of Destiny]";
+
+	if (.@choice == 1) {
+		mes "The Angel faction follows the white light.";
 		next;
 
-		if (select("Become an Angel:Cancel") == 2)
+		if (select("Join the Angel faction:Cancel") == 2)
 			close;
 
 		Faction = 1;
-
 		specialeffect2 EF_CHAINGEHOLY;
+		specialeffect2 EF_WHITEBODY;
 
 		mes "[Valkyrie of Destiny]";
-		mes "You are now an Angel.";
-		close;
-
-	case 2:
-		mes "[Valkyrie of Destiny]";
-		mes "This choice is permanent.";
+		mes "You are now part of the Angel faction.";
+	} else {
+		mes "The Demon faction follows the black light.";
 		next;
 
-		if (select("Become a Demon:Cancel") == 2)
+		if (select("Join the Demon faction:Cancel") == 2)
 			close;
 
 		Faction = 2;
-
 		specialeffect2 EF_CHANGEDARK;
+		specialeffect2 EF_HITDARK;
 
 		mes "[Valkyrie of Destiny]";
-		mes "You are now a Demon.";
-		close;
+		mes "You are now part of the Demon faction.";
+	}
 
-	case 3:
-		close;
+	callfunc "F_AngelDemon_ApplyIndicator";
+	close;
+}
+
+function	script	F_AngelDemon_ApplyIndicator	{
+	if (Faction == 1) {
+		sc_end SC_DEVIL1;
+		sc_start SC_DRESS_UP, 2147483647, 1;
+		dispbottom "Faction: Angel", 0xFFFFFF;
+		return;
+	}
+
+	if (Faction == 2) {
+		sc_end SC_DRESS_UP;
+		sc_start SC_DEVIL1, 2147483647, 1;
+		dispbottom "Faction: Demon", 0x555555;
+		return;
+	}
+
+	sc_end SC_DRESS_UP;
+	sc_end SC_DEVIL1;
+	return;
+}
+
+-	script	AngelDemon_FactionStatus	FAKE_NPC,{
+OnPCLoginEvent:
+	if (Faction == 1 || Faction == 2)
+		addtimer 1000, "AngelDemon_FactionStatus::OnRefresh";
+	end;
+
+OnRefresh:
+	callfunc "F_AngelDemon_ApplyIndicator";
+
+	if (Faction == 1) {
+		specialeffect2 EF_CHAINGEHOLY;
+		end;
+	}
+
+	if (Faction == 2) {
+		specialeffect2 EF_CHANGEDARK;
+		end;
 	}
 
 	end;
