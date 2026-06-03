@@ -1,8 +1,8 @@
 //===== Hercules Script ======================================
 // Main Quest Tuto 2
 // Valkyrie starts a repeatable quest and calls a merchant taxi.
-// The taxi appears beside her, carries the player along its cart route,
-// then disappears at the destination.
+// The taxi waits beside her, picks up the player, carries them along
+// its route, then returns beside the Valkyrie.
 //============================================================
 
 // Quest ID:
@@ -43,25 +43,19 @@ prontera,159,167,4	script	Valkyrie Tuto 2	4_F_VALKYRIE,{
 
 	$Tuto2_TaxiBusy = getcharid(CHAR_ID_ACCOUNT);
 	setquest 65010;
+	getmapxy(.@pc_map$, .@pc_x, .@pc_y, UNITTYPE_PC);
 
 	mes "[Valkyrie]";
-	mes "Parfait. Monte dans le cart, il va t'emmener.";
+	mes "Parfait. Le marchand vient te chercher.";
 	close2;
 
+	.@taxi_gid = getnpcid("Taxi Marchand#tuto2");
 	setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, true);
-	unitwarp(getcharid(CHAR_ID_ACCOUNT), "prontera", 160, 166);
-	$Tuto2_TaxiGid = monster("prontera", 160, 167, "Taxi Marchand", 1002, 1);
-	if (!$Tuto2_TaxiGid) {
-		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, false);
-		$Tuto2_TaxiBusy = 0;
-		message strcharinfo(PC_NAME), "Le taxi n'a pas pu apparaitre. Reessaie dans quelques secondes.";
-		end;
-	}
-	setunitdata($Tuto2_TaxiGid, UDT_CLASS, Job_Merchant);
-	setunitdata($Tuto2_TaxiGid, UDT_SEX, SEX_MALE);
-	setunitdata($Tuto2_TaxiGid, UDT_OPTIONS, 8);
-	setunitdata($Tuto2_TaxiGid, UDT_SPEED, 70);
-	unittalk($Tuto2_TaxiGid, "Installe-toi dans le cart, depart immediat !");
+	setunitdata(.@taxi_gid, UDT_SPEED, 70);
+	unitwalk(.@taxi_gid, .@pc_x, .@pc_y);
+	unittalk(.@taxi_gid, "J'arrive, ne bouge pas !");
+	sleep2 1200;
+	unittalk(.@taxi_gid, "Installe-toi, depart immediat !");
 
 	callsub S_RideStep, 160,170, 160,169, 650;
 	callsub S_RideStep, 159,173, 159,172, 650;
@@ -78,8 +72,7 @@ prontera,159,167,4	script	Valkyrie Tuto 2	4_F_VALKYRIE,{
 	erasequest 65010;
 	message strcharinfo(PC_NAME), "Main Quest Tuto 2: taxi ride complete. Tu peux relancer la quete quand tu veux.";
 
-	killmonstergid $Tuto2_TaxiGid;
-	$Tuto2_TaxiGid = 0;
+	unitwarp(.@taxi_gid, "prontera", 160, 167);
 	setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, false);
 	$Tuto2_TaxiBusy = 0;
 	end;
@@ -90,17 +83,16 @@ S_RideStep:
 	.@player_x = getarg(2);
 	.@player_y = getarg(3);
 	.@delay = getarg(4);
+	.@taxi_gid = getnpcid("Taxi Marchand#tuto2");
 
-	unitwalk($Tuto2_TaxiGid, .@taxi_x, .@taxi_y);
+	unitwalk(.@taxi_gid, .@taxi_x, .@taxi_y);
 	unitwalk(getcharid(CHAR_ID_ACCOUNT), .@player_x, .@player_y);
 	sleep2 .@delay;
 	return;
 
 OnPCLogoutEvent:
 	if ($Tuto2_TaxiBusy == getcharid(CHAR_ID_ACCOUNT)) {
-		if ($Tuto2_TaxiGid)
-			killmonstergid $Tuto2_TaxiGid;
-		$Tuto2_TaxiGid = 0;
+		unitwarp(getnpcid("Taxi Marchand#tuto2"), "prontera", 160, 167);
 		$Tuto2_TaxiBusy = 0;
 	}
 	end;
@@ -117,6 +109,6 @@ prontera,160,167,4	script	Taxi Marchand#tuto2	1_M_MERCHANT,{
 	close;
 
 OnInit:
-	disablenpc "Taxi Marchand#tuto2";
+	setunitdata(getnpcid("Taxi Marchand#tuto2"), UDT_SPEED, 70);
 	end;
 }

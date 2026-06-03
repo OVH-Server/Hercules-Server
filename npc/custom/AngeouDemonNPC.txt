@@ -5,71 +5,78 @@ prontera,159,160,4	script	Valkyrie of Destiny::AngelDemon	4_F_VALKYRIE,{
 	mes "[Valkyrie of Destiny]";
 
 	if (Faction == 1) {
-		mes "You have already chosen the path of the Angels.";
+		mes "You have already chosen the Angel path.";
 		close;
 	}
 
 	if (Faction == 2) {
-		mes "You have already chosen the path of the Demons.";
+		mes "You have already chosen the Demon path.";
 		close;
 	}
 
-	mes "Mortal...";
-	mes "Which path will you follow?";
+	mes "Choose your destiny.";
 	next;
 
-	switch(select("Angel:Demon")) {
+	switch(select("Angel:Demon:Cancel")) {
 
 	case 1:
-
 		mes "[Valkyrie of Destiny]";
-		mes "This choice cannot be reversed.";
+		mes "This choice is permanent.";
 		next;
 
-		if(select("Become an Angel:Cancel") == 2)
+		if (select("Become an Angel:Cancel") == 2)
 			close;
 
 		Faction = 1;
-
-		sc_start SC_ANGELUS,2147483647,10;
-
-		specialeffect2 EF_ANGEL;
+		specialeffect2 EF_CHAINGEHOLY;
+		addtimer 3000,"AngelDemon::OnVisual";
 
 		mes "[Valkyrie of Destiny]";
-		mes "The light embraces your soul.";
+		mes "You are now an Angel.";
 		close;
 
 	case 2:
-
 		mes "[Valkyrie of Destiny]";
-		mes "This choice cannot be reversed.";
+		mes "This choice is permanent.";
 		next;
 
-		if(select("Become a Demon:Cancel") == 2)
+		if (select("Become a Demon:Cancel") == 2)
 			close;
 
 		Faction = 2;
-
-		sc_start SC_DEVOTION,2147483647,10;
-
-		specialeffect2 EF_CURSEATTACK;
+		specialeffect2 EF_CHANGEDARK;
+		addtimer 3000,"AngelDemon::OnVisual";
 
 		mes "[Valkyrie of Destiny]";
-		mes "Darkness flows through your veins.";
+		mes "You are now a Demon.";
+		close;
+
+	case 3:
 		close;
 	}
 
-	close;
+	end;
+
+OnVisual:
+
+	if (!playerattached())
+		end;
+
+	if (Faction == 1)
+		specialeffect2 EF_CHAINGEHOLY;
+
+	if (Faction == 2)
+		specialeffect2 EF_CHANGEDARK;
+
+	if (Faction)
+		addtimer 3000,"AngelDemon::OnVisual";
+
+	end;
 
 OnPCLoginEvent:
 
-	if (Faction == 1) {
-		sc_start SC_ANGELUS,2147483647,10;
-	}
-
-	if (Faction == 2) {
-		sc_start SC_DEVOTION,2147483647,10;
-	}
+	if (Faction)
+		addtimer 3000,"AngelDemon::OnVisual";
 
 	end;
 }
