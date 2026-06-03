@@ -90,12 +90,7 @@ prontera,159,160,4	script	Valkyrie Tuto 4	4_F_VALKYRIE,{
 		callsub S_MoveTo, 105, 250, 14000;
 		callsub S_MoveTo, 80, 294, 16000;
 		callsub S_MoveTo, 55, 335, 16000;
-		callsub S_MoveTo, 45, 346, 8000;
-		sleep2 800;
-
-		warp "prt_in",80,110;
-		sleep2 500;
-		callsub S_MoveTo, 84, 103, 5000;
+		callsub S_MoveTo, 47, 343, 8000;
 
 		sc_end(SC_ALL_RIDING);
 		if (countitem(12622) > 0)
@@ -109,9 +104,9 @@ prontera,159,160,4	script	Valkyrie Tuto 4	4_F_VALKYRIE,{
 		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, false);
 		$Tuto4_RiderBusy = 0;
 		if (#Tuto4_RewardClaimed)
-			message strcharinfo(PC_NAME), "Valkyrie Tuto 4: tu es arrive au maitre Swordman. Tu peux refaire le trajet quand tu veux.";
+			message strcharinfo(PC_NAME), "Valkyrie Tuto 4: tu es arrive devant le batiment Swordman. Tu peux refaire le trajet quand tu veux.";
 		else
-			message strcharinfo(PC_NAME), "Valkyrie Tuto 4: tu es arrive au maitre Swordman. Retourne parler a la Valkyrie.";
+			message strcharinfo(PC_NAME), "Valkyrie Tuto 4: tu es arrive devant le batiment Swordman. Retourne parler a la Valkyrie.";
 		end;
 	}
 

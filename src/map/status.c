@@ -2153,6 +2153,9 @@ static int status_calc_pc_(struct map_session_data *sd, enum e_status_calc_opt o
 		sd->max_weight += sd->max_weight*sc->data[SC_KNOWLEDGE]->val1/10;
 	if((skill_lv=pc->checkskill(sd,ALL_INCCARRY))>0)
 		sd->max_weight += 2000*skill_lv;
+	i = pc_readglobalreg(sd, script->add_variable("gympassmemory"));
+	if (i > skill_lv)
+		sd->max_weight += 2000 * (i - skill_lv);
 	i = pc_readglobalreg(sd, script->add_variable("Custom_MaxWeightBonus"));
 	if (i > 0)
 		sd->max_weight += i;
