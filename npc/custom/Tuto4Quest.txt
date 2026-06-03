@@ -137,15 +137,24 @@ S_MoveTo:
 	.@elapsed = 0;
 
 	unitwalk(.@pc_gid, getarg(0), getarg(1));
-	sleep2 250;
-	.@elapsed += 250;
+	sleep2 100;
+	.@elapsed += 100;
 
 	while (unitiswalking(.@pc_gid) == 1 && .@elapsed < .@timeout) {
-		sleep2 250;
-		.@elapsed += 250;
+		getmapxy(.@map$, .@x, .@y, UNITTYPE_PC);
+		.@dx = getarg(0) - .@x;
+		.@dy = getarg(1) - .@y;
+		if (.@dx < 0)
+			.@dx = -.@dx;
+		if (.@dy < 0)
+			.@dy = -.@dy;
+		if (.@dx <= 1 && .@dy <= 1)
+			return;
+
+		sleep2 100;
+		.@elapsed += 100;
 	}
 
-	sleep2 150;
 	return;
 
 OnPCLogoutEvent:
