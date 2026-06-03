@@ -1,0 +1,122 @@
+//===== Hercules Script ======================================
+// Main Quest Tuto 4
+// Valkyrie gives a Boarding Halter, auto-mounts the player,
+// sends them on an autopilot route through Prontera, then rewards
+// them when they return and speak to her again.
+//============================================================
+
+prontera,159,160,4	script	Valkyrie Tuto 4	4_F_VALKYRIE,{
+	mes "[Valkyrie]";
+
+	if (Tuto4_State == 0) {
+		mes "Veux-tu aller quelque part ?";
+		next;
+
+		if (select("Oui:Non") == 2) {
+			mes "[Valkyrie]";
+			mes "Tres bien. Reviens me voir si l'envie d'un voyage te prend.";
+			close;
+		}
+
+		if ($Tuto4_RiderBusy) {
+			mes "[Valkyrie]";
+			mes "La monture est deja en balade.";
+			mes "Attends quelques secondes puis reessaie.";
+			close;
+		}
+
+		if (checkmount() || hascashmount()) {
+			mes "[Valkyrie]";
+			mes "Descends d'abord de ta monture actuelle.";
+			close;
+		}
+
+		if (!checkweight(12622,1)) {
+			mes "[Valkyrie]";
+			mes "Ton inventaire est trop lourd pour recevoir le Boarding Halter.";
+			close;
+		}
+
+		$Tuto4_RiderBusy = getcharid(CHAR_ID_ACCOUNT);
+		getitem 12622,1;
+		consumeitem 12622;
+		sleep2 300;
+
+		if (!hascashmount()) {
+			if (countitem(12622) > 0)
+				delitem 12622,1;
+			$Tuto4_RiderBusy = 0;
+			mes "[Valkyrie]";
+			mes "La monture refuse de partir pour le moment.";
+			mes "Reessaie dans quelques instants.";
+			close;
+		}
+
+		mes "[Valkyrie]";
+		mes "Parfait. Laisse la monture te guider.";
+		close2;
+
+		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, true);
+		sleep2 800;
+
+		callsub S_WalkTo, 176, 203, 10500;
+		sleep2 2000;
+		unittalk(getcharid(CHAR_ID_ACCOUNT), "Aouuuhhh", false);
+		sleep2 800;
+
+		callsub S_WalkTo, 156, 224, 9000;
+		callsub S_WalkTo, 136, 204, 9000;
+		callsub S_WalkTo, 156, 157, 14500;
+
+		unitwarp(getcharid(CHAR_ID_ACCOUNT), "prontera", 156, 157);
+		sc_end(SC_ALL_RIDING);
+		if (countitem(12622) > 0)
+			delitem 12622,1;
+
+		Tuto4_State = 1;
+		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, false);
+		$Tuto4_RiderBusy = 0;
+		message strcharinfo(PC_NAME), "Valkyrie Tuto 4: le voyage est termine. Retourne parler a la Valkyrie.";
+		end;
+	}
+
+	if (Tuto4_State == 1) {
+		mes "Le voyage a ete bon ?";
+		next;
+
+		if (select("Oui:Non") == 2) {
+			mes "[Valkyrie]";
+			mes "D'accord. Reviens me voir quand tu voudras recevoir ta recompense.";
+			close;
+		}
+
+		Zeny += 100000;
+		getexp 100000,100000;
+		getitem 607,1;
+		Tuto4_State = 2;
+
+		mes "[Valkyrie]";
+		mes "Excellent. Voici ta recompense.";
+		mes "100 000 Zeny, 100 000 Base EXP, 100 000 Job EXP et une Yggdrasil Berry.";
+		close;
+	}
+
+	mes "Tu as deja termine ce voyage.";
+	close;
+
+S_WalkTo:
+	unitwalk(getcharid(CHAR_ID_ACCOUNT), getarg(0), getarg(1));
+	sleep2 getarg(2);
+	return;
+
+OnPCLogoutEvent:
+	if ($Tuto4_RiderBusy == getcharid(CHAR_ID_ACCOUNT)) {
+		sc_end(SC_ALL_RIDING);
+		if (countitem(12622) > 0)
+			delitem 12622,1;
+		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, false);
+		$Tuto4_RiderBusy = 0;
+	}
+	end;
+}
+
