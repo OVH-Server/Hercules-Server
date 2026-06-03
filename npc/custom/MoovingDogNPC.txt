@@ -13,33 +13,23 @@ OnInit:
 
 OnTimer1000:
 	enablenpc strnpcinfo(NPC_NAME);
-	callsub S_DogMoveTo, 161,191, 6000;
-	sleep 150;
-	callsub S_DogMoveTo, 157,194, 3000;
-	sleep 150;
-	callsub S_DogMoveTo, 152,192, 3000;
-	sleep 150;
-	callsub S_DogMoveTo, 152,152, 9000;
+	npcwalkto 161,191;
+	end;
+
+OnTimer3900:
+	npcwalkto 157,194;
+	end;
+
+OnTimer4800:
+	npcwalkto 152,192;
+	end;
+
+OnTimer5900:
+	npcwalkto 152,152;
+	end;
+
+OnTimer11200:
 	disablenpc strnpcinfo(NPC_NAME);
 	stopnpctimer;
 	end;
-
-S_DogMoveTo:
-	npcwalkto getarg(0),getarg(1);
-	.@timeout = getarg(2);
-	.@elapsed = 0;
-	while (.@elapsed < .@timeout) {
-		getmapxy(.@map$, .@x, .@y, UNITTYPE_NPC);
-		.@dx = getarg(0) - .@x;
-		.@dy = getarg(1) - .@y;
-		if (.@dx < 0)
-			.@dx = -.@dx;
-		if (.@dy < 0)
-			.@dy = -.@dy;
-		if (.@dx <= 1 && .@dy <= 1)
-			return;
-		sleep 100;
-		.@elapsed += 100;
-	}
-	return;
 }

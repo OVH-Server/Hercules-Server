@@ -81,16 +81,34 @@ prontera,159,160,4	script	Valkyrie Tuto 4	4_F_VALKYRIE,{
 		mes "Parfait. Je t'emmene au maitre Swordman.";
 		close2;
 
-		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_NPC, true);
 		sleep2 800;
 
-		callsub S_MoveTo, 167, 204, 14000;
-		callsub S_MoveTo, 150, 287, 18000;
-		callsub S_MoveTo, 148, 318, 9000;
-		callsub S_MoveTo, 123, 318, 8000;
-		callsub S_MoveTo, 114, 292, 8000;
-		callsub S_MoveTo, 100, 292, 6000;
-		callsub S_MoveTo, 47, 343, 16000;
+		callsub S_MoveTo, 161, 175, 5000;
+		callsub S_MoveTo, 165, 190, 5000;
+		callsub S_MoveTo, 167, 204, 5000;
+
+		callsub S_MoveTo, 164, 218, 5000;
+		callsub S_MoveTo, 161, 232, 5000;
+		callsub S_MoveTo, 158, 246, 5000;
+		callsub S_MoveTo, 155, 260, 5000;
+		callsub S_MoveTo, 152, 274, 5000;
+		callsub S_MoveTo, 150, 287, 5000;
+
+		callsub S_MoveTo, 149, 302, 5000;
+		callsub S_MoveTo, 148, 318, 5000;
+
+		callsub S_MoveTo, 136, 318, 5000;
+		callsub S_MoveTo, 123, 318, 5000;
+
+		callsub S_MoveTo, 120, 309, 5000;
+		callsub S_MoveTo, 114, 292, 6000;
+		callsub S_MoveTo, 100, 292, 5000;
+
+		callsub S_MoveTo, 90, 302, 5000;
+		callsub S_MoveTo, 80, 312, 5000;
+		callsub S_MoveTo, 70, 322, 5000;
+		callsub S_MoveTo, 60, 333, 5000;
+		callsub S_MoveTo, 47, 344, 7000;
 
 		sc_end(SC_ALL_RIDING);
 		if (countitem(12622) > 0)
@@ -101,7 +119,6 @@ prontera,159,160,4	script	Valkyrie Tuto 4	4_F_VALKYRIE,{
 		else
 			Tuto4_State = 1;
 
-		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_NPC, false);
 		$Tuto4_RiderBusy = 0;
 		if (#Tuto4_RewardClaimed)
 			message strcharinfo(PC_NAME), "Valkyrie Tuto 4: tu es arrive devant le batiment Swordman. Tu peux refaire le trajet quand tu veux.";
