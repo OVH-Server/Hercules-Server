@@ -94,9 +94,8 @@ prontera,159,160,4	script	Valkyrie Tuto 4	4_F_VALKYRIE,{
 		callsub S_MoveTo, 152, 274, 3000;
 		callsub S_MoveTo, 150, 287, 2800;
 
-		callsub S_MoveTo, 149, 296, 1800;
-		callsub S_MoveTo, 149, 300, 1200;
-		callsub S_MoveTo, 149, 308, 1700;
+		callsub S_MoveTo, 149, 296, 1300;
+		callsub S_MoveTo, 149, 308, 1900;
 		callsub S_MoveTo, 148, 314, 1600;
 		callsub S_MoveTo, 148, 318, 1200;
 
@@ -116,6 +115,7 @@ prontera,159,160,4	script	Valkyrie Tuto 4	4_F_VALKYRIE,{
 		callsub S_MoveTo, 70, 322, 2800;
 		callsub S_MoveTo, 60, 333, 2800;
 		callsub S_MoveTo, 47, 344, 3600;
+		sleep2 1000;
 
 		sc_end(SC_ALL_RIDING);
 		if (countitem(12622) > 0)
