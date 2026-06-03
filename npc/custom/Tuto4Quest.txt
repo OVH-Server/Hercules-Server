@@ -81,15 +81,16 @@ prontera,159,160,4	script	Valkyrie Tuto 4	4_F_VALKYRIE,{
 		mes "Parfait. Je t'emmene au maitre Swordman.";
 		close2;
 
-		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, true);
+		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_NPC, true);
 		sleep2 800;
 
-		callsub S_MoveTo, 157, 205, 12000;
-		callsub S_MoveTo, 153, 260, 12000;
-		callsub S_MoveTo, 149, 319, 14000;
-		callsub S_MoveTo, 100, 319, 12000;
-		callsub S_MoveTo, 60, 326, 10000;
-		callsub S_MoveTo, 47, 343, 8000;
+		callsub S_MoveTo, 167, 204, 14000;
+		callsub S_MoveTo, 150, 287, 18000;
+		callsub S_MoveTo, 148, 318, 9000;
+		callsub S_MoveTo, 123, 318, 8000;
+		callsub S_MoveTo, 114, 292, 8000;
+		callsub S_MoveTo, 100, 292, 6000;
+		callsub S_MoveTo, 47, 343, 16000;
 
 		sc_end(SC_ALL_RIDING);
 		if (countitem(12622) > 0)
@@ -100,7 +101,7 @@ prontera,159,160,4	script	Valkyrie Tuto 4	4_F_VALKYRIE,{
 		else
 			Tuto4_State = 1;
 
-		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, false);
+		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_NPC, false);
 		$Tuto4_RiderBusy = 0;
 		if (#Tuto4_RewardClaimed)
 			message strcharinfo(PC_NAME), "Valkyrie Tuto 4: tu es arrive devant le batiment Swordman. Tu peux refaire le trajet quand tu veux.";
