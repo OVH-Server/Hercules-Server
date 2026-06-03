@@ -57,16 +57,6 @@ S_Status:
 	}
 	return;
 
-OnInit:
-	initnpctimer;
-	end;
-
-OnTimer1500:
-	if ($Eterite_Prt08_Active) {
-		specialeffect(EF_LEVEL99_4, AREA, strnpcinfo(NPC_NAME));
-	}
-	setnpctimer 0;
-	end;
 }
 
 prt_fild06,29,191,4	script	Eterite#prt06	4_F_VALKYRIE,{
@@ -85,16 +75,6 @@ S_Status:
 	}
 	return;
 
-OnInit:
-	initnpctimer;
-	end;
-
-OnTimer1500:
-	if ($Eterite_Prt06_Active) {
-		specialeffect(EF_LEVEL99_4, AREA, strnpcinfo(NPC_NAME));
-	}
-	setnpctimer 0;
-	end;
 }
 
 prt_fild05,365,210,4	script	Eterite#prt05	4_F_VALKYRIE,{
@@ -113,16 +93,6 @@ S_Status:
 	}
 	return;
 
-OnInit:
-	initnpctimer;
-	end;
-
-OnTimer1500:
-	if ($Eterite_Prt05_Active) {
-		specialeffect(EF_LEVEL99_4, AREA, strnpcinfo(NPC_NAME));
-	}
-	setnpctimer 0;
-	end;
 }
 
 -	script	Eterite Controller	FAKE_NPC,{
@@ -154,16 +124,6 @@ S_CountKill:
 
 	setd getarg(0), 1;
 	setd getarg(1), 10;
-	callsub S_ActivationEffect, getarg(3);
 	announce "The Eterite of " + getarg(2) + " has been activated! Return to the NPC in Prontera to teleport here.", bc_all, 0x00FF00;
-	return;
-
-S_ActivationEffect:
-	.@npc$ = getarg(0);
-	specialeffect(EF_LEVEL99, AREA, .@npc$);
-	sleep2 250;
-	specialeffect(EF_LEVEL99_4, AREA, .@npc$);
-	sleep2 250;
-	specialeffect(EF_LEVEL99_4, AREA, .@npc$);
 	return;
 }

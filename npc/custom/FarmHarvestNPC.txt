@@ -1,0 +1,113 @@
+//===== Hercules Script ======================================
+// Farming and lumberjack prototype resources.
+//============================================================
+
+prontera,159,154,4	script	Harvest Master	4_F_VALKYRIE,{
+	mes "[Harvest Master]";
+	mes "I can register you for a harvesting profession.";
+	next;
+
+	if (HarvestJob == 1)
+		mes "Current profession: Lumberjack.";
+	else if (HarvestJob == 2)
+		mes "Current profession: Farmer.";
+	else
+		mes "Current profession: None.";
+	next;
+
+	.@choice = select("Become a Lumberjack:Become a Farmer:Keep my current profession:Cancel");
+
+	if (.@choice == 1) {
+		HarvestJob = 1;
+		mes "[Harvest Master]";
+		mes "You are now a Lumberjack.";
+		mes "You can harvest trees by attacking them up close.";
+		close;
+	}
+
+	if (.@choice == 2) {
+		HarvestJob = 2;
+		mes "[Harvest Master]";
+		mes "You are now a Farmer.";
+		mes "You can harvest plants by attacking them up close.";
+		close;
+	}
+
+	close;
+}
+
+-	script	Farm Resources	FAKE_NPC,{
+	end;
+
+OnInit:
+	.TreeMap$ = "prontera";
+	.TreeX = 163;
+	.TreeY = 154;
+	.PlantMap$ = "prontera";
+	.PlantX = 163;
+	.PlantY = 152;
+	.TreeMob = 35000;
+	.PlantMob = 35001;
+	.RespawnDelay = 3000;
+
+	killmonster .TreeMap$, strnpcinfo(NPC_NAME) + "::OnTreeDead";
+	killmonster .PlantMap$, strnpcinfo(NPC_NAME) + "::OnPlantDead";
+
+	callsub S_SpawnTree;
+	callsub S_SpawnPlant;
+	end;
+
+S_SpawnTree:
+	.@gid = monster(.TreeMap$, .TreeX, .TreeY, "Harvest Tree", .TreeMob, 1, strnpcinfo(NPC_NAME) + "::OnTreeDead", Size_Large, AI_NONE);
+	setunitdata .@gid, UDT_MAXHP, 1;
+	setunitdata .@gid, UDT_HP, 1;
+	setunitdata .@gid, UDT_MODE, MD_PLANT;
+	setunitdata .@gid, UDT_ATKRANGE, 1;
+	setunitdata .@gid, UDT_ATKMIN, 0;
+	setunitdata .@gid, UDT_ATKMAX, 0;
+	return;
+
+S_SpawnPlant:
+	.@gid = monster(.PlantMap$, .PlantX, .PlantY, "Harvest Plant", .PlantMob, 1, strnpcinfo(NPC_NAME) + "::OnPlantDead", Size_Medium, AI_NONE);
+	setunitdata .@gid, UDT_MAXHP, 1;
+	setunitdata .@gid, UDT_HP, 1;
+	setunitdata .@gid, UDT_MODE, MD_PLANT;
+	setunitdata .@gid, UDT_ATKRANGE, 1;
+	setunitdata .@gid, UDT_ATKMIN, 0;
+	setunitdata .@gid, UDT_ATKMAX, 0;
+	return;
+
+OnTreeDead:
+	callsub S_CheckHarvest, 1, .TreeMap$, .TreeX, .TreeY, 7201, "You must be a Lumberjack to harvest this tree.";
+	sleep .RespawnDelay;
+	callsub S_SpawnTree;
+	end;
+
+OnPlantDead:
+	callsub S_CheckHarvest, 2, .PlantMap$, .PlantX, .PlantY, 7872, "You must be a Farmer to harvest this plant.";
+	sleep .RespawnDelay;
+	callsub S_SpawnPlant;
+	end;
+
+S_CheckHarvest:
+	.@job = getarg(0);
+	.@map$ = getarg(1);
+	.@x = getarg(2);
+	.@y = getarg(3);
+	.@item = getarg(4);
+	.@wrong_job$ = getarg(5);
+
+	if (HarvestJob != .@job) {
+		message strcharinfo(PC_NAME), .@wrong_job$;
+		return;
+	}
+
+	getmapxy .@pc_map$, .@pc_x, .@pc_y, UNITTYPE_PC;
+	if (.@pc_map$ != .@map$ || .@pc_x < .@x - 1 || .@pc_x > .@x + 1 || .@pc_y < .@y - 1 || .@pc_y > .@y + 1) {
+		message strcharinfo(PC_NAME), "You must harvest this by hand, up close.";
+		return;
+	}
+
+	makeitem .@item, 1, .@map$, .@x, .@y, 1;
+	return;
+}
