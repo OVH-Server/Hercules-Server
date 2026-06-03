@@ -1,71 +1,75 @@
 //===== Hercules Script ======================================
 
-prontera,159,160,4	script	Valkyrie du Destin::AngelDemon	4_F_VALKYRIE,{
-	mes "[Valkyrie du Destin]";
+prontera,159,160,4	script	Valkyrie of Destiny::AngelDemon	4_F_VALKYRIE,{
 
-	if (#Faction == 1) {
-		mes "Vous avez déjà choisi la voie des Anges.";
+	mes "[Valkyrie of Destiny]";
+
+	if (Faction == 1) {
+		mes "You have already chosen the path of the Angels.";
 		close;
 	}
 
-	if (#Faction == 2) {
-		mes "Vous avez déjà choisi la voie des Démons.";
+	if (Faction == 2) {
+		mes "You have already chosen the path of the Demons.";
 		close;
 	}
 
-	mes "Mortel...";
-	mes "Quelle voie désirez-vous suivre ?";
+	mes "Mortal...";
+	mes "Which path will you follow?";
 	next;
 
-	switch(select("Ange:Démon")) {
+	switch(select("Angel:Demon")) {
 
 	case 1:
-		mes "[Valkyrie du Destin]";
-		mes "Une fois votre choix effectué, il sera définitif.";
+
+		mes "[Valkyrie of Destiny]";
+		mes "This choice cannot be reversed.";
 		next;
 
-		if(select("Je deviens un Ange:Annuler") == 2)
+		if(select("Become an Angel:Cancel") == 2)
 			close;
 
-		#Faction = 1;
+		Faction = 1;
 
-		sc_end SC_ALL;
-		sc_start SC_ASPERSIO,2147483647,5;
+		sc_start SC_ANGELUS,2147483647,10;
 
-		specialeffect EF_ANGELUS;
+		specialeffect2 EF_ANGEL;
 
-		mes "[Valkyrie du Destin]";
-		mes "Les ailes de la lumière vous accompagnent désormais.";
+		mes "[Valkyrie of Destiny]";
+		mes "The light embraces your soul.";
 		close;
 
 	case 2:
-		mes "[Valkyrie du Destin]";
-		mes "Une fois votre choix effectué, il sera définitif.";
+
+		mes "[Valkyrie of Destiny]";
+		mes "This choice cannot be reversed.";
 		next;
 
-		if(select("Je deviens un Démon:Annuler") == 2)
+		if(select("Become a Demon:Cancel") == 2)
 			close;
 
-		#Faction = 2;
+		Faction = 2;
 
-		sc_end SC_ALL;
-		sc_start SC_SHADOWFORM,2147483647,5;
+		sc_start SC_DEVOTION,2147483647,10;
 
-		specialeffect EF_CURSEATTACK;
+		specialeffect2 EF_CURSEATTACK;
 
-		mes "[Valkyrie du Destin]";
-		mes "Les ténèbres vous reconnaissent comme l'un des leurs.";
+		mes "[Valkyrie of Destiny]";
+		mes "Darkness flows through your veins.";
 		close;
 	}
-	end;
+
+	close;
 
 OnPCLoginEvent:
-	if (#Faction == 1) {
-		sc_start SC_ASPERSIO,2147483647,5;
+
+	if (Faction == 1) {
+		sc_start SC_ANGELUS,2147483647,10;
 	}
 
-	if (#Faction == 2) {
-		sc_start SC_SHADOWFORM,2147483647,5;
+	if (Faction == 2) {
+		sc_start SC_DEVOTION,2147483647,10;
 	}
+
 	end;
 }
