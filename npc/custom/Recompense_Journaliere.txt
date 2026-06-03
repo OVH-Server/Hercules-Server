@@ -3,7 +3,7 @@
 // Gives 10,000 Zeny and 1 random headgear once per server day.
 //============================================================
 
-prontera,159,170,4	script	Recompense Journaliere	4_VENDING_MACHINE,{
+prontera,161,173,4	script	Recompense Journaliere	4_VENDING_MACHINE,{
 	mes "[Recompense Journaliere]";
 
 	.@today = gettimetick(2) / 86400;
@@ -80,7 +80,7 @@ S_NotifyOnlinePlayers:
 S_NotifyPlayer:
 	.@today = gettimetick(2) / 86400;
 	if (#DailyReward_LastDay != .@today) {
-		.@msg$ = "[Recompense Journaliere] Ta recompense journaliere est disponible a Prontera 159 170.";
+		.@msg$ = "[Recompense Journaliere] Ta recompense journaliere est disponible a Prontera 161 173.";
 		message getcharid(CHAR_ID_ACCOUNT), .@msg$;
 		dispbottom .@msg$;
 	}

@@ -10,7 +10,7 @@
 // scan range small and controlled.
 //============================================================
 
-prontera,155,196,4	script	Chat Ramasseur	4_CAT_DOWN,{
+prontera,159,170,4	script	Chat Ramasseur	4_CAT_DOWN,{
 	mes "[Chat Ramasseur]";
 	mes "Miaou. Je ramasse les objets abandonnes autour de moi, puis je les revends ici.";
 	next;
