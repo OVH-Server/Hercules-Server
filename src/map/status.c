@@ -2153,6 +2153,11 @@ static int status_calc_pc_(struct map_session_data *sd, enum e_status_calc_opt o
 		sd->max_weight += sd->max_weight*sc->data[SC_KNOWLEDGE]->val1/10;
 	if((skill_lv=pc->checkskill(sd,ALL_INCCARRY))>0)
 		sd->max_weight += 2000*skill_lv;
+	i = pc_readglobalreg(sd, script->add_variable("Custom_MaxWeightBonus"));
+	if (i > 0)
+		sd->max_weight += i;
+	if (pc_readglobalreg(sd, script->add_variable("Custom_MaxWeightDouble")) > 0)
+		sd->max_weight *= 2;
 
 	sd->cart_weight_max = battle_config.max_cart_weight + (pc->checkskill(sd, GN_REMODELING_CART)*5000);
 

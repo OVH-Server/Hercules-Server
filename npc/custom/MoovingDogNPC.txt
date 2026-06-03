@@ -1,0 +1,28 @@
+//===== Hercules Script ======================================
+
+prontera,161,170,4	script	Walking Dog::WalkingDog	4_DOG01,{
+	end;
+
+OnInit:
+	npcspeed 120;
+	enablenpc "Walking Dog";
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	npcwalkto 157,194;
+	end;
+
+OnTimer18000:
+	npcwalkto 152,192;
+	end;
+
+OnTimer24000:
+	npcwalkto 126,143;
+	end;
+
+OnTimer52000:
+	disablenpc "Walking Dog";
+	stopnpctimer;
+	end;
+}

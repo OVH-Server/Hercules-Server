@@ -65,7 +65,8 @@ prontera,159,167,4	script	Valkyrie Tuto 2	4_F_VALKYRIE,{
 	callsub S_RideStep, 155,185, 155,184, 650;
 	callsub S_RideStep, 155,188, 155,187, 650;
 	callsub S_RideStep, 155,190, 155,189, 650;
-	unitwarp(getcharid(CHAR_ID_ACCOUNT), "prontera", 155, 190);
+	unitwalk(getcharid(CHAR_ID_ACCOUNT), 155, 190);
+	sleep2 650;
 
 	Tuto2_State++;
 	completequest 65010;
@@ -102,7 +103,7 @@ OnPCLogoutEvent:
 // Taxi merchant
 //============================================================
 
-prontera,160,167,4	script	Taxi Marchand#tuto2	Job_Merchant,{
+prontera,160,167,4	script	Taxi Marchand#tuto2	1_M_MERCHANT,{
 	mes "[Taxi Marchand]";
 	mes "Je suis le taxi de la Valkyrie.";
 	mes "Parle-lui pour lancer le trajet.";

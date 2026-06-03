@@ -1,0 +1,53 @@
+//===== Hercules Script ======================================
+// Custom Max Weight NPC
+//============================================================
+
+prontera,159,157,4	script	Valkyrie du Poids	4_F_VALKYRIE,{
+	mes "[Valkyrie]";
+	mes "Je peux renforcer ta capacite de portage.";
+	mes "Bonus actuel: +" + (Custom_MaxWeightBonus / 10) + " poids.";
+	if (Custom_MaxWeightDouble)
+		mes "Mode actuel: poids maximum double.";
+	next;
+
+	switch(select("+5000 poids:+10000 poids:+15000 poids:Doubler mon poids maximum:Retirer le bonus:Annuler")) {
+	case 1:
+		callsub S_SetWeightBonus, 5000;
+		close;
+	case 2:
+		callsub S_SetWeightBonus, 10000;
+		close;
+	case 3:
+		callsub S_SetWeightBonus, 15000;
+		close;
+	case 4:
+		Custom_MaxWeightBonus = 0;
+		Custom_MaxWeightDouble = 1;
+		statusup2 bStr,0;
+		mes "[Valkyrie]";
+		mes "Ton poids maximum est maintenant double.";
+		mes "Poids maximum actuel: " + (MaxWeight / 10) + ".";
+		close;
+	case 5:
+		Custom_MaxWeightBonus = 0;
+		Custom_MaxWeightDouble = 0;
+		statusup2 bStr,0;
+		mes "[Valkyrie]";
+		mes "Le bonus de poids a ete retire.";
+		mes "Poids maximum actuel: " + (MaxWeight / 10) + ".";
+		close;
+	case 6:
+		mes "[Valkyrie]";
+		mes "Tres bien. Reviens me voir si ton sac devient trop lourd.";
+		close;
+	}
+
+S_SetWeightBonus:
+	Custom_MaxWeightBonus = getarg(0) * 10;
+	Custom_MaxWeightDouble = 0;
+	statusup2 bStr,0;
+	mes "[Valkyrie]";
+	mes "Ton poids maximum gagne +" + getarg(0) + ".";
+	mes "Poids maximum actuel: " + (MaxWeight / 10) + ".";
+	return;
+}
