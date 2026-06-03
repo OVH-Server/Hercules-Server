@@ -83,32 +83,39 @@ prontera,159,160,4	script	Valkyrie Tuto 4	4_F_VALKYRIE,{
 
 		sleep2 800;
 
-		callsub S_MoveTo, 161, 175, 5000;
-		callsub S_MoveTo, 165, 190, 5000;
-		callsub S_MoveTo, 167, 204, 5000;
+		callsub S_MoveTo, 161, 175, 4000;
+		callsub S_MoveTo, 165, 190, 4000;
+		callsub S_MoveTo, 167, 204, 4000;
 
-		callsub S_MoveTo, 164, 218, 5000;
-		callsub S_MoveTo, 161, 232, 5000;
-		callsub S_MoveTo, 158, 246, 5000;
-		callsub S_MoveTo, 155, 260, 5000;
-		callsub S_MoveTo, 152, 274, 5000;
-		callsub S_MoveTo, 150, 287, 5000;
+		callsub S_MoveTo, 164, 218, 4000;
+		callsub S_MoveTo, 161, 232, 4000;
+		callsub S_MoveTo, 158, 246, 4000;
+		callsub S_MoveTo, 155, 260, 4000;
+		callsub S_MoveTo, 152, 274, 4000;
+		callsub S_MoveTo, 150, 287, 4000;
 
-		callsub S_MoveTo, 149, 302, 5000;
-		callsub S_MoveTo, 148, 318, 5000;
+		callsub S_MoveTo, 149, 302, 3500;
+		callsub S_MoveTo, 149, 306, 2500;
+		callsub S_MoveTo, 149, 310, 2500;
+		callsub S_MoveTo, 148, 314, 2500;
+		callsub S_MoveTo, 148, 318, 2500;
 
-		callsub S_MoveTo, 136, 318, 5000;
-		callsub S_MoveTo, 123, 318, 5000;
+		callsub S_MoveTo, 142, 318, 3000;
+		callsub S_MoveTo, 136, 318, 3000;
+		callsub S_MoveTo, 130, 318, 3000;
+		callsub S_MoveTo, 123, 318, 3000;
 
-		callsub S_MoveTo, 120, 309, 5000;
-		callsub S_MoveTo, 114, 292, 6000;
-		callsub S_MoveTo, 100, 292, 5000;
+		callsub S_MoveTo, 120, 309, 3000;
+		callsub S_MoveTo, 117, 300, 3000;
+		callsub S_MoveTo, 114, 292, 3000;
+		callsub S_MoveTo, 107, 292, 3000;
+		callsub S_MoveTo, 100, 292, 3000;
 
-		callsub S_MoveTo, 90, 302, 5000;
-		callsub S_MoveTo, 80, 312, 5000;
-		callsub S_MoveTo, 70, 322, 5000;
-		callsub S_MoveTo, 60, 333, 5000;
-		callsub S_MoveTo, 47, 344, 7000;
+		callsub S_MoveTo, 90, 302, 3500;
+		callsub S_MoveTo, 80, 312, 3500;
+		callsub S_MoveTo, 70, 322, 3500;
+		callsub S_MoveTo, 60, 333, 3500;
+		callsub S_MoveTo, 47, 344, 4500;
 
 		sc_end(SC_ALL_RIDING);
 		if (countitem(12622) > 0)
@@ -136,8 +143,8 @@ S_MoveTo:
 	.@elapsed = 0;
 
 	unitwalk(.@pc_gid, getarg(0), getarg(1));
-	sleep2 250;
-	.@elapsed += 250;
+	sleep2 200;
+	.@elapsed += 200;
 
 	while (.@elapsed < .@timeout) {
 		getmapxy(.@map$, .@x, .@y, UNITTYPE_PC);
@@ -150,11 +157,11 @@ S_MoveTo:
 		if (.@dx <= 1 && .@dy <= 1)
 			return;
 
-		if (unitiswalking(.@pc_gid) != 1 && .@elapsed > 1200)
+		if (unitiswalking(.@pc_gid) != 1 && .@elapsed > 800)
 			unitwalk(.@pc_gid, getarg(0), getarg(1));
 
-		sleep2 250;
-		.@elapsed += 250;
+		sleep2 200;
+		.@elapsed += 200;
 	}
 
 	return;

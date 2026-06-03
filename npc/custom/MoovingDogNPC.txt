@@ -25,10 +25,26 @@ OnTimer4800:
 	end;
 
 OnTimer5900:
+	npcwalkto 152,184;
+	end;
+
+OnTimer7200:
+	npcwalkto 152,176;
+	end;
+
+OnTimer8500:
+	npcwalkto 152,168;
+	end;
+
+OnTimer9800:
+	npcwalkto 152,160;
+	end;
+
+OnTimer11100:
 	npcwalkto 152,152;
 	end;
 
-OnTimer11200:
+OnTimer15000:
 	disablenpc strnpcinfo(NPC_NAME);
 	stopnpctimer;
 	end;
