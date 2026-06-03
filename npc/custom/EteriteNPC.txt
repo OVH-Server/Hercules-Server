@@ -1,0 +1,127 @@
+//===== Hercules Script ======================================
+// Eterite warper and unlockable field eterites.
+//============================================================
+
+prontera,159,157,4	script	Valkyrie Eterite	4_F_VALKYRIE,{
+	mes "[Valkyrie Eterite]";
+	mes "Je peux te teleporter vers les Eterites actives.";
+	mes "Une Eterite inactive demande 10 monstres tues sur sa carte pour etre activee.";
+	next;
+
+	.@prt08_status$ = ($Eterite_Prt08_Active) ? "^00AA00Active^000000" : "^FF0000Inactive^000000";
+	.@prt06_status$ = ($Eterite_Prt06_Active) ? "^00AA00Active^000000" : "^FF0000Inactive^000000";
+	.@prt05_status$ = ($Eterite_Prt05_Active) ? "^00AA00Active^000000" : "^FF0000Inactive^000000";
+
+	.@menu$ = "prt_fild08 " + .@prt08_status$ + ":";
+	.@menu$ += "prt_fild06 " + .@prt06_status$ + ":";
+	.@menu$ += "prt_fild05 " + .@prt05_status$ + ":";
+	.@menu$ += "Annuler";
+
+	.@choice = select(.@menu$);
+
+	if (.@choice == 1) {
+		callsub S_Warp, $Eterite_Prt08_Active, $Eterite_Prt08_Kills, "prt_fild08", 167, 372;
+	} else if (.@choice == 2) {
+		callsub S_Warp, $Eterite_Prt06_Active, $Eterite_Prt06_Kills, "prt_fild06", 29, 191;
+	} else if (.@choice == 3) {
+		callsub S_Warp, $Eterite_Prt05_Active, $Eterite_Prt05_Kills, "prt_fild05", 365, 210;
+	}
+
+	close;
+
+S_Warp:
+	if (!getarg(0)) {
+		mes "[Valkyrie Eterite]";
+		mes "Cette Eterite est encore inactive.";
+		mes "Progression : " + getarg(1) + "/10 monstres tues sur " + getarg(2) + ".";
+		close;
+	}
+
+	warp getarg(2), getarg(3), getarg(4);
+	end;
+}
+
+prt_fild08,167,372,4	script	Eterite#prt08	4_F_VALKYRIE,{
+	callsub S_Status, $Eterite_Prt08_Active, $Eterite_Prt08_Kills, "prt_fild08";
+	close;
+
+S_Status:
+	mes "[Eterite]";
+	if (getarg(0)) {
+		mes "Cette Eterite est active.";
+		mes "Retourne voir la Valkyrie Eterite a Prontera pour te teleporter ici.";
+	} else {
+		mes "Cette Eterite est inactive.";
+		mes "Tue 10 monstres sur " + getarg(2) + " pour l'activer.";
+		mes "Progression : " + getarg(1) + "/10.";
+	}
+	return;
+}
+
+prt_fild06,29,191,4	script	Eterite#prt06	4_F_VALKYRIE,{
+	callsub S_Status, $Eterite_Prt06_Active, $Eterite_Prt06_Kills, "prt_fild06";
+	close;
+
+S_Status:
+	mes "[Eterite]";
+	if (getarg(0)) {
+		mes "Cette Eterite est active.";
+		mes "Retourne voir la Valkyrie Eterite a Prontera pour te teleporter ici.";
+	} else {
+		mes "Cette Eterite est inactive.";
+		mes "Tue 10 monstres sur " + getarg(2) + " pour l'activer.";
+		mes "Progression : " + getarg(1) + "/10.";
+	}
+	return;
+}
+
+prt_fild05,365,210,4	script	Eterite#prt05	4_F_VALKYRIE,{
+	callsub S_Status, $Eterite_Prt05_Active, $Eterite_Prt05_Kills, "prt_fild05";
+	close;
+
+S_Status:
+	mes "[Eterite]";
+	if (getarg(0)) {
+		mes "Cette Eterite est active.";
+		mes "Retourne voir la Valkyrie Eterite a Prontera pour te teleporter ici.";
+	} else {
+		mes "Cette Eterite est inactive.";
+		mes "Tue 10 monstres sur " + getarg(2) + " pour l'activer.";
+		mes "Progression : " + getarg(1) + "/10.";
+	}
+	return;
+}
+
+-	script	Eterite Controller	FAKE_NPC,{
+	end;
+
+OnNPCKillEvent:
+	.@map$ = strcharinfo(PC_MAP);
+
+	if (.@map$ == "prt_fild08")
+		callsub S_CountKill, "$Eterite_Prt08_Active", "$Eterite_Prt08_Kills", "prt_fild08", "Eterite#prt08";
+	else if (.@map$ == "prt_fild06")
+		callsub S_CountKill, "$Eterite_Prt06_Active", "$Eterite_Prt06_Kills", "prt_fild06", "Eterite#prt06";
+	else if (.@map$ == "prt_fild05")
+		callsub S_CountKill, "$Eterite_Prt05_Active", "$Eterite_Prt05_Kills", "prt_fild05", "Eterite#prt05";
+
+	end;
+
+S_CountKill:
+	if (getd(getarg(0)))
+		return;
+
+	.@kills = getd(getarg(1)) + 1;
+	setd getarg(1), .@kills;
+
+	if (.@kills < 10) {
+		message strcharinfo(PC_NAME), "Eterite " + getarg(2) + " : " + .@kills + "/10 monstres tues.";
+		return;
+	}
+
+	setd getarg(0), 1;
+	setd getarg(1), 10;
+	specialeffect(EF_LEVEL99_4, AREA, getarg(3));
+	announce "L'Eterite de " + getarg(2) + " a ete activee ! Retournez voir le NPC a Prontera pour vous teleporter ici.", bc_all, 0x00FF00;
+	return;
+}
