@@ -13,22 +13,14 @@ OnInit:
 
 OnTimer1000:
 	enablenpc strnpcinfo(NPC_NAME);
-	npcwalkto 157,194;
+	npcwalkto 152,152;
 	end;
 
-OnTimer9000:
-	npcwalkto 152,192;
-	end;
-
-OnTimer17000:
+OnTimer12000:
 	npcwalkto 126,143;
 	end;
 
-OnTimer39000:
-	npcwalkto 104,118;
-	end;
-
-OnTimer68000:
+OnTimer28000:
 	disablenpc strnpcinfo(NPC_NAME);
 	stopnpctimer;
 	end;
