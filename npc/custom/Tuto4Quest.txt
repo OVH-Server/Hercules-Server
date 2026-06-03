@@ -81,26 +81,24 @@ prontera,159,160,4	script	Valkyrie Tuto 4	4_F_VALKYRIE,{
 		mes "Parfait. Je t'emmene au maitre Swordman.";
 		close2;
 
-		sleep2 800;
+		sleep2 400;
 
-		callsub S_MoveTo, 161, 175, 4000;
-		callsub S_MoveTo, 165, 190, 4000;
-		callsub S_MoveTo, 167, 204, 4000;
+		callsub S_MoveTo, 161, 175, 2800;
+		callsub S_MoveTo, 165, 190, 2800;
+		callsub S_MoveTo, 167, 204, 2600;
 
-		callsub S_MoveTo, 164, 218, 4000;
-		callsub S_MoveTo, 161, 232, 4000;
-		callsub S_MoveTo, 158, 246, 4000;
-		callsub S_MoveTo, 155, 260, 4000;
-		callsub S_MoveTo, 152, 274, 4000;
-		callsub S_MoveTo, 150, 287, 4000;
+		callsub S_MoveTo, 164, 218, 3000;
+		callsub S_MoveTo, 161, 232, 3000;
+		callsub S_MoveTo, 158, 246, 3000;
+		callsub S_MoveTo, 155, 260, 3000;
+		callsub S_MoveTo, 152, 274, 3000;
+		callsub S_MoveTo, 150, 287, 2800;
 
-		callsub S_MoveTo, 149, 296, 2200;
-		callsub S_MoveTo, 149, 300, 1800;
-		callsub S_MoveTo, 149, 304, 1800;
-		callsub S_MoveTo, 149, 308, 1800;
-		callsub S_MoveTo, 148, 312, 1800;
-		callsub S_MoveTo, 148, 316, 1800;
-		callsub S_MoveTo, 148, 318, 1400;
+		callsub S_MoveTo, 149, 296, 1800;
+		callsub S_MoveTo, 149, 300, 1200;
+		callsub S_MoveTo, 149, 308, 1700;
+		callsub S_MoveTo, 148, 314, 1600;
+		callsub S_MoveTo, 148, 318, 1200;
 
 		callsub S_MoveTo, 142, 318, 2200;
 		callsub S_MoveTo, 136, 318, 2200;
@@ -145,8 +143,8 @@ S_MoveTo:
 	.@elapsed = 0;
 
 	unitwalk(.@pc_gid, getarg(0), getarg(1));
-	sleep2 100;
-	.@elapsed += 100;
+	sleep2 75;
+	.@elapsed += 75;
 
 	while (.@elapsed < .@timeout) {
 		getmapxy(.@map$, .@x, .@y, UNITTYPE_PC);
@@ -156,14 +154,14 @@ S_MoveTo:
 			.@dx = -.@dx;
 		if (.@dy < 0)
 			.@dy = -.@dy;
-		if (.@dx <= 3 && .@dy <= 3)
+		if (.@dx <= 5 && .@dy <= 5)
 			return;
 
-		if (unitiswalking(.@pc_gid) != 1 && .@elapsed > 350)
+		if (unitiswalking(.@pc_gid) != 1 && .@elapsed > 250)
 			unitwalk(.@pc_gid, getarg(0), getarg(1));
 
-		sleep2 100;
-		.@elapsed += 100;
+		sleep2 75;
+		.@elapsed += 75;
 	}
 
 	return;
