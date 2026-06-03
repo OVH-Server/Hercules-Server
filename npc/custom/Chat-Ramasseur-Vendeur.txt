@@ -1,5 +1,5 @@
 //===== Hercules Script ======================================
-// Chat Ramasseur Vendeur
+// Collector Cat Vendor
 //
 // This NPC scans a controlled area around its home, collects accepted
 // ground items into its stock, clears the scanned floor area, then returns
@@ -10,15 +10,15 @@
 // scan range small and controlled.
 //============================================================
 
-prontera,159,170,4	script	Chat Ramasseur	4_CAT_DOWN,{
-	mes "[Chat Ramasseur]";
-	mes "Miaou. Je ramasse les objets abandonnes autour de moi, puis je les revends ici.";
+prontera,159,170,4	script	Collector Cat	4_CAT_DOWN,{
+	mes "[Collector Cat]";
+	mes "Meow. I collect abandoned items around me, then sell them here.";
 	next;
 
 	if (.StockCount <= 0) {
-		mes "[Chat Ramasseur]";
-		mes "Je n'ai rien a vendre pour le moment.";
-		mes "Laisse quelques objets dans ma zone, je ferai ma ronde.";
+		mes "[Collector Cat]";
+		mes "I have nothing to sell right now.";
+		mes "Leave a few items in my area and I will make my rounds.";
 		close;
 	}
 
@@ -30,32 +30,32 @@ S_ShowStock:
 	for (.@i = 0; .@i < .StockCount; .@i++)
 		.@menu$ = .@menu$ + getitemname(.StockId[.@i]) + " x" + .StockAmount[.@i] + " - " + .StockPrice[.@i] + "z:";
 
-	.@menu$ = .@menu$ + "Quitter";
+	.@menu$ = .@menu$ + "Leave";
 	.@choice = select(.@menu$) - 1;
 
 	if (.@choice == .StockCount)
 		return;
 
-	mes "[Chat Ramasseur]";
-	mes "Objet : ^00AAFF" + getitemname(.StockId[.@choice]) + "^000000";
-	mes "Prix : ^00AAFF" + .StockPrice[.@choice] + " Zeny^000000";
-	mes "Stock : " + .StockAmount[.@choice];
+	mes "[Collector Cat]";
+	mes "Item: ^00AAFF" + getitemname(.StockId[.@choice]) + "^000000";
+	mes "Price: ^00AAFF" + .StockPrice[.@choice] + " Zeny^000000";
+	mes "Stock: " + .StockAmount[.@choice];
 	next;
 
-	if (select("Acheter:Retour") == 2) {
+	if (select("Buy:Back") == 2) {
 		callsub S_ShowStock;
 		return;
 	}
 
 	if (Zeny < .StockPrice[.@choice]) {
-		mes "[Chat Ramasseur]";
-		mes "Tu n'as pas assez de Zeny.";
+		mes "[Collector Cat]";
+		mes "You do not have enough Zeny.";
 		return;
 	}
 
 	if (!checkweight(.StockId[.@choice],1)) {
-		mes "[Chat Ramasseur]";
-		mes "Ton inventaire est trop lourd.";
+		mes "[Collector Cat]";
+		mes "Your inventory is too heavy.";
 		return;
 	}
 
@@ -66,8 +66,8 @@ S_ShowStock:
 	if (.StockAmount[.@choice] <= 0)
 		callsub S_RemoveStock,.@choice;
 
-	mes "[Chat Ramasseur]";
-	mes "Miaou. Marche conclu.";
+	mes "[Collector Cat]";
+	mes "Meow. Deal.";
 	return;
 
 S_RemoveStock:
@@ -176,7 +176,7 @@ OnInit:
 	.AcceptedCount = getarraysize(.AcceptedId);
 
 	npcspeed 100;
-	waitingroom "Objets trouves a vendre",0;
+	waitingroom "Found items for sale",0;
 	initnpctimer;
 	end;
 
@@ -196,7 +196,7 @@ OnTimer5000:
 	}
 
 	delwaitingroom;
-	waitingroom "Ramassage en cours",0;
+	waitingroom "Collecting items",0;
 	npcwalkto .ScanCenterX,.ScanCenterY;
 	end;
 
@@ -217,10 +217,10 @@ OnTimer12000:
 		end;
 	}
 
-	movenpc "Chat Ramasseur",.HomeX,.HomeY,4;
+	movenpc "Collector Cat",.HomeX,.HomeY,4;
 	delwaitingroom;
-	waitingroom "Objets trouves a vendre",0;
-	npctalk "Miaou. J'ai ramasse " + .FoundCount + " objet(s).";
+	waitingroom "Found items for sale",0;
+	npctalk "Meow. I collected " + .FoundCount + " item(s).";
 	.Busy = 0;
 	setnpctimer 0;
 	end;

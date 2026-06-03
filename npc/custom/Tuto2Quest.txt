@@ -20,21 +20,21 @@ prontera,159,167,4	script	Valkyrie Tuto 2	4_F_VALKYRIE,{
 
 	mes "[Valkyrie]";
 
-	mes "Bienvenue dans la suite de ton entrainement.";
-	mes "Mon taxi marchand peut t'emmener plus loin dans Prontera.";
-	mes "Es-tu pret a partir ?";
+	mes "Welcome to the next step of your training.";
+	mes "My merchant taxi can take you farther into Prontera.";
+	mes "Are you ready to leave?";
 	next;
 
-	if (select("Oui je suis pret:Pas encore") == 2) {
+	if (select("Yes, I am ready:Not yet") == 2) {
 		mes "[Valkyrie]";
-		mes "Reviens me voir quand tu seras pret.";
+		mes "Come back when you are ready.";
 		close;
 	}
 
 	if ($Tuto2_TaxiBusy) {
 		mes "[Valkyrie]";
-		mes "Le taxi est deja en route.";
-		mes "Attends quelques secondes puis reessaie.";
+		mes "The taxi is already on the road.";
+		mes "Wait a few seconds, then try again.";
 		close;
 	}
 
@@ -46,16 +46,16 @@ prontera,159,167,4	script	Valkyrie Tuto 2	4_F_VALKYRIE,{
 	getmapxy(.@pc_map$, .@pc_x, .@pc_y, UNITTYPE_PC);
 
 	mes "[Valkyrie]";
-	mes "Parfait. Le marchand vient te chercher.";
+	mes "Perfect. The merchant is coming to pick you up.";
 	close2;
 
-	.@taxi_gid = getnpcid("Taxi Marchand#tuto2");
+	.@taxi_gid = getnpcid("Merchant Taxi#tuto2");
 	setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, true);
 	setunitdata(.@taxi_gid, UDT_SPEED, 70);
 	unitwalk(.@taxi_gid, .@pc_x, .@pc_y);
-	unittalk(.@taxi_gid, "J'arrive, ne bouge pas !");
+	unittalk(.@taxi_gid, "I am coming, do not move!");
 	sleep2 1200;
-	unittalk(.@taxi_gid, "Installe-toi, depart immediat !");
+	unittalk(.@taxi_gid, "Hop in, we are leaving now!");
 
 	callsub S_RideStep, 160,170, 160,169, 650;
 	callsub S_RideStep, 159,173, 159,172, 650;
@@ -71,7 +71,7 @@ prontera,159,167,4	script	Valkyrie Tuto 2	4_F_VALKYRIE,{
 	Tuto2_State++;
 	completequest 65010;
 	erasequest 65010;
-	message strcharinfo(PC_NAME), "Main Quest Tuto 2: taxi ride complete. Tu peux relancer la quete quand tu veux.";
+	message strcharinfo(PC_NAME), "Main Quest Tuto 2: taxi ride complete. You can restart the quest whenever you want.";
 
 	unitwarp(.@taxi_gid, "prontera", 160, 167);
 	setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, false);
@@ -84,7 +84,7 @@ S_RideStep:
 	.@player_x = getarg(2);
 	.@player_y = getarg(3);
 	.@delay = getarg(4);
-	.@taxi_gid = getnpcid("Taxi Marchand#tuto2");
+	.@taxi_gid = getnpcid("Merchant Taxi#tuto2");
 
 	unitwalk(.@taxi_gid, .@taxi_x, .@taxi_y);
 	unitwalk(getcharid(CHAR_ID_ACCOUNT), .@player_x, .@player_y);
@@ -93,7 +93,7 @@ S_RideStep:
 
 OnPCLogoutEvent:
 	if ($Tuto2_TaxiBusy == getcharid(CHAR_ID_ACCOUNT)) {
-		unitwarp(getnpcid("Taxi Marchand#tuto2"), "prontera", 160, 167);
+		unitwarp(getnpcid("Merchant Taxi#tuto2"), "prontera", 160, 167);
 		$Tuto2_TaxiBusy = 0;
 	}
 	end;
@@ -103,13 +103,13 @@ OnPCLogoutEvent:
 // Taxi merchant
 //============================================================
 
-prontera,160,167,4	script	Taxi Marchand#tuto2	1_M_MERCHANT,{
-	mes "[Taxi Marchand]";
-	mes "Je suis le taxi de la Valkyrie.";
-	mes "Parle-lui pour lancer le trajet.";
+prontera,160,167,4	script	Merchant Taxi#tuto2	1_M_MERCHANT,{
+	mes "[Merchant Taxi]";
+	mes "I am the Valkyrie's taxi.";
+	mes "Talk to her to start the ride.";
 	close;
 
 OnInit:
-	setunitdata(getnpcid("Taxi Marchand#tuto2"), UDT_SPEED, 70);
+	setunitdata(getnpcid("Merchant Taxi#tuto2"), UDT_SPEED, 70);
 	end;
 }

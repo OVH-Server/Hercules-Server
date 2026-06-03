@@ -9,12 +9,12 @@ prontera,159,160,4	script	Valkyrie Tuto 4	4_F_VALKYRIE,{
 	mes "[Valkyrie]";
 
 	if (Tuto4_State == 1 && !#Tuto4_RewardClaimed) {
-		mes "Le voyage a ete bon ?";
+		mes "Did the trip go well?";
 		next;
 
-		if (select("Oui:Non") == 2) {
+		if (select("Yes:No") == 2) {
 			mes "[Valkyrie]";
-			mes "D'accord. Reviens me voir quand tu voudras recevoir ta recompense.";
+			mes "All right. Come back when you want to receive your reward.";
 			close;
 		}
 
@@ -25,8 +25,8 @@ prontera,159,160,4	script	Valkyrie Tuto 4	4_F_VALKYRIE,{
 		Tuto4_State = 0;
 
 		mes "[Valkyrie]";
-		mes "Excellent. Voici ta recompense.";
-		mes "100 000 Zeny, 100 000 Base EXP, 100 000 Job EXP et une Yggdrasil Berry.";
+		mes "Excellent. Here is your reward.";
+		mes "100,000 Zeny, 100,000 Base EXP, 100,000 Job EXP and a Yggdrasil Berry.";
 		close;
 	}
 
@@ -34,31 +34,31 @@ prontera,159,160,4	script	Valkyrie Tuto 4	4_F_VALKYRIE,{
 		Tuto4_State = 0;
 
 	if (Tuto4_State != 1) {
-		mes "Veux-tu que je t'emmene au maitre de classe Swordman ?";
+		mes "Do you want me to take you to the Swordman class master?";
 		next;
 
-		if (select("Oui:Non") == 2) {
+		if (select("Yes:No") == 2) {
 			mes "[Valkyrie]";
-			mes "Tres bien. Reviens me voir quand tu voudras le rencontrer.";
+			mes "Very well. Come back when you want to meet him.";
 			close;
 		}
 
 		if ($Tuto4_RiderBusy) {
 			mes "[Valkyrie]";
-			mes "La monture est deja en balade.";
-			mes "Attends quelques secondes puis reessaie.";
+			mes "The mount is already out.";
+			mes "Wait a few seconds, then try again.";
 			close;
 		}
 
 		if (checkmount() || hascashmount()) {
 			mes "[Valkyrie]";
-			mes "Descends d'abord de ta monture actuelle.";
+			mes "Dismount from your current mount first.";
 			close;
 		}
 
 		if (!checkweight(12622,1)) {
 			mes "[Valkyrie]";
-			mes "Ton inventaire est trop lourd pour recevoir le Boarding Halter.";
+			mes "Your inventory is too heavy to receive the Boarding Halter.";
 			close;
 		}
 
@@ -72,13 +72,13 @@ prontera,159,160,4	script	Valkyrie Tuto 4	4_F_VALKYRIE,{
 				delitem 12622,1;
 			$Tuto4_RiderBusy = 0;
 			mes "[Valkyrie]";
-			mes "La monture refuse de partir pour le moment.";
-			mes "Reessaie dans quelques instants.";
+			mes "The mount refuses to leave for now.";
+			mes "Try again in a few moments.";
 			close;
 		}
 
 		mes "[Valkyrie]";
-		mes "Parfait. Je t'emmene au maitre Swordman.";
+		mes "Perfect. I will take you to the Swordman master.";
 		close2;
 
 		sleep2 400;
@@ -129,13 +129,13 @@ prontera,159,160,4	script	Valkyrie Tuto 4	4_F_VALKYRIE,{
 
 		$Tuto4_RiderBusy = 0;
 		if (#Tuto4_RewardClaimed)
-			message strcharinfo(PC_NAME), "Valkyrie Tuto 4: tu es arrive devant le batiment Swordman. Tu peux refaire le trajet quand tu veux.";
+			message strcharinfo(PC_NAME), "Valkyrie Tuto 4: you arrived in front of the Swordman building. You can repeat the trip whenever you want.";
 		else
-			message strcharinfo(PC_NAME), "Valkyrie Tuto 4: tu es arrive devant le batiment Swordman. Retourne parler a la Valkyrie.";
+			message strcharinfo(PC_NAME), "Valkyrie Tuto 4: you arrived in front of the Swordman building. Return to the Valkyrie.";
 		end;
 	}
 
-	mes "Retourne me voir apres ton voyage.";
+	mes "Come back to me after your trip.";
 	close;
 
 S_MoveTo:

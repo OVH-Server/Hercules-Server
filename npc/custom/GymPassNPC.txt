@@ -3,24 +3,24 @@
 // Custom limit: 50 Gym Passes, with multi-use support.
 //============================================================
 
-prontera,159,157,4	script	Valkyrie du Poids	4_F_VALKYRIE,{
+prontera,159,157,4	script	Weight Valkyrie	4_F_VALKYRIE,{
 	mes "[Valkyrie]";
-	mes "Je peux utiliser tes ^FF0000Gym Pass^000000 pour augmenter ta capacite de poids.";
-	mes "Progression actuelle: ^3131FF" + gympassmemory + "/50^000000.";
+	mes "I can use your ^FF0000Gym Passes^000000 to increase your weight capacity.";
+	mes "Current progress: ^3131FF" + gympassmemory + "/50^000000.";
 	next;
 
-	switch(select("Utiliser des Gym Pass:Restaurer mon bonus:Annuler")) {
+	switch(select("Use Gym Passes:Restore my bonus:Cancel")) {
 	case 1:
 		if (gympassmemory >= 50) {
 			mes "[Valkyrie]";
-			mes "Ton entrainement est deja au maximum.";
+			mes "Your training is already at its maximum.";
 			close;
 		}
 
 		.@passes = countitem(Max_Weight_Up_Scroll);
 		if (.@passes <= 0) {
 			mes "[Valkyrie]";
-			mes "Tu dois apporter au moins un ^FF0000Gym Pass^000000.";
+			mes "You need to bring at least one ^FF0000Gym Pass^000000.";
 			close;
 		}
 
@@ -29,19 +29,19 @@ prontera,159,157,4	script	Valkyrie du Poids	4_F_VALKYRIE,{
 			.@passes = .@remaining;
 
 		mes "[Valkyrie]";
-		mes "Tu peux utiliser jusqu'a ^3131FF" + .@passes + "^000000 Gym Pass maintenant.";
-		mes "Combien veux-tu en utiliser ?";
+		mes "You can use up to ^3131FF" + .@passes + "^000000 Gym Passes now.";
+		mes "How many do you want to use?";
 		next;
 
 		input .@use,1,.@passes;
 		if (.@use < 1 || .@use > .@passes) {
 			mes "[Valkyrie]";
-			mes "Nombre invalide.";
+			mes "Invalid amount.";
 			close;
 		}
 
 		mes "[Valkyrie]";
-		mes "Tres bien. Que l'entrainement commence.";
+		mes "Very well. Let the training begin.";
 		next;
 		specialeffect(EF_EARTHSPIKE, AREA, playerattached());
 		sleep2 250;
@@ -60,14 +60,14 @@ prontera,159,157,4	script	Valkyrie du Poids	4_F_VALKYRIE,{
 		skill ALL_INCCARRY,.@skill_lv,3;
 
 		mes "[Valkyrie]";
-		mes "C'est fait. Progression: ^3131FF" + gympassmemory + "/50^000000.";
-		mes "Poids maximum actuel: " + (MaxWeight / 10) + ".";
-		mes "Les Gym Pass au-dela de 10 demandent le map-server custom recompile.";
+		mes "Done. Progress: ^3131FF" + gympassmemory + "/50^000000.";
+		mes "Current maximum weight: " + (MaxWeight / 10) + ".";
+		mes "Gym Passes beyond 10 require the custom map-server to be recompiled.";
 		close;
 	case 2:
 		if (gympassmemory <= 0) {
 			mes "[Valkyrie]";
-			mes "Tu n'as aucun entrainement a restaurer.";
+			mes "You have no training to restore.";
 			close;
 		}
 
@@ -76,12 +76,12 @@ prontera,159,157,4	script	Valkyrie du Poids	4_F_VALKYRIE,{
 			.@skill_lv = 10;
 		skill ALL_INCCARRY,.@skill_lv,3;
 		mes "[Valkyrie]";
-		mes "Ta memoire musculaire est restauree.";
-		mes "Progression: ^3131FF" + gympassmemory + "/50^000000.";
+		mes "Your muscle memory has been restored.";
+		mes "Progress: ^3131FF" + gympassmemory + "/50^000000.";
 		close;
 	case 3:
 		mes "[Valkyrie]";
-		mes "Reviens quand tu voudras t'entrainer.";
+		mes "Come back whenever you want to train.";
 		close;
 	}
 }

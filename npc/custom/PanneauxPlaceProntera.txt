@@ -1,9 +1,7 @@
 //===== Hercules Script ======================================
 
-///////////////////
-////Panneau Forge
-prontera,178,189,1	script	Forge	4_BOARD3,{
-	mes "^FF0000[ Informations ]^000000";
+prontera,178,189,1	script	Forge Sign	4_BOARD3,{
+	mes "^FF0000[ Information ]^000000";
 	mes "-------------------------";
 	mes "- Refine";
 	mes "- Identifier";
@@ -12,61 +10,52 @@ prontera,178,189,1	script	Forge	4_BOARD3,{
 	close;
 }
 
-//////////////////
-////Panneau Utilitaire
-prontera,134,188,0	script	Utilitaire	4_BOARD3,{
-	mes "^FF0000[ Informations ]^000000";
+prontera,134,188,0	script	Utility Sign	4_BOARD3,{
+	mes "^FF0000[ Information ]^000000";
 	mes "-------------------------";
-	mes "- Mercenary rent";
+	mes "- Mercenary Rent";
 	mes "- Hunting Missions";
-	mes "- Platinium Skills";
+	mes "- Platinum Skills";
 	mes "- Universal Rental";
 	mes "- Reset NPC";
 	close;
 }
 
-//////////////////
-////Panneau Economie
-prontera,138,223,5	script	Economie	4_BOARD3,{
-	mes "^FF0000[ Informations ]^000000";
+prontera,138,223,5	script	Economy Sign	4_BOARD3,{
+	mes "^FF0000[ Information ]^000000";
 	mes "-------------------------";
 	mes "- Bank";
-	mes "- Action NPC";
+	mes "- Auction NPC";
 	close;
 }
 
-//////////////////
-////Panneau Magasins
-prontera,171,225,3	script	Magasins	4_BOARD3,{
-	mes "^FF0000[ Informations ]^000000";
+prontera,171,225,3	script	Shop Sign	4_BOARD3,{
+	mes "^FF0000[ Information ]^000000";
 	mes "-------------------------";
-	mes "- Equipments";
-	mes "- Arrows/Ammos";
-	mes "- Tool dealer";
+	mes "- Equipment";
+	mes "- Arrows/Ammo";
+	mes "- Tool Dealer";
 	close;
 }
 
-//////////////////
-////Panneau Salle de Jeux 
-prontera,110,216,1	script	Salle de Jeux	4_BOARD3,{
-	mes "^FF0000[ Informations ]^000000";
+prontera,110,216,1	script	Game Room Sign	4_BOARD3,{
+	mes "^FF0000[ Information ]^000000";
 	mes "-------------------------";
-	mes "Salle de Jeux";
+	mes "Game Room";
 	mes "- Lottery";
 	mes "- Roulette / Black Jack";
-	mes "- Pierre Feuille Papier";
+	mes "- Rock Paper Scissors";
 	mes "- Monster Arena";
 	mes "- Morroc Race";
 	close;
 }
-// Panneau Direction Salle de Jeux 
-prontera,123,209,1	script	Salle de Jeux	2_BOARD1,{
-	mes "^FF0000[ Informations ]^000000";
+
+prontera,123,209,1	script	Game Room Direction	2_BOARD1,{
+	mes "^FF0000[ Information ]^000000";
 	mes "-------------------------";
-	mes " Direction Salle de Jeux ";
+	mes "Game Room Direction";
 	mes " < ---";
 	close;
 }
 
-////Duplicate
-prontera,104,208,6	duplicate(Salle de Jeux)	Salle de Jeux	4_BOARD3
+prontera,104,208,6	duplicate(Game Room Sign)	Game Room Sign	4_BOARD3

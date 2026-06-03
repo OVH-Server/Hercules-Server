@@ -1,19 +1,19 @@
 //===== Hercules Script ======================================
 //============================================================
-// Quête Halter Lead
+// Halter Lead Quest
 // Prontera 161,185
 //============================================================
 
 prontera,159,176,4	script	Mount Hunter	4_F_DOMINO,{
 	mes "[Mount Hunter]";
 
-	// Vérifie si la récompense a déjà été obtenue par ce personnage
+	// Checks whether this character has already received the reward.
 	if (HalterQuest_Done) {
 		mes "You have already received your special reward.";
 		close;
 	}
 
-	// Début de quête
+	// Quest start.
 	if (!HalterQuest_Start) {
 		mes "Do you want to obtain a special reward?";
 		mes "Then go kill:";
@@ -28,7 +28,7 @@ prontera,159,176,4	script	Mount Hunter	4_F_DOMINO,{
 			close;
 		}
 
-		// Initialisation des variables de progression liées au personnage
+		// Initializes character-bound progress variables.
 		HalterQuest_Start = 1;
 		HalterQuest_Poring = 0;
 		HalterQuest_Archer = 0;
@@ -39,20 +39,20 @@ prontera,159,176,4	script	Mount Hunter	4_F_DOMINO,{
 		close;
 	}
 
-	// Affichage de la progression actuelle
+	// Displays current progress.
 	mes "Current progress:";
 	mes "Poring: " + HalterQuest_Poring + "/10";
 	mes "Archer Skeleton: " + HalterQuest_Archer + "/10";
 	mes "Les: " + HalterQuest_Les + "/10";
 	next;
 
-	// Vérifie si tous les objectifs sont remplis
+	// Checks whether all objectives are complete.
 	if (HalterQuest_Poring >= 10 && HalterQuest_Archer >= 10 && HalterQuest_Les >= 10) {
 		mes "[Mount Hunter]";
 		mes "You have completed the challenge.";
 		mes "Here is your special reward.";
 
-		// Don de la récompense : Halter Lead
+		// Reward: Halter Lead.
 		getitem 12622,1;
 
 		HalterQuest_Done = 1;
@@ -66,8 +66,8 @@ prontera,159,176,4	script	Mount Hunter	4_F_DOMINO,{
 
 OnNPCKillEvent:
 
-	// Empêche le comptage si la quête n'a pas commencé
-	// ou si elle est déjà terminée
+	// Prevents counting if the quest has not started
+	// or if it is already complete.
 	if (!HalterQuest_Start || HalterQuest_Done)
 		end;
 

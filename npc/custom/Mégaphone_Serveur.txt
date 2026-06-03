@@ -2,74 +2,74 @@
 
 prontera,148,195,3	script	Megaphone	4_CAT_MERMASTER,{
 	mes "[Megaphone]";
-	mes "Je peux diffuser ton message a tous les joueurs sur le serveur !";
-	mes "Prix : ^FF000010 000 zeny^000000.";
+	mes "I can broadcast your message to every player on the server!";
+	mes "Price: ^FF000010,000 zeny^000000.";
 	next;
 
 	if (Zeny < 10000) {
-		mes "[Le Maire]";
-		mes "Tu n'as pas assez de zeny.";
-		mes "Salut byebye";
+		mes "[Mayor]";
+		mes "You do not have enough zeny.";
+		mes "Come back later.";
 		close;
 	}
 
 	mes "[Megaphone]";
-	mes "Dans quel canal veux-tu envoyer ton message ?";
+	mes "Which channel do you want to use?";
 	next;
 
-	switch(select("Commerce:Recrutement:Annuler")) {
+	switch(select("Trade:Recruitment:Cancel")) {
 		case 1:
-			set .@channel$, "Commerce";
+			set .@channel$, "Trade";
 			break;
 
 		case 2:
-			set .@channel$, "Recrutement";
+			set .@channel$, "Recruitment";
 			break;
 
 		case 3:
 			mes "[Megaphone]";
-			mes "Annulé.";
+			mes "Cancelled.";
 			close;
 	}
 
 	mes "[Megaphone]";
-	mes "Note ton message :";
+	mes "Write your message:";
 	next;
 
 	input .@message$;
 
 	if (.@message$ == "") {
-		mes "[Le Maire]";
-		mes "Message vide annule.";
+		mes "[Mayor]";
+		mes "Empty message cancelled.";
 		close;
 	}
 
 	mes "[Megaphone]";
-	mes "Ton message sera envoye dans le canal ^00AAFF" + .@channel$ + "^000000 :";
+	mes "Your message will be sent to the ^00AAFF" + .@channel$ + "^000000 channel:";
 	mes "\"" + .@message$ + "\"";
 	next;
 
-	if (select("Envoyer:Annuler") == 2) {
-		mes "[Le Maire]";
-		mes "Annule.";
+	if (select("Send:Cancel") == 2) {
+		mes "[Mayor]";
+		mes "Cancelled.";
 		close;
 	}
 
 	if (Zeny < 10000) {
 		mes "[Megaphone]";
-		mes "Tu n'as plus assez de zeny.";
+		mes "You no longer have enough zeny.";
 		close;
 	}
 
 	set Zeny, Zeny - 10000;
 
-	if (.@channel$ == "Commerce") {
-	announce "[Commerce] " + strcharinfo(0) + " : " + .@message$, bc_all, 0xFFA500;
-} else {
-	announce "[Recrutement] " + strcharinfo(0) + " : " + .@message$, bc_all, 0x00FF00;
-}
+	if (.@channel$ == "Trade") {
+		announce "[Trade] " + strcharinfo(0) + ": " + .@message$, bc_all, 0xFFA500;
+	} else {
+		announce "[Recruitment] " + strcharinfo(0) + ": " + .@message$, bc_all, 0x00FF00;
+	}
 
 	mes "[Megaphone]";
-	mes "Message bien recu !";
+	mes "Message received!";
 	close;
 }

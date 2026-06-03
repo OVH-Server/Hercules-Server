@@ -1,14 +1,14 @@
 //===== Hercules Script ======================================
 
-prontera,146,197,4	script	Joueurs en ligne	4_MACHINE_DEVICE,{
-	mes "[Joueurs en ligne]";
-	mes "Joueurs actuellement connecte :";
+prontera,146,197,4	script	Online Players	4_MACHINE_DEVICE,{
+	mes "[Online Players]";
+	mes "Players currently online:";
 	next;
 
 	.@count = getunits(BL_PC, .@players, false);
 
 	if (.@count <= 0) {
-		mes "Aucun joueur en ligne.";
+		mes "No players online.";
 		close;
 	}
 
@@ -18,9 +18,9 @@ prontera,146,197,4	script	Joueurs en ligne	4_MACHINE_DEVICE,{
 
 	next;
 
-	mes "Total : " + .@count + " joueur(s) en ligne.";
+	mes "Total: " + .@count + " player(s) online.";
 	close;
 }
 
 //Duplicate
-gon_in,148,20,4	duplicate(Joueurs en ligne)	Joueurs en ligne	4_MACHINE_DEVICE
+gon_in,148,20,4	duplicate(Online Players)	Online Players	4_MACHINE_DEVICE

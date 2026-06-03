@@ -4,8 +4,8 @@
 
 prontera,159,157,4	script	Valkyrie Eterite	4_F_VALKYRIE,{
 	mes "[Valkyrie Eterite]";
-	mes "Je peux te teleporter vers les Eterites actives.";
-	mes "Une Eterite inactive demande 10 monstres tues sur sa carte pour etre activee.";
+	mes "I can teleport you to active Eterites.";
+	mes "An inactive Eterite requires 10 monster kills on its map to be activated.";
 	next;
 
 	.@prt08_status$ = ($Eterite_Prt08_Active) ? "^00AA00Active^000000" : "^FF0000Inactive^000000";
@@ -15,7 +15,7 @@ prontera,159,157,4	script	Valkyrie Eterite	4_F_VALKYRIE,{
 	.@menu$ = "prt_fild08 " + .@prt08_status$ + ":";
 	.@menu$ += "prt_fild06 " + .@prt06_status$ + ":";
 	.@menu$ += "prt_fild05 " + .@prt05_status$ + ":";
-	.@menu$ += "Annuler";
+	.@menu$ += "Cancel";
 
 	.@choice = select(.@menu$);
 
@@ -32,8 +32,8 @@ prontera,159,157,4	script	Valkyrie Eterite	4_F_VALKYRIE,{
 S_Warp:
 	if (!getarg(0)) {
 		mes "[Valkyrie Eterite]";
-		mes "Cette Eterite est encore inactive.";
-		mes "Progression : " + getarg(1) + "/10 monstres tues sur " + getarg(2) + ".";
+		mes "This Eterite is still inactive.";
+		mes "Progress: " + getarg(1) + "/10 monsters killed on " + getarg(2) + ".";
 		close;
 	}
 
@@ -48,12 +48,12 @@ prt_fild08,167,372,4	script	Eterite#prt08	4_F_VALKYRIE,{
 S_Status:
 	mes "[Eterite]";
 	if (getarg(0)) {
-		mes "Cette Eterite est active.";
-		mes "Retourne voir la Valkyrie Eterite a Prontera pour te teleporter ici.";
+		mes "This Eterite is active.";
+		mes "Return to the Valkyrie Eterite in Prontera to teleport here.";
 	} else {
-		mes "Cette Eterite est inactive.";
-		mes "Tue 10 monstres sur " + getarg(2) + " pour l'activer.";
-		mes "Progression : " + getarg(1) + "/10.";
+		mes "This Eterite is inactive.";
+		mes "Kill 10 monsters on " + getarg(2) + " to activate it.";
+		mes "Progress: " + getarg(1) + "/10.";
 	}
 	return;
 }
@@ -65,12 +65,12 @@ prt_fild06,29,191,4	script	Eterite#prt06	4_F_VALKYRIE,{
 S_Status:
 	mes "[Eterite]";
 	if (getarg(0)) {
-		mes "Cette Eterite est active.";
-		mes "Retourne voir la Valkyrie Eterite a Prontera pour te teleporter ici.";
+		mes "This Eterite is active.";
+		mes "Return to the Valkyrie Eterite in Prontera to teleport here.";
 	} else {
-		mes "Cette Eterite est inactive.";
-		mes "Tue 10 monstres sur " + getarg(2) + " pour l'activer.";
-		mes "Progression : " + getarg(1) + "/10.";
+		mes "This Eterite is inactive.";
+		mes "Kill 10 monsters on " + getarg(2) + " to activate it.";
+		mes "Progress: " + getarg(1) + "/10.";
 	}
 	return;
 }
@@ -82,12 +82,12 @@ prt_fild05,365,210,4	script	Eterite#prt05	4_F_VALKYRIE,{
 S_Status:
 	mes "[Eterite]";
 	if (getarg(0)) {
-		mes "Cette Eterite est active.";
-		mes "Retourne voir la Valkyrie Eterite a Prontera pour te teleporter ici.";
+		mes "This Eterite is active.";
+		mes "Return to the Valkyrie Eterite in Prontera to teleport here.";
 	} else {
-		mes "Cette Eterite est inactive.";
-		mes "Tue 10 monstres sur " + getarg(2) + " pour l'activer.";
-		mes "Progression : " + getarg(1) + "/10.";
+		mes "This Eterite is inactive.";
+		mes "Kill 10 monsters on " + getarg(2) + " to activate it.";
+		mes "Progress: " + getarg(1) + "/10.";
 	}
 	return;
 }
@@ -115,13 +115,13 @@ S_CountKill:
 	setd getarg(1), .@kills;
 
 	if (.@kills < 10) {
-		message strcharinfo(PC_NAME), "Eterite " + getarg(2) + " : " + .@kills + "/10 monstres tues.";
+		message strcharinfo(PC_NAME), "Eterite " + getarg(2) + ": " + .@kills + "/10 monsters killed.";
 		return;
 	}
 
 	setd getarg(0), 1;
 	setd getarg(1), 10;
 	specialeffect(EF_LEVEL99_4, AREA, getarg(3));
-	announce "L'Eterite de " + getarg(2) + " a ete activee ! Retournez voir le NPC a Prontera pour vous teleporter ici.", bc_all, 0x00FF00;
+	announce "The Eterite of " + getarg(2) + " has been activated! Return to the NPC in Prontera to teleport here.", bc_all, 0x00FF00;
 	return;
 }

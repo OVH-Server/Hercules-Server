@@ -1,20 +1,20 @@
 //===== Hercules Script ======================================
 
-prontera,159,157,4	script	Quete tuto3::QuestTuto3	4_F_VALKYRIE,{
-	mes "[Quete tuto3]";
+prontera,159,157,4	script	Tutorial Quest 3::QuestTuto3	4_F_VALKYRIE,{
+	mes "[Tutorial Quest 3]";
 
 	if (Tuto3_State == 0) {
 		mes "Do you know the game?";
 		next;
 
 		if (select("Yes:No") == 1) {
-			mes "[Quete tuto3]";
+			mes "[Tutorial Quest 3]";
 			mes "Good. Go to 163 157 and read the board.";
 			Tuto3_State = 1;
 			close;
 		}
 
-		mes "[Quete tuto3]";
+		mes "[Tutorial Quest 3]";
 		mes "Then go read the board anyway. Education, sadly, remains legal.";
 		Tuto3_State = 1;
 		close;
@@ -29,35 +29,35 @@ prontera,159,157,4	script	Quete tuto3::QuestTuto3	4_F_VALKYRIE,{
 		case 1:
 		case 3:
 		case 4:
-			mes "[Quete tuto3]";
+			mes "[Tutorial Quest 3]";
 			mes "Wrong answer.";
 			close;
 
 		case 2:
-			mes "[Quete tuto3]";
-			mes "Bien joué !";
+			mes "[Tutorial Quest 3]";
+			mes "Well done!";
 			Zeny += 10000;
 			Tuto3_State = 2;
 			next;
-			mes "[Quete tuto3]";
-			mes "Now go see Quetetuto3-1.";
+			mes "[Tutorial Quest 3]";
+			mes "Now go see Tutorial Quest 3-1.";
 			close;
 		}
 	}
 
 	if (Tuto3_State == 2) {
-		mes "[Quete tuto3]";
+		mes "[Tutorial Quest 3]";
 		mes "Go talk to the NPC at 164 171.";
 		close;
 	}
 
 	if (Tuto3_State == 3) {
-		mes "[Quete tuto3]";
+		mes "[Tutorial Quest 3]";
 		mes "Did your trip go well?";
 		next;
 		select("Yes:No");
 
-		mes "[Quete tuto3]";
+		mes "[Tutorial Quest 3]";
 		mes "Do you want your reward?";
 		next;
 
@@ -65,18 +65,18 @@ prontera,159,157,4	script	Quete tuto3::QuestTuto3	4_F_VALKYRIE,{
 			Zeny += 10000;
 			getexp 10000,10000;
 			Tuto3_State = 4;
-			mes "[Quete tuto3]";
-			mes "Salut à la prochaine compagnon !";
+			mes "[Tutorial Quest 3]";
+			mes "See you next time, companion!";
 			close;
 		}
 
 		Tuto3_State = 4;
-		mes "[Quete tuto3]";
-		mes "Bon bah à la prochaine surrement ...";
+		mes "[Tutorial Quest 3]";
+		mes "All right, see you next time then...";
 		close;
 	}
 
-	mes "[Quete tuto3]";
+	mes "[Tutorial Quest 3]";
 	mes "You already completed this quest.";
 	close;
 }
@@ -87,12 +87,12 @@ prontera,163,157,4	script	Tutorial Board::Tuto3Board	2_BOARD1,{
 	close;
 }
 
-prontera,164,171,4	script	Quetetuto3-1::QuestTuto3_1	HIDDEN_NPC,{
+prontera,164,171,4	script	Tutorial Quest 3-1::QuestTuto3_1	HIDDEN_NPC,{
 	if (Tuto3_State == 2) {
 		Tuto3_State = 3;
-		mes "[Quetetuto3-1]";
+		mes "[Tutorial Quest 3-1]";
 		mes "Interaction completed.";
-		mes "Go back to Quete tuto3.";
+		mes "Go back to Tutorial Quest 3.";
 		close;
 	}
 

@@ -1,31 +1,27 @@
 //===== Hercules Script ======================================
 
-prontera,164,171,5	script	Maitre Ribs	4_GEFFEN_10,{
+prontera,164,171,5	script	Master Ribs	4_GEFFEN_10,{
 
-	mes "[Maitre Ribs]";
-	mes "Voulez-vous que je parte danser sur la place principale ?";
+	mes "[Master Ribs]";
+	mes "Do you want me to dance on the main square?";
 	next;
 
-	if (select("Oui, allez à la place principale.:Non, restez ici.") == 2) {
-		mes "[Maitre Ribs]";
-		mes "Tres bien, je reste ici.";
+	if (select("Yes, go to the main square.:No, stay here.") == 2) {
+		mes "[Master Ribs]";
+		mes "Very well, I will stay here.";
 		close;
 	}
 
-	mes "[Maitre Ribs]";
-	mes "Place a la troupe !";
+	mes "[Master Ribs]";
+	mes "Make room for the troupe!";
 	close2;
 
-	// Déplacement du leader
 	npcwalkto 156,188;
 
-	// Attente du trajet
 	sleep 6500;
 
-	// Orientation vers le bas (une fois arrivé)
 	setnpcdir getnpcid(0),2;
 
-	// Apparition des deux Nacoruri derrière (gauche + droite)
 	enablenpc "Troupe_Nacoruri_Gauche";
 	enablenpc "Troupe_Nacoruri_Droite";
 	npctalk "SALSA";
@@ -33,7 +29,6 @@ prontera,164,171,5	script	Maitre Ribs	4_GEFFEN_10,{
 
 }
 
-// Derrière gauche du leader 
 prontera,155,188,5	script	Troupe_Nacoruri_Gauche	4_F_NACORURI,{
 	end;
 
@@ -42,7 +37,6 @@ OnInit:
 	end;
 }
 
-// Derrière droite du leader 
 prontera,157,188,5	script	Troupe_Nacoruri_Droite	4_F_NACORURI,{
 	end;
 

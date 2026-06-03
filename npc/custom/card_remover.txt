@@ -60,7 +60,7 @@ prt_in,23,72,4	script	Card Remover	4_F_THAISHAMAN,{
 			close;
 		}
 		mes "[Wise Old Woman]";
-		mes "Besoin : Yellow Gemstone et Star Crumb ";
+		mes "Required: Yellow Gemstone and Star Crumb.";
 		next;
 		if(select("Very well. Do it.", "Nevermind.") == 2) {
 			mes "[Wise Old Woman]";

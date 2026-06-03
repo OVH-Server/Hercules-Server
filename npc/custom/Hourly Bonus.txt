@@ -9,23 +9,23 @@ prontera,159,173,4	script	Hourly Bonus	4_VENDING_MACHINE,{
 	.@now = gettimetick(2);
 	if (#HourlyBonus_LastClaim && .@now < #HourlyBonus_LastClaim + 3600) {
 		.@left = (#HourlyBonus_LastClaim + 3600) - .@now;
-		mes "Ta recompense de l'heure n'est pas encore disponible.";
-		mes "Temps restant : " + (.@left / 60) + " minute(s).";
+		mes "Your hourly reward is not available yet.";
+		mes "Time remaining: " + (.@left / 60) + " minute(s).";
 		close;
 	}
 
 	if (!checkweight(607,1)) {
-		mes "Ton inventaire est trop lourd.";
-		mes "Reviens avec un peu de place pour recevoir ta Yggdrasil Berry.";
+		mes "Your inventory is too heavy.";
+		mes "Come back with some free space to receive your Yggdrasil Berry.";
 		close;
 	}
 
 	getitem 607,1;
 	#HourlyBonus_LastClaim = .@now;
 
-	mes "Voici ta recompense de l'heure :";
+	mes "Here is your hourly reward:";
 	mes "^00AAFF" + getitemname(607) + "^000000 x1";
-	dispbottom "[Hourly Bonus] Tu as recu 1 " + getitemname(607) + ".";
+	dispbottom "[Hourly Bonus] You received 1 " + getitemname(607) + ".";
 	close;
 
 OnPCLoginEvent:
@@ -55,7 +55,7 @@ S_NotifyOnlinePlayers:
 S_NotifyPlayer:
 	.@now = gettimetick(2);
 	if (!#HourlyBonus_LastClaim || .@now >= #HourlyBonus_LastClaim + 3600) {
-		.@msg$ = "[Hourly Bonus] Ta recompense de l'heure est disponible a Prontera 159 173.";
+		.@msg$ = "[Hourly Bonus] Your hourly reward is available at Prontera 159 173.";
 		message getcharid(CHAR_ID_ACCOUNT), .@msg$;
 		dispbottom .@msg$;
 	}
