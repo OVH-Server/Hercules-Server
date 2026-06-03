@@ -94,7 +94,7 @@ prontera,159,160,4	script	Valkyrie Tuto 4	4_F_VALKYRIE,{
 		callsub S_MoveTo, 152, 274, 3000;
 		callsub S_MoveTo, 150, 287, 2800;
 
-		callsub S_MoveTo, 149, 296, 1300;
+		callsub S_MoveTo, 149, 296, 700;
 		callsub S_MoveTo, 149, 302, 900;
 		callsub S_MoveTo, 149, 308, 1400;
 		callsub S_MoveTo, 148, 314, 1600;
@@ -155,7 +155,7 @@ S_MoveTo:
 			.@dx = -.@dx;
 		if (.@dy < 0)
 			.@dy = -.@dy;
-		if (.@dx <= 5 && .@dy <= 5)
+		if (.@dx <= 6 && .@dy <= 6)
 			return;
 
 		if (unitiswalking(.@pc_gid) != 1 && .@elapsed > 250)
