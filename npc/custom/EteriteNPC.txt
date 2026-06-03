@@ -48,6 +48,7 @@ prt_fild08,167,372,4	script	Eterite#prt08	4_F_VALKYRIE,{
 S_Status:
 	mes "[Eterite]";
 	if (getarg(0)) {
+		callsub S_LevelEffect;
 		mes "This Eterite is active.";
 		mes "Return to the Valkyrie Eterite in Prontera to teleport here.";
 	} else {
@@ -55,6 +56,12 @@ S_Status:
 		mes "Kill 10 monsters on " + getarg(2) + " to activate it.";
 		mes "Progress: " + getarg(1) + "/10.";
 	}
+	return;
+
+S_LevelEffect:
+	specialeffect EF_LEVEL99;
+	sleep2 250;
+	specialeffect EF_LEVEL99_4;
 	return;
 }
 
@@ -65,6 +72,7 @@ prt_fild06,29,191,4	script	Eterite#prt06	4_F_VALKYRIE,{
 S_Status:
 	mes "[Eterite]";
 	if (getarg(0)) {
+		callsub S_LevelEffect;
 		mes "This Eterite is active.";
 		mes "Return to the Valkyrie Eterite in Prontera to teleport here.";
 	} else {
@@ -72,6 +80,12 @@ S_Status:
 		mes "Kill 10 monsters on " + getarg(2) + " to activate it.";
 		mes "Progress: " + getarg(1) + "/10.";
 	}
+	return;
+
+S_LevelEffect:
+	specialeffect EF_LEVEL99;
+	sleep2 250;
+	specialeffect EF_LEVEL99_4;
 	return;
 }
 
@@ -82,6 +96,7 @@ prt_fild05,365,210,4	script	Eterite#prt05	4_F_VALKYRIE,{
 S_Status:
 	mes "[Eterite]";
 	if (getarg(0)) {
+		callsub S_LevelEffect;
 		mes "This Eterite is active.";
 		mes "Return to the Valkyrie Eterite in Prontera to teleport here.";
 	} else {
@@ -89,6 +104,12 @@ S_Status:
 		mes "Kill 10 monsters on " + getarg(2) + " to activate it.";
 		mes "Progress: " + getarg(1) + "/10.";
 	}
+	return;
+
+S_LevelEffect:
+	specialeffect EF_LEVEL99;
+	sleep2 250;
+	specialeffect EF_LEVEL99_4;
 	return;
 }
 
@@ -121,7 +142,16 @@ S_CountKill:
 
 	setd getarg(0), 1;
 	setd getarg(1), 10;
-	specialeffect(EF_LEVEL99_4, AREA, getarg(3));
+	callsub S_ActivationEffect, getarg(3);
 	announce "The Eterite of " + getarg(2) + " has been activated! Return to the NPC in Prontera to teleport here.", bc_all, 0x00FF00;
+	return;
+
+S_ActivationEffect:
+	.@npc$ = getarg(0);
+	specialeffect(EF_LEVEL99, AREA, .@npc$);
+	sleep2 250;
+	specialeffect(EF_LEVEL99_4, AREA, .@npc$);
+	sleep2 250;
+	specialeffect(EF_LEVEL99_4, AREA, .@npc$);
 	return;
 }
