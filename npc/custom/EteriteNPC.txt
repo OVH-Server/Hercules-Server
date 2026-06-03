@@ -61,9 +61,9 @@ OnInit:
 	initnpctimer;
 	end;
 
-OnTimer3000:
+OnTimer1500:
 	if ($Eterite_Prt08_Active) {
-		specialeffect EF_LEVEL99_4;
+		specialeffect(EF_LEVEL99_4, AREA, strnpcinfo(NPC_NAME));
 	}
 	setnpctimer 0;
 	end;
@@ -89,9 +89,9 @@ OnInit:
 	initnpctimer;
 	end;
 
-OnTimer3000:
+OnTimer1500:
 	if ($Eterite_Prt06_Active) {
-		specialeffect EF_LEVEL99_4;
+		specialeffect(EF_LEVEL99_4, AREA, strnpcinfo(NPC_NAME));
 	}
 	setnpctimer 0;
 	end;
@@ -117,9 +117,9 @@ OnInit:
 	initnpctimer;
 	end;
 
-OnTimer3000:
+OnTimer1500:
 	if ($Eterite_Prt05_Active) {
-		specialeffect EF_LEVEL99_4;
+		specialeffect(EF_LEVEL99_4, AREA, strnpcinfo(NPC_NAME));
 	}
 	setnpctimer 0;
 	end;
