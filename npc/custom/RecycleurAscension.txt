@@ -80,7 +80,7 @@ prontera,159,163,4	script	Valkyrie Recycler::ValkRecycler	4_F_VALKYRIE,{
 
 		disablenpc "Valkyrie Recycler";
 
-		.@gid = monster("prontera",150,180,"Recycler Core",1905,1,"ValkRecycler::OnCoreDead");
+		.@gid = monster("prontera",163,163,"Recycler Core",1905,1,"ValkRecycler::OnCoreDead");
 
 		setunitdata .@gid, UDT_MAXHP, 1000;
 		setunitdata .@gid, UDT_HP, 1000;

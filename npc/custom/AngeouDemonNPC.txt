@@ -1,7 +1,6 @@
 //===== Hercules Script ======================================
 
 prontera,159,160,4	script	Valkyrie of Destiny::AngelDemon	4_F_VALKYRIE,{
-
 	mes "[Valkyrie of Destiny]";
 
 	if (Faction == 1) {
@@ -28,8 +27,8 @@ prontera,159,160,4	script	Valkyrie of Destiny::AngelDemon	4_F_VALKYRIE,{
 			close;
 
 		Faction = 1;
+
 		specialeffect2 EF_CHAINGEHOLY;
-		addtimer 3000,"AngelDemon::OnVisual";
 
 		mes "[Valkyrie of Destiny]";
 		mes "You are now an Angel.";
@@ -44,8 +43,8 @@ prontera,159,160,4	script	Valkyrie of Destiny::AngelDemon	4_F_VALKYRIE,{
 			close;
 
 		Faction = 2;
+
 		specialeffect2 EF_CHANGEDARK;
-		addtimer 3000,"AngelDemon::OnVisual";
 
 		mes "[Valkyrie of Destiny]";
 		mes "You are now a Demon.";
@@ -54,29 +53,6 @@ prontera,159,160,4	script	Valkyrie of Destiny::AngelDemon	4_F_VALKYRIE,{
 	case 3:
 		close;
 	}
-
-	end;
-
-OnVisual:
-
-	if (!playerattached())
-		end;
-
-	if (Faction == 1)
-		specialeffect2 EF_CHAINGEHOLY;
-
-	if (Faction == 2)
-		specialeffect2 EF_CHANGEDARK;
-
-	if (Faction)
-		addtimer 3000,"AngelDemon::OnVisual";
-
-	end;
-
-OnPCLoginEvent:
-
-	if (Faction)
-		addtimer 3000,"AngelDemon::OnVisual";
 
 	end;
 }
