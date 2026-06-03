@@ -95,7 +95,8 @@ prontera,159,160,4	script	Valkyrie Tuto 4	4_F_VALKYRIE,{
 		callsub S_MoveTo, 150, 287, 2800;
 
 		callsub S_MoveTo, 149, 296, 1300;
-		callsub S_MoveTo, 149, 308, 1900;
+		callsub S_MoveTo, 149, 302, 900;
+		callsub S_MoveTo, 149, 308, 1400;
 		callsub S_MoveTo, 148, 314, 1600;
 		callsub S_MoveTo, 148, 318, 1200;
 
