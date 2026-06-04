@@ -36,6 +36,36 @@ prontera,159,154,4	script	Harvest Master	4_F_VALKYRIE,{
 	close;
 }
 
+prontera,163,149,4	script	Farm Proto Creeper#farm01	4_CREEPER,{
+	mes "[Farm Prototype]";
+	mes "Skin: 4_CREEPER";
+	close;
+}
+
+prontera,163,146,4	script	Farm Proto Gourd#farm02	EVENT_GOURD,{
+	mes "[Farm Prototype]";
+	mes "Skin: EVENT_GOURD";
+	close;
+}
+
+prontera,163,143,4	script	Farm Proto Blue Flower#farm03	4_BLUE_FLOWER,{
+	mes "[Farm Prototype]";
+	mes "Skin: 4_BLUE_FLOWER";
+	close;
+}
+
+prontera,159,143,4	script	Farm Proto Emperium#farm04	S_EMPEL_2,{
+	mes "[Farm Prototype]";
+	mes "Skin: S_EMPEL_2";
+	close;
+}
+
+prontera,159,146,4	script	Farm Proto Soil#farm05	4_SOIL,{
+	mes "[Farm Prototype]";
+	mes "Skin: 4_SOIL";
+	close;
+}
+
 -	script	Farm Resources	FAKE_NPC,{
 	end;
 

@@ -1,31 +1,52 @@
 //===== Hercules Script ======================================
-// Angel / Demon faction choice
+// Angel / Demon alignment choice.
 //
-// Character variable:
+// Character variables:
 // Faction: 0 = none, 1 = Angel, 2 = Demon
-//
-// Note:
-// The exact status text shown in the right buff bar is client-side.
-// These statuses are used only as harmless visual indicators.
+// FactionPetClaimed: 0 = not claimed, 1 = claimed
 //============================================================
 
-prontera,159,160,4	script	Valkyrie of Destiny::AngelDemon	4_F_VALKYRIE,{
+prontera,161,160,4	script	Valkyrie of Destiny::AngelDemon	4_F_VALKYRIE,{
 	mes "[Valkyrie of Destiny]";
 
 	if (Faction == 1) {
-		mes "You are already part of the Angel faction.";
 		callfunc "F_AngelDemon_ApplyIndicator";
+		mes "You belong to the Angel alignment.";
+		next;
+
+		.@choice = select("Travel to Yuno:Refresh my alignment mark:Cancel");
+
+		if (.@choice == 1) {
+			warp "yuno", 157, 51;
+			end;
+		}
+
+		if (.@choice == 2)
+			callfunc "F_AngelDemon_ApplyIndicator";
+
 		close;
 	}
 
 	if (Faction == 2) {
-		mes "You are already part of the Demon faction.";
 		callfunc "F_AngelDemon_ApplyIndicator";
+		mes "You belong to the Demon alignment.";
+		next;
+
+		.@choice = select("Travel to Niflheim:Refresh my alignment mark:Cancel");
+
+		if (.@choice == 1) {
+			warp "niflheim", 193, 182;
+			end;
+		}
+
+		if (.@choice == 2)
+			callfunc "F_AngelDemon_ApplyIndicator";
+
 		close;
 	}
 
-	mes "Choose your faction.";
-	mes "This choice is permanent.";
+	mes "Choose your alignment.";
+	mes "This choice is permanent and grants no bonus.";
 	next;
 
 	.@choice = select("Angel:Demon:Cancel");
@@ -36,10 +57,10 @@ prontera,159,160,4	script	Valkyrie of Destiny::AngelDemon	4_F_VALKYRIE,{
 	mes "[Valkyrie of Destiny]";
 
 	if (.@choice == 1) {
-		mes "The Angel faction follows the white light.";
+		mes "The Angel alignment follows the white light.";
 		next;
 
-		if (select("Join the Angel faction:Cancel") == 2)
+		if (select("Choose Angel alignment:Cancel") == 2)
 			close;
 
 		Faction = 1;
@@ -47,12 +68,12 @@ prontera,159,160,4	script	Valkyrie of Destiny::AngelDemon	4_F_VALKYRIE,{
 		specialeffect2 EF_WHITEBODY;
 
 		mes "[Valkyrie of Destiny]";
-		mes "You are now part of the Angel faction.";
+		mes "Your alignment is now Angel.";
 	} else {
-		mes "The Demon faction follows the black light.";
+		mes "The Demon alignment follows the black light.";
 		next;
 
-		if (select("Join the Demon faction:Cancel") == 2)
+		if (select("Choose Demon alignment:Cancel") == 2)
 			close;
 
 		Faction = 2;
@@ -60,7 +81,7 @@ prontera,159,160,4	script	Valkyrie of Destiny::AngelDemon	4_F_VALKYRIE,{
 		specialeffect2 EF_HITDARK;
 
 		mes "[Valkyrie of Destiny]";
-		mes "You are now part of the Demon faction.";
+		mes "Your alignment is now Demon.";
 	}
 
 	callfunc "F_AngelDemon_ApplyIndicator";
@@ -71,14 +92,14 @@ function	script	F_AngelDemon_ApplyIndicator	{
 	if (Faction == 1) {
 		sc_end SC_DEVIL1;
 		sc_start SC_DRESS_UP, 2147483647, 1;
-		dispbottom "Faction: Angel", 0xFFFFFF;
+		dispbottom "Alignment: Angel", 0xFFFFFF;
 		return;
 	}
 
 	if (Faction == 2) {
 		sc_end SC_DRESS_UP;
 		sc_start SC_DEVIL1, 2147483647, 1;
-		dispbottom "Faction: Demon", 0x555555;
+		dispbottom "Alignment: Demon", 0x555555;
 		return;
 	}
 
@@ -87,7 +108,63 @@ function	script	F_AngelDemon_ApplyIndicator	{
 	return;
 }
 
+yuno,160,51,4	script	Angel Mascot Keeper	4_ANGELING,{
+	mes "[Angel Mascot Keeper]";
+
+	if (Faction != 1) {
+		mes "Only Angel-aligned adventurers may receive this mascot.";
+		close;
+	}
+
+	if (FactionPetClaimed) {
+		mes "You have already received your faction mascot.";
+		close;
+	}
+
+	mes "Your Angel alignment allows you to receive an Angeling mascot egg.";
+	next;
+
+	if (select("Receive Angeling Egg:Cancel") == 2)
+		close;
+
+	getitem 9088, 1; // Angeling Egg
+	FactionPetClaimed = 1;
+
+	mes "[Angel Mascot Keeper]";
+	mes "Take good care of your Angeling.";
+	close;
+}
+
+niflheim,193,180,4	script	Demon Mascot Keeper	DEVILING,{
+	mes "[Demon Mascot Keeper]";
+
+	if (Faction != 2) {
+		mes "Only Demon-aligned adventurers may receive this mascot.";
+		close;
+	}
+
+	if (FactionPetClaimed) {
+		mes "You have already received your faction mascot.";
+		close;
+	}
+
+	mes "Your Demon alignment allows you to receive a Deviling mascot egg.";
+	next;
+
+	if (select("Receive Deviling Egg:Cancel") == 2)
+		close;
+
+	getitem 35002, 1; // Deviling Egg
+	FactionPetClaimed = 1;
+
+	mes "[Demon Mascot Keeper]";
+	mes "Take good care of your Deviling.";
+	close;
+}
+
 -	script	AngelDemon_FactionStatus	FAKE_NPC,{
+	end;
+
 OnPCLoginEvent:
 	if (Faction == 1 || Faction == 2)
 		addtimer 1000, "AngelDemon_FactionStatus::OnRefresh";
