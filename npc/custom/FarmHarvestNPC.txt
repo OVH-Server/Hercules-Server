@@ -88,23 +88,11 @@ OnInit:
 	end;
 
 S_SpawnTree:
-	.@gid = monster(.TreeMap$, .TreeX, .TreeY, "Harvest Tree", .TreeMob, 1, strnpcinfo(NPC_NAME) + "::OnTreeDead", Size_Large, AI_NONE);
-	setunitdata .@gid, UDT_MAXHP, 1;
-	setunitdata .@gid, UDT_HP, 1;
-	setunitdata .@gid, UDT_MODE, MD_PLANT;
-	setunitdata .@gid, UDT_ATKRANGE, 1;
-	setunitdata .@gid, UDT_ATKMIN, 0;
-	setunitdata .@gid, UDT_ATKMAX, 0;
+	monster .TreeMap$, .TreeX, .TreeY, "Harvest Tree", .TreeMob, 1, strnpcinfo(NPC_NAME) + "::OnTreeDead";
 	return;
 
 S_SpawnPlant:
-	.@gid = monster(.PlantMap$, .PlantX, .PlantY, "Harvest Plant", .PlantMob, 1, strnpcinfo(NPC_NAME) + "::OnPlantDead", Size_Medium, AI_NONE);
-	setunitdata .@gid, UDT_MAXHP, 1;
-	setunitdata .@gid, UDT_HP, 1;
-	setunitdata .@gid, UDT_MODE, MD_PLANT;
-	setunitdata .@gid, UDT_ATKRANGE, 1;
-	setunitdata .@gid, UDT_ATKMIN, 0;
-	setunitdata .@gid, UDT_ATKMAX, 0;
+	monster .PlantMap$, .PlantX, .PlantY, "Harvest Plant", .PlantMob, 1, strnpcinfo(NPC_NAME) + "::OnPlantDead";
 	return;
 
 OnTreeDead:

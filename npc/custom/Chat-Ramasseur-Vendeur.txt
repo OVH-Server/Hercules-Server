@@ -110,33 +110,49 @@ S_AddStock:
 S_GetPrice:
 	.@item_id = getarg(0);
 	.@type = getiteminfo(.@item_id, ITEMINFO_TYPE);
-	.@sell = getiteminfo(.@item_id, ITEMINFO_SELLPRICE);
-
-	if (.@sell < 1)
-		.@sell = 50;
 
 	if (.@type == IT_WEAPON || .@type == IT_ARMOR)
-		return .@sell * 3;
+		return 500 + ((.@item_id * 37) % 501);
 
-	if (.@type == IT_HEALING || .@type == IT_USABLE)
-		return .@sell * 2;
+	if (.@type == IT_HEALING || .@type == IT_USABLE || .@type == IT_DELAYCONSUME || .@type == IT_CASH)
+		return 300 + ((.@item_id * 31) % 201);
 
-	return .@sell * 2;
+	return 100 + ((.@item_id * 17) % 101);
 
 S_ScanAcceptedItems:
 	.FoundCount = 0;
 
-	for (.@i = 0; .@i < .AcceptedCount; .@i++) {
-		.@id = .AcceptedId[.@i];
-		.@amount = getareadropitem(.HomeMap$,.ScanX1,.ScanY1,.ScanX2,.ScanY2,.@id);
+	for (.@range = 0; .@range < .ScanRangeCount; .@range++) {
+		for (.@id = .ScanMin[.@range]; .@id <= .ScanMax[.@range]; .@id++) {
+			.@type = getiteminfo(.@id, ITEMINFO_TYPE);
 
-		if (.@amount <= 0)
-			continue;
+			if (!callsub(S_IsAcceptedType,.@type))
+				continue;
 
-		callsub S_AddStock,.@id,.@amount;
-		.FoundCount += .@amount;
+			.@amount = getareadropitem(.HomeMap$,.ScanX1,.ScanY1,.ScanX2,.ScanY2,.@id);
+
+			if (.@amount <= 0)
+				continue;
+
+			callsub S_AddStock,.@id,.@amount;
+			.FoundCount += .@amount;
+		}
 	}
 	return;
+
+S_IsAcceptedType:
+	.@type = getarg(0);
+
+	if (.@type == IT_ETC)
+		return 1;
+
+	if (.@type == IT_HEALING || .@type == IT_USABLE || .@type == IT_DELAYCONSUME || .@type == IT_CASH)
+		return 1;
+
+	if (.@type == IT_WEAPON || .@type == IT_ARMOR)
+		return 1;
+
+	return 0;
 
 OnInit:
 	.HomeMap$ = "prontera";
@@ -148,32 +164,13 @@ OnInit:
 	.ScanY2 = 210;
 	.ScanCenterX = 160;
 	.ScanCenterY = 198;
-	.MaxStock = 50;
+	.MaxStock = 200;
 	.StockCount = 0;
 	.Busy = 0;
 
-	setarray .AcceptedId[0],
-		501,502,503,504,505,506,607,608,
-		512,513,514,515,516,517,518,519,520,521,522,523,525,526,528,529,530,531,532,533,534,535,
-		901,902,903,904,905,906,907,908,909,910,911,912,913,914,915,916,917,918,919,920,
-		921,922,923,924,925,926,928,929,930,931,932,934,935,936,937,938,939,940,941,942,
-		943,944,945,946,947,948,949,950,951,952,953,954,955,956,957,958,959,960,961,962,
-		963,964,965,966,967,968,969,970,971,972,973,974,975,976,978,979,980,981,982,983,
-		984,985,986,987,988,989,990,991,992,993,994,995,996,997,998,999,
-		1000,1001,1002,1003,1004,1005,1006,1007,1008,1009,1010,1011,1012,1013,1014,1015,
-		1016,1017,1018,1019,1020,1021,1022,1023,1024,1025,1026,1027,1028,1029,1030,1031,
-		1032,1033,1034,1035,1036,1037,1038,1039,1040,1041,1042,1043,1044,1045,1046,1047,
-		1048,1049,1050,1051,1052,1053,1054,1055,1056,1057,1058,1059,1060,1061,1062,1063,
-		1064,1065,1066,1067,1068,1069,1070,1071,1072,1073,1074,1075,1076,1077,1078,1079,
-		1080,1081,1082,1083,1084,1085,1086,1087,1088,1089,1090,1091,1092,1093,1094,1095,
-		1096,1097,1098,1099,7001,7002,7003,7004,7005,7006,7007,7008,7009,7010,7011,7012,
-		7013,7014,7015,7016,7017,7018,7019,7020,7021,7022,7023,7024,7025,7026,7027,7028,
-		7029,7030,7031,7032,7033,7034,7035,7036,7037,7038,7039,7040,7041,7042,7043,7044,
-		7045,7046,7047,7048,7049,7050,7051,7052,7053,7054,7055,7056,7057,7058,7059,7060,
-		7061,7062,7063,7064,7065,7066,7067,7068,7069,7070,7071,7072,7073,7074,7075,7076,
-		7077,7078,7079,7080,7081,7082,7083,7084,7085,7086,7087,7088,7089,7090,7091,7092,
-		7093,7094,7095,7096,7097,7098,7099;
-	.AcceptedCount = getarraysize(.AcceptedId);
+	setarray .ScanMin[0], 501, 900, 1101, 2101, 5001, 7001, 12000;
+	setarray .ScanMax[0], 699, 1099, 1999, 2999, 5999, 7999, 12299;
+	.ScanRangeCount = getarraysize(.ScanMin);
 
 	npcspeed 100;
 	waitingroom "Found items for sale",0;

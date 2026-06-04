@@ -127,11 +127,13 @@ yuno,160,51,4	script	Angel Mascot Keeper	4_ANGELING,{
 	if (select("Receive Angeling Egg:Cancel") == 2)
 		close;
 
-	getitem 9088, 1; // Angeling Egg
+	makepet ANGELING;
 	FactionPetClaimed = 1;
 
 	mes "[Angel Mascot Keeper]";
 	mes "Take good care of your Angeling.";
+	next;
+	bpet;
 	close;
 }
 
@@ -154,11 +156,13 @@ niflheim,193,180,4	script	Demon Mascot Keeper	DEVILING,{
 	if (select("Receive Deviling Egg:Cancel") == 2)
 		close;
 
-	getitem 35002, 1; // Deviling Egg
+	makepet DEVILING;
 	FactionPetClaimed = 1;
 
 	mes "[Demon Mascot Keeper]";
 	mes "Take good care of your Deviling.";
+	next;
+	bpet;
 	close;
 }
 
