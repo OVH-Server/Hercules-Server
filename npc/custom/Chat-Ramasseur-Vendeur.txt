@@ -103,21 +103,17 @@ S_AddStock:
 
 	.StockId[.StockCount] = .@item_id;
 	.StockAmount[.StockCount] = .@amount;
-	.StockPrice[.StockCount] = callsub(S_GetPrice,.@item_id);
-	.StockCount++;
-	return;
-
-S_GetPrice:
-	.@item_id = getarg(0);
 	.@type = getiteminfo(.@item_id, ITEMINFO_TYPE);
 
 	if (.@type == IT_WEAPON || .@type == IT_ARMOR)
-		return 500 + ((.@item_id * 37) % 501);
+		.StockPrice[.StockCount] = 500 + ((.@item_id * 37) % 501);
+	else if (.@type == IT_HEALING || .@type == IT_USABLE || .@type == IT_DELAYCONSUME || .@type == IT_CASH)
+		.StockPrice[.StockCount] = 300 + ((.@item_id * 31) % 201);
+	else
+		.StockPrice[.StockCount] = 100 + ((.@item_id * 17) % 101);
 
-	if (.@type == IT_HEALING || .@type == IT_USABLE || .@type == IT_DELAYCONSUME || .@type == IT_CASH)
-		return 300 + ((.@item_id * 31) % 201);
-
-	return 100 + ((.@item_id * 17) % 101);
+	.StockCount++;
+	return;
 
 S_ScanAcceptedItems:
 	.FoundCount = 0;
@@ -125,7 +121,14 @@ S_ScanAcceptedItems:
 	for (.@range = 0; .@range < .ScanRangeCount; .@range++) {
 		for (.@id = .ScanMin[.@range]; .@id <= .ScanMax[.@range]; .@id++) {
 			.@type = getiteminfo(.@id, ITEMINFO_TYPE);
-			.@accepted = callsub(S_IsAcceptedType,.@type);
+			.@accepted = 0;
+
+			if (.@type == IT_ETC)
+				.@accepted = 1;
+			if (.@type == IT_HEALING || .@type == IT_USABLE || .@type == IT_DELAYCONSUME || .@type == IT_CASH)
+				.@accepted = 1;
+			if (.@type == IT_WEAPON || .@type == IT_ARMOR)
+				.@accepted = 1;
 
 			if (!.@accepted)
 				continue;
@@ -141,28 +144,14 @@ S_ScanAcceptedItems:
 	}
 	return;
 
-S_IsAcceptedType:
-	.@type = getarg(0);
-
-	if (.@type == IT_ETC)
-		return 1;
-
-	if (.@type == IT_HEALING || .@type == IT_USABLE || .@type == IT_DELAYCONSUME || .@type == IT_CASH)
-		return 1;
-
-	if (.@type == IT_WEAPON || .@type == IT_ARMOR)
-		return 1;
-
-	return 0;
-
 OnInit:
 	.HomeMap$ = "prontera";
 	.HomeX = 159;
 	.HomeY = 170;
-	.ScanX1 = 149;
+	.ScanX1 = 145;
 	.ScanY1 = 160;
-	.ScanX2 = 169;
-	.ScanY2 = 180;
+	.ScanX2 = 175;
+	.ScanY2 = 210;
 	.MaxStock = 200;
 	.StockCount = 0;
 	.Busy = 0;

@@ -6,7 +6,7 @@
 // FactionMascotGid: current visual mascot monster GID
 //============================================================
 
-prontera,161,160,4	script	Valkyrie of Destiny::AngelDemon	4_F_VALKYRIE,{
+prontera,161,160,4	script	Valkyrie of Destiny	4_F_VALKYRIE,{
 	mes "[Valkyrie of Destiny]";
 
 	if (Faction == 1) {
@@ -90,21 +90,17 @@ prontera,161,160,4	script	Valkyrie of Destiny::AngelDemon	4_F_VALKYRIE,{
 
 function	script	F_AngelDemon_ApplyIndicator	{
 	if (Faction == 1) {
-		sc_end SC_DEVIL1;
-		sc_start SC_DRESS_UP, 2147483647, 1;
+		specialeffect2 EF_CHAINGEHOLY;
 		dispbottom "Alignment: Angel", 0xFFFFFF;
 		return;
 	}
 
 	if (Faction == 2) {
-		sc_end SC_DRESS_UP;
-		sc_start SC_DEVIL1, 2147483647, 1;
+		specialeffect2 EF_CHANGEDARK;
 		dispbottom "Alignment: Demon", 0x555555;
 		return;
 	}
 
-	sc_end SC_DRESS_UP;
-	sc_end SC_DEVIL1;
 	return;
 }
 
@@ -129,7 +125,7 @@ yuno,160,51,4	script	Angel Mascot Keeper	4_ANGELING,{
 	close;
 }
 
-niflheim,193,180,4	script	Demon Mascot Keeper	DEVILING,{
+niflheim,193,180,4	script	Demon Mascot Keeper	1582,{
 	mes "[Demon Mascot Keeper]";
 
 	if (Faction != 2) {
@@ -157,10 +153,10 @@ function	script	F_AngelDemon_SummonMascot	{
 		unitkill FactionMascotGid;
 
 	if (Faction == 1) {
-		.@mob = ANGELING;
+		.@mob = 1096;
 		.@name$ = strcharinfo(PC_NAME) + "'s Angeling";
 	} else if (Faction == 2) {
-		.@mob = DEVILING;
+		.@mob = 1582;
 		.@name$ = strcharinfo(PC_NAME) + "'s Deviling";
 	} else {
 		return;
@@ -221,8 +217,8 @@ OnMascotFollow:
 
 	if (FactionMascotGid <= 0)
 		callfunc "F_AngelDemon_SummonMascot";
-	else if (!unitwalk(FactionMascotGid, getcharid(CHAR_ID_ACCOUNT)))
-		callfunc "F_AngelDemon_SummonMascot";
+	else
+		unitwalk FactionMascotGid, getcharid(CHAR_ID_ACCOUNT);
 
 	addtimer 1500, "AngelDemon_FactionStatus::OnMascotFollow";
 	end;

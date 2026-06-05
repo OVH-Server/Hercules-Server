@@ -4,8 +4,39 @@
 
 prontera,159,154,4	script	Harvest Master	4_F_VALKYRIE,{
 	mes "[Harvest Master]";
-	mes "The prototypes nearby are attackable test resources.";
+	mes "The harvest tree and plant nearby are attackable test resources.";
+	mes "The prototypes keep their visual test skins.";
 	mes "No profession or distance check is required.";
+	close;
+}
+
+prontera,163,149,4	script	Farm Proto Creeper#farm01	4_CREEPER,{
+	mes "[Farm Prototype]";
+	mes "Skin: 4_CREEPER";
+	close;
+}
+
+prontera,163,146,4	script	Farm Proto Gourd#farm02	1816,{
+	mes "[Farm Prototype]";
+	mes "Skin: EVENT_GOURD";
+	close;
+}
+
+prontera,163,143,4	script	Farm Proto Blue Flower#farm03	4_BLUE_FLOWER,{
+	mes "[Farm Prototype]";
+	mes "Skin: 4_BLUE_FLOWER";
+	close;
+}
+
+prontera,159,143,4	script	Farm Proto Emperium#farm04	1908,{
+	mes "[Farm Prototype]";
+	mes "Skin: S_EMPEL_2";
+	close;
+}
+
+prontera,159,146,4	script	Farm Proto Soil#farm05	4_SOIL,{
+	mes "[Farm Prototype]";
+	mes "Skin: 4_SOIL";
 	close;
 }
 
@@ -22,23 +53,12 @@ OnInit:
 	.TreeMob = 35000;
 	.PlantMob = 35001;
 	.RespawnDelay = 3000;
-	.ProtoRespawnDelay = 3000;
 
 	killmonster .TreeMap$, strnpcinfo(NPC_NAME) + "::OnTreeDead";
 	killmonster .PlantMap$, strnpcinfo(NPC_NAME) + "::OnPlantDead";
-	killmonster .TreeMap$, strnpcinfo(NPC_NAME) + "::OnProto01Dead";
-	killmonster .TreeMap$, strnpcinfo(NPC_NAME) + "::OnProto02Dead";
-	killmonster .TreeMap$, strnpcinfo(NPC_NAME) + "::OnProto03Dead";
-	killmonster .TreeMap$, strnpcinfo(NPC_NAME) + "::OnProto04Dead";
-	killmonster .TreeMap$, strnpcinfo(NPC_NAME) + "::OnProto05Dead";
 
 	callsub S_SpawnTree;
 	callsub S_SpawnPlant;
-	callsub S_SpawnProto01;
-	callsub S_SpawnProto02;
-	callsub S_SpawnProto03;
-	callsub S_SpawnProto04;
-	callsub S_SpawnProto05;
 	end;
 
 S_SpawnTree:
@@ -59,50 +79,5 @@ OnPlantDead:
 	makeitem 7872, 1, .PlantMap$, .PlantX, .PlantY, 1;
 	sleep .RespawnDelay;
 	callsub S_SpawnPlant;
-	end;
-
-S_SpawnProto01:
-	monster .TreeMap$, 163, 149, "Farm Proto Mandragora", 1020, 1, strnpcinfo(NPC_NAME) + "::OnProto01Dead";
-	return;
-
-S_SpawnProto02:
-	monster .TreeMap$, 163, 146, "Farm Proto Green Plant", 1080, 1, strnpcinfo(NPC_NAME) + "::OnProto02Dead";
-	return;
-
-S_SpawnProto03:
-	monster .TreeMap$, 163, 143, "Farm Proto Blue Plant", 1079, 1, strnpcinfo(NPC_NAME) + "::OnProto03Dead";
-	return;
-
-S_SpawnProto04:
-	monster .TreeMap$, 159, 143, "Farm Proto Wooden Golem", 1497, 1, strnpcinfo(NPC_NAME) + "::OnProto04Dead";
-	return;
-
-S_SpawnProto05:
-	monster .TreeMap$, 159, 146, "Farm Proto Flora", 1118, 1, strnpcinfo(NPC_NAME) + "::OnProto05Dead";
-	return;
-
-OnProto01Dead:
-	sleep .ProtoRespawnDelay;
-	callsub S_SpawnProto01;
-	end;
-
-OnProto02Dead:
-	sleep .ProtoRespawnDelay;
-	callsub S_SpawnProto02;
-	end;
-
-OnProto03Dead:
-	sleep .ProtoRespawnDelay;
-	callsub S_SpawnProto03;
-	end;
-
-OnProto04Dead:
-	sleep .ProtoRespawnDelay;
-	callsub S_SpawnProto04;
-	end;
-
-OnProto05Dead:
-	sleep .ProtoRespawnDelay;
-	callsub S_SpawnProto05;
 	end;
 }
