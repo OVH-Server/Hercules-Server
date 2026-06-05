@@ -13,6 +13,7 @@ function	script	F_FarmPrototype_Click	{
 	.@y = getarg(1);
 	.@stand_x = getarg(2);
 	.@stand_y = getarg(3);
+	.@need = getarg(4);
 
 	getmapxy .@map$, .@pc_x, .@pc_y, UNITTYPE_PC;
 	if (.@map$ != "prontera" || distance(.@pc_x,.@pc_y,.@x,.@y) > 2)
@@ -20,12 +21,18 @@ function	script	F_FarmPrototype_Click	{
 
 	if (distance(.@pc_x,.@pc_y,.@x,.@y) > 1) {
 		unitwalk(getcharid(CHAR_ID_ACCOUNT), .@stand_x, .@stand_y);
-		sleep2 600;
+		sleep2 1200;
 		getmapxy .@map$, .@pc_x, .@pc_y, UNITTYPE_PC;
 		if (.@map$ != "prontera" || distance(.@pc_x,.@pc_y,.@x,.@y) > 1)
 			end;
 	}
 
+	.Hits++;
+	if (.Hits < .@need)
+		end;
+
+	.Hits = 0;
+	specialeffect EF_SMOKE;
 	makeitem 7201, 1, "prontera", .@x, .@y, 1;
 	movenpc(strnpcinfo(NPC_NAME),1,1,4);
 	disablenpc(strnpcinfo(NPC_NAME));
@@ -36,65 +43,73 @@ function	script	F_FarmPrototype_Click	{
 }
 
 prontera,163,149,4	script	Plant 1#farm01	4_CREEPER,{
-	callfunc "F_FarmPrototype_Click",163,149,163,148;
+	callfunc "F_FarmPrototype_Click",163,149,163,148,1;
 
 OnInit:
+	.Hits = 0;
 	setnpcdistance 2;
 	end;
 }
 
 prontera,163,146,4	script	Plant 2#farm02	1816,{
-	callfunc "F_FarmPrototype_Click",163,146,163,145;
+	callfunc "F_FarmPrototype_Click",163,146,163,145,1;
 
 OnInit:
+	.Hits = 0;
 	setnpcdistance 2;
 	end;
 }
 
 prontera,163,143,4	script	Plant 3#farm03	4_BLUE_FLOWER,{
-	callfunc "F_FarmPrototype_Click",163,143,163,142;
+	callfunc "F_FarmPrototype_Click",163,143,163,142,1;
 
 OnInit:
+	.Hits = 0;
 	setnpcdistance 2;
 	end;
 }
 
 prontera,159,143,4	script	Mining 1#farm04	1908,{
-	callfunc "F_FarmPrototype_Click",159,143,159,142;
+	callfunc "F_FarmPrototype_Click",159,143,159,142,5;
 
 OnInit:
+	.Hits = 0;
 	setnpcdistance 2;
 	end;
 }
 
 prontera,159,149,4	script	Archaeology Prototype 1#farm05	2_MONEMUS,{
-	callfunc "F_FarmPrototype_Click",159,149,159,148;
+	callfunc "F_FarmPrototype_Click",159,149,159,148,5;
 
 OnInit:
+	.Hits = 0;
 	setnpcdistance 2;
 	end;
 }
 
 prontera,159,147,4	script	Archaeology 2#farm06	4_CRACK,{
-	callfunc "F_FarmPrototype_Click",159,147,159,146;
+	callfunc "F_FarmPrototype_Click",159,147,159,146,5;
 
 OnInit:
+	.Hits = 0;
 	setnpcdistance 2;
 	end;
 }
 
 prontera,157,147,4	script	Box 1#farm07	4_STAR_BOX_CRT1,{
-	callfunc "F_FarmPrototype_Click",157,147,157,146;
+	callfunc "F_FarmPrototype_Click",157,147,157,146,10;
 
 OnInit:
+	.Hits = 0;
 	setnpcdistance 2;
 	end;
 }
 
 prontera,155,147,4	script	Box 2#farm08	10404,{
-	callfunc "F_FarmPrototype_Click",155,147,155,146;
+	callfunc "F_FarmPrototype_Click",155,147,155,146,10;
 
 OnInit:
+	.Hits = 0;
 	setnpcdistance 2;
 	end;
 }
