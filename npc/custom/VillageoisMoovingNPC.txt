@@ -1,7 +1,7 @@
 // Villageois mobile - Prontera
 // Fait des allers-retours entre prt 163,164 et prt 163,185.
 
-prontera,163,164,0	script	Villageois Marchand#prt	4028,{
+prontera,163,164,0	script	Villageois Marchand#prt	MER_ARCHER01,{
 	stopnpctimer;
 	npcstop;
 
@@ -15,19 +15,179 @@ prontera,163,164,0	script	Villageois Marchand#prt	4028,{
 	end;
 
 OnInit:
-	npcspeed 180;
+	npcspeed 120;
 	initnpctimer;
 	end;
 
 OnTimer1000:
+	npcwalkto 163,165;
+	end;
+
+OnTimer1350:
+	npcwalkto 163,166;
+	end;
+
+OnTimer1700:
+	npcwalkto 163,167;
+	end;
+
+OnTimer2050:
+	npcwalkto 163,168;
+	end;
+
+OnTimer2400:
+	npcwalkto 163,169;
+	end;
+
+OnTimer2750:
+	npcwalkto 163,170;
+	end;
+
+OnTimer3100:
+	npcwalkto 163,171;
+	end;
+
+OnTimer3450:
+	npcwalkto 163,172;
+	end;
+
+OnTimer3800:
+	npcwalkto 163,173;
+	end;
+
+OnTimer4150:
+	npcwalkto 163,174;
+	end;
+
+OnTimer4500:
+	npcwalkto 163,175;
+	end;
+
+OnTimer4850:
+	npcwalkto 163,176;
+	end;
+
+OnTimer5200:
+	npcwalkto 163,177;
+	end;
+
+OnTimer5550:
+	npcwalkto 163,178;
+	end;
+
+OnTimer5900:
+	npcwalkto 163,179;
+	end;
+
+OnTimer6250:
+	npcwalkto 163,180;
+	end;
+
+OnTimer6600:
+	npcwalkto 163,181;
+	end;
+
+OnTimer6950:
+	npcwalkto 163,182;
+	end;
+
+OnTimer7300:
+	npcwalkto 163,183;
+	end;
+
+OnTimer7650:
+	npcwalkto 163,184;
+	end;
+
+OnTimer8000:
 	npcwalkto 163,185;
 	end;
 
-OnTimer7500:
+OnTimer9500:
+	npcwalkto 163,184;
+	end;
+
+OnTimer9850:
+	npcwalkto 163,183;
+	end;
+
+OnTimer10200:
+	npcwalkto 163,182;
+	end;
+
+OnTimer10550:
+	npcwalkto 163,181;
+	end;
+
+OnTimer10900:
+	npcwalkto 163,180;
+	end;
+
+OnTimer11250:
+	npcwalkto 163,179;
+	end;
+
+OnTimer11600:
+	npcwalkto 163,178;
+	end;
+
+OnTimer11950:
+	npcwalkto 163,177;
+	end;
+
+OnTimer12300:
+	npcwalkto 163,176;
+	end;
+
+OnTimer12650:
+	npcwalkto 163,175;
+	end;
+
+OnTimer13000:
+	npcwalkto 163,174;
+	end;
+
+OnTimer13350:
+	npcwalkto 163,173;
+	end;
+
+OnTimer13700:
+	npcwalkto 163,172;
+	end;
+
+OnTimer14050:
+	npcwalkto 163,171;
+	end;
+
+OnTimer14400:
+	npcwalkto 163,170;
+	end;
+
+OnTimer14750:
+	npcwalkto 163,169;
+	end;
+
+OnTimer15100:
+	npcwalkto 163,168;
+	end;
+
+OnTimer15450:
+	npcwalkto 163,167;
+	end;
+
+OnTimer15800:
+	npcwalkto 163,166;
+	end;
+
+OnTimer16150:
+	npcwalkto 163,165;
+	end;
+
+OnTimer16500:
 	npcwalkto 163,164;
 	end;
 
-OnTimer14000:
+OnTimer18000:
 	stopnpctimer;
 	setnpctimer 0;
 	initnpctimer;
@@ -48,19 +208,75 @@ prontera,163,160,6	script	Villageois Marchand#prt2	5,{
 	end;
 
 OnInit:
-	npcspeed 180;
+	npcspeed 120;
 	initnpctimer;
 	end;
 
 OnTimer1000:
+	npcwalkto 162,160;
+	end;
+
+OnTimer1350:
+	npcwalkto 161,160;
+	end;
+
+OnTimer1700:
+	npcwalkto 160,160;
+	end;
+
+OnTimer2050:
+	npcwalkto 159,160;
+	end;
+
+OnTimer2400:
+	npcwalkto 158,160;
+	end;
+
+OnTimer2750:
+	npcwalkto 157,160;
+	end;
+
+OnTimer3100:
+	npcwalkto 156,160;
+	end;
+
+OnTimer3450:
 	npcwalkto 155,160;
 	end;
 
-OnTimer5000:
+OnTimer4950:
+	npcwalkto 156,160;
+	end;
+
+OnTimer5300:
+	npcwalkto 157,160;
+	end;
+
+OnTimer5650:
+	npcwalkto 158,160;
+	end;
+
+OnTimer6000:
+	npcwalkto 159,160;
+	end;
+
+OnTimer6350:
+	npcwalkto 160,160;
+	end;
+
+OnTimer6700:
+	npcwalkto 161,160;
+	end;
+
+OnTimer7050:
+	npcwalkto 162,160;
+	end;
+
+OnTimer7400:
 	npcwalkto 163,160;
 	end;
 
-OnTimer9000:
+OnTimer8900:
 	stopnpctimer;
 	setnpctimer 0;
 	initnpctimer;
