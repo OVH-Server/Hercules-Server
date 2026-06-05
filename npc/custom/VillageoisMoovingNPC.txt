@@ -19,16 +19,28 @@ OnInit:
 	end;
 
 OnTimer1000:
-	setunitdata(.villager1_gid, UDT_WALKTOXY, 163, 185);
+	setunitdata(.villager1_gid, UDT_WALKTOXY, 163, 174);
 	setunitdata(.villager2_gid, UDT_WALKTOXY, 155, 160);
 	end;
 
-OnTimer6200:
+OnTimer3000:
+	setunitdata(.villager1_gid, UDT_WALKTOXY, 163, 185);
+	end;
+
+OnTimer5200:
 	unitstop(.villager1_gid);
 	end;
 
-OnTimer7600:
+OnTimer6600:
+	setunitdata(.villager1_gid, UDT_WALKTOXY, 163, 174);
+	end;
+
+OnTimer8600:
 	setunitdata(.villager1_gid, UDT_WALKTOXY, 163, 164);
+	end;
+
+OnTimer10200:
+	unitstop(.villager1_gid);
 	end;
 
 OnTimer10100:
@@ -39,12 +51,20 @@ OnTimer11500:
 	setunitdata(.villager2_gid, UDT_WALKTOXY, 163, 160);
 	end;
 
-OnTimer12800:
+OnTimer14200:
+	setunitdata(.villager1_gid, UDT_WALKTOXY, 163, 174);
+	end;
+
+OnTimer16200:
+	setunitdata(.villager1_gid, UDT_WALKTOXY, 163, 185);
+	end;
+
+OnTimer18400:
 	unitstop(.villager1_gid);
 	end;
 
-OnTimer14200:
-	setunitdata(.villager1_gid, UDT_WALKTOXY, 163, 185);
+OnTimer19800:
+	setunitdata(.villager1_gid, UDT_WALKTOXY, 163, 174);
 	end;
 
 OnTimer20100:
@@ -55,7 +75,19 @@ OnTimer21500:
 	setunitdata(.villager2_gid, UDT_WALKTOXY, 155, 160);
 	end;
 
-OnTimer23200:
+OnTimer21800:
+	setunitdata(.villager1_gid, UDT_WALKTOXY, 163, 164);
+	end;
+
+OnTimer23000:
+	unitstop(.villager2_gid);
+	end;
+
+OnTimer24000:
+	unitstop(.villager1_gid);
+	end;
+
+OnTimer25200:
 	stopnpctimer;
 	setnpctimer 0;
 	initnpctimer;
@@ -78,6 +110,57 @@ prontera,159,160,0	script	VillageoisTouch#prt2	HIDDEN_WARP_NPC,10,1,{
 OnTouch:
 	callfunc "F_VillageoisMoovingTalk", "VillageoisMoovingController", 2;
 	end;
+}
+
+-	script	VillageoisMoovingScanner	-1,{
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	callfunc "F_VillageoisMoovingScan", "VillageoisMoovingController";
+	stopnpctimer;
+	setnpctimer 0;
+	initnpctimer;
+	end;
+}
+
+function	script	F_VillageoisMoovingScan	{
+	.@controller$ = getarg(0);
+	.@gid1 = getvariableofnpc(.villager1_gid, .@controller$);
+	.@gid2 = getvariableofnpc(.villager2_gid, .@controller$);
+
+	if (.@gid1 <= 0 && .@gid2 <= 0)
+		return;
+
+	if (.@gid1 > 0)
+		getunitdata(.@gid1, UDT_MAPIDXY, .@mob1_pos);
+	if (.@gid2 > 0)
+		getunitdata(.@gid2, UDT_MAPIDXY, .@mob2_pos);
+
+	.@count = getunits(BL_PC, .@players, false, "prontera", 150, 150, 166, 187);
+	for (.@i = 0; .@i < .@count; .@i++) {
+		if (!attachrid(.@players[.@i]))
+			continue;
+
+		if (@VillageoisMoovingDelay > gettimetick(2)) {
+			detachrid;
+			continue;
+		}
+
+		getmapxy(.@map$, .@pc_x, .@pc_y, UNITTYPE_PC);
+		if (.@map$ == "prontera" && .@gid1 > 0 && distance(.@pc_x, .@pc_y, .@mob1_pos[1], .@mob1_pos[2]) <= 2) {
+			@VillageoisMoovingDelay = gettimetick(2) + 8;
+			callfunc "F_VillageoisMoovingTalk", .@controller$, 1;
+		} else if (.@map$ == "prontera" && .@gid2 > 0 && distance(.@pc_x, .@pc_y, .@mob2_pos[1], .@mob2_pos[2]) <= 2) {
+			@VillageoisMoovingDelay = gettimetick(2) + 8;
+			callfunc "F_VillageoisMoovingTalk", .@controller$, 2;
+		}
+		detachrid;
+	}
+	return;
 }
 
 function	script	F_VillageoisMoovingTalk	{
