@@ -11,20 +11,32 @@ prontera,159,154,4	script	Harvest Master	4_F_VALKYRIE,{
 function	script	F_FarmPrototype_Click	{
 	.@x = getarg(0);
 	.@y = getarg(1);
+	.@stand_x = getarg(2);
+	.@stand_y = getarg(3);
 
 	getmapxy .@map$, .@pc_x, .@pc_y, UNITTYPE_PC;
 	if (.@map$ != "prontera" || distance(.@pc_x,.@pc_y,.@x,.@y) > 2)
 		end;
 
+	if (distance(.@pc_x,.@pc_y,.@x,.@y) > 1) {
+		unitwalk(getcharid(CHAR_ID_ACCOUNT), .@stand_x, .@stand_y);
+		sleep2 600;
+		getmapxy .@map$, .@pc_x, .@pc_y, UNITTYPE_PC;
+		if (.@map$ != "prontera" || distance(.@pc_x,.@pc_y,.@x,.@y) > 1)
+			end;
+	}
+
 	makeitem 7201, 1, "prontera", .@x, .@y, 1;
-	disablenpc strnpcinfo(NPC_NAME);
+	movenpc(strnpcinfo(NPC_NAME),1,1,4);
+	disablenpc(strnpcinfo(NPC_NAME));
 	sleep 10000;
-	enablenpc strnpcinfo(NPC_NAME);
+	enablenpc(strnpcinfo(NPC_NAME));
+	movenpc(strnpcinfo(NPC_NAME),.@x,.@y,4);
 	end;
 }
 
 prontera,163,149,4	script	Plant 1#farm01	4_CREEPER,{
-	callfunc "F_FarmPrototype_Click",163,149;
+	callfunc "F_FarmPrototype_Click",163,149,163,148;
 
 OnInit:
 	setnpcdistance 2;
@@ -32,7 +44,7 @@ OnInit:
 }
 
 prontera,163,146,4	script	Plant 2#farm02	1816,{
-	callfunc "F_FarmPrototype_Click",163,146;
+	callfunc "F_FarmPrototype_Click",163,146,163,145;
 
 OnInit:
 	setnpcdistance 2;
@@ -40,31 +52,31 @@ OnInit:
 }
 
 prontera,163,143,4	script	Plant 3#farm03	4_BLUE_FLOWER,{
-	callfunc "F_FarmPrototype_Click",163,143;
+	callfunc "F_FarmPrototype_Click",163,143,163,142;
 
 OnInit:
 	setnpcdistance 2;
 	end;
 }
 
-prontera,159,143,4	script	Minage 1#farm04	1908,{
-	callfunc "F_FarmPrototype_Click",159,143;
+prontera,159,143,4	script	Mining 1#farm04	1908,{
+	callfunc "F_FarmPrototype_Click",159,143,159,142;
 
 OnInit:
 	setnpcdistance 2;
 	end;
 }
 
-prontera,159,149,4	script	Archeologie proto 1#farm05	2_MONEMUS,{
-	callfunc "F_FarmPrototype_Click",159,149;
+prontera,159,149,4	script	Archaeology Prototype 1#farm05	2_MONEMUS,{
+	callfunc "F_FarmPrototype_Click",159,149,159,148;
 
 OnInit:
 	setnpcdistance 2;
 	end;
 }
 
-prontera,159,147,4	script	Archeologie 2#farm06	4_CRACK,{
-	callfunc "F_FarmPrototype_Click",159,147;
+prontera,159,147,4	script	Archaeology 2#farm06	4_CRACK,{
+	callfunc "F_FarmPrototype_Click",159,147,159,146;
 
 OnInit:
 	setnpcdistance 2;
@@ -72,7 +84,7 @@ OnInit:
 }
 
 prontera,157,147,4	script	Box 1#farm07	4_STAR_BOX_CRT1,{
-	callfunc "F_FarmPrototype_Click",157,147;
+	callfunc "F_FarmPrototype_Click",157,147,157,146;
 
 OnInit:
 	setnpcdistance 2;
@@ -80,7 +92,7 @@ OnInit:
 }
 
 prontera,155,147,4	script	Box 2#farm08	10404,{
-	callfunc "F_FarmPrototype_Click",155,147;
+	callfunc "F_FarmPrototype_Click",155,147,155,146;
 
 OnInit:
 	setnpcdistance 2;
