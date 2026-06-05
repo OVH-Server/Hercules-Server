@@ -1,7 +1,7 @@
 // Villageois mobile - Prontera
 // Fait des allers-retours entre prt 163,164 et prt 163,185.
 
-prontera,163,164,0	script	Villageois Marchand#prt	MER_ARCHER01,{
+prontera,163,164,0	script	Villageois Marchand#prt	8W_SOLDIER,{
 	stopnpctimer;
 	npcstop;
 
@@ -194,7 +194,7 @@ OnTimer18000:
 	end;
 }
 
-prontera,163,160,6	script	Villageois Marchand#prt2	5,{
+prontera,163,160,6	script	Villageois Marchand#prt2	4_EP18_MARAM,{
 	stopnpctimer;
 	npcstop;
 
