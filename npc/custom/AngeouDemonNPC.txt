@@ -3,7 +3,7 @@
 //
 // Character variables:
 // Faction: 0 = none, 1 = Angel, 2 = Demon
-// FactionPetClaimed: 0 = not claimed, 1 = claimed
+// FactionMascotGid: current visual mascot monster GID
 //============================================================
 
 prontera,161,160,4	script	Valkyrie of Destiny::AngelDemon	4_F_VALKYRIE,{
@@ -112,28 +112,20 @@ yuno,160,51,4	script	Angel Mascot Keeper	4_ANGELING,{
 	mes "[Angel Mascot Keeper]";
 
 	if (Faction != 1) {
-		mes "Only Angel-aligned adventurers may receive this mascot.";
+		mes "Only Angel-aligned adventurers may call this mascot.";
 		close;
 	}
 
-	if (FactionPetClaimed) {
-		mes "You have already received your faction mascot.";
-		close;
-	}
-
-	mes "Your Angel alignment allows you to receive an Angeling mascot egg.";
+	mes "Your Angel alignment calls an Angeling to follow you.";
 	next;
 
-	if (select("Receive Angeling Egg:Cancel") == 2)
+	if (select("Call Angeling:Cancel") == 2)
 		close;
 
-	makepet ANGELING;
-	FactionPetClaimed = 1;
+	callfunc "F_AngelDemon_SummonMascot";
 
 	mes "[Angel Mascot Keeper]";
-	mes "Take good care of your Angeling.";
-	next;
-	bpet;
+	mes "Your Angeling is now following you.";
 	close;
 }
 
@@ -141,29 +133,54 @@ niflheim,193,180,4	script	Demon Mascot Keeper	DEVILING,{
 	mes "[Demon Mascot Keeper]";
 
 	if (Faction != 2) {
-		mes "Only Demon-aligned adventurers may receive this mascot.";
+		mes "Only Demon-aligned adventurers may call this mascot.";
 		close;
 	}
 
-	if (FactionPetClaimed) {
-		mes "You have already received your faction mascot.";
-		close;
-	}
-
-	mes "Your Demon alignment allows you to receive a Deviling mascot egg.";
+	mes "Your Demon alignment calls a Deviling to follow you.";
 	next;
 
-	if (select("Receive Deviling Egg:Cancel") == 2)
+	if (select("Call Deviling:Cancel") == 2)
 		close;
 
-	makepet DEVILING;
-	FactionPetClaimed = 1;
+	callfunc "F_AngelDemon_SummonMascot";
 
 	mes "[Demon Mascot Keeper]";
-	mes "Take good care of your Deviling.";
-	next;
-	bpet;
+	mes "Your Deviling is now following you.";
 	close;
+}
+
+function	script	F_AngelDemon_SummonMascot	{
+	getmapxy .@map$, .@x, .@y, UNITTYPE_PC;
+
+	if (FactionMascotGid > 0)
+		unitkill FactionMascotGid;
+
+	if (Faction == 1) {
+		.@mob = ANGELING;
+		.@name$ = strcharinfo(PC_NAME) + "'s Angeling";
+	} else if (Faction == 2) {
+		.@mob = DEVILING;
+		.@name$ = strcharinfo(PC_NAME) + "'s Deviling";
+	} else {
+		return;
+	}
+
+	FactionMascotGid = monster(.@map$, .@x, .@y, .@name$, .@mob, 1);
+	setunitdata FactionMascotGid, UDT_MASTERAID, getcharid(CHAR_ID_ACCOUNT);
+	setunitdata FactionMascotGid, UDT_MASTERCID, getcharid(CHAR_ID_CHAR);
+	setunitdata FactionMascotGid, UDT_MODE, 0;
+	setunitdata FactionMascotGid, UDT_ATKMIN, 0;
+	setunitdata FactionMascotGid, UDT_ATKMAX, 0;
+	setunitdata FactionMascotGid, UDT_MATKMIN, 0;
+	setunitdata FactionMascotGid, UDT_MATKMAX, 0;
+	setunitdata FactionMascotGid, UDT_SPEED, 160;
+	unitwalk FactionMascotGid, getcharid(CHAR_ID_ACCOUNT);
+	if (!FactionMascotTimer) {
+		FactionMascotTimer = 1;
+		addtimer 1500, "AngelDemon_FactionStatus::OnMascotFollow";
+	}
+	return;
 }
 
 -	script	AngelDemon_FactionStatus	FAKE_NPC,{
@@ -172,6 +189,13 @@ niflheim,193,180,4	script	Demon Mascot Keeper	DEVILING,{
 OnPCLoginEvent:
 	if (Faction == 1 || Faction == 2)
 		addtimer 1000, "AngelDemon_FactionStatus::OnRefresh";
+	end;
+
+OnPCLogoutEvent:
+	if (FactionMascotGid > 0)
+		unitkill FactionMascotGid;
+	FactionMascotGid = 0;
+	FactionMascotTimer = 0;
 	end;
 
 OnRefresh:
@@ -187,5 +211,19 @@ OnRefresh:
 		end;
 	}
 
+	end;
+
+OnMascotFollow:
+	if (Faction != 1 && Faction != 2) {
+		FactionMascotTimer = 0;
+		end;
+	}
+
+	if (FactionMascotGid <= 0)
+		callfunc "F_AngelDemon_SummonMascot";
+	else if (!unitwalk(FactionMascotGid, getcharid(CHAR_ID_ACCOUNT)))
+		callfunc "F_AngelDemon_SummonMascot";
+
+	addtimer 1500, "AngelDemon_FactionStatus::OnMascotFollow";
 	end;
 }

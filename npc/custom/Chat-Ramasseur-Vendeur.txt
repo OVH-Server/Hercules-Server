@@ -125,8 +125,9 @@ S_ScanAcceptedItems:
 	for (.@range = 0; .@range < .ScanRangeCount; .@range++) {
 		for (.@id = .ScanMin[.@range]; .@id <= .ScanMax[.@range]; .@id++) {
 			.@type = getiteminfo(.@id, ITEMINFO_TYPE);
+			.@accepted = callsub(S_IsAcceptedType,.@type);
 
-			if (!callsub(S_IsAcceptedType,.@type))
+			if (!.@accepted)
 				continue;
 
 			.@amount = getareadropitem(.HomeMap$,.ScanX1,.ScanY1,.ScanX2,.ScanY2,.@id);
@@ -156,14 +157,12 @@ S_IsAcceptedType:
 
 OnInit:
 	.HomeMap$ = "prontera";
-	.HomeX = 155;
-	.HomeY = 196;
-	.ScanX1 = 145;
-	.ScanY1 = 186;
-	.ScanX2 = 175;
-	.ScanY2 = 210;
-	.ScanCenterX = 160;
-	.ScanCenterY = 198;
+	.HomeX = 159;
+	.HomeY = 170;
+	.ScanX1 = 149;
+	.ScanY1 = 160;
+	.ScanX2 = 169;
+	.ScanY2 = 180;
 	.MaxStock = 200;
 	.StockCount = 0;
 	.Busy = 0;
@@ -172,17 +171,11 @@ OnInit:
 	setarray .ScanMax[0], 699, 1099, 1999, 2999, 5999, 7999, 12299;
 	.ScanRangeCount = getarraysize(.ScanMin);
 
-	npcspeed 100;
-	waitingroom "Found items for sale",0;
+	movenpc "Collector Cat",.HomeX,.HomeY,4;
 	initnpctimer;
 	end;
 
 OnTimer5000:
-	if (.Busy) {
-		setnpctimer 0;
-		end;
-	}
-
 	.Busy = 1;
 	callsub S_ScanAcceptedItems;
 
@@ -192,32 +185,9 @@ OnTimer5000:
 		end;
 	}
 
-	delwaitingroom;
-	waitingroom "Collecting items",0;
-	npcwalkto .ScanCenterX,.ScanCenterY;
-	end;
-
-OnTimer8000:
-	if (!.Busy) {
-		setnpctimer 0;
-		end;
-	}
-
 	specialeffect EF_STEAL;
 	cleanarea .HomeMap$,.ScanX1,.ScanY1,.ScanX2,.ScanY2;
-	npcwalkto .HomeX,.HomeY;
-	end;
-
-OnTimer12000:
-	if (!.Busy) {
-		setnpctimer 0;
-		end;
-	}
-
 	movenpc "Collector Cat",.HomeX,.HomeY,4;
-	delwaitingroom;
-	waitingroom "Found items for sale",0;
-	npctalk "Meow. I collected " + .FoundCount + " item(s).";
 	.Busy = 0;
 	setnpctimer 0;
 	end;
