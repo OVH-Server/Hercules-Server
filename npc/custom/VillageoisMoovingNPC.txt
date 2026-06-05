@@ -1,3 +1,4 @@
+//===== Hercules Script ======================================
 // Villageois mobiles - Prontera
 // Mobs visibles pilotes par unitwalk, interaction par zones OnTouch invisibles.
 
@@ -6,8 +7,8 @@
 
 OnInit:
 	killmonster "prontera","VillageoisMoovingController::OnMobDead";
-	.villager1_gid = monster("prontera",163,164,"Villageois Marchand",35002,1,"VillageoisMoovingController::OnMobDead");
-	.villager2_gid = monster("prontera",163,160,"Villageois Marchand",35003,1,"VillageoisMoovingController::OnMobDead");
+	.villager1_gid = monster("prontera",163,164,"Villageois Marchand",20990,1,"VillageoisMoovingController::OnMobDead");
+	.villager2_gid = monster("prontera",163,160,"Villageois Marchand",20991,1,"VillageoisMoovingController::OnMobDead");
 
 	setunitdata(.villager1_gid, UDT_SPEED, 120);
 	setunitdata(.villager2_gid, UDT_SPEED, 120);
