@@ -4,7 +4,7 @@
 // Prontera 161,185
 //============================================================
 
-prontera,159,176,4	script	Mount Hunter	4_F_DOMINO,{
+prontera,159,170,4	script	Mount Quest	4_F_DOMINO,{
 	mes "[Mount Hunter]";
 
 	// Checks whether this character has already received the reward.

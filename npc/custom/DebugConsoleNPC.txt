@@ -14,7 +14,7 @@
 //   callfunc "F_DebugValue","Olga","Tuto1_State",Tuto1_State;
 //============================================================
 
-prontera,164,162,4	script	CONSOLE DEBUG	4_F_KAFRA1,{
+prontera,164,162,4	script	Debug System	4_F_KAFRA1,{
 	mes "[CONSOLE DEBUG]";
 	mes "Generic debug console.";
 	mes "Status: " + (#DebugConsole ? "enabled" : "disabled");

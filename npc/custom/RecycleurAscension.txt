@@ -1,6 +1,6 @@
 //===== Hercules Script ======================================
 
-prontera,149,154,4	script	Valkyrie Recycler::ValkRecycler	4_F_VALKYRIE,{
+prontera,149,154,4	script	Recycler System	4_F_VALKYRIE,{
 
 	if (.Charge >= 20) {
 		mes "[Valkyrie Recycler]";

@@ -2,7 +2,7 @@
 // Farming and lumberjack prototype resources.
 //============================================================
 
-prontera,159,154,4	script	Harvest Master	4_F_VALKYRIE,{
+prontera,163,152,4	script	Harvest Job	4_F_VALKYRIE,{
 	mes "[Harvest Master]";
 	mes "The prototypes keep their visual test skins.";
 	close;

@@ -4,7 +4,7 @@
 //= plus tard sur des mobs/clones scripts.
 //============================================================
 
-prontera,164,160,4	script	Enregistreur Clone	1_M_01,{
+prontera,164,160,4	script	Clone System	1_M_01,{
 	mes "[Enregistreur Clone]";
 	mes "Je peux sauvegarder ton apparence actuelle dans 3 slots.";
 	next;

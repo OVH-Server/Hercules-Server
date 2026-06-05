@@ -334,3 +334,36 @@ OnPCLoginEvent:
 	}
 	end;
 }
+
+new_1-3,102,30,4	script	Tuto Quest 1	4_F_VALKYRIE,{
+	mes "[Tuto Quest 1]";
+	mes "Do you want to go to Prontera?";
+	next;
+
+	if (select("Yes:No") == 1)
+		warp "prontera",159,170;
+
+	close;
+}
+
+prontera,159,170,4	script	Tuto Quest 1	4_F_VALKYRIE,{
+	mes "[Tuto Quest 1]";
+	mes "Do you want to go to the tutorial area?";
+	next;
+
+	if (select("Yes:No") == 1)
+		warp "new_1-3",102,30;
+
+	close;
+}
+
+prt_new1,35,29,4	script	Tuto Quest 1	4_F_VALKYRIE,{
+	mes "[Tuto Quest 1]";
+	mes "Do you want to go to Prontera?";
+	next;
+
+	if (select("Yes:No") == 1)
+		warp "prontera",159,170;
+
+	close;
+}
