@@ -1,0 +1,156 @@
+//===== Hercules Script ======================================
+//= Clone Style Recorder
+//= Sauvegarde 3 apparences de personnages pour les reutiliser
+//= plus tard sur des mobs/clones scripts.
+//============================================================
+
+prontera,163,163,4	script	Enregistreur Clone	4_M_MANAGER,{
+	mes "[Enregistreur Clone]";
+	mes "Je peux sauvegarder ton apparence actuelle dans 3 slots.";
+	next;
+
+	while (true) {
+		.@menu = select("Enregistrer un style:Voir les styles:Effacer un style:Quitter");
+
+		if (.@menu == 1) {
+			callsub S_SelectSlot;
+			if (.@slot == 0)
+				continue;
+
+			mes "[Enregistreur Clone]";
+			mes "Donne un nom a ce style.";
+			mes "Exemple: Marchand bleu, Garde nord, Mage rouge.";
+			next;
+			input .@style_name$;
+			if (.@style_name$ == "")
+				.@style_name$ = "Style " + .@slot;
+			if (getstrlen(.@style_name$) > 24)
+				.@style_name$ = substr(.@style_name$, 0, 23);
+
+			callsub S_SaveStyle, .@slot, .@style_name$;
+
+			mes "[Enregistreur Clone]";
+			mes "Style sauvegarde dans le slot " + .@slot + ".";
+			mes "Nom: " + $CloneStyle_Name$[.@slot];
+			mes "Classe: " + jobname($CloneStyle_Class[.@slot]);
+			next;
+		} else if (.@menu == 2) {
+			callsub S_ShowStyles;
+			next;
+		} else if (.@menu == 3) {
+			callsub S_SelectSlot;
+			if (.@slot == 0)
+				continue;
+
+			mes "[Enregistreur Clone]";
+			if (!$CloneStyle_Saved[.@slot]) {
+				mes "Ce slot est deja vide.";
+				next;
+				continue;
+			}
+
+			mes "Effacer le slot " + .@slot + " ?";
+			mes "Nom: " + $CloneStyle_Name$[.@slot];
+			next;
+			if (select("Oui:Non") == 1) {
+				callsub S_ClearStyle, .@slot;
+				mes "[Enregistreur Clone]";
+				mes "Slot efface.";
+				next;
+			}
+		} else {
+			close;
+		}
+	}
+
+S_SelectSlot:
+	mes "[Enregistreur Clone]";
+	mes "Choisis un slot.";
+	next;
+	.@choice = select("Slot 1:Slot 2:Slot 3:Retour");
+	if (.@choice == 4)
+		.@slot = 0;
+	else
+		.@slot = .@choice;
+	return;
+
+S_SaveStyle:
+	.@slot = getarg(0);
+	.@style_name$ = getarg(1);
+
+	$CloneStyle_Saved[.@slot] = 1;
+	$CloneStyle_Name$[.@slot] = .@style_name$;
+	$CloneStyle_SourceName$[.@slot] = strcharinfo(PC_NAME);
+	$CloneStyle_Class[.@slot] = Class;
+	$CloneStyle_Sex[.@slot] = Sex;
+	$CloneStyle_Hair[.@slot] = getlook(LOOK_HAIR);
+	$CloneStyle_HairColor[.@slot] = getlook(LOOK_HAIR_COLOR);
+	$CloneStyle_ClothColor[.@slot] = getlook(LOOK_CLOTHES_COLOR);
+	$CloneStyle_HeadTop[.@slot] = getlook(LOOK_HEAD_TOP);
+	$CloneStyle_HeadMid[.@slot] = getlook(LOOK_HEAD_MID);
+	$CloneStyle_HeadBottom[.@slot] = getlook(LOOK_HEAD_BOTTOM);
+	$CloneStyle_Weapon[.@slot] = getlook(LOOK_WEAPON);
+	$CloneStyle_Shield[.@slot] = getlook(LOOK_SHIELD);
+	$CloneStyle_Robe[.@slot] = getlook(LOOK_ROBE);
+	$CloneStyle_Body2[.@slot] = getlook(LOOK_BODY2);
+	return;
+
+S_ClearStyle:
+	.@slot = getarg(0);
+
+	$CloneStyle_Saved[.@slot] = 0;
+	$CloneStyle_Name$[.@slot] = "";
+	$CloneStyle_SourceName$[.@slot] = "";
+	$CloneStyle_Class[.@slot] = 0;
+	$CloneStyle_Sex[.@slot] = 0;
+	$CloneStyle_Hair[.@slot] = 0;
+	$CloneStyle_HairColor[.@slot] = 0;
+	$CloneStyle_ClothColor[.@slot] = 0;
+	$CloneStyle_HeadTop[.@slot] = 0;
+	$CloneStyle_HeadMid[.@slot] = 0;
+	$CloneStyle_HeadBottom[.@slot] = 0;
+	$CloneStyle_Weapon[.@slot] = 0;
+	$CloneStyle_Shield[.@slot] = 0;
+	$CloneStyle_Robe[.@slot] = 0;
+	$CloneStyle_Body2[.@slot] = 0;
+	return;
+
+S_ShowStyles:
+	mes "[Enregistreur Clone]";
+	for (.@i = 1; .@i <= 3; .@i++) {
+		if ($CloneStyle_Saved[.@i]) {
+			mes "Slot " + .@i + ": " + $CloneStyle_Name$[.@i];
+			mes "  Source: " + $CloneStyle_SourceName$[.@i];
+			mes "  Classe: " + jobname($CloneStyle_Class[.@i]);
+		} else {
+			mes "Slot " + .@i + ": vide";
+		}
+	}
+	return;
+}
+
+function	script	F_ApplyCloneStyle	{
+	.@gid = getarg(0);
+	.@slot = getarg(1);
+
+	if (.@gid <= 0)
+		return 0;
+	if (.@slot < 1 || .@slot > 3)
+		return 0;
+	if (!$CloneStyle_Saved[.@slot])
+		return 0;
+
+	setunitdata(.@gid, UDT_CLASS, $CloneStyle_Class[.@slot]);
+	setunitdata(.@gid, UDT_SEX, $CloneStyle_Sex[.@slot]);
+	setunitdata(.@gid, UDT_HAIRSTYLE, $CloneStyle_Hair[.@slot]);
+	setunitdata(.@gid, UDT_HAIRCOLOR, $CloneStyle_HairColor[.@slot]);
+	setunitdata(.@gid, UDT_CLOTHCOLOR, $CloneStyle_ClothColor[.@slot]);
+	setunitdata(.@gid, UDT_HEADTOP, $CloneStyle_HeadTop[.@slot]);
+	setunitdata(.@gid, UDT_HEADMIDDLE, $CloneStyle_HeadMid[.@slot]);
+	setunitdata(.@gid, UDT_HEADBOTTOM, $CloneStyle_HeadBottom[.@slot]);
+	setunitdata(.@gid, UDT_WEAPON, $CloneStyle_Weapon[.@slot]);
+	setunitdata(.@gid, UDT_SHIELD, $CloneStyle_Shield[.@slot]);
+	setunitdata(.@gid, UDT_ROBE, $CloneStyle_Robe[.@slot]);
+	setunitdata(.@gid, UDT_BODY2, $CloneStyle_Body2[.@slot]);
+	return 1;
+}
