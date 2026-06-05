@@ -32,7 +32,7 @@ function	script	F_FarmPrototype_Click	{
 		end;
 
 	.Hits = 0;
-	specialeffect EF_SMOKE;
+	specialeffect EF_HEALSP;
 	makeitem 7201, 1, "prontera", .@x, .@y, 1;
 	movenpc(strnpcinfo(NPC_NAME),1,1,4);
 	disablenpc(strnpcinfo(NPC_NAME));
