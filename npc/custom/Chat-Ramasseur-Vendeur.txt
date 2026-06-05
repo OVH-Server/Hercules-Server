@@ -1,3 +1,5 @@
+// Collector Cat disabled on request.
+/*
 //===== Hercules Script ======================================
 // Collector Cat Vendor
 //
@@ -186,3 +188,4 @@ OnTimer10000:
 	initnpctimer;
 	end;
 }
+*/
