@@ -12,15 +12,22 @@ OnInit:
 
 	setunitdata(.villager1_gid, UDT_SPEED, 120);
 	setunitdata(.villager2_gid, UDT_SPEED, 120);
-	setunitdata(.villager1_gid, UDT_MODE, MD_CANMOVE|MD_NOKNOCKBACK);
-	setunitdata(.villager2_gid, UDT_MODE, MD_CANMOVE|MD_NOKNOCKBACK);
+	setunitdata(.villager1_gid, UDT_MODE, MD_NOKNOCKBACK);
+	setunitdata(.villager2_gid, UDT_MODE, MD_NOKNOCKBACK);
 
 	initnpctimer;
 	end;
 
 OnTimer1000:
+	setunitdata(.villager1_gid, UDT_MODE, MD_CANMOVE|MD_NOKNOCKBACK);
+	setunitdata(.villager2_gid, UDT_MODE, MD_CANMOVE|MD_NOKNOCKBACK);
 	unitwalk(.villager1_gid, 163, 185);
 	unitwalk(.villager2_gid, 155, 160);
+	end;
+
+OnTimer1020:
+	setunitdata(.villager1_gid, UDT_MODE, MD_NOKNOCKBACK);
+	setunitdata(.villager2_gid, UDT_MODE, MD_NOKNOCKBACK);
 	end;
 
 OnTimer6200:
@@ -28,7 +35,12 @@ OnTimer6200:
 	end;
 
 OnTimer7600:
+	setunitdata(.villager1_gid, UDT_MODE, MD_CANMOVE|MD_NOKNOCKBACK);
 	unitwalk(.villager1_gid, 163, 164);
+	end;
+
+OnTimer7620:
+	setunitdata(.villager1_gid, UDT_MODE, MD_NOKNOCKBACK);
 	end;
 
 OnTimer10100:
@@ -36,7 +48,12 @@ OnTimer10100:
 	end;
 
 OnTimer11500:
+	setunitdata(.villager2_gid, UDT_MODE, MD_CANMOVE|MD_NOKNOCKBACK);
 	unitwalk(.villager2_gid, 163, 160);
+	end;
+
+OnTimer11520:
+	setunitdata(.villager2_gid, UDT_MODE, MD_NOKNOCKBACK);
 	end;
 
 OnTimer12800:
@@ -44,7 +61,12 @@ OnTimer12800:
 	end;
 
 OnTimer14200:
+	setunitdata(.villager1_gid, UDT_MODE, MD_CANMOVE|MD_NOKNOCKBACK);
 	unitwalk(.villager1_gid, 163, 185);
+	end;
+
+OnTimer14220:
+	setunitdata(.villager1_gid, UDT_MODE, MD_NOKNOCKBACK);
 	end;
 
 OnTimer20100:
@@ -52,7 +74,12 @@ OnTimer20100:
 	end;
 
 OnTimer21500:
+	setunitdata(.villager2_gid, UDT_MODE, MD_CANMOVE|MD_NOKNOCKBACK);
 	unitwalk(.villager2_gid, 155, 160);
+	end;
+
+OnTimer21520:
+	setunitdata(.villager2_gid, UDT_MODE, MD_NOKNOCKBACK);
 	end;
 
 OnTimer23200:
@@ -111,15 +138,23 @@ function	script	F_VillageoisMoovingTalk	{
 	close2;
 
 	if (.@which == 1) {
-		if (distance(.@mob_pos[1], .@mob_pos[2], 163, 185) < distance(.@mob_pos[1], .@mob_pos[2], 163, 164))
+		if (distance(.@mob_pos[1], .@mob_pos[2], 163, 185) < distance(.@mob_pos[1], .@mob_pos[2], 163, 164)) {
+			setunitdata(.@gid, UDT_MODE, MD_CANMOVE|MD_NOKNOCKBACK);
 			unitwalk(.@gid, 163, 164);
-		else
+		} else {
+			setunitdata(.@gid, UDT_MODE, MD_CANMOVE|MD_NOKNOCKBACK);
 			unitwalk(.@gid, 163, 185);
+		}
 	} else {
-		if (distance(.@mob_pos[1], .@mob_pos[2], 155, 160) < distance(.@mob_pos[1], .@mob_pos[2], 163, 160))
+		if (distance(.@mob_pos[1], .@mob_pos[2], 155, 160) < distance(.@mob_pos[1], .@mob_pos[2], 163, 160)) {
+			setunitdata(.@gid, UDT_MODE, MD_CANMOVE|MD_NOKNOCKBACK);
 			unitwalk(.@gid, 163, 160);
-		else
+		} else {
+			setunitdata(.@gid, UDT_MODE, MD_CANMOVE|MD_NOKNOCKBACK);
 			unitwalk(.@gid, 155, 160);
+		}
 	}
+	sleep2 20;
+	setunitdata(.@gid, UDT_MODE, MD_NOKNOCKBACK);
 	return;
 }
