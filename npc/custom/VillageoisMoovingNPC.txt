@@ -15,7 +15,7 @@ prontera,163,164,0	script	Villageois Marchand#prt	4028,{
 	end;
 
 OnInit:
-	npcspeed 100;
+	npcspeed 180;
 	initnpctimer;
 	end;
 
@@ -23,19 +23,11 @@ OnTimer1000:
 	npcwalkto 163,185;
 	end;
 
-OnTimer6500:
-	npcwalkto 163,185;
-	end;
-
-OnTimer8000:
+OnTimer7500:
 	npcwalkto 163,164;
 	end;
 
-OnTimer13500:
-	npcwalkto 163,164;
-	end;
-
-OnTimer15000:
+OnTimer14000:
 	stopnpctimer;
 	setnpctimer 0;
 	initnpctimer;
@@ -56,7 +48,7 @@ prontera,163,160,6	script	Villageois Marchand#prt2	5,{
 	end;
 
 OnInit:
-	npcspeed 100;
+	npcspeed 180;
 	initnpctimer;
 	end;
 
@@ -64,19 +56,11 @@ OnTimer1000:
 	npcwalkto 155,160;
 	end;
 
-OnTimer4500:
-	npcwalkto 155,160;
-	end;
-
-OnTimer6000:
+OnTimer5000:
 	npcwalkto 163,160;
 	end;
 
-OnTimer9500:
-	npcwalkto 163,160;
-	end;
-
-OnTimer11000:
+OnTimer9000:
 	stopnpctimer;
 	setnpctimer 0;
 	initnpctimer;
