@@ -23,7 +23,7 @@ function	script	F_FarmPrototype_Click	{
 	end;
 }
 
-prontera,163,149,4	script	#Plant1	4_CREEPER,{
+prontera,163,149,4	script	Plant 1#farm01	4_CREEPER,{
 	callfunc "F_FarmPrototype_Click",163,149;
 
 OnInit:
@@ -31,7 +31,7 @@ OnInit:
 	end;
 }
 
-prontera,163,146,4	script	#Plant2	1816,{
+prontera,163,146,4	script	Plant 2#farm02	1816,{
 	callfunc "F_FarmPrototype_Click",163,146;
 
 OnInit:
@@ -39,7 +39,7 @@ OnInit:
 	end;
 }
 
-prontera,163,143,4	script	#Plant3	4_BLUE_FLOWER,{
+prontera,163,143,4	script	Plant 3#farm03	4_BLUE_FLOWER,{
 	callfunc "F_FarmPrototype_Click",163,143;
 
 OnInit:
@@ -47,7 +47,7 @@ OnInit:
 	end;
 }
 
-prontera,159,143,4	script	#Minage1	1908,{
+prontera,159,143,4	script	Minage 1#farm04	1908,{
 	callfunc "F_FarmPrototype_Click",159,143;
 
 OnInit:
@@ -55,7 +55,7 @@ OnInit:
 	end;
 }
 
-prontera,159,149,4	script	#ArcheologieProto1	2_MONEMUS,{
+prontera,159,149,4	script	Archeologie proto 1#farm05	2_MONEMUS,{
 	callfunc "F_FarmPrototype_Click",159,149;
 
 OnInit:
@@ -63,7 +63,7 @@ OnInit:
 	end;
 }
 
-prontera,159,147,4	script	#Archeologie2	4_CRACK,{
+prontera,159,147,4	script	Archeologie 2#farm06	4_CRACK,{
 	callfunc "F_FarmPrototype_Click",159,147;
 
 OnInit:
@@ -71,7 +71,7 @@ OnInit:
 	end;
 }
 
-prontera,157,147,4	script	#Box1	4_STAR_BOX_CRT1,{
+prontera,157,147,4	script	Box 1#farm07	4_STAR_BOX_CRT1,{
 	callfunc "F_FarmPrototype_Click",157,147;
 
 OnInit:
@@ -79,7 +79,7 @@ OnInit:
 	end;
 }
 
-prontera,155,147,4	script	#Box2	10404,{
+prontera,155,147,4	script	Box 2#farm08	10404,{
 	callfunc "F_FarmPrototype_Click",155,147;
 
 OnInit:
