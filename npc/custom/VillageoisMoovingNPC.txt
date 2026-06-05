@@ -112,11 +112,10 @@ OnTouch:
 	end;
 }
 
--	script	VillageoisMoovingScanner	-1,{
+prontera,160,170,0	script	VillageoisMoovingScanner	HIDDEN_WARP_NPC,{
 	end;
 
 OnInit:
-	sleep 1000;
 	initnpctimer;
 	end;
 
@@ -151,6 +150,7 @@ function	script	F_VillageoisMoovingScan	{
 			continue;
 		}
 
+		dispbottom "[Villageois] Scanner actif.";
 		getmapxy(.@map$, .@pc_x, .@pc_y, UNITTYPE_PC);
 		if (.@map$ == "prontera" && .@gid1 > 0 && distance(.@pc_x, .@pc_y, .@mob1_pos[1], .@mob1_pos[2]) <= 5) {
 			@VillageoisMoovingDelay = gettimetick(2) + 8;
