@@ -55,8 +55,10 @@ prontera,161,160,4	script	Valkyrie of Destiny	4_F_VALKYRIE,{
 		Faction = 1;
 		mes "[Valkyrie of Destiny]";
 		mes "Your faction is now Angel.";
-		mes "Come back to travel to Yuno.";
-		close;
+		mes "I will send you to Yuno.";
+		close2;
+		warp "yuno",157,51;
+		end;
 	}
 
 	mes "You chose the Demon faction.";
@@ -68,6 +70,72 @@ prontera,161,160,4	script	Valkyrie of Destiny	4_F_VALKYRIE,{
 	Faction = 2;
 	mes "[Valkyrie of Destiny]";
 	mes "Your faction is now Demon.";
-	mes "Come back to travel to Niflheim.";
-	close;
+	mes "I will send you to Niflheim.";
+	close2;
+	warp "niflheim",193,182;
+	end;
+}
+
+yuno,160,53,4	script	Angel Mascot Valkyrie	4_F_VALKYRIE,{
+	mes "[Angel Mascot Valkyrie]";
+
+	if (Faction != 1) {
+		mes "This mascot is reserved for the Angel faction.";
+		close;
+	}
+
+	if (getpetinfo(PETINFO_ID) > 0) {
+		mes "Your pet is already with you.";
+		close;
+	}
+
+	mes "I can give you your Angel mascot.";
+	next;
+
+	if (select("Recover Angel mascot:Cancel") == 2)
+		close;
+
+	if (!AngelMascotClaimed) {
+		makepet(1002);
+		AngelMascotClaimed = 1;
+	}
+
+	mes "[Angel Mascot Valkyrie]";
+	mes "Your mascot is ready.";
+	mes "Choose the egg in the pet window to hatch it.";
+	close2;
+	bpet;
+	end;
+}
+
+niflheim,193,184,4	script	Demon Mascot Valkyrie	4_F_VALKYRIE,{
+	mes "[Demon Mascot Valkyrie]";
+
+	if (Faction != 2) {
+		mes "This mascot is reserved for the Demon faction.";
+		close;
+	}
+
+	if (getpetinfo(PETINFO_ID) > 0) {
+		mes "Your pet is already with you.";
+		close;
+	}
+
+	mes "I can give you your Demon mascot.";
+	next;
+
+	if (select("Recover Demon mascot:Cancel") == 2)
+		close;
+
+	if (!DemonMascotClaimed) {
+		makepet(1011);
+		DemonMascotClaimed = 1;
+	}
+
+	mes "[Demon Mascot Valkyrie]";
+	mes "Your mascot is ready.";
+	mes "Choose the egg in the pet window to hatch it.";
+	close2;
+	bpet;
+	end;
 }

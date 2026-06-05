@@ -120,29 +120,27 @@ S_AddStock:
 S_ScanAcceptedItems:
 	.FoundCount = 0;
 
-	for (.@range = 0; .@range < .ScanRangeCount; .@range++) {
-		for (.@id = .ScanMin[.@range]; .@id <= .ScanMax[.@range]; .@id++) {
-			.@type = getiteminfo(.@id, ITEMINFO_TYPE);
-			.@accepted = 0;
+	for (.@id = .ScanMin; .@id <= .ScanMax; .@id++) {
+		.@type = getiteminfo(.@id, ITEMINFO_TYPE);
+		.@accepted = 0;
 
-			if (.@type == IT_ETC)
-				.@accepted = 1;
-			if (.@type == IT_HEALING || .@type == IT_USABLE || .@type == IT_DELAYCONSUME || .@type == IT_CASH)
-				.@accepted = 1;
-			if (.@type == IT_WEAPON || .@type == IT_ARMOR)
-				.@accepted = 1;
+		if (.@type == IT_ETC)
+			.@accepted = 1;
+		if (.@type == IT_HEALING || .@type == IT_USABLE || .@type == IT_DELAYCONSUME || .@type == IT_CASH)
+			.@accepted = 1;
+		if (.@type == IT_WEAPON || .@type == IT_ARMOR)
+			.@accepted = 1;
 
-			if (!.@accepted)
-				continue;
+		if (!.@accepted)
+			continue;
 
-			.@amount = getareadropitem(.HomeMap$,.ScanX1,.ScanY1,.ScanX2,.ScanY2,.@id);
+		.@amount = getareadropitem(.HomeMap$,.ScanX1,.ScanY1,.ScanX2,.ScanY2,.@id);
 
-			if (.@amount <= 0)
-				continue;
+		if (.@amount <= 0)
+			continue;
 
-			callsub S_AddStock,.@id,.@amount;
-			.FoundCount += .@amount;
-		}
+		callsub S_AddStock,.@id,.@amount;
+		.FoundCount += .@amount;
 	}
 	return;
 
@@ -157,10 +155,8 @@ OnInit:
 	.MaxStock = 200;
 	.StockCount = 0;
 	.Busy = 0;
-
-	setarray .ScanMin[0], 501, 700, 1101, 2101, 4001, 5001, 7001, 10001, 12000, 13000, 15000, 18000, 22000, 25000;
-	setarray .ScanMax[0], 699, 1099, 1999, 2999, 4999, 5999, 7999, 11999, 12999, 14999, 17999, 21999, 24999, 32767;
-	.ScanRangeCount = getarraysize(.ScanMin);
+	.ScanMin = 501;
+	.ScanMax = 32767;
 
 	movenpc "Collector Cat",.HomeX,.HomeY,4;
 	initnpctimer;
@@ -184,8 +180,9 @@ S_CollectGroundItems:
 	.Busy = 0;
 	return;
 
-OnTimer5000:
+OnTimer10000:
 	callsub S_CollectGroundItems;
+	setnpctimer 0;
 	initnpctimer;
 	end;
 }

@@ -4,17 +4,11 @@
 
 prontera,159,154,4	script	Harvest Master	4_F_VALKYRIE,{
 	mes "[Harvest Master]";
-	mes "The harvest tree and plant nearby are attackable test resources.";
 	mes "The prototypes keep their visual test skins.";
-	mes "No profession or distance check is required.";
 	close;
 }
 
-prontera,163,149,4	script	Farm Proto Creeper#farm01	4_CREEPER,{
-	mes "[Farm Prototype]";
-	mes "Skin: 4_CREEPER";
-	close;
-}
+prontera,163,149,4	monster	Farm Proto Creeper	2249,1,0,0
 
 prontera,163,146,4	script	Farm Proto Gourd#farm02	1816,{
 	mes "[Farm Prototype]";
@@ -38,46 +32,4 @@ prontera,159,146,4	script	Farm Proto Soil#farm05	4_SOIL,{
 	mes "[Farm Prototype]";
 	mes "Skin: 4_SOIL";
 	close;
-}
-
--	script	Farm Resources	FAKE_NPC,{
-	end;
-
-OnInit:
-	.TreeMap$ = "prontera";
-	.TreeX = 163;
-	.TreeY = 154;
-	.PlantMap$ = "prontera";
-	.PlantX = 163;
-	.PlantY = 152;
-	.TreeMob = 35000;
-	.PlantMob = 35001;
-	.RespawnDelay = 3000;
-
-	killmonster .TreeMap$, strnpcinfo(NPC_NAME) + "::OnTreeDead";
-	killmonster .PlantMap$, strnpcinfo(NPC_NAME) + "::OnPlantDead";
-
-	callsub S_SpawnTree;
-	callsub S_SpawnPlant;
-	end;
-
-S_SpawnTree:
-	monster .TreeMap$, .TreeX, .TreeY, "Harvest Tree", .TreeMob, 1, strnpcinfo(NPC_NAME) + "::OnTreeDead";
-	return;
-
-S_SpawnPlant:
-	monster .PlantMap$, .PlantX, .PlantY, "Harvest Plant", .PlantMob, 1, strnpcinfo(NPC_NAME) + "::OnPlantDead";
-	return;
-
-OnTreeDead:
-	makeitem 7201, 1, .TreeMap$, .TreeX, .TreeY, 1;
-	sleep .RespawnDelay;
-	callsub S_SpawnTree;
-	end;
-
-OnPlantDead:
-	makeitem 7872, 1, .PlantMap$, .PlantX, .PlantY, 1;
-	sleep .RespawnDelay;
-	callsub S_SpawnPlant;
-	end;
 }
