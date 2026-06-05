@@ -3,7 +3,7 @@
 // Gives 10,000 Zeny and 1 random headgear once per server day.
 //============================================================
 
-prontera,158,176,4	script	Daily Reward	4_VENDING_MACHINE,{
+prontera,159,176,4	script	Daily Reward	4_VENDING_MACHINE,{
 	mes "[Daily Reward]";
 
 	.@today = gettimetick(2) / 86400;
