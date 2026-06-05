@@ -1,0 +1,84 @@
+// Villageois mobile - Prontera
+// Fait des allers-retours entre prt 163,164 et prt 163,185.
+
+prontera,163,164,0	script	Villageois Marchand#prt	4028,{
+	stopnpctimer;
+	npcstop;
+
+	mes "[Villageois]";
+	mes "Tu veux quoi ?";
+	sleep2 1500;
+	close2;
+
+	setnpctimer 0;
+	initnpctimer;
+	end;
+
+OnInit:
+	npcspeed 100;
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	npcwalkto 163,185;
+	end;
+
+OnTimer6500:
+	npcwalkto 163,185;
+	end;
+
+OnTimer8000:
+	npcwalkto 163,164;
+	end;
+
+OnTimer13500:
+	npcwalkto 163,164;
+	end;
+
+OnTimer15000:
+	stopnpctimer;
+	setnpctimer 0;
+	initnpctimer;
+	end;
+}
+
+prontera,163,160,6	script	Villageois Marchand#prt2	5,{
+	stopnpctimer;
+	npcstop;
+
+	mes "[Villageois]";
+	mes "Tu veux quoi ?";
+	sleep2 1500;
+	close2;
+
+	setnpctimer 0;
+	initnpctimer;
+	end;
+
+OnInit:
+	npcspeed 100;
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	npcwalkto 155,160;
+	end;
+
+OnTimer4500:
+	npcwalkto 155,160;
+	end;
+
+OnTimer6000:
+	npcwalkto 163,160;
+	end;
+
+OnTimer9500:
+	npcwalkto 163,160;
+	end;
+
+OnTimer11000:
+	stopnpctimer;
+	setnpctimer 0;
+	initnpctimer;
+	end;
+}
