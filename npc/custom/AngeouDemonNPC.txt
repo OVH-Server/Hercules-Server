@@ -5,7 +5,7 @@
 // Faction: 0 = none, 1 = Angel, 2 = Demon
 //============================================================
 
-prontera,161,160,4	script	Valkyrie of Destiny	4_F_VALKYRIE,{
+prontera,163,167,4	script	Valkyrie of Destiny	4_F_VALKYRIE,{
 	mes "[Valkyrie of Destiny]";
 
 	if (Faction == 1) {

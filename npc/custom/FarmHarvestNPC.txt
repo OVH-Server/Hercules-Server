@@ -8,110 +8,81 @@ prontera,159,154,4	script	Harvest Master	4_F_VALKYRIE,{
 	close;
 }
 
-prontera,163,149,4	script	Farm Proto Creeper#farm01	4_CREEPER,{
-	getmapxy .@map$, .@x, .@y, UNITTYPE_PC;
-	if (.@map$ != "prontera" || distance(.@x,.@y,163,149) > 2)
-		close;
+function	script	F_FarmPrototype_Click	{
+	.@x = getarg(0);
+	.@y = getarg(1);
 
-	.Hits++;
-	mes "[Farm Prototype]";
-	mes "Progress: " + .Hits + "/" + .NeedClicks;
+	getmapxy .@map$, .@pc_x, .@pc_y, UNITTYPE_PC;
+	if (.@map$ != "prontera" || distance(.@pc_x,.@pc_y,.@x,.@y) > 2)
+		end;
 
-	if (.Hits < .NeedClicks)
-		close;
-
-	.Hits = 0;
-	makeitem 7201, 1, "prontera", 163, 149, 1;
-	close2;
+	makeitem 7201, 1, "prontera", .@x, .@y, 1;
 	disablenpc strnpcinfo(NPC_NAME);
 	sleep 10000;
 	enablenpc strnpcinfo(NPC_NAME);
 	end;
+}
+
+prontera,163,149,4	script	#Plant1	4_CREEPER,{
+	callfunc "F_FarmPrototype_Click",163,149;
 
 OnInit:
-	.Hits = 0;
-	.NeedClicks = 1;
 	setnpcdistance 2;
 	end;
 }
 
-prontera,163,146,4	script	Farm Proto Gourd#farm02	1816,{
-	getmapxy .@map$, .@x, .@y, UNITTYPE_PC;
-	if (.@map$ != "prontera" || distance(.@x,.@y,163,146) > 2)
-		close;
-
-	.Hits++;
-	mes "[Farm Prototype]";
-	mes "Progress: " + .Hits + "/" + .NeedClicks;
-
-	if (.Hits < .NeedClicks)
-		close;
-
-	.Hits = 0;
-	makeitem 7201, 1, "prontera", 163, 146, 1;
-	close2;
-	disablenpc strnpcinfo(NPC_NAME);
-	sleep 10000;
-	enablenpc strnpcinfo(NPC_NAME);
-	end;
+prontera,163,146,4	script	#Plant2	1816,{
+	callfunc "F_FarmPrototype_Click",163,146;
 
 OnInit:
-	.Hits = 0;
-	.NeedClicks = 3;
 	setnpcdistance 2;
 	end;
 }
 
-prontera,163,143,4	script	Farm Proto Blue Flower#farm03	4_BLUE_FLOWER,{
-	getmapxy .@map$, .@x, .@y, UNITTYPE_PC;
-	if (.@map$ != "prontera" || distance(.@x,.@y,163,143) > 2)
-		close;
-
-	.Hits++;
-	mes "[Farm Prototype]";
-	mes "Progress: " + .Hits + "/" + .NeedClicks;
-
-	if (.Hits < .NeedClicks)
-		close;
-
-	.Hits = 0;
-	makeitem 7201, 1, "prontera", 163, 143, 1;
-	close2;
-	disablenpc strnpcinfo(NPC_NAME);
-	sleep 10000;
-	enablenpc strnpcinfo(NPC_NAME);
-	end;
+prontera,163,143,4	script	#Plant3	4_BLUE_FLOWER,{
+	callfunc "F_FarmPrototype_Click",163,143;
 
 OnInit:
-	.Hits = 0;
-	.NeedClicks = 5;
 	setnpcdistance 2;
 	end;
 }
 
-prontera,159,143,4	script	Farm Proto Emperium#farm04	1908,{
-	getmapxy .@map$, .@x, .@y, UNITTYPE_PC;
-	if (.@map$ != "prontera" || distance(.@x,.@y,159,143) > 2)
-		close;
-
-	.Hits++;
-	mes "[Farm Prototype]";
-	mes "Progress: " + .Hits + "/" + .NeedClicks;
-
-	if (.Hits < .NeedClicks)
-		close;
-
-	.Hits = 0;
-	makeitem 7201, 1, "prontera", 159, 143, 1;
-	close2;
-	disablenpc strnpcinfo(NPC_NAME);
-	sleep 10000;
-	enablenpc strnpcinfo(NPC_NAME);
-	end;
+prontera,159,143,4	script	#Minage1	1908,{
+	callfunc "F_FarmPrototype_Click",159,143;
 
 OnInit:
-	.Hits = 0;
-	.NeedClicks = 10;
+	setnpcdistance 2;
+	end;
+}
+
+prontera,159,149,4	script	#ArcheologieProto1	2_MONEMUS,{
+	callfunc "F_FarmPrototype_Click",159,149;
+
+OnInit:
+	setnpcdistance 2;
+	end;
+}
+
+prontera,159,147,4	script	#Archeologie2	4_CRACK,{
+	callfunc "F_FarmPrototype_Click",159,147;
+
+OnInit:
+	setnpcdistance 2;
+	end;
+}
+
+prontera,157,147,4	script	#Box1	4_STAR_BOX_CRT1,{
+	callfunc "F_FarmPrototype_Click",157,147;
+
+OnInit:
+	setnpcdistance 2;
+	end;
+}
+
+prontera,155,147,4	script	#Box2	10404,{
+	callfunc "F_FarmPrototype_Click",155,147;
+
+OnInit:
 	setnpcdistance 2;
 	end;
 }

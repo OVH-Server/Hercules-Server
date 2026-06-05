@@ -49,31 +49,44 @@ prontera,159,167,4	script	Valkyrie Tuto 2	4_F_VALKYRIE,{
 	mes "Perfect. The merchant is coming to pick you up.";
 	close2;
 
-	.@taxi_gid = getnpcid("Merchant Taxi#tuto2");
 	setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, true);
-	setunitdata(.@taxi_gid, UDT_SPEED, 70);
-	unitwalk(.@taxi_gid, .@pc_x, .@pc_y);
-	unittalk(.@taxi_gid, "I am coming, do not move!");
-	sleep2 1200;
-	unittalk(.@taxi_gid, "Hop in, we are leaving now!");
+	movenpc "Merchant Taxi#tuto2",160,167,4;
+	unittalk(getnpcid("Merchant Taxi#tuto2"), "Hop in, follow me!");
+	sleep2 600;
 
-	callsub S_RideStep, 160,170, 160,169, 650;
-	callsub S_RideStep, 159,173, 159,172, 650;
-	callsub S_RideStep, 158,176, 158,175, 650;
-	callsub S_RideStep, 157,179, 157,178, 650;
-	callsub S_RideStep, 156,182, 156,181, 650;
-	callsub S_RideStep, 155,185, 155,184, 650;
-	callsub S_RideStep, 155,188, 155,187, 650;
-	callsub S_RideStep, 155,190, 155,189, 650;
+	callsub S_RideStep, 160,168, 160,167, 350;
+	callsub S_RideStep, 160,169, 160,168, 350;
+	callsub S_RideStep, 160,170, 160,169, 350;
+	callsub S_RideStep, 159,171, 160,170, 350;
+	callsub S_RideStep, 159,172, 159,171, 350;
+	callsub S_RideStep, 159,173, 159,172, 350;
+	callsub S_RideStep, 158,174, 159,173, 350;
+	callsub S_RideStep, 158,175, 158,174, 350;
+	callsub S_RideStep, 158,176, 158,175, 350;
+	callsub S_RideStep, 157,177, 158,176, 350;
+	callsub S_RideStep, 157,178, 157,177, 350;
+	callsub S_RideStep, 157,179, 157,178, 350;
+	callsub S_RideStep, 156,180, 157,179, 350;
+	callsub S_RideStep, 156,181, 156,180, 350;
+	callsub S_RideStep, 156,182, 156,181, 350;
+	callsub S_RideStep, 155,183, 156,182, 350;
+	callsub S_RideStep, 155,184, 155,183, 350;
+	callsub S_RideStep, 155,185, 155,184, 350;
+	callsub S_RideStep, 155,186, 155,185, 350;
+	callsub S_RideStep, 155,187, 155,186, 350;
+	callsub S_RideStep, 155,188, 155,187, 350;
+	callsub S_RideStep, 155,189, 155,188, 350;
+	callsub S_RideStep, 155,190, 155,189, 350;
 	unitwalk(getcharid(CHAR_ID_ACCOUNT), 155, 190);
-	sleep2 650;
+	sleep2 500;
+	unittalk(getnpcid("Merchant Taxi#tuto2"), "We are here!");
 
 	Tuto2_State++;
 	completequest 65010;
 	erasequest 65010;
 	message strcharinfo(PC_NAME), "Main Quest Tuto 2: taxi ride complete. You can restart the quest whenever you want.";
 
-	unitwarp(.@taxi_gid, "prontera", 160, 167);
+	movenpc "Merchant Taxi#tuto2",160,167,4;
 	setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, false);
 	$Tuto2_TaxiBusy = 0;
 	end;
@@ -84,16 +97,14 @@ S_RideStep:
 	.@player_x = getarg(2);
 	.@player_y = getarg(3);
 	.@delay = getarg(4);
-	.@taxi_gid = getnpcid("Merchant Taxi#tuto2");
-
-	unitwalk(.@taxi_gid, .@taxi_x, .@taxi_y);
+	movenpc "Merchant Taxi#tuto2",.@taxi_x,.@taxi_y,4;
 	unitwalk(getcharid(CHAR_ID_ACCOUNT), .@player_x, .@player_y);
 	sleep2 .@delay;
 	return;
 
 OnPCLogoutEvent:
 	if ($Tuto2_TaxiBusy == getcharid(CHAR_ID_ACCOUNT)) {
-		unitwarp(getnpcid("Merchant Taxi#tuto2"), "prontera", 160, 167);
+		movenpc "Merchant Taxi#tuto2",160,167,4;
 		$Tuto2_TaxiBusy = 0;
 	}
 	end;
@@ -110,6 +121,7 @@ prontera,160,167,4	script	Merchant Taxi#tuto2	1_M_MERCHANT,{
 	close;
 
 OnInit:
+	movenpc "Merchant Taxi#tuto2",160,167,4;
 	setunitdata(getnpcid("Merchant Taxi#tuto2"), UDT_SPEED, 70);
 	end;
 }
