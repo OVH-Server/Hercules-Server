@@ -14,8 +14,6 @@ OnInit:
 	.StartY = 160;
 	.EndX = 172;
 	.EndY = 145;
-	.GoingToEnd = 1;
-	.MoveCooldown = 0;
 
 	.CloneGID = monster("prontera", .StartX, .StartY, "Villagers Cesar", 1002, 1, "CloneListeSlot1::OnCloneDead");
 	callfunc "F_ApplyCloneStyle", .CloneGID, .CloneSlot;
@@ -28,26 +26,15 @@ OnInit:
 	initnpctimer;
 	end;
 
-OnTimer250:
-	if (.CloneGID <= 0)
-		end;
-	if (.MoveCooldown > 0) {
-		.MoveCooldown--;
-		stopnpctimer;
-		setnpctimer 0;
-		initnpctimer;
-		end;
-	}
-	if (unitiswalking(.CloneGID) == 0) {
-		if (.GoingToEnd) {
-			setunitdata(.CloneGID, UDT_WALKTOXY, .EndX, .EndY);
-			.GoingToEnd = 0;
-		} else {
-			setunitdata(.CloneGID, UDT_WALKTOXY, .StartX, .StartY);
-			.GoingToEnd = 1;
-		}
-		.MoveCooldown = 2;
-	}
+OnTimer500:
+	setunitdata(.CloneGID, UDT_WALKTOXY, .EndX, .EndY);
+	end;
+
+OnTimer9500:
+	setunitdata(.CloneGID, UDT_WALKTOXY, .StartX, .StartY);
+	end;
+
+OnTimer18500:
 	stopnpctimer;
 	setnpctimer 0;
 	initnpctimer;
@@ -71,8 +58,6 @@ OnInit:
 	.StartY = 160;
 	.EndX = 175;
 	.EndY = 145;
-	.GoingToEnd = 1;
-	.MoveCooldown = 0;
 
 	.CloneGID = monster("prontera", .StartX, .StartY, "Merchant Moka", 1002, 1, "CloneListeSlot2::OnCloneDead");
 	callfunc "F_ApplyCloneStyle", .CloneGID, .CloneSlot;
@@ -85,26 +70,15 @@ OnInit:
 	initnpctimer;
 	end;
 
-OnTimer250:
-	if (.CloneGID <= 0)
-		end;
-	if (.MoveCooldown > 0) {
-		.MoveCooldown--;
-		stopnpctimer;
-		setnpctimer 0;
-		initnpctimer;
-		end;
-	}
-	if (unitiswalking(.CloneGID) == 0) {
-		if (.GoingToEnd) {
-			setunitdata(.CloneGID, UDT_WALKTOXY, .EndX, .EndY);
-			.GoingToEnd = 0;
-		} else {
-			setunitdata(.CloneGID, UDT_WALKTOXY, .StartX, .StartY);
-			.GoingToEnd = 1;
-		}
-		.MoveCooldown = 2;
-	}
+OnTimer500:
+	setunitdata(.CloneGID, UDT_WALKTOXY, .EndX, .EndY);
+	end;
+
+OnTimer9500:
+	setunitdata(.CloneGID, UDT_WALKTOXY, .StartX, .StartY);
+	end;
+
+OnTimer18500:
 	stopnpctimer;
 	setnpctimer 0;
 	initnpctimer;
