@@ -18,7 +18,8 @@ OnInit:
 	.CloneGID = monster("prontera", .StartX, .StartY, "Villagers Cesar", 1002, 1, "CloneListeSlot1::OnCloneDead");
 	callfunc "F_ApplyCloneStyle", .CloneGID, .CloneSlot;
 	setunitdata(.CloneGID, UDT_SPEED, 120);
-	setunitdata(.CloneGID, UDT_MODE, MD_NOKNOCKBACK);
+	setunitdata(.CloneGID, UDT_MODE, MD_CANMOVE|MD_NOKNOCKBACK);
+	setunitdata(.CloneGID, UDT_AI, AI_NONE);
 	setunitdata(.CloneGID, UDT_LOOKDIR, 0);
 
 	stopnpctimer;
@@ -62,7 +63,8 @@ OnInit:
 	.CloneGID = monster("prontera", .StartX, .StartY, "Merchant Moka", 1002, 1, "CloneListeSlot2::OnCloneDead");
 	callfunc "F_ApplyCloneStyle", .CloneGID, .CloneSlot;
 	setunitdata(.CloneGID, UDT_SPEED, 120);
-	setunitdata(.CloneGID, UDT_MODE, MD_NOKNOCKBACK);
+	setunitdata(.CloneGID, UDT_MODE, MD_CANMOVE|MD_NOKNOCKBACK);
+	setunitdata(.CloneGID, UDT_AI, AI_NONE);
 	setunitdata(.CloneGID, UDT_LOOKDIR, 0);
 
 	stopnpctimer;
@@ -88,5 +90,34 @@ OnCloneDead:
 	stopnpctimer;
 	setnpctimer 0;
 	donpcevent "CloneListeSlot2::OnInit";
+	end;
+}
+
+prontera,174,145,0	script	CloneEndTalkZones	FAKE_NPC,6,5,{
+OnTouch:
+	getmapxy(.@map$, .@x, .@y, UNITTYPE_PC);
+
+	.@cesar_dx = .@x - 172;
+	if (.@cesar_dx < 0)
+		.@cesar_dx = -.@cesar_dx;
+	.@cesar_dy = .@y - 145;
+	if (.@cesar_dy < 0)
+		.@cesar_dy = -.@cesar_dy;
+
+	.@moka_dx = .@x - 175;
+	if (.@moka_dx < 0)
+		.@moka_dx = -.@moka_dx;
+	.@moka_dy = .@y - 145;
+	if (.@moka_dy < 0)
+		.@moka_dy = -.@moka_dy;
+
+	if (.@cesar_dx <= 5 && .@cesar_dy <= 5 && (.@cesar_dx + .@cesar_dy) <= (.@moka_dx + .@moka_dy)) {
+		mes "TEST Cesar";
+		close;
+	}
+	if (.@moka_dx <= 5 && .@moka_dy <= 5) {
+		mes "TEST Moka";
+		close;
+	}
 	end;
 }
