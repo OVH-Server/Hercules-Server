@@ -18,7 +18,7 @@ OnInit:
 	.CloneGID = monster("prontera", .StartX, .StartY, "Villagers Cesar", 1002, 1, "CloneListeSlot1::OnCloneDead");
 	callfunc "F_ApplyCloneStyle", .CloneGID, .CloneSlot;
 	setunitdata(.CloneGID, UDT_SPEED, 120);
-	setunitdata(.CloneGID, UDT_MODE, MD_CANMOVE|MD_NOKNOCKBACK);
+	setunitdata(.CloneGID, UDT_MODE, MD_NOKNOCKBACK);
 	setunitdata(.CloneGID, UDT_LOOKDIR, 0);
 
 	stopnpctimer;
@@ -54,26 +54,15 @@ OnInit:
 	killmonster "prontera","CloneListeSlot2::OnCloneDead";
 
 	.CloneSlot = 2;
-	setarray .PathX[0], 175, 156, 156, 162, 162;
-	setarray .PathY[0], 160, 160, 179, 185, 182;
-	.PathCount = 5;
-	.PathIndex = 0;
-	.PathDir = 1;
+	.StartX = 175;
+	.StartY = 160;
+	.EndX = 175;
+	.EndY = 145;
 
-	.CloneGID = 0;
-	if ($CloneStyle_SourceCID[.CloneSlot] > 0)
-		.CloneGID = clone("prontera", .PathX[0], .PathY[0], "CloneListeSlot2::OnCloneDead", $CloneStyle_SourceCID[.CloneSlot], 0, MD_CANMOVE, 0, 0);
-	if (.CloneGID <= 0) {
-		.CloneGID = monster("prontera", .PathX[0], .PathY[0], "Merchant Moka", 1002, 1, "CloneListeSlot2::OnCloneDead");
-		callfunc "F_ApplyCloneStyle", .CloneGID, .CloneSlot;
-		if ($CloneStyle_SaveVersion[.CloneSlot] < 3)
-			setunitdata(.CloneGID, UDT_OPTIONS, getunitdata(.CloneGID, UDT_OPTIONS) | 0x00000008);
-	} else {
-		callfunc "F_ApplyCloneStyle", .CloneGID, .CloneSlot;
-	}
-	setunitname(.CloneGID, "Merchant Moka");
+	.CloneGID = monster("prontera", .StartX, .StartY, "Merchant Moka", 1002, 1, "CloneListeSlot2::OnCloneDead");
+	callfunc "F_ApplyCloneStyle", .CloneGID, .CloneSlot;
 	setunitdata(.CloneGID, UDT_SPEED, 120);
-	setunitdata(.CloneGID, UDT_MODE, MD_CANMOVE|MD_NOKNOCKBACK);
+	setunitdata(.CloneGID, UDT_MODE, MD_NOKNOCKBACK);
 	setunitdata(.CloneGID, UDT_LOOKDIR, 0);
 
 	stopnpctimer;
@@ -81,20 +70,15 @@ OnInit:
 	initnpctimer;
 	end;
 
-OnTimer100:
-	if (.CloneGID <= 0)
-		end;
-	if (!unitiswalking(.CloneGID)) {
-		.PathIndex += .PathDir;
-		if (.PathIndex >= .PathCount) {
-			.PathIndex = .PathCount - 2;
-			.PathDir = -1;
-		} else if (.PathIndex < 0) {
-			.PathIndex = 1;
-			.PathDir = 1;
-		}
-		setunitdata(.CloneGID, UDT_WALKTOXY, .PathX[.PathIndex], .PathY[.PathIndex]);
-	}
+OnTimer500:
+	setunitdata(.CloneGID, UDT_WALKTOXY, .EndX, .EndY);
+	end;
+
+OnTimer8000:
+	setunitdata(.CloneGID, UDT_WALKTOXY, .StartX, .StartY);
+	end;
+
+OnTimer15500:
 	stopnpctimer;
 	setnpctimer 0;
 	initnpctimer;
