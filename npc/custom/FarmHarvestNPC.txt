@@ -78,8 +78,54 @@ OnInit:
 	end;
 }
 
-prontera,159,143,4	script	Mining 1#farm05	1908,{
+prontera,163,137,4	script	Plant 5#farm00	10093,{
+	callfunc "F_FarmPrototype_Click",163,137,163,136,1;
+
+OnInit:
+	.Hits = 0;
+	setnpcdistance 2;
+	end;
+}
+
+prontera,163,134,4	script	Plant 6#farm00	10094,{
+	callfunc "F_FarmPrototype_Click",163,134,163,133,1;
+
+OnInit:
+	.Hits = 0;
+	setnpcdistance 2;
+	end;
+}
+
+
+prontera,159,143,4	script	Mining 1#farm00	1908,{
 	callfunc "F_FarmPrototype_Click",159,143,159,142,5;
+
+OnInit:
+	.Hits = 0;
+	setnpcdistance 2;
+	end;
+}
+
+prontera,159,140,4	script	Mining 2#farm00	10025,{
+	callfunc "F_FarmPrototype_Click",159,140,159,139,5;
+
+OnInit:
+	.Hits = 0;
+	setnpcdistance 2;
+	end;
+}
+
+prontera,159,137,4	script	Mining 3#farm00	10026,{
+	callfunc "F_FarmPrototype_Click",159,137,159,136,5;
+
+OnInit:
+	.Hits = 0;
+	setnpcdistance 2;
+	end;
+}
+
+prontera,157,143,4	script	Mining 4#farm00	1907,{
+	callfunc "F_FarmPrototype_Click",159,137,159,136,5;
 
 OnInit:
 	.Hits = 0;
@@ -141,7 +187,16 @@ OnInit:
 	end;
 }
 
-prontera,154,143,4	script	Box 1#farm	4_STAR_BOX_CRT1,{
+prontera,148,147,4	script	Archaeology 7#farm12	10308,{
+	callfunc "F_FarmPrototype_Click",148,147,148,146,5;
+
+OnInit:
+	.Hits = 0;
+	setnpcdistance 2;
+	end;
+}
+
+prontera,154,143,4	script	Box 1#farm13	4_STAR_BOX_CRT1,{
 	callfunc "F_FarmPrototype_Click",154,143,154,142,10;
 
 OnInit:
@@ -150,8 +205,17 @@ OnInit:
 	end;
 }
 
-prontera,154,140,4	script	Box 2#farm	10404,{
-	callfunc "F_FarmPrototype_Click",154,140,154,139,10;
+prontera,151,143,4	script	Box 2#farm14	10249,{
+	callfunc "F_FarmPrototype_Click",151,143,151,142,10;
+
+OnInit:
+	.Hits = 0;
+	setnpcdistance 2;
+	end;
+}
+
+prontera,151,140,4	script	Box 2#farm15	10250,{
+	callfunc "F_FarmPrototype_Click",151,140,151,139,10;
 
 OnInit:
 	.Hits = 0;
