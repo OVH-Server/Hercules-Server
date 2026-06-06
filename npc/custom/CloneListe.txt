@@ -1,6 +1,22 @@
 //===== Hercules Script ======================================
 //= Clone Liste
 //= Clones places depuis les styles enregistres in game.
+//=
+//= Principe pour reproduire ce systeme:
+//= 1) Chaque clone est un mob cree avec monster(), puis habille avec
+//=    F_ApplyCloneStyle(<GID>, <slot sauvegarde>).
+//= 2) Le deplacement reste volontairement simple: deux points seulement,
+//=    StartX/StartY et EndX/EndY, avec des timers fixes.
+//= 3) Ne pas utiliser MD_CANMOVE ici: sur ces mobs, cela peut declencher
+//=    du random walk. Le mode stable est MD_NOKNOCKBACK + AI_NONE.
+//= 4) Lorsqu'une interaction doit forcer le clone a venir au point final,
+//=    appeler OnInteractStart. Cela stoppe le timer et envoie le clone vers
+//=    EndX/EndY.
+//= 5) Apres fermeture de la fenetre de dialogue, appeler OnInteractEnd pour
+//=    relancer la boucle normale.
+//= 6) Pour ajouter un clone: dupliquer un bloc CloneListeSlotX, changer
+//=    CloneSlot, nom, StartX/StartY, EndX/EndY, puis ajouter la logique dans
+//=    CloneEndTalkZones si une interaction de proximite est souhaitee.
 //============================================================
 
 -	script	CloneListeSlot1	-1,{
@@ -112,6 +128,52 @@ OnCloneDead:
 	stopnpctimer;
 	setnpctimer 0;
 	donpcevent "CloneListeSlot2::OnInit";
+	end;
+}
+
+prontera,179,134,0	script	Training Post#CloneDS	1915,{
+	end;
+}
+
+-	script	CloneListeSlot3	-1,{
+	end;
+
+OnInit:
+	killmonster "prontera","CloneListeSlot3::OnCloneDead";
+
+	.CloneSlot = 3;
+	.CloneX = 174;
+	.CloneY = 134;
+	.DummyX = 179;
+	.DummyY = 134;
+	.DummyGID = getnpcid("Training Post#CloneDS");
+
+	.CloneGID = monster("prontera", .CloneX, .CloneY, "Hunter Spiach", 1002, 1, "CloneListeSlot3::OnCloneDead");
+	callfunc "F_ApplyCloneStyle", .CloneGID, .CloneSlot;
+	setunitdata(.CloneGID, UDT_SPEED, 120);
+	setunitdata(.CloneGID, UDT_MODE, MD_NOKNOCKBACK);
+	setunitdata(.CloneGID, UDT_AI, AI_NONE);
+	setunitdata(.CloneGID, UDT_LOOKDIR, 6);
+
+	stopnpctimer;
+	setnpctimer 0;
+	initnpctimer;
+	end;
+
+OnTimer1200:
+	if (.CloneGID > 0 && .DummyGID > 0) {
+		unitskilluseid(.CloneGID, AC_DOUBLE, 10, .DummyGID);
+		npcskilleffect(AC_DOUBLE, 10, .DummyX, .DummyY);
+	}
+	stopnpctimer;
+	setnpctimer 0;
+	initnpctimer;
+	end;
+
+OnCloneDead:
+	stopnpctimer;
+	setnpctimer 0;
+	donpcevent "CloneListeSlot3::OnInit";
 	end;
 }
 
