@@ -327,9 +327,11 @@ function	script	F_ApplyCloneLook	{
 	if ($CloneStyle_Cart[.@slot]) {
 		setunitdata(.@gid, UDT_OPTIONS, getunitdata(.@gid, UDT_OPTIONS) | max(0x00000008, $CloneStyle_CartOption[.@slot]));
 		sc_start(SC_PUSH_CART, 604800000, max(1, $CloneStyle_CartType[.@slot]), 10000, SCFLAG_NOAVOID, .@gid);
+		sc_start(SC_ON_PUSH_CART, 604800000, max(1, $CloneStyle_CartType[.@slot]), 10000, SCFLAG_NOAVOID, .@gid);
 	} else {
 		setunitdata(.@gid, UDT_OPTIONS, getunitdata(.@gid, UDT_OPTIONS) & ~0x00000788);
 		sc_end(SC_PUSH_CART, .@gid);
+		sc_end(SC_ON_PUSH_CART, .@gid);
 	}
 	if (getunittype(.@gid) == UNITTYPE_NPC) {
 		setunitdata(.@gid, UDT_ROBE, $CloneStyle_Robe[.@slot]);
