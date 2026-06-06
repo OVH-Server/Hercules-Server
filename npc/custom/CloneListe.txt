@@ -13,7 +13,7 @@ OnInit:
 	.StartX = 172;
 	.StartY = 160;
 	.EndX = 172;
-	.EndY = 152;
+	.EndY = 145;
 
 	.CloneGID = monster("prontera", .StartX, .StartY, "Villagers Cesar", 1002, 1, "CloneListeSlot1::OnCloneDead");
 	callfunc "F_ApplyCloneStyle", .CloneGID, .CloneSlot;
