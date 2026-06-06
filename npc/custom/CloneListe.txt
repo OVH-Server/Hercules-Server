@@ -41,6 +41,17 @@ OnTimer18500:
 	initnpctimer;
 	end;
 
+OnInteractStart:
+	stopnpctimer;
+	setunitdata(.CloneGID, UDT_WALKTOXY, .EndX, .EndY);
+	end;
+
+OnInteractEnd:
+	stopnpctimer;
+	setnpctimer 0;
+	initnpctimer;
+	end;
+
 OnCloneDead:
 	stopnpctimer;
 	setnpctimer 0;
@@ -86,6 +97,17 @@ OnTimer18500:
 	initnpctimer;
 	end;
 
+OnInteractStart:
+	stopnpctimer;
+	setunitdata(.CloneGID, UDT_WALKTOXY, .EndX, .EndY);
+	end;
+
+OnInteractEnd:
+	stopnpctimer;
+	setnpctimer 0;
+	initnpctimer;
+	end;
+
 OnCloneDead:
 	stopnpctimer;
 	setnpctimer 0;
@@ -112,12 +134,18 @@ OnTouch:
 		.@moka_dy = -.@moka_dy;
 
 	if (.@cesar_dx <= 5 && .@cesar_dy <= 5 && (.@cesar_dx + .@cesar_dy) <= (.@moka_dx + .@moka_dy)) {
+		donpcevent "CloneListeSlot1::OnInteractStart";
 		mes "TEST Cesar";
-		close;
+		close2;
+		donpcevent "CloneListeSlot1::OnInteractEnd";
+		end;
 	}
 	if (.@moka_dx <= 5 && .@moka_dy <= 5) {
+		donpcevent "CloneListeSlot2::OnInteractStart";
 		mes "TEST Moka";
-		close;
+		close2;
+		donpcevent "CloneListeSlot2::OnInteractEnd";
+		end;
 	}
 	end;
 }
