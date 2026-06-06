@@ -16,7 +16,8 @@ prontera,164,160,4	script	Clone System	1_M_01,{
 		.@menu = select("Enregistrer un style:Voir les styles:Effacer un style:Quitter");
 
 		if (.@menu == 1) {
-			.@slot = callsub S_SelectSlot;
+			callsub S_SelectSlot;
+			.@slot = .SelectedSlot;
 			if (.@slot == 0)
 				continue;
 
@@ -41,7 +42,8 @@ prontera,164,160,4	script	Clone System	1_M_01,{
 			callsub S_ShowStyles;
 			next;
 		} else if (.@menu == 3) {
-			.@slot = callsub S_SelectSlot;
+			callsub S_SelectSlot;
+			.@slot = .SelectedSlot;
 			if (.@slot == 0)
 				continue;
 
@@ -72,10 +74,10 @@ S_SelectSlot:
 	next;
 	.@choice = select("Slot 1:Slot 2:Slot 3:Slot 4:Slot 5:Slot 6:Slot 7:Slot 8:Slot 9:Slot 10:Retour");
 	if (.@choice == .MaxSlots + 1)
-		.@slot = 0;
+		.SelectedSlot = 0;
 	else
-		.@slot = .@choice;
-	return .@slot;
+		.SelectedSlot = .@choice;
+	return;
 
 S_SaveStyle:
 	.@slot = getarg(0);

@@ -2728,7 +2728,7 @@ new_1-3,96,174,3	script	Test Examiner#nv1::NovKeyman	4_M_03,{
 		mes "future. Bon voyage.";
 		close2;
 		warp "new_1-4",99,10;
-		return
+		return;
 		end;
 	case 2:
 		mes "[Keyman]";
