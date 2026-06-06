@@ -1,0 +1,41 @@
+//===== Hercules Script ======================================
+//= Clone Liste
+//= Clones places depuis les styles enregistres in game.
+//============================================================
+
+prontera,172,160,4	script	Clone Slot 1#walk01	1_M_01,{
+	mes "[Clone]";
+	mes "Je patrouille ici.";
+	close;
+
+OnInit:
+	.GID = getnpcid();
+	.CloneSlot = 1;
+	.StartX = 172;
+	.StartY = 160;
+	.EndX = 172;
+	.EndY = 152;
+
+	callfunc "F_ApplyCloneStyle", .GID, .CloneSlot;
+	setunitdata(.GID, UDT_SPEED, 120);
+	setunitdata(.GID, UDT_LOOKDIR, 0);
+
+	stopnpctimer;
+	setnpctimer 0;
+	initnpctimer;
+	end;
+
+OnTimer500:
+	setunitdata(.GID, UDT_WALKTOXY, .EndX, .EndY);
+	end;
+
+OnTimer2300:
+	setunitdata(.GID, UDT_WALKTOXY, .StartX, .StartY);
+	end;
+
+OnTimer4100:
+	stopnpctimer;
+	setnpctimer 0;
+	initnpctimer;
+	end;
+}
