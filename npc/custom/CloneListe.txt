@@ -17,7 +17,7 @@ OnInit:
 
 	.CloneGID = monster("prontera", .StartX, .StartY, "Villagers Cesar", 1002, 1, "CloneListeSlot1::OnCloneDead");
 	callfunc "F_ApplyCloneStyle", .CloneGID, .CloneSlot;
-	setunitdata(.CloneGID, UDT_SPEED, 120);
+	setunitdata(.CloneGID, UDT_SPEED, 140);
 	setunitdata(.CloneGID, UDT_MODE, MD_NOKNOCKBACK);
 	setunitdata(.CloneGID, UDT_LOOKDIR, 0);
 
@@ -61,7 +61,7 @@ OnInit:
 
 	.CloneGID = monster("prontera", .StartX, .StartY, "Merchant Moka", 1002, 1, "CloneListeSlot2::OnCloneDead");
 	callfunc "F_ApplyCloneStyle", .CloneGID, .CloneSlot;
-	setunitdata(.CloneGID, UDT_SPEED, 120);
+	setunitdata(.CloneGID, UDT_SPEED, 105);
 	setunitdata(.CloneGID, UDT_MODE, MD_NOKNOCKBACK);
 	setunitdata(.CloneGID, UDT_LOOKDIR, 0);
 
