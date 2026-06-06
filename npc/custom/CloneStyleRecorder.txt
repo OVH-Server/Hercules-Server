@@ -5,6 +5,9 @@
 //============================================================
 
 prontera,164,160,4	script	Clone System	1_M_01,{
+	if (.MaxSlots < 1)
+		.MaxSlots = 10;
+
 	mes "[Enregistreur Clone]";
 	mes "Je peux sauvegarder ta fiche actuelle dans " + .MaxSlots + " slots.";
 	next;
@@ -13,7 +16,7 @@ prontera,164,160,4	script	Clone System	1_M_01,{
 		.@menu = select("Enregistrer un style:Voir les styles:Effacer un style:Quitter");
 
 		if (.@menu == 1) {
-			callsub S_SelectSlot;
+			.@slot = callsub S_SelectSlot;
 			if (.@slot == 0)
 				continue;
 
@@ -38,7 +41,7 @@ prontera,164,160,4	script	Clone System	1_M_01,{
 			callsub S_ShowStyles;
 			next;
 		} else if (.@menu == 3) {
-			callsub S_SelectSlot;
+			.@slot = callsub S_SelectSlot;
 			if (.@slot == 0)
 				continue;
 
@@ -72,7 +75,7 @@ S_SelectSlot:
 		.@slot = 0;
 	else
 		.@slot = .@choice;
-	return;
+	return .@slot;
 
 S_SaveStyle:
 	.@slot = getarg(0);
