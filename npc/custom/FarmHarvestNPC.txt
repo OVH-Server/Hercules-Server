@@ -69,7 +69,7 @@ OnInit:
 	end;
 }
 
-prontera,163,140,4	script	Plant 4#farm03	10392,{
+prontera,163,140,4	script	Plant 4#farm04	10392,{
 	callfunc "F_FarmPrototype_Click",163,140,163,139,1;
 
 OnInit:
@@ -105,8 +105,8 @@ OnInit:
 	end;
 }
 
-prontera,157,147,4	script	Box 1#farm07	4_STAR_BOX_CRT1,{
-	callfunc "F_FarmPrototype_Click",157,147,157,146,10;
+prontera,154,143,4	script	Box 1#farm07	4_STAR_BOX_CRT1,{
+	callfunc "F_FarmPrototype_Click",154,143,154,142,10;
 
 OnInit:
 	.Hits = 0;
@@ -114,8 +114,8 @@ OnInit:
 	end;
 }
 
-prontera,155,147,4	script	Box 2#farm08	10404,{
-	callfunc "F_FarmPrototype_Click",155,147,155,146,10;
+prontera,154,140,4	script	Box 2#farm08	10404,{
+	callfunc "F_FarmPrototype_Click",154,140,154,139,10;
 
 OnInit:
 	.Hits = 0;
