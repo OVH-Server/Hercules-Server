@@ -56,17 +56,25 @@ OnInit:
 	.CloneSlot = 2;
 	.Point1X = 175;
 	.Point1Y = 160;
-	.Point2X = 156;
+	.Point2X = 166;
 	.Point2Y = 160;
 	.Point3X = 156;
-	.Point3Y = 179;
-	.Point4X = 162;
-	.Point4Y = 185;
-	.Point5X = 162;
-	.Point5Y = 182;
+	.Point3Y = 160;
+	.Point4X = 156;
+	.Point4Y = 170;
+	.Point5X = 156;
+	.Point5Y = 179;
+	.Point6X = 159;
+	.Point6Y = 182;
+	.Point7X = 162;
+	.Point7Y = 185;
+	.Point8X = 162;
+	.Point8Y = 182;
 
 	.CloneGID = monster("prontera", .Point1X, .Point1Y, "Merchant Moka", 1002, 1, "CloneListeSlot2::OnCloneDead");
 	callfunc "F_ApplyCloneStyle", .CloneGID, .CloneSlot;
+	if ($CloneStyle_SaveVersion[.CloneSlot] < 3)
+		setunitdata(.CloneGID, UDT_OPTIONS, getunitdata(.CloneGID, UDT_OPTIONS) | 0x00000008);
 	setunitdata(.CloneGID, UDT_SPEED, 120);
 	setunitdata(.CloneGID, UDT_MODE, MD_NOKNOCKBACK);
 	setunitdata(.CloneGID, UDT_LOOKDIR, 0);
@@ -80,35 +88,59 @@ OnTimer500:
 	setunitdata(.CloneGID, UDT_WALKTOXY, .Point2X, .Point2Y);
 	end;
 
-OnTimer10500:
+OnTimer7000:
 	setunitdata(.CloneGID, UDT_WALKTOXY, .Point3X, .Point3Y);
 	end;
 
-OnTimer20500:
+OnTimer14000:
 	setunitdata(.CloneGID, UDT_WALKTOXY, .Point4X, .Point4Y);
 	end;
 
-OnTimer27000:
+OnTimer21000:
 	setunitdata(.CloneGID, UDT_WALKTOXY, .Point5X, .Point5Y);
 	end;
 
-OnTimer29000:
-	setunitdata(.CloneGID, UDT_WALKTOXY, .Point4X, .Point4Y);
+OnTimer28000:
+	setunitdata(.CloneGID, UDT_WALKTOXY, .Point6X, .Point6Y);
 	end;
 
-OnTimer31000:
-	setunitdata(.CloneGID, UDT_WALKTOXY, .Point3X, .Point3Y);
+OnTimer32500:
+	setunitdata(.CloneGID, UDT_WALKTOXY, .Point7X, .Point7Y);
 	end;
 
-OnTimer37500:
-	setunitdata(.CloneGID, UDT_WALKTOXY, .Point2X, .Point2Y);
+OnTimer37000:
+	setunitdata(.CloneGID, UDT_WALKTOXY, .Point8X, .Point8Y);
 	end;
 
-OnTimer47500:
-	setunitdata(.CloneGID, UDT_WALKTOXY, .Point1X, .Point1Y);
+OnTimer41500:
+	setunitdata(.CloneGID, UDT_WALKTOXY, .Point7X, .Point7Y);
+	end;
+
+OnTimer46000:
+	setunitdata(.CloneGID, UDT_WALKTOXY, .Point6X, .Point6Y);
+	end;
+
+OnTimer50500:
+	setunitdata(.CloneGID, UDT_WALKTOXY, .Point5X, .Point5Y);
 	end;
 
 OnTimer57500:
+	setunitdata(.CloneGID, UDT_WALKTOXY, .Point4X, .Point4Y);
+	end;
+
+OnTimer64500:
+	setunitdata(.CloneGID, UDT_WALKTOXY, .Point3X, .Point3Y);
+	end;
+
+OnTimer71500:
+	setunitdata(.CloneGID, UDT_WALKTOXY, .Point2X, .Point2Y);
+	end;
+
+OnTimer78500:
+	setunitdata(.CloneGID, UDT_WALKTOXY, .Point1X, .Point1Y);
+	end;
+
+OnTimer85500:
 	stopnpctimer;
 	setnpctimer 0;
 	initnpctimer;

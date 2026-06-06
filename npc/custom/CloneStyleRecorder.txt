@@ -84,6 +84,7 @@ S_SaveStyle:
 	.@style_name$ = getarg(1);
 
 	$CloneStyle_Saved[.@slot] = 1;
+	$CloneStyle_SaveVersion[.@slot] = 3;
 	$CloneStyle_Name$[.@slot] = .@style_name$;
 	$CloneStyle_SourceName$[.@slot] = strcharinfo(PC_NAME);
 	$CloneStyle_SourceCID[.@slot] = getcharid(CHAR_ID_CHAR);
@@ -133,6 +134,25 @@ S_SaveStyle:
 	$CloneStyle_Shield[.@slot] = getlook(LOOK_SHIELD);
 	$CloneStyle_Robe[.@slot] = getlook(LOOK_ROBE);
 	$CloneStyle_Body2[.@slot] = getlook(LOOK_BODY2);
+	$CloneStyle_Cart[.@slot] = checkcart();
+	$CloneStyle_CartType[.@slot] = 0;
+	$CloneStyle_CartOption[.@slot] = 0;
+	if ($CloneStyle_Cart[.@slot])
+		$CloneStyle_CartType[.@slot] = getstatus(SC_PUSH_CART, 1);
+	if ($CloneStyle_Cart[.@slot] && $CloneStyle_CartType[.@slot] < 1)
+		$CloneStyle_CartType[.@slot] = 1;
+	if ($CloneStyle_CartType[.@slot] == 1)
+		$CloneStyle_CartOption[.@slot] = 0x00000008;
+	else if ($CloneStyle_CartType[.@slot] == 2)
+		$CloneStyle_CartOption[.@slot] = 0x00000080;
+	else if ($CloneStyle_CartType[.@slot] == 3)
+		$CloneStyle_CartOption[.@slot] = 0x00000100;
+	else if ($CloneStyle_CartType[.@slot] == 4)
+		$CloneStyle_CartOption[.@slot] = 0x00000200;
+	else if ($CloneStyle_CartType[.@slot] == 5)
+		$CloneStyle_CartOption[.@slot] = 0x00000400;
+	else if ($CloneStyle_Cart[.@slot])
+		$CloneStyle_CartOption[.@slot] = 0x00000008;
 
 	$CloneStyle_EquipHeadTop[.@slot] = getequipid(EQI_HEAD_TOP);
 	$CloneStyle_EquipHeadMid[.@slot] = getequipid(EQI_HEAD_MID);
@@ -154,6 +174,7 @@ S_ClearStyle:
 	.@slot = getarg(0);
 
 	$CloneStyle_Saved[.@slot] = 0;
+	$CloneStyle_SaveVersion[.@slot] = 0;
 	$CloneStyle_Name$[.@slot] = "";
 	$CloneStyle_SourceName$[.@slot] = "";
 	$CloneStyle_SourceCID[.@slot] = 0;
@@ -198,6 +219,9 @@ S_ClearStyle:
 	$CloneStyle_Shield[.@slot] = 0;
 	$CloneStyle_Robe[.@slot] = 0;
 	$CloneStyle_Body2[.@slot] = 0;
+	$CloneStyle_Cart[.@slot] = 0;
+	$CloneStyle_CartType[.@slot] = 0;
+	$CloneStyle_CartOption[.@slot] = 0;
 	$CloneStyle_EquipHeadTop[.@slot] = 0;
 	$CloneStyle_EquipHeadMid[.@slot] = 0;
 	$CloneStyle_EquipHeadLow[.@slot] = 0;
@@ -223,6 +247,10 @@ S_ShowStyles:
 			mes "  Classe: " + jobname($CloneStyle_Class[.@i]) + " " + $CloneStyle_BaseLevel[.@i] + "/" + $CloneStyle_JobLevel[.@i];
 			mes "  Stats: " + $CloneStyle_Str[.@i] + "/" + $CloneStyle_Agi[.@i] + "/" + $CloneStyle_Vit[.@i] + "/" + $CloneStyle_Int[.@i] + "/" + $CloneStyle_Dex[.@i] + "/" + $CloneStyle_Luk[.@i];
 			mes "  HP/SP: " + $CloneStyle_MaxHp[.@i] + "/" + $CloneStyle_MaxSp[.@i];
+			if ($CloneStyle_Cart[.@i])
+				mes "  Cart: oui, type " + max(1, $CloneStyle_CartType[.@i]);
+			else
+				mes "  Cart: non";
 		} else {
 			mes "Slot " + .@i + ": vide";
 		}
@@ -296,6 +324,13 @@ function	script	F_ApplyCloneLook	{
 	setunitdata(.@gid, UDT_HEADBOTTOM, $CloneStyle_HeadBottom[.@slot]);
 	setunitdata(.@gid, UDT_WEAPON, $CloneStyle_Weapon[.@slot]);
 	setunitdata(.@gid, UDT_SHIELD, $CloneStyle_Shield[.@slot]);
+	if ($CloneStyle_Cart[.@slot]) {
+		setunitdata(.@gid, UDT_OPTIONS, getunitdata(.@gid, UDT_OPTIONS) | max(0x00000008, $CloneStyle_CartOption[.@slot]));
+		sc_start(SC_PUSH_CART, 604800000, max(1, $CloneStyle_CartType[.@slot]), 10000, SCFLAG_NOAVOID, .@gid);
+	} else {
+		setunitdata(.@gid, UDT_OPTIONS, getunitdata(.@gid, UDT_OPTIONS) & ~0x00000788);
+		sc_end(SC_PUSH_CART, .@gid);
+	}
 	if (getunittype(.@gid) == UNITTYPE_NPC) {
 		setunitdata(.@gid, UDT_ROBE, $CloneStyle_Robe[.@slot]);
 		setunitdata(.@gid, UDT_BODY2, $CloneStyle_Body2[.@slot]);
