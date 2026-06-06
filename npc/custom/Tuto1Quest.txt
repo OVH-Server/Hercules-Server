@@ -335,7 +335,7 @@ OnPCLoginEvent:
 	end;
 }
 
-new_1-3,102,30,4	script	Tuto Quest 1	4_F_VALKYRIE,{
+new_1-3,102,30,4	script	Tuto Quest 1	10509,{
 	mes "[Tuto Quest 1]";
 	mes "Do you want to go to Prontera?";
 	next;
@@ -346,7 +346,7 @@ new_1-3,102,30,4	script	Tuto Quest 1	4_F_VALKYRIE,{
 	close;
 }
 
-prontera,162,170,4	script	Tuto Quest 1	4_F_VALKYRIE,{
+prontera,162,170,4	script	Tuto Quest 1	10509,{
 	mes "[Tuto Quest 1]";
 	mes "Do you want to go to the tutorial area?";
 	next;

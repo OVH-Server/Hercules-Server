@@ -2,7 +2,7 @@
 // Farming and lumberjack prototype resources.
 //============================================================
 
-prontera,163,152,4	script	Harvest Job	4_F_VALKYRIE,{
+prontera,163,152,4	script	Harvest Job	10451,{
 	mes "[Harvest Master]";
 	mes "The prototypes keep their visual test skins.";
 	close;
@@ -69,6 +69,15 @@ OnInit:
 	end;
 }
 
+prontera,163,140,4	script	Plant 4#farm03	10392,{
+	callfunc "F_FarmPrototype_Click",163,140,163,139,1;
+
+OnInit:
+	.Hits = 0;
+	setnpcdistance 2;
+	end;
+}
+
 prontera,159,143,4	script	Mining 1#farm04	1908,{
 	callfunc "F_FarmPrototype_Click",159,143,159,142,5;
 
@@ -78,7 +87,7 @@ OnInit:
 	end;
 }
 
-prontera,159,149,4	script	Archaeology Prototype 1#farm05	2_MONEMUS,{
+prontera,159,149,4	script	Archaeology 1#farm05	2_MONEMUS,{
 	callfunc "F_FarmPrototype_Click",159,149,159,148,5;
 
 OnInit:

@@ -5,7 +5,7 @@
 // Faction: 0 = none, 1 = Angel, 2 = Demon
 //============================================================
 
-prontera,152,158,4	script	Alignment: Angel or Demon	4_F_VALKYRIE,{
+prontera,152,158,4	script	Alignment: Angel or Demon	G_RANDGRIS,{
 	mes "[Valkyrie of Destiny]";
 
 	if (Faction == 1) {

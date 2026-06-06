@@ -2,7 +2,7 @@
 // Eterite warper and unlockable field eterites.
 //============================================================
 
-prontera,149,158,4	script	Eterite system	4_F_VALKYRIE,{
+prontera,149,158,4	script	Eterite system	10100,{
 	mes "[Valkyrie Eterite]";
 	mes "I can teleport you to active Eterites.";
 	mes "An inactive Eterite requires 10 monster kills on its map to be activated.";

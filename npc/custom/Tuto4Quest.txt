@@ -5,7 +5,7 @@
 // them when they return and speak to her again.
 //============================================================
 
-prontera,159,160,4	script	Taxi 2 - Swordman Class	4_F_VALKYRIE,{
+prontera,162,167,4	script	Taxi 2 - Swordman Class	10549,{
 	mes "[Valkyrie]";
 
 	if (Tuto4_State == 1 && !#Tuto4_RewardClaimed) {

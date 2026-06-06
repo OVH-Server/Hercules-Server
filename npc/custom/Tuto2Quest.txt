@@ -15,7 +15,7 @@
 // NPC 1 - Valkyrie
 //============================================================
 
-prontera,159,167,4	script	Taxi 1	4_F_VALKYRIE,{
+prontera,159,167,4	script	Taxi 1	10531,{
 	callfunc "F_DebugConsole","Valkyrie Tuto 2","Click. State=" + Tuto2_State;
 
 	mes "[Valkyrie]";
