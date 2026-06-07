@@ -132,7 +132,7 @@ S_SaveStyle:
 	$CloneStyle_Crit[.@slot] = readparam(bCritical);
 	$CloneStyle_EleType[.@slot] = readparam(bDefEle);
 	$CloneStyle_EleLevel[.@slot] = 1;
-	$CloneStyle_Size[.@slot] = Upper == 2 ? SZ_SMALL : SZ_MEDIUM;
+	$CloneStyle_Size[.@slot] = Upper == 2 ? Size_Small : Size_Medium;
 
 	$CloneStyle_BaseLook[.@slot] = getlook(LOOK_BASE);
 	$CloneStyle_Hair[.@slot] = getlook(LOOK_HAIR);
@@ -344,7 +344,7 @@ function	script	F_ApplyCloneStyle	{
 
 	callfunc "F_ApplyCloneLook", .@gid, .@slot;
 
-	setunitdata(.@gid, UDT_SIZE, max(SZ_SMALL, min(SZ_BIG, $CloneStyle_Size[.@slot])));
+	setunitdata(.@gid, UDT_SIZE, max(Size_Small, min(Size_Large, $CloneStyle_Size[.@slot])));
 	setunitdata(.@gid, UDT_LEVEL, max(1, $CloneStyle_BaseLevel[.@slot]));
 	setunitdata(.@gid, UDT_MAXHP, max(1, $CloneStyle_MaxHp[.@slot]));
 	setunitdata(.@gid, UDT_HP, max(1, $CloneStyle_MaxHp[.@slot]));
