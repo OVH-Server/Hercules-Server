@@ -149,9 +149,10 @@ OnInit:
 	.CloneGID = monster("prontera", .CloneX, .CloneY, "Hunter Spiach", 1905, 1, "CloneListeSlot3::OnCloneDead");
 	callfunc "F_ApplyCloneStyle", .CloneGID, .CloneSlot;
 	setunitdata(.CloneGID, UDT_SPEED, 120);
-	setunitdata(.CloneGID, UDT_MODE, MD_NOKNOCKBACK);
+	setunitdata(.CloneGID, UDT_MODE, MD_NOKNOCKBACK | MD_CANATTACK);
 	setunitdata(.CloneGID, UDT_AI, AI_NONE);
 	setunitdata(.CloneGID, UDT_LOOKDIR, 6);
+	unitattack(.CloneGID, .DummyGID);
 
 	stopnpctimer;
 	setnpctimer 0;
@@ -164,10 +165,7 @@ OnTimer1200:
 		setunitdata(.DummyGID, UDT_HP, 2000000);
 		unitattack(.CloneGID, .DummyGID);
 		unitskilluseid(.CloneGID, AC_DOUBLE, 10, .DummyGID);
-		npcskilleffect(AC_DOUBLE, 10, .DummyX, .DummyY);
-		specialeffect(EF_ARROWSHOT, AREA, .CloneGID);
-		specialeffect(EF_HIT5, AREA, .DummyGID);
-		specialeffect(EF_HIT6, AREA, .DummyGID);
+		areamobuseskill("prontera", .CloneX, .CloneY, 0, 1905, AC_DOUBLE, 10, 0, 1, e_no1, 1);
 	}
 	stopnpctimer;
 	setnpctimer 0;
