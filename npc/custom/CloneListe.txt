@@ -296,7 +296,7 @@ OnInit:
 	.CloneX = 175;
 	.CloneY = 141;
 
-	.CloneGID = monster("prontera", .CloneX, .CloneY, "Risa", 1905, 1, "CloneListeSlot5::OnCloneDead");
+	.CloneGID = monster("prontera", .CloneX, .CloneY, "Acolyte Risa", 1905, 1, "CloneListeSlot5::OnCloneDead");
 	callfunc "F_ApplyCloneStyle", .CloneGID, .CloneSlot;
 	setunitdata(.CloneGID, UDT_SPEED, 120);
 	setunitdata(.CloneGID, UDT_MODE, MD_NOKNOCKBACK);
