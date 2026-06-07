@@ -69,14 +69,21 @@ L_ClearMenu:
 	close;
 
 S_SelectSlot:
-	mes "[Enregistreur Clone]";
-	mes "Choisis un slot.";
-	next;
-	.@choice = select("Slot 1:Slot 2:Slot 3:Slot 4:Slot 5:Slot 6:Slot 7:Slot 8:Slot 9:Slot 10:Retour");
-	if (.@choice == .MaxSlots + 1)
+	.@page = select("Slot 1:Slot 2:Slot 3:Slot 4:Slot 5:Slots 6-10:Retour");
+	if (.@page >= 1 && .@page <= 5) {
+		.SelectedSlot = .@page;
+		return;
+	}
+	if (.@page == 7) {
+		.SelectedSlot = 0;
+		return;
+	}
+
+	.@choice = select("Slot 6:Slot 7:Slot 8:Slot 9:Slot 10:Retour");
+	if (.@choice == 6)
 		.SelectedSlot = 0;
 	else
-		.SelectedSlot = .@choice;
+		.SelectedSlot = .@choice + 5;
 	return;
 
 S_SaveStyle:
