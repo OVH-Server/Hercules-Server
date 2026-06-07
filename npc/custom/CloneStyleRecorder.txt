@@ -30,13 +30,7 @@ L_SaveMenu:
 	if (.@slot == 0)
 		close;
 
-	mes "[Enregistreur Clone]";
-	mes "Donne un nom a ce style.";
-	mes "Maximum 24 caracteres.";
-	next;
-	input .@style_name$;
-	if (.@style_name$ == "")
-		.@style_name$ = "Style " + .@slot;
+	.@style_name$ = strcharinfo(PC_NAME) + " Slot " + .@slot;
 	if (getstrlen(.@style_name$) > 24)
 		.@style_name$ = substr(.@style_name$, 0, 23);
 
