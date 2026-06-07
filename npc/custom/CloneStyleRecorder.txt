@@ -339,3 +339,17 @@ function	script	F_ApplyCloneLook	{
 	}
 	return 1;
 }
+
+function	script	F_GetCloneSkillLevel	{
+	.@slot = getarg(0);
+	.@skill_id = getarg(1);
+
+	if (.@slot < 1 || .@slot > 10)
+		return 0;
+	if (.@skill_id <= 0)
+		return 0;
+	if (!$CloneStyle_Saved[.@slot])
+		return 0;
+
+	return 0;
+}
