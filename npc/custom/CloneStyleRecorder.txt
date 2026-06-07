@@ -2,8 +2,6 @@
 //= Clone Style Recorder
 //= Sauvegarde 10 fiches de personnages pour les reutiliser
 //= plus tard sur des mobs/clones scripts.
-//= Les skills sont sauvegardes par slot, puis reutilisables via
-//= F_GetCloneSkillLevel(<slot>, <skill id>) dans les scripts de comportement.
 //============================================================
 
 prontera,164,160,4	script	Clone System	1_M_01,{
@@ -14,72 +12,68 @@ prontera,164,160,4	script	Clone System	1_M_01,{
 	mes "Je peux sauvegarder ta fiche actuelle dans " + .MaxSlots + " slots.";
 	next;
 
-	.@menu = select("Enregistrer un style:Voir les styles:Effacer un style:Quitter");
+	while (true) {
+		.@menu = select("Enregistrer un style:Voir les styles:Effacer un style:Quitter");
 
-	if (.@menu == 1)
-		goto L_SaveMenu;
-	if (.@menu == 2)
-		goto L_ShowMenu;
-	if (.@menu == 3)
-		goto L_ClearMenu;
-	close;
+		if (.@menu == 1) {
+			callsub S_SelectSlot;
+			.@slot = .SelectedSlot;
+			if (.@slot == 0)
+				continue;
 
-L_SaveMenu:
-	callsub S_SelectSlot;
-	.@slot = .SelectedSlot;
-	if (.@slot == 0)
-		close;
+			mes "[Enregistreur Clone]";
+			mes "Donne un nom a ce style.";
+			mes "Exemple: Marchand bleu, Garde nord, Mage rouge.";
+			next;
+			input .@style_name$;
+			if (.@style_name$ == "")
+				.@style_name$ = "Style " + .@slot;
+			if (getstrlen(.@style_name$) > 24)
+				.@style_name$ = substr(.@style_name$, 0, 23);
 
-	mes "[Enregistreur Clone]";
-	mes "Donne un nom a ce style.";
-	mes "Exemple: Merchant Moka.";
-	next;
-	input .@style_name$;
-	if (.@style_name$ == "")
-		.@style_name$ = strcharinfo(PC_NAME) + " Slot " + .@slot;
-	if (getstrlen(.@style_name$) > 24)
-		.@style_name$ = substr(.@style_name$, 0, 23);
+			callsub S_SaveStyle, .@slot, .@style_name$;
 
-	callsub S_SaveStyle, .@slot, .@style_name$;
+			mes "[Enregistreur Clone]";
+			mes "Style sauvegarde dans le slot " + .@slot + ".";
+			mes "Nom: " + $CloneStyle_Name$[.@slot];
+			mes "Classe: " + jobname($CloneStyle_Class[.@slot]);
+			next;
+		} else if (.@menu == 2) {
+			callsub S_ShowStyles;
+			next;
+		} else if (.@menu == 3) {
+			callsub S_SelectSlot;
+			.@slot = .SelectedSlot;
+			if (.@slot == 0)
+				continue;
 
-	mes "[Enregistreur Clone]";
-	mes "Style sauvegarde dans le slot " + .@slot + ".";
-	mes "Nom: " + $CloneStyle_Name$[.@slot];
-	mes "Classe: " + jobname($CloneStyle_Class[.@slot]);
-	close;
+			mes "[Enregistreur Clone]";
+			if (!$CloneStyle_Saved[.@slot]) {
+				mes "Ce slot est deja vide.";
+				next;
+				continue;
+			}
 
-L_ShowMenu:
-	callsub S_ShowStyles;
-	close;
-
-L_ClearMenu:
-	callsub S_SelectSlot;
-	.@slot = .SelectedSlot;
-	if (.@slot == 0)
-		close;
-
-	mes "[Enregistreur Clone]";
-	if (!$CloneStyle_Saved[.@slot]) {
-		mes "Ce slot est deja vide.";
-		close;
+			mes "Effacer le slot " + .@slot + " ?";
+			mes "Nom: " + $CloneStyle_Name$[.@slot];
+			next;
+			if (select("Oui:Non") == 1) {
+				callsub S_ClearStyle, .@slot;
+				mes "[Enregistreur Clone]";
+				mes "Slot efface.";
+				next;
+			}
+		} else {
+			close;
+		}
 	}
-
-	mes "Effacer le slot " + .@slot + " ?";
-	mes "Nom: " + $CloneStyle_Name$[.@slot];
-	next;
-	if (select("Oui:Non") == 1) {
-		callsub S_ClearStyle, .@slot;
-		mes "[Enregistreur Clone]";
-		mes "Slot efface.";
-	}
-	close;
 
 S_SelectSlot:
 	mes "[Enregistreur Clone]";
 	mes "Choisis un slot.";
 	next;
 	.@choice = select("Slot 1:Slot 2:Slot 3:Slot 4:Slot 5:Slot 6:Slot 7:Slot 8:Slot 9:Slot 10:Retour");
-	if (.@choice == 11)
+	if (.@choice == .MaxSlots + 1)
 		.SelectedSlot = 0;
 	else
 		.SelectedSlot = .@choice;
@@ -90,7 +84,7 @@ S_SaveStyle:
 	.@style_name$ = getarg(1);
 
 	$CloneStyle_Saved[.@slot] = 1;
-	$CloneStyle_SaveVersion[.@slot] = 4;
+	$CloneStyle_SaveVersion[.@slot] = 3;
 	$CloneStyle_Name$[.@slot] = .@style_name$;
 	$CloneStyle_SourceName$[.@slot] = strcharinfo(PC_NAME);
 	$CloneStyle_SourceCID[.@slot] = getcharid(CHAR_ID_CHAR);
@@ -100,23 +94,35 @@ S_SaveStyle:
 	$CloneStyle_Sex[.@slot] = Sex;
 	$CloneStyle_BaseLevel[.@slot] = BaseLevel;
 	$CloneStyle_JobLevel[.@slot] = JobLevel;
+	$CloneStyle_BaseJob[.@slot] = BaseJob;
+	$CloneStyle_BaseClass[.@slot] = BaseClass;
+	$CloneStyle_Upper[.@slot] = Upper;
+
+	$CloneStyle_Hp[.@slot] = Hp;
 	$CloneStyle_MaxHp[.@slot] = MaxHp;
+	$CloneStyle_Sp[.@slot] = Sp;
 	$CloneStyle_MaxSp[.@slot] = MaxSp;
 
+	$CloneStyle_Str[.@slot] = readparam(bStr);
+	$CloneStyle_Agi[.@slot] = readparam(bAgi);
+	$CloneStyle_Vit[.@slot] = readparam(bVit);
+	$CloneStyle_Int[.@slot] = readparam(bInt);
+	$CloneStyle_Dex[.@slot] = readparam(bDex);
+	$CloneStyle_Luk[.@slot] = readparam(bLuk);
+
 	$CloneStyle_AtkRange[.@slot] = 1;
-	$CloneStyle_AtkMin[.@slot] = 10;
-	$CloneStyle_AtkMax[.@slot] = 10;
-	$CloneStyle_MatkMin[.@slot] = 0;
-	$CloneStyle_MatkMax[.@slot] = 0;
-	$CloneStyle_Def[.@slot] = 0;
-	$CloneStyle_Mdef[.@slot] = 0;
-	$CloneStyle_Hit[.@slot] = 0;
-	$CloneStyle_Flee[.@slot] = 0;
-	$CloneStyle_PDodge[.@slot] = 0;
-	$CloneStyle_Crit[.@slot] = 0;
-	$CloneStyle_EleType[.@slot] = Ele_Neutral;
+	$CloneStyle_AtkMin[.@slot] = max(1, readparam(bBaseAtk));
+	$CloneStyle_AtkMax[.@slot] = max($CloneStyle_AtkMin[.@slot], readparam(bBaseAtk) + readparam(bStr));
+	$CloneStyle_MatkMin[.@slot] = max(0, readparam(bInt));
+	$CloneStyle_MatkMax[.@slot] = max($CloneStyle_MatkMin[.@slot], readparam(bInt) * 2);
+	$CloneStyle_Def[.@slot] = readparam(bDef);
+	$CloneStyle_Mdef[.@slot] = readparam(bMdef);
+	$CloneStyle_Hit[.@slot] = readparam(bHit);
+	$CloneStyle_Flee[.@slot] = readparam(bFlee);
+	$CloneStyle_PDodge[.@slot] = readparam(bFlee2);
+	$CloneStyle_Crit[.@slot] = readparam(bCritical);
+	$CloneStyle_EleType[.@slot] = readparam(bDefEle);
 	$CloneStyle_EleLevel[.@slot] = 1;
-	$CloneStyle_Size[.@slot] = Size_Medium;
 
 	$CloneStyle_Hair[.@slot] = getlook(LOOK_HAIR);
 	$CloneStyle_HairColor[.@slot] = getlook(LOOK_HAIR_COLOR);
@@ -124,14 +130,10 @@ S_SaveStyle:
 	$CloneStyle_HeadTop[.@slot] = getlook(LOOK_HEAD_TOP);
 	$CloneStyle_HeadMid[.@slot] = getlook(LOOK_HEAD_MID);
 	$CloneStyle_HeadBottom[.@slot] = getlook(LOOK_HEAD_BOTTOM);
-	$CloneStyle_Weapon[.@slot] = callfunc("F_GetCloneWeaponLook");
+	$CloneStyle_Weapon[.@slot] = getlook(LOOK_WEAPON);
 	$CloneStyle_Shield[.@slot] = getlook(LOOK_SHIELD);
 	$CloneStyle_Robe[.@slot] = getlook(LOOK_ROBE);
 	$CloneStyle_Body2[.@slot] = getlook(LOOK_BODY2);
-	$CloneStyle_Shoes[.@slot] = 0;
-	$CloneStyle_Body[.@slot] = 0;
-	$CloneStyle_Floor[.@slot] = 0;
-	$CloneStyle_Option[.@slot] = 0;
 	$CloneStyle_Cart[.@slot] = checkcart();
 	$CloneStyle_CartType[.@slot] = 0;
 	$CloneStyle_CartOption[.@slot] = 0;
@@ -152,24 +154,20 @@ S_SaveStyle:
 	else if ($CloneStyle_Cart[.@slot])
 		$CloneStyle_CartOption[.@slot] = 0x00000008;
 
-	callsub S_SaveSkills, .@slot;
-	return;
-
-S_SaveSkills:
-	.@slot = getarg(0);
-	.@base = .@slot * 1000;
-	for (.@i = 0; .@i < 1000; .@i++) {
-		$CloneStyle_SkillId[.@base + .@i] = 0;
-		$CloneStyle_SkillLv[.@base + .@i] = 0;
-		$CloneStyle_SkillFlag[.@base + .@i] = 0;
-	}
-	getskilllist();
-	$CloneStyle_SkillCount[.@slot] = @skilllist_count;
-	for (.@i = 0; .@i < @skilllist_count && .@i < 1000; .@i++) {
-		$CloneStyle_SkillId[.@base + .@i] = @skilllist_id[.@i];
-		$CloneStyle_SkillLv[.@base + .@i] = @skilllist_lv[.@i];
-		$CloneStyle_SkillFlag[.@base + .@i] = @skilllist_flag[.@i];
-	}
+	$CloneStyle_EquipHeadTop[.@slot] = getequipid(EQI_HEAD_TOP);
+	$CloneStyle_EquipHeadMid[.@slot] = getequipid(EQI_HEAD_MID);
+	$CloneStyle_EquipHeadLow[.@slot] = getequipid(EQI_HEAD_LOW);
+	$CloneStyle_EquipArmor[.@slot] = getequipid(EQI_ARMOR);
+	$CloneStyle_EquipHandL[.@slot] = getequipid(EQI_HAND_L);
+	$CloneStyle_EquipHandR[.@slot] = getequipid(EQI_HAND_R);
+	$CloneStyle_EquipGarment[.@slot] = getequipid(EQI_GARMENT);
+	$CloneStyle_EquipShoes[.@slot] = getequipid(EQI_SHOES);
+	$CloneStyle_EquipAccL[.@slot] = getequipid(EQI_ACC_L);
+	$CloneStyle_EquipAccR[.@slot] = getequipid(EQI_ACC_R);
+	$CloneStyle_EquipCostumeTop[.@slot] = getequipid(EQI_COSTUME_HEAD_TOP);
+	$CloneStyle_EquipCostumeMid[.@slot] = getequipid(EQI_COSTUME_HEAD_MID);
+	$CloneStyle_EquipCostumeLow[.@slot] = getequipid(EQI_COSTUME_HEAD_LOW);
+	$CloneStyle_EquipCostumeGarment[.@slot] = getequipid(EQI_COSTUME_GARMENT);
 	return;
 
 S_ClearStyle:
@@ -188,13 +186,6 @@ S_ClearStyle:
 	$CloneStyle_BaseJob[.@slot] = 0;
 	$CloneStyle_BaseClass[.@slot] = 0;
 	$CloneStyle_Upper[.@slot] = 0;
-	$CloneStyle_BaseExp[.@slot] = 0;
-	$CloneStyle_JobExp[.@slot] = 0;
-	$CloneStyle_StatusPoint[.@slot] = 0;
-	$CloneStyle_SkillPoint[.@slot] = 0;
-	$CloneStyle_Karma[.@slot] = 0;
-	$CloneStyle_Manner[.@slot] = 0;
-	$CloneStyle_Zeny[.@slot] = 0;
 	$CloneStyle_Hp[.@slot] = 0;
 	$CloneStyle_MaxHp[.@slot] = 0;
 	$CloneStyle_Sp[.@slot] = 0;
@@ -218,8 +209,6 @@ S_ClearStyle:
 	$CloneStyle_Crit[.@slot] = 0;
 	$CloneStyle_EleType[.@slot] = 0;
 	$CloneStyle_EleLevel[.@slot] = 0;
-	$CloneStyle_Size[.@slot] = 0;
-	$CloneStyle_BaseLook[.@slot] = 0;
 	$CloneStyle_Hair[.@slot] = 0;
 	$CloneStyle_HairColor[.@slot] = 0;
 	$CloneStyle_ClothColor[.@slot] = 0;
@@ -228,12 +217,8 @@ S_ClearStyle:
 	$CloneStyle_HeadBottom[.@slot] = 0;
 	$CloneStyle_Weapon[.@slot] = 0;
 	$CloneStyle_Shield[.@slot] = 0;
-	$CloneStyle_Shoes[.@slot] = 0;
-	$CloneStyle_Body[.@slot] = 0;
-	$CloneStyle_Floor[.@slot] = 0;
 	$CloneStyle_Robe[.@slot] = 0;
 	$CloneStyle_Body2[.@slot] = 0;
-	$CloneStyle_Option[.@slot] = 0;
 	$CloneStyle_Cart[.@slot] = 0;
 	$CloneStyle_CartType[.@slot] = 0;
 	$CloneStyle_CartOption[.@slot] = 0;
@@ -251,19 +236,6 @@ S_ClearStyle:
 	$CloneStyle_EquipCostumeMid[.@slot] = 0;
 	$CloneStyle_EquipCostumeLow[.@slot] = 0;
 	$CloneStyle_EquipCostumeGarment[.@slot] = 0;
-	$CloneStyle_EquipShadowArmor[.@slot] = 0;
-	$CloneStyle_EquipShadowWeapon[.@slot] = 0;
-	$CloneStyle_EquipShadowShield[.@slot] = 0;
-	$CloneStyle_EquipShadowShoes[.@slot] = 0;
-	$CloneStyle_EquipShadowAccR[.@slot] = 0;
-	$CloneStyle_EquipShadowAccL[.@slot] = 0;
-	$CloneStyle_SkillCount[.@slot] = 0;
-	.@base = .@slot * 1000;
-	for (.@i = 0; .@i < 1000; .@i++) {
-		$CloneStyle_SkillId[.@base + .@i] = 0;
-		$CloneStyle_SkillLv[.@base + .@i] = 0;
-		$CloneStyle_SkillFlag[.@base + .@i] = 0;
-	}
 	return;
 
 S_ShowStyles:
@@ -271,13 +243,10 @@ S_ShowStyles:
 	for (.@i = 1; .@i <= .MaxSlots; .@i++) {
 		if ($CloneStyle_Saved[.@i]) {
 			mes "Slot " + .@i + ": " + $CloneStyle_Name$[.@i];
-			mes "  Version sauvegarde: " + $CloneStyle_SaveVersion[.@i];
 			mes "  Source: " + $CloneStyle_SourceName$[.@i];
 			mes "  Classe: " + jobname($CloneStyle_Class[.@i]) + " " + $CloneStyle_BaseLevel[.@i] + "/" + $CloneStyle_JobLevel[.@i];
 			mes "  Stats: " + $CloneStyle_Str[.@i] + "/" + $CloneStyle_Agi[.@i] + "/" + $CloneStyle_Vit[.@i] + "/" + $CloneStyle_Int[.@i] + "/" + $CloneStyle_Dex[.@i] + "/" + $CloneStyle_Luk[.@i];
 			mes "  HP/SP: " + $CloneStyle_MaxHp[.@i] + "/" + $CloneStyle_MaxSp[.@i];
-			mes "  Arme sprite: " + $CloneStyle_Weapon[.@i];
-			mes "  Skills: " + $CloneStyle_SkillCount[.@i];
 			if ($CloneStyle_Cart[.@i])
 				mes "  Cart: oui, type " + max(1, $CloneStyle_CartType[.@i]);
 			else
@@ -306,15 +275,28 @@ function	script	F_ApplyCloneStyle	{
 
 	callfunc "F_ApplyCloneLook", .@gid, .@slot;
 
-	setunitdata(.@gid, UDT_SIZE, max(Size_Small, min(Size_Large, $CloneStyle_Size[.@slot])));
 	setunitdata(.@gid, UDT_LEVEL, max(1, $CloneStyle_BaseLevel[.@slot]));
 	setunitdata(.@gid, UDT_MAXHP, max(1, $CloneStyle_MaxHp[.@slot]));
 	setunitdata(.@gid, UDT_HP, max(1, $CloneStyle_MaxHp[.@slot]));
 	setunitdata(.@gid, UDT_MAXSP, max(0, $CloneStyle_MaxSp[.@slot]));
 	setunitdata(.@gid, UDT_SP, max(0, $CloneStyle_MaxSp[.@slot]));
+	setunitdata(.@gid, UDT_STR, max(0, $CloneStyle_Str[.@slot]));
+	setunitdata(.@gid, UDT_AGI, max(0, $CloneStyle_Agi[.@slot]));
+	setunitdata(.@gid, UDT_VIT, max(0, $CloneStyle_Vit[.@slot]));
+	setunitdata(.@gid, UDT_INT, max(0, $CloneStyle_Int[.@slot]));
+	setunitdata(.@gid, UDT_DEX, max(0, $CloneStyle_Dex[.@slot]));
+	setunitdata(.@gid, UDT_LUK, max(0, $CloneStyle_Luk[.@slot]));
 	setunitdata(.@gid, UDT_ATKRANGE, max(1, $CloneStyle_AtkRange[.@slot]));
 	setunitdata(.@gid, UDT_ATKMIN, max(1, $CloneStyle_AtkMin[.@slot]));
 	setunitdata(.@gid, UDT_ATKMAX, max($CloneStyle_AtkMin[.@slot], $CloneStyle_AtkMax[.@slot]));
+	setunitdata(.@gid, UDT_MATKMIN, max(0, $CloneStyle_MatkMin[.@slot]));
+	setunitdata(.@gid, UDT_MATKMAX, max($CloneStyle_MatkMin[.@slot], $CloneStyle_MatkMax[.@slot]));
+	setunitdata(.@gid, UDT_DEF, max(0, $CloneStyle_Def[.@slot]));
+	setunitdata(.@gid, UDT_MDEF, max(0, $CloneStyle_Mdef[.@slot]));
+	setunitdata(.@gid, UDT_HIT, max(0, $CloneStyle_Hit[.@slot]));
+	setunitdata(.@gid, UDT_FLEE, max(0, $CloneStyle_Flee[.@slot]));
+	setunitdata(.@gid, UDT_PDODGE, max(0, $CloneStyle_PDodge[.@slot]));
+	setunitdata(.@gid, UDT_CRIT, max(0, $CloneStyle_Crit[.@slot]));
 	setunitdata(.@gid, UDT_RACE, RC_DemiHuman);
 	setunitdata(.@gid, UDT_ELETYPE, max(0, $CloneStyle_EleType[.@slot]));
 	setunitdata(.@gid, UDT_ELELEVEL, max(1, $CloneStyle_EleLevel[.@slot]));
@@ -340,7 +322,7 @@ function	script	F_ApplyCloneLook	{
 	setunitdata(.@gid, UDT_HEADTOP, $CloneStyle_HeadTop[.@slot]);
 	setunitdata(.@gid, UDT_HEADMIDDLE, $CloneStyle_HeadMid[.@slot]);
 	setunitdata(.@gid, UDT_HEADBOTTOM, $CloneStyle_HeadBottom[.@slot]);
-	setunitdata(.@gid, UDT_WEAPON, max(0, $CloneStyle_Weapon[.@slot]));
+	setunitdata(.@gid, UDT_WEAPON, $CloneStyle_Weapon[.@slot]);
 	setunitdata(.@gid, UDT_SHIELD, $CloneStyle_Shield[.@slot]);
 	if ($CloneStyle_Cart[.@slot]) {
 		setunitdata(.@gid, UDT_OPTIONS, getunitdata(.@gid, UDT_OPTIONS) | max(0x00000008, $CloneStyle_CartOption[.@slot]));
@@ -356,68 +338,4 @@ function	script	F_ApplyCloneLook	{
 		setunitdata(.@gid, UDT_BODY2, $CloneStyle_Body2[.@slot]);
 	}
 	return 1;
-}
-
-function	script	F_GetCloneWeaponLook	{
-	.@weapon = getlook(LOOK_WEAPON);
-	if (.@weapon > 0)
-		return .@weapon;
-
-	.@item = getequipid(EQI_HAND_R);
-	if (.@item > 0) {
-		.@weapon = getiteminfo(.@item, ITEMINFO_VIEWSPRITE);
-		if (.@weapon > 0)
-			return .@weapon;
-		.@weapon = getiteminfo(.@item, ITEMINFO_VIEWID);
-		if (.@weapon > 0)
-			return .@weapon;
-	}
-
-	.@item = getequipid(EQI_HAND_L);
-	if (.@item > 0 && getiteminfo(.@item, ITEMINFO_TYPE) == IT_WEAPON) {
-		.@weapon = getiteminfo(.@item, ITEMINFO_VIEWSPRITE);
-		if (.@weapon > 0)
-			return .@weapon;
-		.@weapon = getiteminfo(.@item, ITEMINFO_VIEWID);
-		if (.@weapon > 0)
-			return .@weapon;
-	}
-
-	return 0;
-}
-
-function	script	F_GetCloneSkillLevel	{
-	.@slot = getarg(0);
-	.@skill_id = getarg(1);
-
-	if (.@slot < 1 || .@slot > 10)
-		return 0;
-	if (.@skill_id <= 0)
-		return 0;
-	if (!$CloneStyle_Saved[.@slot])
-		return 0;
-
-	.@base = .@slot * 1000;
-	for (.@i = 0; .@i < $CloneStyle_SkillCount[.@slot] && .@i < 1000; .@i++) {
-		if ($CloneStyle_SkillId[.@base + .@i] == .@skill_id)
-			return $CloneStyle_SkillLv[.@base + .@i];
-	}
-
-	return 0;
-}
-
-function	script	F_GetCloneSkillIdByIndex	{
-	.@slot = getarg(0);
-	.@index = getarg(1);
-
-	if (.@slot < 1 || .@slot > 10)
-		return 0;
-	if (.@index < 0 || .@index >= 1000)
-		return 0;
-	if (!$CloneStyle_Saved[.@slot])
-		return 0;
-	if (.@index >= $CloneStyle_SkillCount[.@slot])
-		return 0;
-
-	return $CloneStyle_SkillId[(.@slot * 1000) + .@index];
 }
