@@ -30,7 +30,13 @@ L_SaveMenu:
 	if (.@slot == 0)
 		close;
 
-	.@style_name$ = strcharinfo(PC_NAME) + " Slot " + .@slot;
+	mes "[Enregistreur Clone]";
+	mes "Donne un nom a ce style.";
+	mes "Exemple: Merchant Moka.";
+	next;
+	input .@style_name$;
+	if (.@style_name$ == "")
+		.@style_name$ = strcharinfo(PC_NAME) + " Slot " + .@slot;
 	if (getstrlen(.@style_name$) > 24)
 		.@style_name$ = substr(.@style_name$, 0, 23);
 
@@ -69,29 +75,21 @@ L_ClearMenu:
 	close;
 
 S_SelectSlot:
-	.@page = select("Slot 1:Slot 2:Slot 3:Slot 4:Slot 5:Slots 6-10:Retour");
-	if (.@page >= 1 && .@page <= 5) {
-		.SelectedSlot = .@page;
-		return;
-	}
-	if (.@page == 7) {
-		.SelectedSlot = 0;
-		return;
-	}
-
-	.@choice = select("Slot 6:Slot 7:Slot 8:Slot 9:Slot 10:Retour");
-	if (.@choice == 6)
+	mes "[Enregistreur Clone]";
+	mes "Choisis un slot.";
+	next;
+	.@choice = select("Slot 1:Slot 2:Slot 3:Slot 4:Slot 5:Slot 6:Slot 7:Slot 8:Slot 9:Slot 10:Retour");
+	if (.@choice == 11)
 		.SelectedSlot = 0;
 	else
-		.SelectedSlot = .@choice + 5;
+		.SelectedSlot = .@choice;
 	return;
 
 S_SaveStyle:
 	.@slot = getarg(0);
 	.@style_name$ = getarg(1);
 
-	$CloneStyle_Saved[.@slot] = 1;
-	$CloneStyle_SaveVersion[.@slot] = 5;
+	$CloneStyle_SaveVersion[.@slot] = 6;
 	$CloneStyle_Name$[.@slot] = .@style_name$;
 	$CloneStyle_SourceName$[.@slot] = strcharinfo(PC_NAME);
 	$CloneStyle_SourceCID[.@slot] = getcharid(CHAR_ID_CHAR);
@@ -125,17 +123,17 @@ S_SaveStyle:
 	$CloneStyle_Luk[.@slot] = readparam(bLuk);
 
 	$CloneStyle_AtkRange[.@slot] = 1;
-	$CloneStyle_AtkMin[.@slot] = max(1, readparam(bBaseAtk));
-	$CloneStyle_AtkMax[.@slot] = max($CloneStyle_AtkMin[.@slot], readparam(bBaseAtk) + readparam(bStr));
-	$CloneStyle_MatkMin[.@slot] = max(0, readparam(bInt));
-	$CloneStyle_MatkMax[.@slot] = max($CloneStyle_MatkMin[.@slot], readparam(bInt) * 2);
-	$CloneStyle_Def[.@slot] = readparam(bDef);
-	$CloneStyle_Mdef[.@slot] = readparam(bMdef);
-	$CloneStyle_Hit[.@slot] = readparam(bHit);
-	$CloneStyle_Flee[.@slot] = readparam(bFlee);
-	$CloneStyle_PDodge[.@slot] = readparam(bFlee2);
-	$CloneStyle_Crit[.@slot] = readparam(bCritical);
-	$CloneStyle_EleType[.@slot] = readparam(bDefEle);
+	$CloneStyle_AtkMin[.@slot] = 1;
+	$CloneStyle_AtkMax[.@slot] = 1;
+	$CloneStyle_MatkMin[.@slot] = 0;
+	$CloneStyle_MatkMax[.@slot] = 0;
+	$CloneStyle_Def[.@slot] = 0;
+	$CloneStyle_Mdef[.@slot] = 0;
+	$CloneStyle_Hit[.@slot] = 0;
+	$CloneStyle_Flee[.@slot] = 0;
+	$CloneStyle_PDodge[.@slot] = 0;
+	$CloneStyle_Crit[.@slot] = 0;
+	$CloneStyle_EleType[.@slot] = Ele_Neutral;
 	$CloneStyle_EleLevel[.@slot] = 1;
 	$CloneStyle_Size[.@slot] = Upper == 2 ? Size_Small : Size_Medium;
 
@@ -148,11 +146,11 @@ S_SaveStyle:
 	$CloneStyle_HeadBottom[.@slot] = getlook(LOOK_HEAD_BOTTOM);
 	$CloneStyle_Weapon[.@slot] = callfunc("F_GetCloneWeaponLook");
 	$CloneStyle_Shield[.@slot] = getlook(LOOK_SHIELD);
-	$CloneStyle_Shoes[.@slot] = getlook(LOOK_SHOES);
-	$CloneStyle_Body[.@slot] = getlook(LOOK_BODY);
-	$CloneStyle_Floor[.@slot] = getlook(LOOK_FLOOR);
 	$CloneStyle_Robe[.@slot] = getlook(LOOK_ROBE);
 	$CloneStyle_Body2[.@slot] = getlook(LOOK_BODY2);
+	$CloneStyle_Shoes[.@slot] = 0;
+	$CloneStyle_Body[.@slot] = 0;
+	$CloneStyle_Floor[.@slot] = 0;
 	$CloneStyle_Option[.@slot] = 0;
 	$CloneStyle_Cart[.@slot] = checkcart();
 	$CloneStyle_CartType[.@slot] = 0;
@@ -174,28 +172,29 @@ S_SaveStyle:
 	else if ($CloneStyle_Cart[.@slot])
 		$CloneStyle_CartOption[.@slot] = 0x00000008;
 
-	$CloneStyle_EquipHeadTop[.@slot] = getequipid(EQI_HEAD_TOP);
-	$CloneStyle_EquipHeadMid[.@slot] = getequipid(EQI_HEAD_MID);
-	$CloneStyle_EquipHeadLow[.@slot] = getequipid(EQI_HEAD_LOW);
-	$CloneStyle_EquipArmor[.@slot] = getequipid(EQI_ARMOR);
-	$CloneStyle_EquipHandL[.@slot] = getequipid(EQI_HAND_L);
-	$CloneStyle_EquipHandR[.@slot] = getequipid(EQI_HAND_R);
-	$CloneStyle_EquipGarment[.@slot] = getequipid(EQI_GARMENT);
-	$CloneStyle_EquipShoes[.@slot] = getequipid(EQI_SHOES);
-	$CloneStyle_EquipAccL[.@slot] = getequipid(EQI_ACC_L);
-	$CloneStyle_EquipAccR[.@slot] = getequipid(EQI_ACC_R);
-	$CloneStyle_EquipCostumeTop[.@slot] = getequipid(EQI_COSTUME_HEAD_TOP);
-	$CloneStyle_EquipCostumeMid[.@slot] = getequipid(EQI_COSTUME_HEAD_MID);
-	$CloneStyle_EquipCostumeLow[.@slot] = getequipid(EQI_COSTUME_HEAD_LOW);
-	$CloneStyle_EquipCostumeGarment[.@slot] = getequipid(EQI_COSTUME_GARMENT);
-	$CloneStyle_EquipShadowArmor[.@slot] = getequipid(EQI_SHADOW_ARMOR);
-	$CloneStyle_EquipShadowWeapon[.@slot] = getequipid(EQI_SHADOW_WEAPON);
-	$CloneStyle_EquipShadowShield[.@slot] = getequipid(EQI_SHADOW_SHIELD);
-	$CloneStyle_EquipShadowShoes[.@slot] = getequipid(EQI_SHADOW_SHOES);
-	$CloneStyle_EquipShadowAccR[.@slot] = getequipid(EQI_SHADOW_ACC_R);
-	$CloneStyle_EquipShadowAccL[.@slot] = getequipid(EQI_SHADOW_ACC_L);
+	$CloneStyle_EquipHeadTop[.@slot] = 0;
+	$CloneStyle_EquipHeadMid[.@slot] = 0;
+	$CloneStyle_EquipHeadLow[.@slot] = 0;
+	$CloneStyle_EquipArmor[.@slot] = 0;
+	$CloneStyle_EquipHandL[.@slot] = 0;
+	$CloneStyle_EquipHandR[.@slot] = 0;
+	$CloneStyle_EquipGarment[.@slot] = 0;
+	$CloneStyle_EquipShoes[.@slot] = 0;
+	$CloneStyle_EquipAccL[.@slot] = 0;
+	$CloneStyle_EquipAccR[.@slot] = 0;
+	$CloneStyle_EquipCostumeTop[.@slot] = 0;
+	$CloneStyle_EquipCostumeMid[.@slot] = 0;
+	$CloneStyle_EquipCostumeLow[.@slot] = 0;
+	$CloneStyle_EquipCostumeGarment[.@slot] = 0;
+	$CloneStyle_EquipShadowArmor[.@slot] = 0;
+	$CloneStyle_EquipShadowWeapon[.@slot] = 0;
+	$CloneStyle_EquipShadowShield[.@slot] = 0;
+	$CloneStyle_EquipShadowShoes[.@slot] = 0;
+	$CloneStyle_EquipShadowAccR[.@slot] = 0;
+	$CloneStyle_EquipShadowAccL[.@slot] = 0;
 
 	callsub S_SaveSkills, .@slot;
+	$CloneStyle_Saved[.@slot] = 1;
 	return;
 
 S_SaveSkills:
