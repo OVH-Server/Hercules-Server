@@ -173,7 +173,7 @@ OnTimer2500:
 	}
 	end;
 
-OnTimer4700:
+OnTimer4550:
 	if (.CloneGID > 0 && .DummyGID > 0) {
 		setunitdata(.CloneGID, UDT_LOOKDIR, 6);
 		setunitdata(.DummyGID, UDT_HP, 2000000);
