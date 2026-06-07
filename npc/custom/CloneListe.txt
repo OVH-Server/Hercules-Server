@@ -169,7 +169,7 @@ OnTimer2500:
 		setunitdata(.CloneGID, UDT_LOOKDIR, 6);
 		setunitdata(.DummyGID, UDT_HP, 2000000);
 		unitattack(.CloneGID, .DummyGID);
-		specialeffect(EF_CASTSPIN, AREA, .CloneGID);
+		specialeffect(EF_BEGINSPELL, AREA, .CloneGID);
 	}
 	end;
 
@@ -179,6 +179,20 @@ OnTimer4700:
 		setunitdata(.DummyGID, UDT_HP, 2000000);
 		specialeffect(EF_LIGHTBOLT, AREA, .DummyGID);
 	}
+	stopnpctimer;
+	setnpctimer 0;
+	initnpctimer;
+	end;
+
+OnInteractStart:
+	stopnpctimer;
+	if (.CloneGID > 0) {
+		unitstop(.CloneGID);
+		setunitdata(.CloneGID, UDT_LOOKDIR, 6);
+	}
+	end;
+
+OnInteractEnd:
 	stopnpctimer;
 	setnpctimer 0;
 	initnpctimer;
@@ -201,6 +215,15 @@ S_SpawnDummy:
 	setunitdata(.DummyGID, UDT_MODE, MD_NOKNOCKBACK | MD_BOSS);
 	setunitdata(.DummyGID, UDT_AI, AI_NONE);
 	return;
+}
+
+prontera,174,134,0	script	CloneOttoTalkZone	FAKE_NPC,3,3,{
+OnTouch:
+	donpcevent "CloneListeSlot3::OnInteractStart";
+	mes "Test OTTO";
+	close2;
+	donpcevent "CloneListeSlot3::OnInteractEnd";
+	end;
 }
 
 prontera,174,145,0	script	CloneEndTalkZones	FAKE_NPC,6,5,{
