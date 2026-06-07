@@ -164,13 +164,12 @@ OnInit:
 	initnpctimer;
 	end;
 
-OnTimer1200:
+OnTimer2500:
 	if (.CloneGID > 0 && .DummyGID > 0) {
 		setunitdata(.CloneGID, UDT_LOOKDIR, 6);
 		setunitdata(.DummyGID, UDT_HP, 2000000);
 		unitattack(.CloneGID, .DummyGID);
 		unitskilluseid(.CloneGID, MG_LIGHTNINGBOLT, 10, .DummyGID);
-		areamobuseskill("prontera", .CloneX, .CloneY, 0, 1905, MG_LIGHTNINGBOLT, 10, 0, 1, e_no1, 1);
 		specialeffect(EF_LIGHTBOLT, AREA, .DummyGID);
 	}
 	stopnpctimer;
