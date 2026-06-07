@@ -16,7 +16,7 @@
 //=    relancer la boucle normale.
 //= 6) Pour ajouter un clone: dupliquer un bloc CloneListeSlotX, changer
 //=    CloneSlot, nom, StartX/StartY, EndX/EndY, puis ajouter la logique dans
-//=    CloneEndTalkZones si une interaction de proximite est souhaitee.
+//=    CloneVillageTalkZones si une interaction de proximite est souhaitee.
 //============================================================
 
 -	script	CloneListeSlot1	-1,{
@@ -217,6 +217,152 @@ S_SpawnDummy:
 	return;
 }
 
+-	script	CloneListeSlot4	-1,{
+	end;
+
+OnInit:
+	killmonster "prontera","CloneListeSlot4::OnCloneDead";
+
+	.CloneSlot = 4;
+	.StartX = 173;
+	.StartY = 141;
+	.EndX = 170;
+	.EndY = 141;
+
+	.CloneGID = monster("prontera", .StartX, .StartY, "Guard Adam", 1905, 1, "CloneListeSlot4::OnCloneDead");
+	callfunc "F_ApplyCloneStyle", .CloneGID, .CloneSlot;
+	setunitdata(.CloneGID, UDT_SPEED, 120);
+	setunitdata(.CloneGID, UDT_MODE, MD_NOKNOCKBACK);
+	setunitdata(.CloneGID, UDT_AI, AI_NONE);
+	setunitdata(.CloneGID, UDT_LOOKDIR, 2);
+	setunitdata(.CloneGID, UDT_SP, 2000);
+	setunitdata(.CloneGID, UDT_MAXSP, 2000);
+
+	stopnpctimer;
+	setnpctimer 0;
+	initnpctimer;
+	end;
+
+OnTimer500:
+	setunitdata(.CloneGID, UDT_WALKTOXY, .EndX, .EndY);
+	end;
+
+OnTimer3000:
+	setunitdata(.CloneGID, UDT_WALKTOXY, .StartX, .StartY);
+	end;
+
+OnTimer5500:
+	stopnpctimer;
+	setnpctimer 0;
+	initnpctimer;
+	end;
+
+OnInteractStart:
+	stopnpctimer;
+	setunitdata(.CloneGID, UDT_WALKTOXY, .EndX, .EndY);
+	addtimer 1600, "CloneListeSlot4::OnInteractCast";
+	end;
+
+OnInteractCast:
+	if (.CloneGID > 0) {
+		.@endure_lv = callfunc("F_GetCloneSkillLevel", .CloneSlot, SM_ENDURE);
+		if (.@endure_lv < 1)
+			.@endure_lv = 1;
+		unitskilluseid(.CloneGID, SM_ENDURE, .@endure_lv, .CloneGID);
+	}
+	end;
+
+OnInteractEnd:
+	deltimer "CloneListeSlot4::OnInteractCast";
+	stopnpctimer;
+	setnpctimer 0;
+	initnpctimer;
+	end;
+
+OnCloneDead:
+	stopnpctimer;
+	setnpctimer 0;
+	donpcevent "CloneListeSlot4::OnInit";
+	end;
+}
+
+-	script	CloneListeSlot5	-1,{
+	end;
+
+OnInit:
+	killmonster "prontera","CloneListeSlot5::OnCloneDead";
+
+	.CloneSlot = 5;
+	.CloneX = 175;
+	.CloneY = 141;
+
+	.CloneGID = monster("prontera", .CloneX, .CloneY, "Risa", 1905, 1, "CloneListeSlot5::OnCloneDead");
+	callfunc "F_ApplyCloneStyle", .CloneGID, .CloneSlot;
+	setunitdata(.CloneGID, UDT_SPEED, 120);
+	setunitdata(.CloneGID, UDT_MODE, MD_NOKNOCKBACK);
+	setunitdata(.CloneGID, UDT_AI, AI_NONE);
+	setunitdata(.CloneGID, UDT_LOOKDIR, 2);
+	setunitdata(.CloneGID, UDT_ATKRANGE, 9);
+	setunitdata(.CloneGID, UDT_MATKMIN, 500);
+	setunitdata(.CloneGID, UDT_MATKMAX, 800);
+	setunitdata(.CloneGID, UDT_SP, 2000);
+	setunitdata(.CloneGID, UDT_MAXSP, 2000);
+
+	stopnpctimer;
+	setnpctimer 0;
+	initnpctimer;
+	end;
+
+OnTimer2500:
+	if (.CloneGID > 0) {
+		.@adam_gid = getvariableofnpc(.CloneGID, "CloneListeSlot4");
+		if (.@adam_gid > 0) {
+			.@heal_lv = callfunc("F_GetCloneSkillLevel", .CloneSlot, AL_HEAL);
+			if (.@heal_lv < 1)
+				.@heal_lv = 10;
+			setunitdata(.CloneGID, UDT_LOOKDIR, 2);
+			unitskilluseid(.CloneGID, AL_HEAL, .@heal_lv, .@adam_gid);
+			specialeffect(EF_HEAL2, AREA, .@adam_gid);
+		}
+	}
+	stopnpctimer;
+	setnpctimer 0;
+	initnpctimer;
+	end;
+
+OnInteractStart:
+	stopnpctimer;
+	if (.CloneGID > 0) {
+		getmapxy(.@map$, .@x, .@y, UNITTYPE_PC);
+		if (.@x > .CloneX)
+			setunitdata(.CloneGID, UDT_LOOKDIR, 6);
+		else if (.@x < .CloneX)
+			setunitdata(.CloneGID, UDT_LOOKDIR, 2);
+		else if (.@y > .CloneY)
+			setunitdata(.CloneGID, UDT_LOOKDIR, 0);
+		else
+			setunitdata(.CloneGID, UDT_LOOKDIR, 4);
+		.@heal_lv = callfunc("F_GetCloneSkillLevel", .CloneSlot, AL_HEAL);
+		if (.@heal_lv < 1)
+			.@heal_lv = 10;
+		unitskilluseid(.CloneGID, AL_HEAL, .@heal_lv, playerattached());
+		specialeffect(EF_HEAL2, AREA, playerattached());
+	}
+	end;
+
+OnInteractEnd:
+	stopnpctimer;
+	setnpctimer 0;
+	initnpctimer;
+	end;
+
+OnCloneDead:
+	stopnpctimer;
+	setnpctimer 0;
+	donpcevent "CloneListeSlot5::OnInit";
+	end;
+}
+
 prontera,174,134,0	script	CloneOttoTalkZone	FAKE_NPC,3,3,{
 OnTouch:
 	donpcevent "CloneListeSlot3::OnInteractStart";
@@ -226,9 +372,11 @@ OnTouch:
 	end;
 }
 
-prontera,174,145,0	script	CloneEndTalkZones	FAKE_NPC,6,5,{
+prontera,172,143,0	script	CloneVillageTalkZones	FAKE_NPC,7,7,{
 OnTouch:
 	getmapxy(.@map$, .@x, .@y, UNITTYPE_PC);
+	.@best = 0;
+	.@best_dist = 999;
 
 	.@cesar_dx = .@x - 172;
 	if (.@cesar_dx < 0)
@@ -244,18 +392,63 @@ OnTouch:
 	if (.@moka_dy < 0)
 		.@moka_dy = -.@moka_dy;
 
-	if (.@cesar_dx <= 5 && .@cesar_dy <= 5 && (.@cesar_dx + .@cesar_dy) <= (.@moka_dx + .@moka_dy)) {
+	.@adam_dx = .@x - 170;
+	if (.@adam_dx < 0)
+		.@adam_dx = -.@adam_dx;
+	.@adam_dy = .@y - 141;
+	if (.@adam_dy < 0)
+		.@adam_dy = -.@adam_dy;
+
+	.@risa_dx = .@x - 175;
+	if (.@risa_dx < 0)
+		.@risa_dx = -.@risa_dx;
+	.@risa_dy = .@y - 141;
+	if (.@risa_dy < 0)
+		.@risa_dy = -.@risa_dy;
+
+	if (.@cesar_dx <= 5 && .@cesar_dy <= 5) {
+		.@best = 1;
+		.@best_dist = .@cesar_dx + .@cesar_dy;
+	}
+	if (.@moka_dx <= 5 && .@moka_dy <= 5 && (.@moka_dx + .@moka_dy) < .@best_dist) {
+		.@best = 2;
+		.@best_dist = .@moka_dx + .@moka_dy;
+	}
+	if (.@adam_dx <= 3 && .@adam_dy <= 3 && (.@adam_dx + .@adam_dy) < .@best_dist) {
+		.@best = 4;
+		.@best_dist = .@adam_dx + .@adam_dy;
+	}
+	if (.@risa_dx <= 3 && .@risa_dy <= 3 && (.@risa_dx + .@risa_dy) < .@best_dist) {
+		.@best = 5;
+		.@best_dist = .@risa_dx + .@risa_dy;
+	}
+
+	if (.@best == 1) {
 		donpcevent "CloneListeSlot1::OnInteractStart";
 		mes "TEST Cesar";
 		close2;
 		donpcevent "CloneListeSlot1::OnInteractEnd";
 		end;
 	}
-	if (.@moka_dx <= 5 && .@moka_dy <= 5) {
+	if (.@best == 2) {
 		donpcevent "CloneListeSlot2::OnInteractStart";
 		mes "TEST Moka";
 		close2;
 		donpcevent "CloneListeSlot2::OnInteractEnd";
+		end;
+	}
+	if (.@best == 4) {
+		donpcevent "CloneListeSlot4::OnInteractStart";
+		mes "Test ADAM";
+		close2;
+		donpcevent "CloneListeSlot4::OnInteractEnd";
+		end;
+	}
+	if (.@best == 5) {
+		donpcevent "CloneListeSlot5::OnInteractStart";
+		mes "Test Risa";
+		close2;
+		donpcevent "CloneListeSlot5::OnInteractEnd";
 		end;
 	}
 	end;

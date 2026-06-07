@@ -2,6 +2,8 @@
 //= Clone Style Recorder
 //= Sauvegarde 10 fiches de personnages pour les reutiliser
 //= plus tard sur des mobs/clones scripts.
+//= Les skills sont sauvegardes par slot, puis reutilisables via
+//= F_GetCloneSkillLevel(<slot>, <skill id>) dans les scripts de comportement.
 //============================================================
 
 prontera,164,160,4	script	Clone System	1_M_01,{
@@ -84,7 +86,7 @@ S_SaveStyle:
 	.@style_name$ = getarg(1);
 
 	$CloneStyle_Saved[.@slot] = 1;
-	$CloneStyle_SaveVersion[.@slot] = 4;
+	$CloneStyle_SaveVersion[.@slot] = 5;
 	$CloneStyle_Name$[.@slot] = .@style_name$;
 	$CloneStyle_SourceName$[.@slot] = strcharinfo(PC_NAME);
 	$CloneStyle_SourceCID[.@slot] = getcharid(CHAR_ID_CHAR);
@@ -97,6 +99,13 @@ S_SaveStyle:
 	$CloneStyle_BaseJob[.@slot] = BaseJob;
 	$CloneStyle_BaseClass[.@slot] = BaseClass;
 	$CloneStyle_Upper[.@slot] = Upper;
+	$CloneStyle_BaseExp[.@slot] = BaseExp;
+	$CloneStyle_JobExp[.@slot] = JobExp;
+	$CloneStyle_StatusPoint[.@slot] = StatusPoint;
+	$CloneStyle_SkillPoint[.@slot] = SkillPoint;
+	$CloneStyle_Karma[.@slot] = Karma;
+	$CloneStyle_Manner[.@slot] = Manner;
+	$CloneStyle_Zeny[.@slot] = Zeny;
 
 	$CloneStyle_Hp[.@slot] = Hp;
 	$CloneStyle_MaxHp[.@slot] = MaxHp;
@@ -123,7 +132,9 @@ S_SaveStyle:
 	$CloneStyle_Crit[.@slot] = readparam(bCritical);
 	$CloneStyle_EleType[.@slot] = readparam(bDefEle);
 	$CloneStyle_EleLevel[.@slot] = 1;
+	$CloneStyle_Size[.@slot] = Upper == 2 ? SZ_SMALL : SZ_MEDIUM;
 
+	$CloneStyle_BaseLook[.@slot] = getlook(LOOK_BASE);
 	$CloneStyle_Hair[.@slot] = getlook(LOOK_HAIR);
 	$CloneStyle_HairColor[.@slot] = getlook(LOOK_HAIR_COLOR);
 	$CloneStyle_ClothColor[.@slot] = getlook(LOOK_CLOTHES_COLOR);
@@ -132,8 +143,12 @@ S_SaveStyle:
 	$CloneStyle_HeadBottom[.@slot] = getlook(LOOK_HEAD_BOTTOM);
 	$CloneStyle_Weapon[.@slot] = callfunc("F_GetCloneWeaponLook");
 	$CloneStyle_Shield[.@slot] = getlook(LOOK_SHIELD);
+	$CloneStyle_Shoes[.@slot] = getlook(LOOK_SHOES);
+	$CloneStyle_Body[.@slot] = getlook(LOOK_BODY);
+	$CloneStyle_Floor[.@slot] = getlook(LOOK_FLOOR);
 	$CloneStyle_Robe[.@slot] = getlook(LOOK_ROBE);
 	$CloneStyle_Body2[.@slot] = getlook(LOOK_BODY2);
+	$CloneStyle_Option[.@slot] = 0;
 	$CloneStyle_Cart[.@slot] = checkcart();
 	$CloneStyle_CartType[.@slot] = 0;
 	$CloneStyle_CartOption[.@slot] = 0;
@@ -168,6 +183,31 @@ S_SaveStyle:
 	$CloneStyle_EquipCostumeMid[.@slot] = getequipid(EQI_COSTUME_HEAD_MID);
 	$CloneStyle_EquipCostumeLow[.@slot] = getequipid(EQI_COSTUME_HEAD_LOW);
 	$CloneStyle_EquipCostumeGarment[.@slot] = getequipid(EQI_COSTUME_GARMENT);
+	$CloneStyle_EquipShadowArmor[.@slot] = getequipid(EQI_SHADOW_ARMOR);
+	$CloneStyle_EquipShadowWeapon[.@slot] = getequipid(EQI_SHADOW_WEAPON);
+	$CloneStyle_EquipShadowShield[.@slot] = getequipid(EQI_SHADOW_SHIELD);
+	$CloneStyle_EquipShadowShoes[.@slot] = getequipid(EQI_SHADOW_SHOES);
+	$CloneStyle_EquipShadowAccR[.@slot] = getequipid(EQI_SHADOW_ACC_R);
+	$CloneStyle_EquipShadowAccL[.@slot] = getequipid(EQI_SHADOW_ACC_L);
+
+	callsub S_SaveSkills, .@slot;
+	return;
+
+S_SaveSkills:
+	.@slot = getarg(0);
+	.@base = .@slot * 1000;
+	for (.@i = 0; .@i < 1000; .@i++) {
+		$CloneStyle_SkillId[.@base + .@i] = 0;
+		$CloneStyle_SkillLv[.@base + .@i] = 0;
+		$CloneStyle_SkillFlag[.@base + .@i] = 0;
+	}
+	getskilllist();
+	$CloneStyle_SkillCount[.@slot] = @skilllist_count;
+	for (.@i = 0; .@i < @skilllist_count && .@i < 1000; .@i++) {
+		$CloneStyle_SkillId[.@base + .@i] = @skilllist_id[.@i];
+		$CloneStyle_SkillLv[.@base + .@i] = @skilllist_lv[.@i];
+		$CloneStyle_SkillFlag[.@base + .@i] = @skilllist_flag[.@i];
+	}
 	return;
 
 S_ClearStyle:
@@ -186,6 +226,13 @@ S_ClearStyle:
 	$CloneStyle_BaseJob[.@slot] = 0;
 	$CloneStyle_BaseClass[.@slot] = 0;
 	$CloneStyle_Upper[.@slot] = 0;
+	$CloneStyle_BaseExp[.@slot] = 0;
+	$CloneStyle_JobExp[.@slot] = 0;
+	$CloneStyle_StatusPoint[.@slot] = 0;
+	$CloneStyle_SkillPoint[.@slot] = 0;
+	$CloneStyle_Karma[.@slot] = 0;
+	$CloneStyle_Manner[.@slot] = 0;
+	$CloneStyle_Zeny[.@slot] = 0;
 	$CloneStyle_Hp[.@slot] = 0;
 	$CloneStyle_MaxHp[.@slot] = 0;
 	$CloneStyle_Sp[.@slot] = 0;
@@ -209,6 +256,8 @@ S_ClearStyle:
 	$CloneStyle_Crit[.@slot] = 0;
 	$CloneStyle_EleType[.@slot] = 0;
 	$CloneStyle_EleLevel[.@slot] = 0;
+	$CloneStyle_Size[.@slot] = 0;
+	$CloneStyle_BaseLook[.@slot] = 0;
 	$CloneStyle_Hair[.@slot] = 0;
 	$CloneStyle_HairColor[.@slot] = 0;
 	$CloneStyle_ClothColor[.@slot] = 0;
@@ -217,8 +266,12 @@ S_ClearStyle:
 	$CloneStyle_HeadBottom[.@slot] = 0;
 	$CloneStyle_Weapon[.@slot] = 0;
 	$CloneStyle_Shield[.@slot] = 0;
+	$CloneStyle_Shoes[.@slot] = 0;
+	$CloneStyle_Body[.@slot] = 0;
+	$CloneStyle_Floor[.@slot] = 0;
 	$CloneStyle_Robe[.@slot] = 0;
 	$CloneStyle_Body2[.@slot] = 0;
+	$CloneStyle_Option[.@slot] = 0;
 	$CloneStyle_Cart[.@slot] = 0;
 	$CloneStyle_CartType[.@slot] = 0;
 	$CloneStyle_CartOption[.@slot] = 0;
@@ -236,6 +289,19 @@ S_ClearStyle:
 	$CloneStyle_EquipCostumeMid[.@slot] = 0;
 	$CloneStyle_EquipCostumeLow[.@slot] = 0;
 	$CloneStyle_EquipCostumeGarment[.@slot] = 0;
+	$CloneStyle_EquipShadowArmor[.@slot] = 0;
+	$CloneStyle_EquipShadowWeapon[.@slot] = 0;
+	$CloneStyle_EquipShadowShield[.@slot] = 0;
+	$CloneStyle_EquipShadowShoes[.@slot] = 0;
+	$CloneStyle_EquipShadowAccR[.@slot] = 0;
+	$CloneStyle_EquipShadowAccL[.@slot] = 0;
+	$CloneStyle_SkillCount[.@slot] = 0;
+	.@base = .@slot * 1000;
+	for (.@i = 0; .@i < 1000; .@i++) {
+		$CloneStyle_SkillId[.@base + .@i] = 0;
+		$CloneStyle_SkillLv[.@base + .@i] = 0;
+		$CloneStyle_SkillFlag[.@base + .@i] = 0;
+	}
 	return;
 
 S_ShowStyles:
@@ -243,11 +309,13 @@ S_ShowStyles:
 	for (.@i = 1; .@i <= .MaxSlots; .@i++) {
 		if ($CloneStyle_Saved[.@i]) {
 			mes "Slot " + .@i + ": " + $CloneStyle_Name$[.@i];
+			mes "  Version sauvegarde: " + $CloneStyle_SaveVersion[.@i];
 			mes "  Source: " + $CloneStyle_SourceName$[.@i];
 			mes "  Classe: " + jobname($CloneStyle_Class[.@i]) + " " + $CloneStyle_BaseLevel[.@i] + "/" + $CloneStyle_JobLevel[.@i];
 			mes "  Stats: " + $CloneStyle_Str[.@i] + "/" + $CloneStyle_Agi[.@i] + "/" + $CloneStyle_Vit[.@i] + "/" + $CloneStyle_Int[.@i] + "/" + $CloneStyle_Dex[.@i] + "/" + $CloneStyle_Luk[.@i];
 			mes "  HP/SP: " + $CloneStyle_MaxHp[.@i] + "/" + $CloneStyle_MaxSp[.@i];
 			mes "  Arme sprite: " + $CloneStyle_Weapon[.@i];
+			mes "  Skills: " + $CloneStyle_SkillCount[.@i];
 			if ($CloneStyle_Cart[.@i])
 				mes "  Cart: oui, type " + max(1, $CloneStyle_CartType[.@i]);
 			else
@@ -276,6 +344,7 @@ function	script	F_ApplyCloneStyle	{
 
 	callfunc "F_ApplyCloneLook", .@gid, .@slot;
 
+	setunitdata(.@gid, UDT_SIZE, max(SZ_SMALL, min(SZ_BIG, $CloneStyle_Size[.@slot])));
 	setunitdata(.@gid, UDT_LEVEL, max(1, $CloneStyle_BaseLevel[.@slot]));
 	setunitdata(.@gid, UDT_MAXHP, max(1, $CloneStyle_MaxHp[.@slot]));
 	setunitdata(.@gid, UDT_HP, max(1, $CloneStyle_MaxHp[.@slot]));
@@ -301,6 +370,7 @@ function	script	F_ApplyCloneStyle	{
 	setunitdata(.@gid, UDT_RACE, RC_DemiHuman);
 	setunitdata(.@gid, UDT_ELETYPE, max(0, $CloneStyle_EleType[.@slot]));
 	setunitdata(.@gid, UDT_ELELEVEL, max(1, $CloneStyle_EleLevel[.@slot]));
+	setunitdata(.@gid, UDT_OPTIONS, getunitdata(.@gid, UDT_OPTIONS) | max(0, $CloneStyle_Option[.@slot]));
 	return 1;
 }
 
@@ -367,4 +437,40 @@ function	script	F_GetCloneWeaponLook	{
 	}
 
 	return 0;
+}
+
+function	script	F_GetCloneSkillLevel	{
+	.@slot = getarg(0);
+	.@skill_id = getarg(1);
+
+	if (.@slot < 1 || .@slot > 10)
+		return 0;
+	if (.@skill_id <= 0)
+		return 0;
+	if (!$CloneStyle_Saved[.@slot])
+		return 0;
+
+	.@base = .@slot * 1000;
+	for (.@i = 0; .@i < $CloneStyle_SkillCount[.@slot] && .@i < 1000; .@i++) {
+		if ($CloneStyle_SkillId[.@base + .@i] == .@skill_id)
+			return $CloneStyle_SkillLv[.@base + .@i];
+	}
+
+	return 0;
+}
+
+function	script	F_GetCloneSkillIdByIndex	{
+	.@slot = getarg(0);
+	.@index = getarg(1);
+
+	if (.@slot < 1 || .@slot > 10)
+		return 0;
+	if (.@index < 0 || .@index >= 1000)
+		return 0;
+	if (!$CloneStyle_Saved[.@slot])
+		return 0;
+	if (.@index >= $CloneStyle_SkillCount[.@slot])
+		return 0;
+
+	return $CloneStyle_SkillId[(.@slot * 1000) + .@index];
 }
