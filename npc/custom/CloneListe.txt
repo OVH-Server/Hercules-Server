@@ -169,7 +169,7 @@ OnTimer2500:
 		setunitdata(.CloneGID, UDT_LOOKDIR, 6);
 		setunitdata(.DummyGID, UDT_HP, 2000000);
 		unitattack(.CloneGID, .DummyGID);
-		specialeffect(EF_BEGINSPELL, AREA, .CloneGID);
+		unitskilluseid(.CloneGID, MG_LIGHTNINGBOLT, 3, .DummyGID);
 	}
 	end;
 
