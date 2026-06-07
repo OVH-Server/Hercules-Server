@@ -84,7 +84,7 @@ S_SaveStyle:
 	.@style_name$ = getarg(1);
 
 	$CloneStyle_Saved[.@slot] = 1;
-	$CloneStyle_SaveVersion[.@slot] = 3;
+	$CloneStyle_SaveVersion[.@slot] = 4;
 	$CloneStyle_Name$[.@slot] = .@style_name$;
 	$CloneStyle_SourceName$[.@slot] = strcharinfo(PC_NAME);
 	$CloneStyle_SourceCID[.@slot] = getcharid(CHAR_ID_CHAR);
@@ -130,7 +130,7 @@ S_SaveStyle:
 	$CloneStyle_HeadTop[.@slot] = getlook(LOOK_HEAD_TOP);
 	$CloneStyle_HeadMid[.@slot] = getlook(LOOK_HEAD_MID);
 	$CloneStyle_HeadBottom[.@slot] = getlook(LOOK_HEAD_BOTTOM);
-	$CloneStyle_Weapon[.@slot] = getlook(LOOK_WEAPON);
+	$CloneStyle_Weapon[.@slot] = callfunc("F_GetCloneWeaponLook");
 	$CloneStyle_Shield[.@slot] = getlook(LOOK_SHIELD);
 	$CloneStyle_Robe[.@slot] = getlook(LOOK_ROBE);
 	$CloneStyle_Body2[.@slot] = getlook(LOOK_BODY2);
@@ -247,6 +247,7 @@ S_ShowStyles:
 			mes "  Classe: " + jobname($CloneStyle_Class[.@i]) + " " + $CloneStyle_BaseLevel[.@i] + "/" + $CloneStyle_JobLevel[.@i];
 			mes "  Stats: " + $CloneStyle_Str[.@i] + "/" + $CloneStyle_Agi[.@i] + "/" + $CloneStyle_Vit[.@i] + "/" + $CloneStyle_Int[.@i] + "/" + $CloneStyle_Dex[.@i] + "/" + $CloneStyle_Luk[.@i];
 			mes "  HP/SP: " + $CloneStyle_MaxHp[.@i] + "/" + $CloneStyle_MaxSp[.@i];
+			mes "  Arme sprite: " + $CloneStyle_Weapon[.@i];
 			if ($CloneStyle_Cart[.@i])
 				mes "  Cart: oui, type " + max(1, $CloneStyle_CartType[.@i]);
 			else
@@ -322,7 +323,7 @@ function	script	F_ApplyCloneLook	{
 	setunitdata(.@gid, UDT_HEADTOP, $CloneStyle_HeadTop[.@slot]);
 	setunitdata(.@gid, UDT_HEADMIDDLE, $CloneStyle_HeadMid[.@slot]);
 	setunitdata(.@gid, UDT_HEADBOTTOM, $CloneStyle_HeadBottom[.@slot]);
-	setunitdata(.@gid, UDT_WEAPON, $CloneStyle_Weapon[.@slot]);
+	setunitdata(.@gid, UDT_WEAPON, max(0, $CloneStyle_Weapon[.@slot]));
 	setunitdata(.@gid, UDT_SHIELD, $CloneStyle_Shield[.@slot]);
 	if ($CloneStyle_Cart[.@slot]) {
 		setunitdata(.@gid, UDT_OPTIONS, getunitdata(.@gid, UDT_OPTIONS) | max(0x00000008, $CloneStyle_CartOption[.@slot]));
@@ -338,4 +339,32 @@ function	script	F_ApplyCloneLook	{
 		setunitdata(.@gid, UDT_BODY2, $CloneStyle_Body2[.@slot]);
 	}
 	return 1;
+}
+
+function	script	F_GetCloneWeaponLook	{
+	.@weapon = getlook(LOOK_WEAPON);
+	if (.@weapon > 0)
+		return .@weapon;
+
+	.@item = getequipid(EQI_HAND_R);
+	if (.@item > 0) {
+		.@weapon = getiteminfo(.@item, ITEMINFO_VIEWSPRITE);
+		if (.@weapon > 0)
+			return .@weapon;
+		.@weapon = getiteminfo(.@item, ITEMINFO_VIEWID);
+		if (.@weapon > 0)
+			return .@weapon;
+	}
+
+	.@item = getequipid(EQI_HAND_L);
+	if (.@item > 0 && getiteminfo(.@item, ITEMINFO_TYPE) == IT_WEAPON) {
+		.@weapon = getiteminfo(.@item, ITEMINFO_VIEWSPRITE);
+		if (.@weapon > 0)
+			return .@weapon;
+		.@weapon = getiteminfo(.@item, ITEMINFO_VIEWID);
+		if (.@weapon > 0)
+			return .@weapon;
+	}
+
+	return 0;
 }

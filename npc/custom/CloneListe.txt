@@ -146,7 +146,7 @@ OnInit:
 
 	callsub S_SpawnDummy;
 
-	.CloneGID = monster("prontera", .CloneX, .CloneY, "Hunter Spiach", 1905, 1, "CloneListeSlot3::OnCloneDead");
+	.CloneGID = monster("prontera", .CloneX, .CloneY, "Magician Otto", 1905, 1, "CloneListeSlot3::OnCloneDead");
 	callfunc "F_ApplyCloneStyle", .CloneGID, .CloneSlot;
 	setunitdata(.CloneGID, UDT_SPEED, 120);
 	setunitdata(.CloneGID, UDT_MODE, MD_NOKNOCKBACK | MD_CANATTACK);
@@ -169,7 +169,13 @@ OnTimer2500:
 		setunitdata(.CloneGID, UDT_LOOKDIR, 6);
 		setunitdata(.DummyGID, UDT_HP, 2000000);
 		unitattack(.CloneGID, .DummyGID);
-		unitskilluseid(.CloneGID, MG_LIGHTNINGBOLT, 10, .DummyGID);
+	}
+	end;
+
+OnTimer4700:
+	if (.CloneGID > 0 && .DummyGID > 0) {
+		setunitdata(.CloneGID, UDT_LOOKDIR, 6);
+		setunitdata(.DummyGID, UDT_HP, 2000000);
 		specialeffect(EF_LIGHTBOLT, AREA, .DummyGID);
 	}
 	stopnpctimer;
