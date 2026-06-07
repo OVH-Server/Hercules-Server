@@ -89,7 +89,8 @@ S_SaveStyle:
 	.@slot = getarg(0);
 	.@style_name$ = getarg(1);
 
-	$CloneStyle_SaveVersion[.@slot] = 6;
+	$CloneStyle_Saved[.@slot] = 1;
+	$CloneStyle_SaveVersion[.@slot] = 4;
 	$CloneStyle_Name$[.@slot] = .@style_name$;
 	$CloneStyle_SourceName$[.@slot] = strcharinfo(PC_NAME);
 	$CloneStyle_SourceCID[.@slot] = getcharid(CHAR_ID_CHAR);
@@ -99,32 +100,12 @@ S_SaveStyle:
 	$CloneStyle_Sex[.@slot] = Sex;
 	$CloneStyle_BaseLevel[.@slot] = BaseLevel;
 	$CloneStyle_JobLevel[.@slot] = JobLevel;
-	$CloneStyle_BaseJob[.@slot] = BaseJob;
-	$CloneStyle_BaseClass[.@slot] = BaseClass;
-	$CloneStyle_Upper[.@slot] = Upper;
-	$CloneStyle_BaseExp[.@slot] = BaseExp;
-	$CloneStyle_JobExp[.@slot] = JobExp;
-	$CloneStyle_StatusPoint[.@slot] = StatusPoint;
-	$CloneStyle_SkillPoint[.@slot] = SkillPoint;
-	$CloneStyle_Karma[.@slot] = Karma;
-	$CloneStyle_Manner[.@slot] = Manner;
-	$CloneStyle_Zeny[.@slot] = Zeny;
-
-	$CloneStyle_Hp[.@slot] = Hp;
 	$CloneStyle_MaxHp[.@slot] = MaxHp;
-	$CloneStyle_Sp[.@slot] = Sp;
 	$CloneStyle_MaxSp[.@slot] = MaxSp;
 
-	$CloneStyle_Str[.@slot] = readparam(bStr);
-	$CloneStyle_Agi[.@slot] = readparam(bAgi);
-	$CloneStyle_Vit[.@slot] = readparam(bVit);
-	$CloneStyle_Int[.@slot] = readparam(bInt);
-	$CloneStyle_Dex[.@slot] = readparam(bDex);
-	$CloneStyle_Luk[.@slot] = readparam(bLuk);
-
 	$CloneStyle_AtkRange[.@slot] = 1;
-	$CloneStyle_AtkMin[.@slot] = 1;
-	$CloneStyle_AtkMax[.@slot] = 1;
+	$CloneStyle_AtkMin[.@slot] = 10;
+	$CloneStyle_AtkMax[.@slot] = 10;
 	$CloneStyle_MatkMin[.@slot] = 0;
 	$CloneStyle_MatkMax[.@slot] = 0;
 	$CloneStyle_Def[.@slot] = 0;
@@ -135,9 +116,8 @@ S_SaveStyle:
 	$CloneStyle_Crit[.@slot] = 0;
 	$CloneStyle_EleType[.@slot] = Ele_Neutral;
 	$CloneStyle_EleLevel[.@slot] = 1;
-	$CloneStyle_Size[.@slot] = Upper == 2 ? Size_Small : Size_Medium;
+	$CloneStyle_Size[.@slot] = Size_Medium;
 
-	$CloneStyle_BaseLook[.@slot] = getlook(LOOK_BASE);
 	$CloneStyle_Hair[.@slot] = getlook(LOOK_HAIR);
 	$CloneStyle_HairColor[.@slot] = getlook(LOOK_HAIR_COLOR);
 	$CloneStyle_ClothColor[.@slot] = getlook(LOOK_CLOTHES_COLOR);
@@ -172,29 +152,7 @@ S_SaveStyle:
 	else if ($CloneStyle_Cart[.@slot])
 		$CloneStyle_CartOption[.@slot] = 0x00000008;
 
-	$CloneStyle_EquipHeadTop[.@slot] = 0;
-	$CloneStyle_EquipHeadMid[.@slot] = 0;
-	$CloneStyle_EquipHeadLow[.@slot] = 0;
-	$CloneStyle_EquipArmor[.@slot] = 0;
-	$CloneStyle_EquipHandL[.@slot] = 0;
-	$CloneStyle_EquipHandR[.@slot] = 0;
-	$CloneStyle_EquipGarment[.@slot] = 0;
-	$CloneStyle_EquipShoes[.@slot] = 0;
-	$CloneStyle_EquipAccL[.@slot] = 0;
-	$CloneStyle_EquipAccR[.@slot] = 0;
-	$CloneStyle_EquipCostumeTop[.@slot] = 0;
-	$CloneStyle_EquipCostumeMid[.@slot] = 0;
-	$CloneStyle_EquipCostumeLow[.@slot] = 0;
-	$CloneStyle_EquipCostumeGarment[.@slot] = 0;
-	$CloneStyle_EquipShadowArmor[.@slot] = 0;
-	$CloneStyle_EquipShadowWeapon[.@slot] = 0;
-	$CloneStyle_EquipShadowShield[.@slot] = 0;
-	$CloneStyle_EquipShadowShoes[.@slot] = 0;
-	$CloneStyle_EquipShadowAccR[.@slot] = 0;
-	$CloneStyle_EquipShadowAccL[.@slot] = 0;
-
 	callsub S_SaveSkills, .@slot;
-	$CloneStyle_Saved[.@slot] = 1;
 	return;
 
 S_SaveSkills:
@@ -354,27 +312,12 @@ function	script	F_ApplyCloneStyle	{
 	setunitdata(.@gid, UDT_HP, max(1, $CloneStyle_MaxHp[.@slot]));
 	setunitdata(.@gid, UDT_MAXSP, max(0, $CloneStyle_MaxSp[.@slot]));
 	setunitdata(.@gid, UDT_SP, max(0, $CloneStyle_MaxSp[.@slot]));
-	setunitdata(.@gid, UDT_STR, max(0, $CloneStyle_Str[.@slot]));
-	setunitdata(.@gid, UDT_AGI, max(0, $CloneStyle_Agi[.@slot]));
-	setunitdata(.@gid, UDT_VIT, max(0, $CloneStyle_Vit[.@slot]));
-	setunitdata(.@gid, UDT_INT, max(0, $CloneStyle_Int[.@slot]));
-	setunitdata(.@gid, UDT_DEX, max(0, $CloneStyle_Dex[.@slot]));
-	setunitdata(.@gid, UDT_LUK, max(0, $CloneStyle_Luk[.@slot]));
 	setunitdata(.@gid, UDT_ATKRANGE, max(1, $CloneStyle_AtkRange[.@slot]));
 	setunitdata(.@gid, UDT_ATKMIN, max(1, $CloneStyle_AtkMin[.@slot]));
 	setunitdata(.@gid, UDT_ATKMAX, max($CloneStyle_AtkMin[.@slot], $CloneStyle_AtkMax[.@slot]));
-	setunitdata(.@gid, UDT_MATKMIN, max(0, $CloneStyle_MatkMin[.@slot]));
-	setunitdata(.@gid, UDT_MATKMAX, max($CloneStyle_MatkMin[.@slot], $CloneStyle_MatkMax[.@slot]));
-	setunitdata(.@gid, UDT_DEF, max(0, $CloneStyle_Def[.@slot]));
-	setunitdata(.@gid, UDT_MDEF, max(0, $CloneStyle_Mdef[.@slot]));
-	setunitdata(.@gid, UDT_HIT, max(0, $CloneStyle_Hit[.@slot]));
-	setunitdata(.@gid, UDT_FLEE, max(0, $CloneStyle_Flee[.@slot]));
-	setunitdata(.@gid, UDT_PDODGE, max(0, $CloneStyle_PDodge[.@slot]));
-	setunitdata(.@gid, UDT_CRIT, max(0, $CloneStyle_Crit[.@slot]));
 	setunitdata(.@gid, UDT_RACE, RC_DemiHuman);
 	setunitdata(.@gid, UDT_ELETYPE, max(0, $CloneStyle_EleType[.@slot]));
 	setunitdata(.@gid, UDT_ELELEVEL, max(1, $CloneStyle_EleLevel[.@slot]));
-	setunitdata(.@gid, UDT_OPTIONS, getunitdata(.@gid, UDT_OPTIONS) | max(0, $CloneStyle_Option[.@slot]));
 	return 1;
 }
 
