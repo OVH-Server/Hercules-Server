@@ -131,22 +131,20 @@ OnCloneDead:
 	end;
 }
 
-prontera,179,134,0	script	Training Post#CloneDS	1915,{
-	end;
-}
-
 -	script	CloneListeSlot3	-1,{
 	end;
 
 OnInit:
 	killmonster "prontera","CloneListeSlot3::OnCloneDead";
+	killmonster "prontera","CloneListeSlot3::OnDummyDead";
 
 	.CloneSlot = 3;
 	.CloneX = 174;
 	.CloneY = 134;
 	.DummyX = 179;
 	.DummyY = 134;
-	.DummyGID = getnpcid("Training Post#CloneDS");
+
+	callsub S_SpawnDummy;
 
 	.CloneGID = monster("prontera", .CloneX, .CloneY, "Hunter Spiach", 1905, 1, "CloneListeSlot3::OnCloneDead");
 	callfunc "F_ApplyCloneStyle", .CloneGID, .CloneSlot;
@@ -162,8 +160,14 @@ OnInit:
 
 OnTimer1200:
 	if (.CloneGID > 0 && .DummyGID > 0) {
+		setunitdata(.CloneGID, UDT_LOOKDIR, 6);
+		setunitdata(.DummyGID, UDT_HP, 2000000);
+		unitattack(.CloneGID, .DummyGID);
 		unitskilluseid(.CloneGID, AC_DOUBLE, 10, .DummyGID);
 		npcskilleffect(AC_DOUBLE, 10, .DummyX, .DummyY);
+		specialeffect(EF_ARROWSHOT, AREA, .CloneGID);
+		specialeffect(EF_HIT5, AREA, .DummyGID);
+		specialeffect(EF_HIT6, AREA, .DummyGID);
 	}
 	stopnpctimer;
 	setnpctimer 0;
@@ -175,6 +179,18 @@ OnCloneDead:
 	setnpctimer 0;
 	donpcevent "CloneListeSlot3::OnInit";
 	end;
+
+OnDummyDead:
+	callsub S_SpawnDummy;
+	end;
+
+S_SpawnDummy:
+	.DummyGID = monster("prontera", .DummyX, .DummyY, "Training Post", 1915, 1, "CloneListeSlot3::OnDummyDead");
+	setunitdata(.DummyGID, UDT_MAXHP, 2000000);
+	setunitdata(.DummyGID, UDT_HP, 2000000);
+	setunitdata(.DummyGID, UDT_MODE, MD_NOKNOCKBACK | MD_BOSS);
+	setunitdata(.DummyGID, UDT_AI, AI_NONE);
+	return;
 }
 
 prontera,174,145,0	script	CloneEndTalkZones	FAKE_NPC,6,5,{
