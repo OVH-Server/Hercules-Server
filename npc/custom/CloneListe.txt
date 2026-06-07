@@ -264,10 +264,7 @@ OnInteractStart:
 
 OnInteractCast:
 	if (.CloneGID > 0) {
-		.@endure_lv = callfunc("F_GetCloneSkillLevel", .CloneSlot, SM_ENDURE);
-		if (.@endure_lv < 1)
-			.@endure_lv = 1;
-		unitskilluseid(.CloneGID, SM_ENDURE, .@endure_lv);
+		unitskilluseid(.CloneGID, SM_ENDURE, 1);
 	}
 	end;
 
@@ -318,11 +315,8 @@ OnTimer2500:
 	if (.CloneGID > 0) {
 		.@adam_gid = getvariableofnpc(.CloneGID, "CloneListeSlot4");
 		if (.@adam_gid > 0) {
-			.@heal_lv = callfunc("F_GetCloneSkillLevel", .CloneSlot, AL_HEAL);
-			if (.@heal_lv < 1)
-				.@heal_lv = 10;
 			setunitdata(.CloneGID, UDT_LOOKDIR, 2);
-			unitskilluseid(.CloneGID, AL_HEAL, .@heal_lv, .@adam_gid);
+			unitskilluseid(.CloneGID, AL_HEAL, 10, .@adam_gid);
 			specialeffect(EF_HEAL2, AREA, .@adam_gid);
 		}
 	}
@@ -342,10 +336,7 @@ OnInteractStart:
 			setunitdata(.CloneGID, UDT_LOOKDIR, 0);
 		else
 			setunitdata(.CloneGID, UDT_LOOKDIR, 4);
-		.@heal_lv = callfunc("F_GetCloneSkillLevel", .CloneSlot, AL_HEAL);
-		if (.@heal_lv < 1)
-			.@heal_lv = 10;
-		unitskilluseid(.CloneGID, AL_HEAL, .@heal_lv, .TargetAID);
+		unitskilluseid(.CloneGID, AL_HEAL, 10, .TargetAID);
 		specialeffect(EF_HEAL2, AREA, .TargetAID);
 	}
 	end;
