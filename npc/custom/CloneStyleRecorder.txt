@@ -14,61 +14,65 @@ prontera,164,160,4	script	Clone System	1_M_01,{
 	mes "Je peux sauvegarder ta fiche actuelle dans " + .MaxSlots + " slots.";
 	next;
 
-	while (true) {
-		.@menu = select("Enregistrer un style:Voir les styles:Effacer un style:Quitter");
+	.@menu = select("Enregistrer un style:Voir les styles:Effacer un style:Quitter");
 
-		if (.@menu == 1) {
-			callsub S_SelectSlot;
-			.@slot = .SelectedSlot;
-			if (.@slot == 0)
-				continue;
+	if (.@menu == 1)
+		goto L_SaveMenu;
+	if (.@menu == 2)
+		goto L_ShowMenu;
+	if (.@menu == 3)
+		goto L_ClearMenu;
+	close;
 
-			mes "[Enregistreur Clone]";
-			mes "Donne un nom a ce style.";
-			mes "Exemple: Marchand bleu, Garde nord, Mage rouge.";
-			next;
-			input .@style_name$;
-			if (.@style_name$ == "")
-				.@style_name$ = "Style " + .@slot;
-			if (getstrlen(.@style_name$) > 24)
-				.@style_name$ = substr(.@style_name$, 0, 23);
+L_SaveMenu:
+	callsub S_SelectSlot;
+	.@slot = .SelectedSlot;
+	if (.@slot == 0)
+		close;
 
-			callsub S_SaveStyle, .@slot, .@style_name$;
+	mes "[Enregistreur Clone]";
+	mes "Donne un nom a ce style.";
+	mes "Maximum 24 caracteres.";
+	next;
+	input .@style_name$;
+	if (.@style_name$ == "")
+		.@style_name$ = "Style " + .@slot;
+	if (getstrlen(.@style_name$) > 24)
+		.@style_name$ = substr(.@style_name$, 0, 23);
 
-			mes "[Enregistreur Clone]";
-			mes "Style sauvegarde dans le slot " + .@slot + ".";
-			mes "Nom: " + $CloneStyle_Name$[.@slot];
-			mes "Classe: " + jobname($CloneStyle_Class[.@slot]);
-			next;
-		} else if (.@menu == 2) {
-			callsub S_ShowStyles;
-			next;
-		} else if (.@menu == 3) {
-			callsub S_SelectSlot;
-			.@slot = .SelectedSlot;
-			if (.@slot == 0)
-				continue;
+	callsub S_SaveStyle, .@slot, .@style_name$;
 
-			mes "[Enregistreur Clone]";
-			if (!$CloneStyle_Saved[.@slot]) {
-				mes "Ce slot est deja vide.";
-				next;
-				continue;
-			}
+	mes "[Enregistreur Clone]";
+	mes "Style sauvegarde dans le slot " + .@slot + ".";
+	mes "Nom: " + $CloneStyle_Name$[.@slot];
+	mes "Classe: " + jobname($CloneStyle_Class[.@slot]);
+	close;
 
-			mes "Effacer le slot " + .@slot + " ?";
-			mes "Nom: " + $CloneStyle_Name$[.@slot];
-			next;
-			if (select("Oui:Non") == 1) {
-				callsub S_ClearStyle, .@slot;
-				mes "[Enregistreur Clone]";
-				mes "Slot efface.";
-				next;
-			}
-		} else {
-			close;
-		}
+L_ShowMenu:
+	callsub S_ShowStyles;
+	close;
+
+L_ClearMenu:
+	callsub S_SelectSlot;
+	.@slot = .SelectedSlot;
+	if (.@slot == 0)
+		close;
+
+	mes "[Enregistreur Clone]";
+	if (!$CloneStyle_Saved[.@slot]) {
+		mes "Ce slot est deja vide.";
+		close;
 	}
+
+	mes "Effacer le slot " + .@slot + " ?";
+	mes "Nom: " + $CloneStyle_Name$[.@slot];
+	next;
+	if (select("Oui:Non") == 1) {
+		callsub S_ClearStyle, .@slot;
+		mes "[Enregistreur Clone]";
+		mes "Slot efface.";
+	}
+	close;
 
 S_SelectSlot:
 	mes "[Enregistreur Clone]";
