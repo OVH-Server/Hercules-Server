@@ -152,6 +152,11 @@ OnInit:
 	setunitdata(.CloneGID, UDT_MODE, MD_NOKNOCKBACK | MD_CANATTACK);
 	setunitdata(.CloneGID, UDT_AI, AI_NONE);
 	setunitdata(.CloneGID, UDT_LOOKDIR, 6);
+	setunitdata(.CloneGID, UDT_ATKRANGE, 6);
+	setunitdata(.CloneGID, UDT_MATKMIN, 500);
+	setunitdata(.CloneGID, UDT_MATKMAX, 800);
+	setunitdata(.CloneGID, UDT_SP, 2000);
+	setunitdata(.CloneGID, UDT_MAXSP, 2000);
 	unitattack(.CloneGID, .DummyGID);
 
 	stopnpctimer;
@@ -164,8 +169,9 @@ OnTimer1200:
 		setunitdata(.CloneGID, UDT_LOOKDIR, 6);
 		setunitdata(.DummyGID, UDT_HP, 2000000);
 		unitattack(.CloneGID, .DummyGID);
-		unitskilluseid(.CloneGID, AC_DOUBLE, 10, .DummyGID);
-		areamobuseskill("prontera", .CloneX, .CloneY, 0, 1905, AC_DOUBLE, 10, 0, 1, e_no1, 1);
+		unitskilluseid(.CloneGID, MG_LIGHTNINGBOLT, 10, .DummyGID);
+		areamobuseskill("prontera", .CloneX, .CloneY, 0, 1905, MG_LIGHTNINGBOLT, 10, 0, 1, e_no1, 1);
+		specialeffect(EF_LIGHTBOLT, AREA, .DummyGID);
 	}
 	stopnpctimer;
 	setnpctimer 0;
