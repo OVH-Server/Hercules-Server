@@ -274,14 +274,12 @@ function	script	F_FarmPrototype_Click	{
 		}
 	}
 
-	.RespawnX = .@x;
-	.RespawnY = .@y;
 	movenpc(strnpcinfo(NPC_NAME),1,1,4);
 	disablenpc(strnpcinfo(NPC_NAME));
 	.Busy = 0;
 	sleep 10000;
 	enablenpc(strnpcinfo(NPC_NAME));
-	movenpc(strnpcinfo(NPC_NAME),.RespawnX,.RespawnY,4);
+	movenpc(strnpcinfo(NPC_NAME),.@x,.@y,4);
 	end;
 }
 
