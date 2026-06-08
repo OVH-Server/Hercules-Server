@@ -36,6 +36,8 @@ prontera,164,160,4	script	Clone System	1_M_01,{
 			mes "[Enregistreur Clone]";
 			mes "Style sauvegarde dans le slot " + .@slot + ".";
 			mes "Nom: " + $CloneStyle_Name$[.@slot];
+			if ($CloneStyle_SourceGuild$[.@slot] != "")
+				mes "Guilde: " + $CloneStyle_SourceGuild$[.@slot];
 			mes "Classe: " + jobname($CloneStyle_Class[.@slot]);
 			next;
 		} else if (.@menu == 2) {
@@ -84,11 +86,13 @@ S_SaveStyle:
 	.@style_name$ = getarg(1);
 
 	$CloneStyle_Saved[.@slot] = 1;
-	$CloneStyle_SaveVersion[.@slot] = 3;
+	$CloneStyle_SaveVersion[.@slot] = 4;
 	$CloneStyle_Name$[.@slot] = .@style_name$;
 	$CloneStyle_SourceName$[.@slot] = strcharinfo(PC_NAME);
 	$CloneStyle_SourceCID[.@slot] = getcharid(CHAR_ID_CHAR);
 	$CloneStyle_SourceAID[.@slot] = getcharid(CHAR_ID_ACCOUNT);
+	$CloneStyle_SourceGuild$[.@slot] = strcharinfo(PC_GUILD);
+	$CloneStyle_SourceGID[.@slot] = getcharid(CHAR_ID_GUILD);
 
 	$CloneStyle_Class[.@slot] = Class;
 	$CloneStyle_Sex[.@slot] = Sex;
@@ -179,6 +183,8 @@ S_ClearStyle:
 	$CloneStyle_SourceName$[.@slot] = "";
 	$CloneStyle_SourceCID[.@slot] = 0;
 	$CloneStyle_SourceAID[.@slot] = 0;
+	$CloneStyle_SourceGuild$[.@slot] = "";
+	$CloneStyle_SourceGID[.@slot] = 0;
 	$CloneStyle_Class[.@slot] = 0;
 	$CloneStyle_Sex[.@slot] = 0;
 	$CloneStyle_BaseLevel[.@slot] = 0;
@@ -244,6 +250,10 @@ S_ShowStyles:
 		if ($CloneStyle_Saved[.@i]) {
 			mes "Slot " + .@i + ": " + $CloneStyle_Name$[.@i];
 			mes "  Source: " + $CloneStyle_SourceName$[.@i];
+			if ($CloneStyle_SourceGuild$[.@i] != "")
+				mes "  Guilde: " + $CloneStyle_SourceGuild$[.@i];
+			else
+				mes "  Guilde: aucune";
 			mes "  Classe: " + jobname($CloneStyle_Class[.@i]) + " " + $CloneStyle_BaseLevel[.@i] + "/" + $CloneStyle_JobLevel[.@i];
 			mes "  Stats: " + $CloneStyle_Str[.@i] + "/" + $CloneStyle_Agi[.@i] + "/" + $CloneStyle_Vit[.@i] + "/" + $CloneStyle_Int[.@i] + "/" + $CloneStyle_Dex[.@i] + "/" + $CloneStyle_Luk[.@i];
 			mes "  HP/SP: " + $CloneStyle_MaxHp[.@i] + "/" + $CloneStyle_MaxSp[.@i];
