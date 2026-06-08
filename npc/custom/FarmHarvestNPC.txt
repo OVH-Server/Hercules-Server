@@ -104,7 +104,12 @@ prontera,163,152,4	script	Harvest Job	10451,{
 		mes "[Harvest Master]";
 		mes "Compteur total de recoltes :";
 		mes "^0000FF" + HarvestGatherCount + "^000000 ressources recuperees.";
-		mes "Ce compteur additionne les plants, minerais, archeologies et box.";
+		next;
+		mes "[Harvest Master]";
+		mes "Plants : " + HarvestHerbGatherCount + ".";
+		mes "Mining : " + HarvestMiningGatherCount + ".";
+		mes "Archeology : " + HarvestArchaeoGatherCount + ".";
+		mes "Box : " + HarvestBoxGatherCount + ".";
 		close;
 
 	case 4:
@@ -164,6 +169,9 @@ function	script	F_FarmPrototype_Click	{
 	if (.@map$ != "prontera" || distance(.@pc_x,.@pc_y,.@x,.@y) > 2)
 		end;
 
+	if (.Busy)
+		end;
+
 	if (.@resource_type) {
 		if (!HarvestJob) {
 			mes "[Harvest Master]";
@@ -182,22 +190,36 @@ function	script	F_FarmPrototype_Click	{
 		}
 	}
 
+	.Busy = 1;
+
 	if (distance(.@pc_x,.@pc_y,.@x,.@y) > 1) {
 		unitwalk(getcharid(CHAR_ID_ACCOUNT), .@stand_x, .@stand_y);
 		sleep2 1200;
 		getmapxy .@map$, .@pc_x, .@pc_y, UNITTYPE_PC;
-		if (.@map$ != "prontera" || distance(.@pc_x,.@pc_y,.@x,.@y) > 1)
+		if (.@map$ != "prontera" || distance(.@pc_x,.@pc_y,.@x,.@y) > 1) {
+			.Busy = 0;
 			end;
+		}
 	}
 
 	.Hits++;
-	if (.Hits < .@need)
+	if (.Hits < .@need) {
+		.Busy = 0;
 		end;
+	}
 
 	.Hits = 0;
 	specialeffect EF_SONIC_CLAW965;
 	makeitem .@drop_item, 1, "prontera", .@x, .@y, 1;
 	HarvestGatherCount++;
+	if (.@resource_type == 1)
+		HarvestHerbGatherCount++;
+	else if (.@resource_type == 2)
+		HarvestMiningGatherCount++;
+	else if (.@resource_type == 3)
+		HarvestArchaeoGatherCount++;
+	else
+		HarvestBoxGatherCount++;
 
 	if (.@resource_type) {
 		if (.@resource_type == 1) {
@@ -251,6 +273,7 @@ function	script	F_FarmPrototype_Click	{
 	sleep 10000;
 	enablenpc(strnpcinfo(NPC_NAME));
 	movenpc(strnpcinfo(NPC_NAME),.@x,.@y,4);
+	.Busy = 0;
 	end;
 }
 
