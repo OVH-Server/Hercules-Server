@@ -41,7 +41,7 @@ S_Warp:
 	end;
 }
 
-prt_fild08,167,372,4	script	Eterite#prt08	4_F_VALKYRIE,{
+prt_fild08,167,372,4	script	Eterite#prt08	4_4JOB_SEALSTONE,{
 	callsub S_Status, $Eterite_Prt08_Active, $Eterite_Prt08_Kills, "prt_fild08";
 	close;
 
@@ -59,7 +59,7 @@ S_Status:
 
 }
 
-prt_fild06,29,191,4	script	Eterite#prt06	4_F_VALKYRIE,{
+prt_fild06,29,191,4	script	Eterite#prt06	4_4JOB_SEALSTONE,{
 	callsub S_Status, $Eterite_Prt06_Active, $Eterite_Prt06_Kills, "prt_fild06";
 	close;
 
@@ -77,7 +77,7 @@ S_Status:
 
 }
 
-prt_fild05,365,210,4	script	Eterite#prt05	4_F_VALKYRIE,{
+prt_fild05,365,210,4	script	Eterite#prt05	4_4JOB_SEALSTONE,{
 	callsub S_Status, $Eterite_Prt05_Active, $Eterite_Prt05_Kills, "prt_fild05";
 	close;
 

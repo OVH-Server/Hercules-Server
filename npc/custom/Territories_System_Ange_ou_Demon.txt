@@ -3,7 +3,7 @@
 //= Affiche les territoires controles par les Anges et Demons.
 //============================================================
 
-prontera,164,164,4	script	Territoires Ange/Demon	4_F_VALKYRIE,{
+prontera,152,154,4	script	Territoires Ange/Demon	10387,{
 	while (true) {
 		mes "[Gardienne des Territoires]";
 		mes "Je veille sur les terres marquees par les Anges et les Demons.";
@@ -63,14 +63,25 @@ S_ShowTerritories:
 	mes "[Gardienne des Territoires]";
 	mes .@category_name$ + " des " + .@faction_name$ + " :";
 
-	if (.@faction == 1 && .@category == 1) {
-		mes "- Prontera";
-		mes "- Yuno";
-	} else if (.@faction == 2 && .@category == 1) {
-		mes "- Niflheim";
-	} else {
-		mes "Aucun territoire enregistre pour le moment.";
+	.@count = 0;
+
+	if (.@category == 2) {
+		if ($Territory_Prt08_Alignment == .@faction) {
+			mes "- prt_fild08";
+			.@count++;
+		}
+		if ($Territory_Prt06_Alignment == .@faction) {
+			mes "- prt_fild06";
+			.@count++;
+		}
+		if ($Territory_Prt05_Alignment == .@faction) {
+			mes "- prt_fild05";
+			.@count++;
+		}
 	}
+
+	if (.@count == 0)
+		mes "Aucun territoire enregistre pour le moment.";
 
 	next;
 	if (select("Voir une autre categorie:Retour au menu principal") == 1)
@@ -90,28 +101,57 @@ S_ShowInfo:
 
 	mes "[Gardienne des Territoires]";
 	mes "Territoires actuels :";
-	mes "- Anges : Prontera et Yuno.";
-	mes "- Demons : Niflheim.";
+	mes "- Les listes sont mises a jour quand un Cristal de Puissance est conquis.";
+	mes "- Un cristal neutre peut etre revendique par les Anges ou les Demons.";
 	return;
 }
 
-prt_fild08,169,372,4	script	Cristal de Puissance#prt08	4_F_VALKYRIE,{
-	callfunc "F_PowerCrystalAlignment";
+prt_fild08,169,372,4	script	Cristal de Puissance#prt08	10547,{
+	callfunc "F_PowerCrystalTalk", "prt_fild08", "Cristal de Puissance#prt08", "$Territory_Prt08_Alignment", "$Territory_Prt08_Battle", "$Territory_Prt08_Kills", "$Territory_Prt08_Pending", "$Territory_Prt08_Need", 169, 372, "TerritoryCrystalPrt08::OnMonsterDead";
 	close;
 }
 
-prt_fild06,31,191,4	script	Cristal de Puissance#prt06	4_F_VALKYRIE,{
-	callfunc "F_PowerCrystalAlignment";
+prt_fild06,31,191,4	script	Cristal de Puissance#prt06	10547,{
+	callfunc "F_PowerCrystalTalk", "prt_fild06", "Cristal de Puissance#prt06", "$Territory_Prt06_Alignment", "$Territory_Prt06_Battle", "$Territory_Prt06_Kills", "$Territory_Prt06_Pending", "$Territory_Prt06_Need", 31, 191, "TerritoryCrystalPrt06::OnMonsterDead";
 	close;
 }
 
-prt_fild05,367,210,4	script	Cristal de Puissance#prt05	4_F_VALKYRIE,{
-	callfunc "F_PowerCrystalAlignment";
+prt_fild05,367,210,4	script	Cristal de Puissance#prt05	10547,{
+	callfunc "F_PowerCrystalTalk", "prt_fild05", "Cristal de Puissance#prt05", "$Territory_Prt05_Alignment", "$Territory_Prt05_Battle", "$Territory_Prt05_Kills", "$Territory_Prt05_Pending", "$Territory_Prt05_Need", 367, 210, "TerritoryCrystalPrt05::OnMonsterDead";
 	close;
 }
 
-function	script	F_PowerCrystalAlignment	{
+function	script	F_PowerCrystalTalk	{
+	.@map$ = getarg(0);
+	.@npc$ = getarg(1);
+	.@alignment_var$ = getarg(2);
+	.@battle_var$ = getarg(3);
+	.@kills_var$ = getarg(4);
+	.@pending_var$ = getarg(5);
+	.@need_var$ = getarg(6);
+	.@x = getarg(7);
+	.@y = getarg(8);
+	.@event$ = getarg(9);
+	.@alignment = getd(.@alignment_var$);
+
 	mes "[Cristal de Puissance]";
+	if (.@alignment == 1) {
+		mes "Ce territoire est actuellement affilie aux Anges.";
+		return;
+	}
+	if (.@alignment == 2) {
+		mes "Ce territoire est actuellement affilie aux Demons.";
+		return;
+	}
+
+	if (getd(.@battle_var$)) {
+		mes "La conquete du territoire est deja en cours.";
+		mes "Elimine les gardiens invoques autour du cristal.";
+		mes "Progression : " + getd(.@kills_var$) + "/" + getd(.@need_var$) + ".";
+		return;
+	}
+
+	mes "Ce territoire est neutre.";
 	mes "Quelle force soutiens-tu sur ce territoire ?";
 	next;
 
@@ -122,11 +162,128 @@ function	script	F_PowerCrystalAlignment	{
 		return;
 	}
 
+	setd .@battle_var$, 1;
+	setd .@kills_var$, 0;
+	setd .@pending_var$, .@alignment;
+
 	mes "[Cristal de Puissance]";
-	if (.@alignment == 1)
+	if (.@alignment == 1) {
 		mes "Tu soutiens les Anges.";
-	else
+		mes "D'accord, tres bien.";
+		mes "Le cristal invoque des Poring. Terrasse-les pour revendiquer ce territoire.";
+		setd .@need_var$, 6;
+		callfunc "F_PowerCrystalSpawnSides", .@map$, .@x, .@y, PORING, "Poring du Cristal", .@event$;
+	} else {
 		mes "Tu soutiens les Demons.";
-	mes "D'accord, tres bien.";
+		mes "D'accord, tres bien.";
+		mes "Le cristal invoque des Chonchon. Terrasse-les pour revendiquer ce territoire.";
+		setd .@need_var$, 3;
+		callfunc "F_PowerCrystalSpawnThree", .@map$, .@x, .@y, CHONCHON, "Chonchon du Cristal", .@event$;
+	}
+	specialeffect(EF_BEGINSPELL6, AREA, .@npc$);
 	return;
+}
+
+function	script	F_PowerCrystalSpawnSides	{
+	.@map$ = getarg(0);
+	.@x = getarg(1);
+	.@y = getarg(2);
+	.@mob_id = getarg(3);
+	.@mob_name$ = getarg(4);
+	.@event$ = getarg(5);
+
+	monster .@map$, .@x - 2, .@y - 1, .@mob_name$, .@mob_id, 1, .@event$;
+	monster .@map$, .@x - 2, .@y, .@mob_name$, .@mob_id, 1, .@event$;
+	monster .@map$, .@x - 2, .@y + 1, .@mob_name$, .@mob_id, 1, .@event$;
+	monster .@map$, .@x + 2, .@y - 1, .@mob_name$, .@mob_id, 1, .@event$;
+	monster .@map$, .@x + 2, .@y, .@mob_name$, .@mob_id, 1, .@event$;
+	monster .@map$, .@x + 2, .@y + 1, .@mob_name$, .@mob_id, 1, .@event$;
+	return;
+}
+
+function	script	F_PowerCrystalSpawnThree	{
+	.@map$ = getarg(0);
+	.@x = getarg(1);
+	.@y = getarg(2);
+	.@mob_id = getarg(3);
+	.@mob_name$ = getarg(4);
+	.@event$ = getarg(5);
+
+	monster .@map$, .@x + 2, .@y - 1, .@mob_name$, .@mob_id, 1, .@event$;
+	monster .@map$, .@x + 2, .@y, .@mob_name$, .@mob_id, 1, .@event$;
+	monster .@map$, .@x + 2, .@y + 1, .@mob_name$, .@mob_id, 1, .@event$;
+	return;
+}
+
+function	script	F_PowerCrystalMonsterDead	{
+	.@map$ = getarg(0);
+	.@npc$ = getarg(1);
+	.@alignment_var$ = getarg(2);
+	.@battle_var$ = getarg(3);
+	.@kills_var$ = getarg(4);
+	.@pending_var$ = getarg(5);
+	.@need_var$ = getarg(6);
+
+	if (!getd(.@battle_var$))
+		return;
+
+	.@kills = getd(.@kills_var$) + 1;
+	setd .@kills_var$, .@kills;
+
+	if (.@kills < getd(.@need_var$))
+		return;
+
+	.@alignment = getd(.@pending_var$);
+	setd .@alignment_var$, .@alignment;
+	setd .@battle_var$, 0;
+	setd .@kills_var$, 0;
+	setd .@pending_var$, 0;
+	setd .@need_var$, 0;
+
+	specialeffect(EF_LEVEL99, AREA, .@npc$);
+	specialeffect(EF_ANGEL2, AREA, .@npc$);
+	if (.@alignment == 1)
+		mapannounce .@map$, "Le Cristal de Puissance est maintenant affilie aux Anges.", bc_map, 0x66CCFF;
+	else
+		mapannounce .@map$, "Le Cristal de Puissance est maintenant affilie aux Demons.", bc_map, 0xCC66FF;
+	return;
+}
+
+-	script	TerritoryCrystalPrt08	FAKE_NPC,{
+OnInit:
+	$Territory_Prt08_Battle = 0;
+	$Territory_Prt08_Kills = 0;
+	$Territory_Prt08_Pending = 0;
+	$Territory_Prt08_Need = 0;
+	end;
+
+OnMonsterDead:
+	callfunc "F_PowerCrystalMonsterDead", "prt_fild08", "Cristal de Puissance#prt08", "$Territory_Prt08_Alignment", "$Territory_Prt08_Battle", "$Territory_Prt08_Kills", "$Territory_Prt08_Pending", "$Territory_Prt08_Need";
+	end;
+}
+
+-	script	TerritoryCrystalPrt06	FAKE_NPC,{
+OnInit:
+	$Territory_Prt06_Battle = 0;
+	$Territory_Prt06_Kills = 0;
+	$Territory_Prt06_Pending = 0;
+	$Territory_Prt06_Need = 0;
+	end;
+
+OnMonsterDead:
+	callfunc "F_PowerCrystalMonsterDead", "prt_fild06", "Cristal de Puissance#prt06", "$Territory_Prt06_Alignment", "$Territory_Prt06_Battle", "$Territory_Prt06_Kills", "$Territory_Prt06_Pending", "$Territory_Prt06_Need";
+	end;
+}
+
+-	script	TerritoryCrystalPrt05	FAKE_NPC,{
+OnInit:
+	$Territory_Prt05_Battle = 0;
+	$Territory_Prt05_Kills = 0;
+	$Territory_Prt05_Pending = 0;
+	$Territory_Prt05_Need = 0;
+	end;
+
+OnMonsterDead:
+	callfunc "F_PowerCrystalMonsterDead", "prt_fild05", "Cristal de Puissance#prt05", "$Territory_Prt05_Alignment", "$Territory_Prt05_Battle", "$Territory_Prt05_Kills", "$Territory_Prt05_Pending", "$Territory_Prt05_Need";
+	end;
 }
