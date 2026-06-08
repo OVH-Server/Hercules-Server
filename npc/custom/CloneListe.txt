@@ -131,7 +131,7 @@ OnCloneDead:
 	end;
 }
 
--	shop	CloneMamokoVendorShop	FAKE_NPC,1405:10000
+-	shop	CloneMamokoVendorShop	FAKE_NPC,1405:10000,1405:10000,2285:150999,4140:499999
 
 -	script	CloneMamokoVendor	-1,{
 	end;
@@ -156,55 +156,84 @@ OnCloneDead:
 	end;
 }
 
-prontera,170,153,4	script	MamokoVendorClick	HIDDEN_NPC,{
+prontera,170,153,4	script	Mamoko#vendor	HIDDEN_NPC,{
 	callshop "CloneMamokoVendorShop",1;
 	npcshopattach "CloneMamokoVendorShop";
 	end;
 
 OnBuyItem:
 	for (.@i = 0; .@i < getarraysize(@bought_nameid); .@i++) {
-		if (@bought_nameid[.@i] != 1405 || @bought_quantity[.@i] <= 0) {
+		if (@bought_quantity[.@i] <= 0) {
+			mes "[Mamoko]";
+			mes "Transaction invalide.";
+			close;
+		}
+
+		if (@bought_nameid[.@i] == 1405) {
+			.@stock = .SpearStock;
+			.@price_each = 10000;
+		}
+		else if (@bought_nameid[.@i] == 2285) {
+			.@stock = .Item2285Stock;
+			.@price_each = 150999;
+		}
+		else if (@bought_nameid[.@i] == 4140) {
+			.@stock = .Card4140Stock;
+			.@price_each = 499999;
+		}
+		else {
 			mes "[Mamoko]";
 			mes "Transaction invalide.";
 			close;
 		}
 
 		.@amount = @bought_quantity[.@i];
-		if (.Stock <= 0) {
+		if (.@stock <= 0) {
 			mes "[Mamoko]";
-			mes "Je n'ai plus de Spear a vendre.";
+			mes "Je n'ai plus cet item a vendre.";
 			close;
 		}
-		if (.@amount > .Stock)
-			.@amount = .Stock;
+		if (.@amount > .@stock)
+			.@amount = .@stock;
 
-		.@price = .@amount * 10000;
+		.@price = .@amount * .@price_each;
 		if (Zeny < .@price) {
 			mes "[Mamoko]";
 			mes "Tu n'as pas assez de Zeny.";
 			close;
 		}
-		if (!checkweight(1405,.@amount)) {
+		if (!checkweight(@bought_nameid[.@i],.@amount)) {
 			mes "[Mamoko]";
 			mes "Ton inventaire est trop lourd.";
 			close;
 		}
 
 		Zeny -= .@price;
-		getitem 1405,.@amount;
-		.Stock -= .@amount;
+		getitem @bought_nameid[.@i],.@amount;
+		if (@bought_nameid[.@i] == 1405)
+			.SpearStock -= .@amount;
+		else if (@bought_nameid[.@i] == 2285)
+			.Item2285Stock -= .@amount;
+		else
+			.Card4140Stock -= .@amount;
 	}
 	deletearray @bought_quantity, getarraysize(@bought_quantity);
 	deletearray @bought_nameid, getarraysize(@bought_nameid);
-	if (.Stock <= 0)
+	if (.SpearStock <= 0)
 		npcshopdelitem "CloneMamokoVendorShop",1405;
+	if (.Item2285Stock <= 0)
+		npcshopdelitem "CloneMamokoVendorShop",2285;
+	if (.Card4140Stock <= 0)
+		npcshopdelitem "CloneMamokoVendorShop",4140;
 	mes "[Mamoko]";
-	mes "Merci pour ton achat. Stock restant : " + .Stock + ".";
+	mes "Merci pour ton achat.";
 	close;
 
 OnInit:
-	.Stock = 2;
-	npcshopitem "CloneMamokoVendorShop",1405,10000;
+	.SpearStock = 2;
+	.Item2285Stock = 1;
+	.Card4140Stock = 2;
+	npcshopitem "CloneMamokoVendorShop",1405,10000,1405,10000,2285,150999,4140,499999;
 	end;
 }
 
