@@ -1,0 +1,132 @@
+//===== Hercules Script ======================================
+//= Territories System Ange ou Demon
+//= Affiche les territoires controles par les Anges et Demons.
+//============================================================
+
+prontera,164,164,4	script	Territoires Ange/Demon	4_F_VALKYRIE,{
+	while (true) {
+		mes "[Gardienne des Territoires]";
+		mes "Je veille sur les terres marquees par les Anges et les Demons.";
+		next;
+
+		.@menu = select("Voir les territoires:Comprendre le systeme:Quitter");
+
+		if (.@menu == 1) {
+			callsub S_SelectFaction;
+			next;
+		} else if (.@menu == 2) {
+			callsub S_ShowInfo;
+			next;
+		} else {
+			close;
+		}
+	}
+
+S_SelectFaction:
+	mes "[Gardienne des Territoires]";
+	mes "Quel camp veux-tu consulter ?";
+	next;
+
+	.@faction = select("Anges:Demons:Retour");
+	if (.@faction == 3)
+		return;
+
+	callsub S_SelectCategory, .@faction;
+	return;
+
+S_SelectCategory:
+	.@faction = getarg(0);
+	.@faction_name$ = (.@faction == 1) ? "Anges" : "Demons";
+
+	mes "[Gardienne des Territoires]";
+	mes "Territoires controles par les " + .@faction_name$ + ".";
+	mes "Choisis une categorie.";
+	next;
+
+	.@category = select("Villes:Fields:Dungeons:Retour");
+	if (.@category == 4)
+		return;
+
+	callsub S_ShowTerritories, .@faction, .@category;
+	return;
+
+S_ShowTerritories:
+	.@faction = getarg(0);
+	.@category = getarg(1);
+	.@faction_name$ = (.@faction == 1) ? "Anges" : "Demons";
+	.@category_name$ = "Villes";
+	if (.@category == 2)
+		.@category_name$ = "Fields";
+	else if (.@category == 3)
+		.@category_name$ = "Dungeons";
+
+	mes "[Gardienne des Territoires]";
+	mes .@category_name$ + " des " + .@faction_name$ + " :";
+
+	if (.@faction == 1 && .@category == 1) {
+		mes "- Prontera";
+		mes "- Yuno";
+	} else if (.@faction == 2 && .@category == 1) {
+		mes "- Niflheim";
+	} else {
+		mes "Aucun territoire enregistre pour le moment.";
+	}
+
+	next;
+	if (select("Voir une autre categorie:Retour au menu principal") == 1)
+		callsub S_SelectCategory, .@faction;
+	return;
+
+S_ShowInfo:
+	mes "[Gardienne des Territoires]";
+	mes "Chaque territoire possede un Cristal de Puissance.";
+	mes "Quand un camp defend ce cristal, son influence grandit sur la zone.";
+	next;
+
+	mes "[Gardienne des Territoires]";
+	mes "Soutiens les Anges ou les Demons en protegeant le cristal de la carte.";
+	mes "Si ton camp tient la defense, le territoire peut passer sous son controle.";
+	next;
+
+	mes "[Gardienne des Territoires]";
+	mes "Territoires actuels :";
+	mes "- Anges : Prontera et Yuno.";
+	mes "- Demons : Niflheim.";
+	return;
+}
+
+prt_fild08,169,372,4	script	Cristal de Puissance#prt08	4_F_VALKYRIE,{
+	callfunc "F_PowerCrystalAlignment";
+	close;
+}
+
+prt_fild06,31,191,4	script	Cristal de Puissance#prt06	4_F_VALKYRIE,{
+	callfunc "F_PowerCrystalAlignment";
+	close;
+}
+
+prt_fild05,367,210,4	script	Cristal de Puissance#prt05	4_F_VALKYRIE,{
+	callfunc "F_PowerCrystalAlignment";
+	close;
+}
+
+function	script	F_PowerCrystalAlignment	{
+	mes "[Cristal de Puissance]";
+	mes "Quelle force soutiens-tu sur ce territoire ?";
+	next;
+
+	.@alignment = select("Anges:Demons:Annuler");
+	if (.@alignment == 3) {
+		mes "[Cristal de Puissance]";
+		mes "Reviens lorsque ton choix sera clair.";
+		return;
+	}
+
+	mes "[Cristal de Puissance]";
+	if (.@alignment == 1)
+		mes "Tu soutiens les Anges.";
+	else
+		mes "Tu soutiens les Demons.";
+	mes "D'accord, tres bien.";
+	return;
+}
