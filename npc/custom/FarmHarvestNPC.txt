@@ -274,12 +274,12 @@ function	script	F_FarmPrototype_Click	{
 		}
 	}
 
+	.RespawnX = .@x;
+	.RespawnY = .@y;
 	movenpc(strnpcinfo(NPC_NAME),1,1,4);
 	disablenpc(strnpcinfo(NPC_NAME));
-	sleep 10000;
-	enablenpc(strnpcinfo(NPC_NAME));
-	movenpc(strnpcinfo(NPC_NAME),.@x,.@y,4);
 	.Busy = 0;
+	initnpctimer;
 	end;
 }
 
@@ -290,6 +290,12 @@ OnInit:
 	.Hits = 0;
 	setnpcdistance 100;
 	end;
+
+OnTimer10000:
+	stopnpctimer;
+	enablenpc(strnpcinfo(NPC_NAME));
+	movenpc(strnpcinfo(NPC_NAME),.RespawnX,.RespawnY,4);
+	end;
 }
 
 prontera,163,146,4	script	Plant 2#farm02	1816,{
@@ -298,6 +304,12 @@ prontera,163,146,4	script	Plant 2#farm02	1816,{
 OnInit:
 	.Hits = 0;
 	setnpcdistance 100;
+	end;
+
+OnTimer10000:
+	stopnpctimer;
+	enablenpc(strnpcinfo(NPC_NAME));
+	movenpc(strnpcinfo(NPC_NAME),.RespawnX,.RespawnY,4);
 	end;
 }
 
@@ -308,6 +320,12 @@ OnInit:
 	.Hits = 0;
 	setnpcdistance 100;
 	end;
+
+OnTimer10000:
+	stopnpctimer;
+	enablenpc(strnpcinfo(NPC_NAME));
+	movenpc(strnpcinfo(NPC_NAME),.RespawnX,.RespawnY,4);
+	end;
 }
 
 prontera,163,140,4	script	Plant 4#farm04	10392,{
@@ -316,6 +334,12 @@ prontera,163,140,4	script	Plant 4#farm04	10392,{
 OnInit:
 	.Hits = 0;
 	setnpcdistance 100;
+	end;
+
+OnTimer10000:
+	stopnpctimer;
+	enablenpc(strnpcinfo(NPC_NAME));
+	movenpc(strnpcinfo(NPC_NAME),.RespawnX,.RespawnY,4);
 	end;
 }
 
@@ -326,6 +350,12 @@ OnInit:
 	.Hits = 0;
 	setnpcdistance 100;
 	end;
+
+OnTimer10000:
+	stopnpctimer;
+	enablenpc(strnpcinfo(NPC_NAME));
+	movenpc(strnpcinfo(NPC_NAME),.RespawnX,.RespawnY,4);
+	end;
 }
 
 prontera,163,134,4	script	Plant 6#farm00	10094,{
@@ -334,6 +364,12 @@ prontera,163,134,4	script	Plant 6#farm00	10094,{
 OnInit:
 	.Hits = 0;
 	setnpcdistance 100;
+	end;
+
+OnTimer10000:
+	stopnpctimer;
+	enablenpc(strnpcinfo(NPC_NAME));
+	movenpc(strnpcinfo(NPC_NAME),.RespawnX,.RespawnY,4);
 	end;
 }
 
@@ -345,6 +381,12 @@ OnInit:
 	.Hits = 0;
 	setnpcdistance 100;
 	end;
+
+OnTimer10000:
+	stopnpctimer;
+	enablenpc(strnpcinfo(NPC_NAME));
+	movenpc(strnpcinfo(NPC_NAME),.RespawnX,.RespawnY,4);
+	end;
 }
 
 prontera,159,140,4	script	Mining 2#farm00	10025,{
@@ -353,6 +395,12 @@ prontera,159,140,4	script	Mining 2#farm00	10025,{
 OnInit:
 	.Hits = 0;
 	setnpcdistance 100;
+	end;
+
+OnTimer10000:
+	stopnpctimer;
+	enablenpc(strnpcinfo(NPC_NAME));
+	movenpc(strnpcinfo(NPC_NAME),.RespawnX,.RespawnY,4);
 	end;
 }
 
@@ -363,6 +411,12 @@ OnInit:
 	.Hits = 0;
 	setnpcdistance 100;
 	end;
+
+OnTimer10000:
+	stopnpctimer;
+	enablenpc(strnpcinfo(NPC_NAME));
+	movenpc(strnpcinfo(NPC_NAME),.RespawnX,.RespawnY,4);
+	end;
 }
 
 prontera,157,143,4	script	Mining 4#farm00	1907,{
@@ -371,6 +425,12 @@ prontera,157,143,4	script	Mining 4#farm00	1907,{
 OnInit:
 	.Hits = 0;
 	setnpcdistance 100;
+	end;
+
+OnTimer10000:
+	stopnpctimer;
+	enablenpc(strnpcinfo(NPC_NAME));
+	movenpc(strnpcinfo(NPC_NAME),.RespawnX,.RespawnY,4);
 	end;
 }
 
@@ -381,6 +441,12 @@ OnInit:
 	.Hits = 0;
 	setnpcdistance 100;
 	end;
+
+OnTimer10000:
+	stopnpctimer;
+	enablenpc(strnpcinfo(NPC_NAME));
+	movenpc(strnpcinfo(NPC_NAME),.RespawnX,.RespawnY,4);
+	end;
 }
 
 prontera,159,147,4	script	Archaeology 2#farm07	4_CRACK,{
@@ -389,6 +455,12 @@ prontera,159,147,4	script	Archaeology 2#farm07	4_CRACK,{
 OnInit:
 	.Hits = 0;
 	setnpcdistance 100;
+	end;
+
+OnTimer10000:
+	stopnpctimer;
+	enablenpc(strnpcinfo(NPC_NAME));
+	movenpc(strnpcinfo(NPC_NAME),.RespawnX,.RespawnY,4);
 	end;
 }
 
@@ -399,6 +471,12 @@ OnInit:
 	.Hits = 0;
 	setnpcdistance 100;
 	end;
+
+OnTimer10000:
+	stopnpctimer;
+	enablenpc(strnpcinfo(NPC_NAME));
+	movenpc(strnpcinfo(NPC_NAME),.RespawnX,.RespawnY,4);
+	end;
 }
 
 prontera,154,149,4	script	Archaeology 4#farm09	10443,{
@@ -407,6 +485,12 @@ prontera,154,149,4	script	Archaeology 4#farm09	10443,{
 OnInit:
 	.Hits = 0;
 	setnpcdistance 100;
+	end;
+
+OnTimer10000:
+	stopnpctimer;
+	enablenpc(strnpcinfo(NPC_NAME));
+	movenpc(strnpcinfo(NPC_NAME),.RespawnX,.RespawnY,4);
 	end;
 }
 
@@ -417,6 +501,12 @@ OnInit:
 	.Hits = 0;
 	setnpcdistance 100;
 	end;
+
+OnTimer10000:
+	stopnpctimer;
+	enablenpc(strnpcinfo(NPC_NAME));
+	movenpc(strnpcinfo(NPC_NAME),.RespawnX,.RespawnY,4);
+	end;
 }
 
 prontera,151,147,4	script	Archaeology 6#farm11	10390,{
@@ -425,6 +515,12 @@ prontera,151,147,4	script	Archaeology 6#farm11	10390,{
 OnInit:
 	.Hits = 0;
 	setnpcdistance 100;
+	end;
+
+OnTimer10000:
+	stopnpctimer;
+	enablenpc(strnpcinfo(NPC_NAME));
+	movenpc(strnpcinfo(NPC_NAME),.RespawnX,.RespawnY,4);
 	end;
 }
 
@@ -435,6 +531,12 @@ OnInit:
 	.Hits = 0;
 	setnpcdistance 100;
 	end;
+
+OnTimer10000:
+	stopnpctimer;
+	enablenpc(strnpcinfo(NPC_NAME));
+	movenpc(strnpcinfo(NPC_NAME),.RespawnX,.RespawnY,4);
+	end;
 }
 
 prontera,156,147,4	script	Archaeology 8#farm00	557,{
@@ -443,6 +545,12 @@ prontera,156,147,4	script	Archaeology 8#farm00	557,{
 OnInit:
 	.Hits = 0;
 	setnpcdistance 100;
+	end;
+
+OnTimer10000:
+	stopnpctimer;
+	enablenpc(strnpcinfo(NPC_NAME));
+	movenpc(strnpcinfo(NPC_NAME),.RespawnX,.RespawnY,4);
 	end;
 }
 
@@ -453,6 +561,12 @@ OnInit:
 	.Hits = 0;
 	setnpcdistance 100;
 	end;
+
+OnTimer10000:
+	stopnpctimer;
+	enablenpc(strnpcinfo(NPC_NAME));
+	movenpc(strnpcinfo(NPC_NAME),.RespawnX,.RespawnY,4);
+	end;
 }
 
 prontera,154,140,4	script	Box 2#farm	10404,{
@@ -461,6 +575,12 @@ prontera,154,140,4	script	Box 2#farm	10404,{
 OnInit:
 	.Hits = 0;
 	setnpcdistance 100;
+	end;
+
+OnTimer10000:
+	stopnpctimer;
+	enablenpc(strnpcinfo(NPC_NAME));
+	movenpc(strnpcinfo(NPC_NAME),.RespawnX,.RespawnY,4);
 	end;
 }
 
@@ -471,6 +591,12 @@ OnInit:
 	.Hits = 0;
 	setnpcdistance 100;
 	end;
+
+OnTimer10000:
+	stopnpctimer;
+	enablenpc(strnpcinfo(NPC_NAME));
+	movenpc(strnpcinfo(NPC_NAME),.RespawnX,.RespawnY,4);
+	end;
 }
 
 prontera,151,140,4	script	Box 4#farm	10250,{
@@ -479,5 +605,11 @@ prontera,151,140,4	script	Box 4#farm	10250,{
 OnInit:
 	.Hits = 0;
 	setnpcdistance 100;
+	end;
+
+OnTimer10000:
+	stopnpctimer;
+	enablenpc(strnpcinfo(NPC_NAME));
+	movenpc(strnpcinfo(NPC_NAME),.RespawnX,.RespawnY,4);
 	end;
 }
