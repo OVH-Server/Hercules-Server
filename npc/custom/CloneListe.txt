@@ -75,11 +75,90 @@ OnCloneDead:
 	end;
 }
 
--	shop	CloneMokaVendorShop	FAKE_NPC,1405:10000
+-	script	CloneListeSlot2	-1,{
+	end;
 
-prontera,170,153,4	script	Mamoko#vendor::CloneListeSlot2	1905,{
-	callshop "CloneMokaVendorShop",1;
-	npcshopattach "CloneMokaVendorShop";
+OnInit:
+	killmonster "prontera","CloneListeSlot2::OnCloneDead";
+
+	.CloneSlot = 2;
+	.StartX = 175;
+	.StartY = 160;
+	.EndX = 175;
+	.EndY = 145;
+
+	.CloneGID = monster("prontera", .StartX, .StartY, "Merchant Moka", 1905, 1, "CloneListeSlot2::OnCloneDead");
+	callfunc "F_ApplyCloneStyle", .CloneGID, .CloneSlot;
+	setunitdata(.CloneGID, UDT_SPEED, 120);
+	setunitdata(.CloneGID, UDT_MODE, MD_NOKNOCKBACK);
+	setunitdata(.CloneGID, UDT_AI, AI_NONE);
+	setunitdata(.CloneGID, UDT_LOOKDIR, 0);
+
+	stopnpctimer;
+	setnpctimer 0;
+	initnpctimer;
+	end;
+
+OnTimer500:
+	setunitdata(.CloneGID, UDT_WALKTOXY, .EndX, .EndY);
+	end;
+
+OnTimer9500:
+	setunitdata(.CloneGID, UDT_WALKTOXY, .StartX, .StartY);
+	end;
+
+OnTimer18500:
+	stopnpctimer;
+	setnpctimer 0;
+	initnpctimer;
+	end;
+
+OnInteractStart:
+	stopnpctimer;
+	setunitdata(.CloneGID, UDT_WALKTOXY, .EndX, .EndY);
+	end;
+
+OnInteractEnd:
+	stopnpctimer;
+	setnpctimer 0;
+	initnpctimer;
+	end;
+
+OnCloneDead:
+	stopnpctimer;
+	setnpctimer 0;
+	donpcevent "CloneListeSlot2::OnInit";
+	end;
+}
+
+-	shop	CloneMamokoVendorShop	FAKE_NPC,1405:10000
+
+-	script	CloneMamokoVendor	-1,{
+	end;
+
+OnInit:
+	killmonster "prontera","CloneMamokoVendor::OnCloneDead";
+
+	.CloneSlot = 2;
+	.CloneX = 170;
+	.CloneY = 153;
+
+	.CloneGID = monster("prontera", .CloneX, .CloneY, "Mamoko", 1905, 1, "CloneMamokoVendor::OnCloneDead");
+	callfunc "F_ApplyCloneStyle", .CloneGID, .CloneSlot;
+	setunitdata(.CloneGID, UDT_SPEED, 120);
+	setunitdata(.CloneGID, UDT_MODE, MD_NOKNOCKBACK);
+	setunitdata(.CloneGID, UDT_AI, AI_NONE);
+	setunitdata(.CloneGID, UDT_LOOKDIR, 4);
+	end;
+
+OnCloneDead:
+	donpcevent "CloneMamokoVendor::OnInit";
+	end;
+}
+
+prontera,170,153,4	script	MamokoVendorClick	HIDDEN_NPC,{
+	callshop "CloneMamokoVendorShop",1;
+	npcshopattach "CloneMamokoVendorShop";
 	end;
 
 OnBuyItem:
@@ -118,16 +197,14 @@ OnBuyItem:
 	deletearray @bought_quantity, getarraysize(@bought_quantity);
 	deletearray @bought_nameid, getarraysize(@bought_nameid);
 	if (.Stock <= 0)
-		npcshopdelitem "CloneMokaVendorShop",1405;
+		npcshopdelitem "CloneMamokoVendorShop",1405;
 	mes "[Mamoko]";
 	mes "Merci pour ton achat. Stock restant : " + .Stock + ".";
 	close;
 
 OnInit:
-	callfunc "F_ApplyCloneStyle", getnpcid(0), 2;
-	setunitdata(getnpcid(0), UDT_LOOKDIR, 4);
 	.Stock = 2;
-	npcshopitem "CloneMokaVendorShop",1405,10000;
+	npcshopitem "CloneMamokoVendorShop",1405,10000;
 	end;
 }
 
@@ -379,6 +456,13 @@ OnTouch:
 	if (.@cesar_dy < 0)
 		.@cesar_dy = -.@cesar_dy;
 
+	.@moka_dx = .@x - 175;
+	if (.@moka_dx < 0)
+		.@moka_dx = -.@moka_dx;
+	.@moka_dy = .@y - 145;
+	if (.@moka_dy < 0)
+		.@moka_dy = -.@moka_dy;
+
 	.@adam_dx = .@x - 170;
 	if (.@adam_dx < 0)
 		.@adam_dx = -.@adam_dx;
@@ -397,6 +481,10 @@ OnTouch:
 		.@best = 1;
 		.@best_dist = .@cesar_dx + .@cesar_dy;
 	}
+	if (.@moka_dx <= 5 && .@moka_dy <= 5 && (.@moka_dx + .@moka_dy) < .@best_dist) {
+		.@best = 2;
+		.@best_dist = .@moka_dx + .@moka_dy;
+	}
 	if (.@adam_dx <= 3 && .@adam_dy <= 3 && (.@adam_dx + .@adam_dy) < .@best_dist) {
 		.@best = 4;
 		.@best_dist = .@adam_dx + .@adam_dy;
@@ -411,6 +499,13 @@ OnTouch:
 		mes "TEST Cesar";
 		close2;
 		donpcevent "CloneListeSlot1::OnInteractEnd";
+		end;
+	}
+	if (.@best == 2) {
+		donpcevent "CloneListeSlot2::OnInteractStart";
+		mes "TEST Moka";
+		close2;
+		donpcevent "CloneListeSlot2::OnInteractEnd";
 		end;
 	}
 	if (.@best == 4) {
