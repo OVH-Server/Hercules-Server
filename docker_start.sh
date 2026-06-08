@@ -14,7 +14,7 @@ if [[ ! -z ${COMPILE_SERVER} ]] && [[ $COMPILE_SERVER == "true" ]]; then
     else
         ./configure --enable-packetver=${PACKETVER} --enable-packetver-re=${ENABLE_RENEWAL_PACKET} --disable-renewal --enable-cashshop-preview-patch
     fi
-    make sql -j
+    make plugins sql -j
 fi
 
 if [ ! -z ${SERVER_TYPE} ]; then
