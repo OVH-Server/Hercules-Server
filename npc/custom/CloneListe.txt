@@ -219,12 +219,7 @@ OnBuyItem:
 	}
 	deletearray @bought_quantity, getarraysize(@bought_quantity);
 	deletearray @bought_nameid, getarraysize(@bought_nameid);
-	if (.SpearStock <= 0)
-		npcshopdelitem "CloneMamokoVendorShop",1405;
-	if (.Item2285Stock <= 0)
-		npcshopdelitem "CloneMamokoVendorShop",2285;
-	if (.Card4140Stock <= 0)
-		npcshopdelitem "CloneMamokoVendorShop",4140;
+	callsub S_UpdateShop;
 	mes "[Mamoko]";
 	mes "Merci pour ton achat.";
 	close;
@@ -233,8 +228,20 @@ OnInit:
 	.SpearStock = 2;
 	.Item2285Stock = 1;
 	.Card4140Stock = 2;
-	npcshopitem "CloneMamokoVendorShop",1405,10000,1405,10000,2285,150999,4140,499999;
+	callsub S_UpdateShop;
 	end;
+
+S_UpdateShop:
+	npcshopdelitem "CloneMamokoVendorShop",1405,2285,4140;
+	if (.SpearStock >= 2)
+		npcshopadditem "CloneMamokoVendorShop",1405,10000,1405,10000;
+	else if (.SpearStock == 1)
+		npcshopadditem "CloneMamokoVendorShop",1405,10000;
+	if (.Item2285Stock > 0)
+		npcshopadditem "CloneMamokoVendorShop",2285,150999;
+	if (.Card4140Stock > 0)
+		npcshopadditem "CloneMamokoVendorShop",4140,499999;
+	return;
 }
 
 -	script	CloneListeSlot3	-1,{
