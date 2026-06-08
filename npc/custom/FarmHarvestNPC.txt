@@ -166,7 +166,7 @@ function	script	F_FarmPrototype_Click	{
 	.@drop_item = getarg(6,7201);
 
 	getmapxy .@map$, .@pc_x, .@pc_y, UNITTYPE_PC;
-	if (.@map$ != "prontera" || distance(.@pc_x,.@pc_y,.@x,.@y) > 2)
+	if (.@map$ != "prontera" || distance(.@pc_x,.@pc_y,.@x,.@y) > 4)
 		end;
 
 	if (.Busy)
@@ -194,8 +194,14 @@ function	script	F_FarmPrototype_Click	{
 
 	if (distance(.@pc_x,.@pc_y,.@x,.@y) > 1) {
 		unitwalk(getcharid(CHAR_ID_ACCOUNT), .@stand_x, .@stand_y);
-		sleep2 1200;
-		getmapxy .@map$, .@pc_x, .@pc_y, UNITTYPE_PC;
+		.@walk_wait = 0;
+		while (.@walk_wait < 6) {
+			sleep2 500;
+			getmapxy .@map$, .@pc_x, .@pc_y, UNITTYPE_PC;
+			if (.@map$ == "prontera" && distance(.@pc_x,.@pc_y,.@x,.@y) <= 1)
+				break;
+			.@walk_wait++;
+		}
 		if (.@map$ != "prontera" || distance(.@pc_x,.@pc_y,.@x,.@y) > 1) {
 			.Busy = 0;
 			end;
