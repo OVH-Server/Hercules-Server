@@ -47,7 +47,7 @@ prontera,163,149,4	script	Plant 1#farm01	4_CREEPER,{
 
 OnInit:
 	.Hits = 0;
-	setnpcdistance 2;
+	setnpcdistance 100;
 	end;
 }
 
@@ -56,7 +56,7 @@ prontera,163,146,4	script	Plant 2#farm02	1816,{
 
 OnInit:
 	.Hits = 0;
-	setnpcdistance 2;
+	setnpcdistance 100;
 	end;
 }
 
@@ -65,7 +65,7 @@ prontera,163,143,4	script	Plant 3#farm03	4_BLUE_FLOWER,{
 
 OnInit:
 	.Hits = 0;
-	setnpcdistance 2;
+	setnpcdistance 100;
 	end;
 }
 
@@ -74,7 +74,7 @@ prontera,163,140,4	script	Plant 4#farm04	10392,{
 
 OnInit:
 	.Hits = 0;
-	setnpcdistance 2;
+	setnpcdistance 100;
 	end;
 }
 
@@ -83,7 +83,7 @@ prontera,163,137,4	script	Plant 5#farm00	10093,{
 
 OnInit:
 	.Hits = 0;
-	setnpcdistance 2;
+	setnpcdistance 100;
 	end;
 }
 
@@ -92,151 +92,151 @@ prontera,163,134,4	script	Plant 6#farm00	10094,{
 
 OnInit:
 	.Hits = 0;
-	setnpcdistance 2;
+	setnpcdistance 100;
 	end;
 }
 
 
 prontera,159,143,4	script	Mining 1#farm00	1908,{
-	callfunc "F_FarmPrototype_Click",159,143,159,142,5;
+	callfunc "F_FarmPrototype_Click",159,143,159,142,1;
 
 OnInit:
 	.Hits = 0;
-	setnpcdistance 2;
+	setnpcdistance 100;
 	end;
 }
 
 prontera,159,140,4	script	Mining 2#farm00	10025,{
-	callfunc "F_FarmPrototype_Click",159,140,159,139,5;
+	callfunc "F_FarmPrototype_Click",159,140,159,139,1;
 
 OnInit:
 	.Hits = 0;
-	setnpcdistance 2;
+	setnpcdistance 100;
 	end;
 }
 
 prontera,159,137,4	script	Mining 3#farm00	10026,{
-	callfunc "F_FarmPrototype_Click",159,137,159,136,5;
+	callfunc "F_FarmPrototype_Click",159,137,159,136,1;
 
 OnInit:
 	.Hits = 0;
-	setnpcdistance 2;
+	setnpcdistance 100;
 	end;
 }
 
 prontera,157,143,4	script	Mining 4#farm00	1907,{
-	callfunc "F_FarmPrototype_Click",159,137,159,136,5;
+	callfunc "F_FarmPrototype_Click",157,143,157,142,1;
 
 OnInit:
 	.Hits = 0;
-	setnpcdistance 2;
+	setnpcdistance 100;
 	end;
 }
 
 prontera,159,149,4	script	Archaeology 1#farm06	2_MONEMUS,{
-	callfunc "F_FarmPrototype_Click",159,149,159,148,5;
+	callfunc "F_FarmPrototype_Click",159,149,159,148,1;
 
 OnInit:
 	.Hits = 0;
-	setnpcdistance 2;
+	setnpcdistance 100;
 	end;
 }
 
 prontera,159,147,4	script	Archaeology 2#farm07	4_CRACK,{
-	callfunc "F_FarmPrototype_Click",159,147,159,146,5;
+	callfunc "F_FarmPrototype_Click",159,147,159,146,1;
 
 OnInit:
 	.Hits = 0;
-	setnpcdistance 2;
+	setnpcdistance 100;
 	end;
 }
 
 prontera,156,149,4	script	Archaeology 3#farm08	10442,{
-	callfunc "F_FarmPrototype_Click",156,149,156,148,5;
+	callfunc "F_FarmPrototype_Click",156,149,156,148,1;
 
 OnInit:
 	.Hits = 0;
-	setnpcdistance 2;
+	setnpcdistance 100;
 	end;
 }
 
 prontera,154,149,4	script	Archaeology 4#farm09	10443,{
-	callfunc "F_FarmPrototype_Click",154,149,154,148,5;
+	callfunc "F_FarmPrototype_Click",154,149,154,148,1;
 
 OnInit:
 	.Hits = 0;
-	setnpcdistance 2;
+	setnpcdistance 100;
 	end;
 }
 
 prontera,154,147,4	script	Archaeology 5#farm10	10391,{
-	callfunc "F_FarmPrototype_Click",154,147,154,146,5;
+	callfunc "F_FarmPrototype_Click",154,147,154,146,1;
 
 OnInit:
 	.Hits = 0;
-	setnpcdistance 2;
+	setnpcdistance 100;
 	end;
 }
 
 prontera,151,147,4	script	Archaeology 6#farm11	10390,{
-	callfunc "F_FarmPrototype_Click",151,147,151,146,5;
+	callfunc "F_FarmPrototype_Click",151,147,151,146,1;
 
 OnInit:
 	.Hits = 0;
-	setnpcdistance 2;
+	setnpcdistance 100;
 	end;
 }
 
 prontera,148,147,4	script	Archaeology 7#farm12	10308,{
-	callfunc "F_FarmPrototype_Click",148,147,148,146,5;
+	callfunc "F_FarmPrototype_Click",148,147,148,146,1;
 
 OnInit:
 	.Hits = 0;
-	setnpcdistance 2;
+	setnpcdistance 100;
 	end;
 }
 
 prontera,156,147,4	script	Archaeology 8#farm00	557,{
-	callfunc "F_FarmPrototype_Click",148,147,148,146,5;
+	callfunc "F_FarmPrototype_Click",156,147,156,146,1;
 
 OnInit:
 	.Hits = 0;
-	setnpcdistance 2;
+	setnpcdistance 100;
 	end;
 }
 
 prontera,154,143,4	script	Box 1#farm	4_STAR_BOX_CRT1,{
-	callfunc "F_FarmPrototype_Click",154,143,154,142,10;
+	callfunc "F_FarmPrototype_Click",154,143,154,142,1;
 
 OnInit:
 	.Hits = 0;
-	setnpcdistance 2;
+	setnpcdistance 100;
 	end;
 }
 
 prontera,154,140,4	script	Box 2#farm	10404,{
-	callfunc "F_FarmPrototype_Click",154,140,154,139,10;
+	callfunc "F_FarmPrototype_Click",154,140,154,139,1;
 
 OnInit:
 	.Hits = 0;
-	setnpcdistance 2;
+	setnpcdistance 100;
 	end;
 }
 
 prontera,151,143,4	script	Box 3#farm	10249,{
-	callfunc "F_FarmPrototype_Click",151,143,151,142,10;
+	callfunc "F_FarmPrototype_Click",151,143,151,142,1;
 
 OnInit:
 	.Hits = 0;
-	setnpcdistance 2;
+	setnpcdistance 100;
 	end;
 }
 
 prontera,151,140,4	script	Box 4#farm	10250,{
-	callfunc "F_FarmPrototype_Click",151,140,151,139,10;
+	callfunc "F_FarmPrototype_Click",151,140,151,139,1;
 
 OnInit:
 	.Hits = 0;
-	setnpcdistance 2;
+	setnpcdistance 100;
 	end;
 }
