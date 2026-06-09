@@ -187,7 +187,7 @@ function	script	F_PowerCrystalTalk	{
 		mes "Le cristal invoque des Lunatic. Terrasse-les pour revendiquer ce territoire.";
 		callfunc "F_PowerCrystalSpawnFive", .@map$, .@x, .@y, 1063, "Lunatic du Cristal", .@event$, playerattached();
 	}
-	specialeffect(EF_BEGINSPELL6, AREA, .@npc$);
+	specialeffect(EF_BEGINSPELL6, AREA, getnpcid(.@npc$));
 	return;
 }
 
@@ -250,7 +250,7 @@ function	script	F_PowerCrystalMonsterDead	{
 	setd .@need_var$, 0;
 	setd .@attacker_var$, 0;
 
-	specialeffect(999, AREA, .@npc$);
+	specialeffect(999, AREA, getnpcid(.@npc$));
 	if (.@alignment == 1)
 		announce "Le Cristal de Puissance de " + .@map$ + " est maintenant affilie aux Anges.", bc_all, 0x66CCFF;
 	else
@@ -286,9 +286,9 @@ function	script	F_PowerCrystalAura	{
 	.@alignment = getarg(1);
 
 	if (.@alignment == 1)
-		specialeffect(992, AREA, .@npc$);
+		specialeffect(992, AREA, getnpcid(.@npc$));
 	else if (.@alignment == 2)
-		specialeffect(994, AREA, .@npc$);
+		specialeffect(994, AREA, getnpcid(.@npc$));
 	return;
 }
 
