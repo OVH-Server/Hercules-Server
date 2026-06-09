@@ -80,6 +80,8 @@ new_1-1,144,107,2	script	Guard#nv2	8W_SOLDIER,{
 */
 
 //== Receptionist ==========================================
+
+/*
 new_1-2,100,29,4	script	Receptionist#nv1	4_M_04,{
 	mes "[Training Grounds Receptionist]";
 	mes "Hello, you look to be new here.";
@@ -196,8 +198,9 @@ new_1-2,100,29,4	script	Receptionist#nv1	4_M_04,{
 		}
 	}
 }
-
 */
+
+/*
 new_1-1,53,114,4	script	Shion#nv1	4_F_JOB_HUNTER,{
 	if (nov_get_item04 > 9 || nov_get_item05 > 9) {
 		mes "[Shion]";
