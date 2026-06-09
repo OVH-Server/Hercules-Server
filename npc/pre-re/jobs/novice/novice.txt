@@ -194,6 +194,7 @@ new_1-2,100,29,4	script	Receptionist#nv1	4_M_04,{
 	}
 }
 
+*/
 new_1-1,53,114,4	script	Shion#nv1	4_F_JOB_HUNTER,{
 	if (nov_get_item04 > 9 || nov_get_item05 > 9) {
 		mes "[Shion]";
@@ -364,6 +365,7 @@ new_1-1,53,114,4	script	Shion#nv1	4_F_JOB_HUNTER,{
 		}
 	}
 }
+*/
 
 //== Interfaces Tutor ======================================
 new_1-2,99,105,3	script	Interfaces Tutor#nv1	4_M_CRU,{
