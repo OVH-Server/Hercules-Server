@@ -107,17 +107,17 @@ S_ShowInfo:
 }
 
 prt_fild08,169,372,4	script	Cristal de Puissance#prt08	10547,{
-	callfunc "F_PowerCrystalTalk", "prt_fild08", "Cristal de Puissance#prt08", "$Territory_Prt08_Alignment", "$Territory_Prt08_Battle", "$Territory_Prt08_Kills", "$Territory_Prt08_Pending", "$Territory_Prt08_Need", 169, 372, "TerritoryCrystalPrt08::OnMonsterDead";
+	callfunc "F_PowerCrystalTalk", "prt_fild08", "Cristal de Puissance#prt08", "$Territory_Prt08_Alignment", "$Territory_Prt08_Battle", "$Territory_Prt08_Kills", "$Territory_Prt08_Pending", "$Territory_Prt08_Need", "$Territory_Prt08_Attacker", 169, 372, "TerritoryCrystalPrt08::OnMonsterDead";
 	close;
 }
 
 prt_fild06,31,191,4	script	Cristal de Puissance#prt06	10547,{
-	callfunc "F_PowerCrystalTalk", "prt_fild06", "Cristal de Puissance#prt06", "$Territory_Prt06_Alignment", "$Territory_Prt06_Battle", "$Territory_Prt06_Kills", "$Territory_Prt06_Pending", "$Territory_Prt06_Need", 31, 191, "TerritoryCrystalPrt06::OnMonsterDead";
+	callfunc "F_PowerCrystalTalk", "prt_fild06", "Cristal de Puissance#prt06", "$Territory_Prt06_Alignment", "$Territory_Prt06_Battle", "$Territory_Prt06_Kills", "$Territory_Prt06_Pending", "$Territory_Prt06_Need", "$Territory_Prt06_Attacker", 31, 191, "TerritoryCrystalPrt06::OnMonsterDead";
 	close;
 }
 
 prt_fild05,367,210,4	script	Cristal de Puissance#prt05	10547,{
-	callfunc "F_PowerCrystalTalk", "prt_fild05", "Cristal de Puissance#prt05", "$Territory_Prt05_Alignment", "$Territory_Prt05_Battle", "$Territory_Prt05_Kills", "$Territory_Prt05_Pending", "$Territory_Prt05_Need", 367, 210, "TerritoryCrystalPrt05::OnMonsterDead";
+	callfunc "F_PowerCrystalTalk", "prt_fild05", "Cristal de Puissance#prt05", "$Territory_Prt05_Alignment", "$Territory_Prt05_Battle", "$Territory_Prt05_Kills", "$Territory_Prt05_Pending", "$Territory_Prt05_Need", "$Territory_Prt05_Attacker", 367, 210, "TerritoryCrystalPrt05::OnMonsterDead";
 	close;
 }
 
@@ -129,9 +129,10 @@ function	script	F_PowerCrystalTalk	{
 	.@kills_var$ = getarg(4);
 	.@pending_var$ = getarg(5);
 	.@need_var$ = getarg(6);
-	.@x = getarg(7);
-	.@y = getarg(8);
-	.@event$ = getarg(9);
+	.@attacker_var$ = getarg(7);
+	.@x = getarg(8);
+	.@y = getarg(9);
+	.@event$ = getarg(10);
 	.@alignment = getd(.@alignment_var$);
 
 	mes "[Cristal de Puissance]";
@@ -172,18 +173,19 @@ function	script	F_PowerCrystalTalk	{
 	setd .@kills_var$, 0;
 	setd .@pending_var$, .@alignment;
 	setd .@need_var$, 5;
+	setd .@attacker_var$, getcharid(CHAR_ID_ACCOUNT);
 
 	mes "[Cristal de Puissance]";
 	if (.@alignment == 1) {
 		mes "Tu soutiens les Anges.";
 		mes "D'accord, tres bien.";
 		mes "Le cristal invoque des Poring. Terrasse-les pour revendiquer ce territoire.";
-		callfunc "F_PowerCrystalSpawnFive", .@map$, .@x, .@y, PORING, "Poring du Cristal", .@event$;
+		callfunc "F_PowerCrystalSpawnFive", .@map$, .@x, .@y, PORING, "Poring du Cristal", .@event$, playerattached();
 	} else {
 		mes "Tu soutiens les Demons.";
 		mes "D'accord, tres bien.";
 		mes "Le cristal invoque des Lunatic. Terrasse-les pour revendiquer ce territoire.";
-		callfunc "F_PowerCrystalSpawnFive", .@map$, .@x, .@y, 1063, "Lunatic du Cristal", .@event$;
+		callfunc "F_PowerCrystalSpawnFive", .@map$, .@x, .@y, 1063, "Lunatic du Cristal", .@event$, playerattached();
 	}
 	specialeffect(EF_BEGINSPELL6, AREA, .@npc$);
 	return;
@@ -196,12 +198,29 @@ function	script	F_PowerCrystalSpawnFive	{
 	.@mob_id = getarg(3);
 	.@mob_name$ = getarg(4);
 	.@event$ = getarg(5);
+	.@target_gid = getarg(6);
 
-	monster .@map$, .@x - 2, .@y, .@mob_name$, .@mob_id, 1, .@event$;
-	monster .@map$, .@x + 2, .@y, .@mob_name$, .@mob_id, 1, .@event$;
-	monster .@map$, .@x, .@y - 2, .@mob_name$, .@mob_id, 1, .@event$;
-	monster .@map$, .@x, .@y + 2, .@mob_name$, .@mob_id, 1, .@event$;
-	monster .@map$, .@x + 1, .@y + 1, .@mob_name$, .@mob_id, 1, .@event$;
+	callfunc "F_PowerCrystalSpawnMob", .@map$, .@x - 2, .@y, .@mob_name$, .@mob_id, .@event$, .@target_gid;
+	callfunc "F_PowerCrystalSpawnMob", .@map$, .@x + 2, .@y, .@mob_name$, .@mob_id, .@event$, .@target_gid;
+	callfunc "F_PowerCrystalSpawnMob", .@map$, .@x, .@y - 2, .@mob_name$, .@mob_id, .@event$, .@target_gid;
+	callfunc "F_PowerCrystalSpawnMob", .@map$, .@x, .@y + 2, .@mob_name$, .@mob_id, .@event$, .@target_gid;
+	callfunc "F_PowerCrystalSpawnMob", .@map$, .@x + 1, .@y + 1, .@mob_name$, .@mob_id, .@event$, .@target_gid;
+	return;
+}
+
+function	script	F_PowerCrystalSpawnMob	{
+	.@map$ = getarg(0);
+	.@x = getarg(1);
+	.@y = getarg(2);
+	.@mob_name$ = getarg(3);
+	.@mob_id = getarg(4);
+	.@event$ = getarg(5);
+	.@target_gid = getarg(6);
+
+	.@gid = monster(.@map$, .@x, .@y, .@mob_name$, .@mob_id, 1, .@event$);
+	setunitdata(.@gid, UDT_MODE, MD_CANMOVE | MD_CANATTACK | MD_AGGRESSIVE);
+	if (.@target_gid > 0)
+		unitattack(.@gid, .@target_gid);
 	return;
 }
 
@@ -229,13 +248,47 @@ function	script	F_PowerCrystalMonsterDead	{
 	setd .@kills_var$, 0;
 	setd .@pending_var$, 0;
 	setd .@need_var$, 0;
+	setd .@attacker_var$, 0;
 
-	specialeffect(EF_LEVEL99, AREA, .@npc$);
-	specialeffect(EF_ANGEL2, AREA, .@npc$);
+	specialeffect(999, AREA, .@npc$);
 	if (.@alignment == 1)
-		mapannounce .@map$, "Le Cristal de Puissance est maintenant affilie aux Anges.", bc_map, 0x66CCFF;
+		announce "Le Cristal de Puissance de " + .@map$ + " est maintenant affilie aux Anges.", bc_all, 0x66CCFF;
 	else
-		mapannounce .@map$, "Le Cristal de Puissance est maintenant affilie aux Demons.", bc_map, 0xCC66FF;
+		announce "Le Cristal de Puissance de " + .@map$ + " est maintenant affilie aux Demons.", bc_all, 0xCC66FF;
+	return;
+}
+
+function	script	F_PowerCrystalCancelBattle	{
+	.@map$ = getarg(0);
+	.@event$ = getarg(1);
+	.@battle_var$ = getarg(2);
+	.@kills_var$ = getarg(3);
+	.@pending_var$ = getarg(4);
+	.@need_var$ = getarg(5);
+	.@attacker_var$ = getarg(6);
+
+	if (!getd(.@battle_var$))
+		return;
+
+	setd .@battle_var$, 0;
+	setd .@kills_var$, 0;
+	setd .@pending_var$, 0;
+	setd .@need_var$, 0;
+	setd .@attacker_var$, 0;
+
+	killmonster .@map$, .@event$;
+	mapannounce .@map$, "Le combat du Cristal de Puissance a echoue. Les gardiens disparaissent.", bc_map, 0xFF6666;
+	return;
+}
+
+function	script	F_PowerCrystalAura	{
+	.@npc$ = getarg(0);
+	.@alignment = getarg(1);
+
+	if (.@alignment == 1)
+		specialeffect(992, AREA, .@npc$);
+	else if (.@alignment == 2)
+		specialeffect(994, AREA, .@npc$);
 	return;
 }
 
@@ -245,10 +298,18 @@ OnInit:
 	$Territory_Prt08_Kills = 0;
 	$Territory_Prt08_Pending = 0;
 	$Territory_Prt08_Need = 0;
+	$Territory_Prt08_Attacker = 0;
+	initnpctimer;
 	end;
 
 OnMonsterDead:
-	callfunc "F_PowerCrystalMonsterDead", "prt_fild08", "Cristal de Puissance#prt08", "$Territory_Prt08_Alignment", "$Territory_Prt08_Battle", "$Territory_Prt08_Kills", "$Territory_Prt08_Pending", "$Territory_Prt08_Need";
+	callfunc "F_PowerCrystalMonsterDead", "prt_fild08", "Cristal de Puissance#prt08", "$Territory_Prt08_Alignment", "$Territory_Prt08_Battle", "$Territory_Prt08_Kills", "$Territory_Prt08_Pending", "$Territory_Prt08_Need", "$Territory_Prt08_Attacker";
+	end;
+
+OnTimer1000:
+	callfunc "F_PowerCrystalAura", "Cristal de Puissance#prt08", $Territory_Prt08_Alignment;
+	setnpctimer 0;
+	initnpctimer;
 	end;
 }
 
@@ -258,10 +319,18 @@ OnInit:
 	$Territory_Prt06_Kills = 0;
 	$Territory_Prt06_Pending = 0;
 	$Territory_Prt06_Need = 0;
+	$Territory_Prt06_Attacker = 0;
+	initnpctimer;
 	end;
 
 OnMonsterDead:
-	callfunc "F_PowerCrystalMonsterDead", "prt_fild06", "Cristal de Puissance#prt06", "$Territory_Prt06_Alignment", "$Territory_Prt06_Battle", "$Territory_Prt06_Kills", "$Territory_Prt06_Pending", "$Territory_Prt06_Need";
+	callfunc "F_PowerCrystalMonsterDead", "prt_fild06", "Cristal de Puissance#prt06", "$Territory_Prt06_Alignment", "$Territory_Prt06_Battle", "$Territory_Prt06_Kills", "$Territory_Prt06_Pending", "$Territory_Prt06_Need", "$Territory_Prt06_Attacker";
+	end;
+
+OnTimer1000:
+	callfunc "F_PowerCrystalAura", "Cristal de Puissance#prt06", $Territory_Prt06_Alignment;
+	setnpctimer 0;
+	initnpctimer;
 	end;
 }
 
@@ -271,9 +340,30 @@ OnInit:
 	$Territory_Prt05_Kills = 0;
 	$Territory_Prt05_Pending = 0;
 	$Territory_Prt05_Need = 0;
+	$Territory_Prt05_Attacker = 0;
+	initnpctimer;
 	end;
 
 OnMonsterDead:
-	callfunc "F_PowerCrystalMonsterDead", "prt_fild05", "Cristal de Puissance#prt05", "$Territory_Prt05_Alignment", "$Territory_Prt05_Battle", "$Territory_Prt05_Kills", "$Territory_Prt05_Pending", "$Territory_Prt05_Need";
+	callfunc "F_PowerCrystalMonsterDead", "prt_fild05", "Cristal de Puissance#prt05", "$Territory_Prt05_Alignment", "$Territory_Prt05_Battle", "$Territory_Prt05_Kills", "$Territory_Prt05_Pending", "$Territory_Prt05_Need", "$Territory_Prt05_Attacker";
+	end;
+
+OnTimer1000:
+	callfunc "F_PowerCrystalAura", "Cristal de Puissance#prt05", $Territory_Prt05_Alignment;
+	setnpctimer 0;
+	initnpctimer;
+	end;
+}
+
+-	script	TerritoryCrystalDeathWatcher	FAKE_NPC,{
+OnPCDieEvent:
+	.@aid = getcharid(CHAR_ID_ACCOUNT);
+
+	if ($Territory_Prt08_Battle && $Territory_Prt08_Attacker == .@aid)
+		callfunc "F_PowerCrystalCancelBattle", "prt_fild08", "TerritoryCrystalPrt08::OnMonsterDead", "$Territory_Prt08_Battle", "$Territory_Prt08_Kills", "$Territory_Prt08_Pending", "$Territory_Prt08_Need", "$Territory_Prt08_Attacker";
+	if ($Territory_Prt06_Battle && $Territory_Prt06_Attacker == .@aid)
+		callfunc "F_PowerCrystalCancelBattle", "prt_fild06", "TerritoryCrystalPrt06::OnMonsterDead", "$Territory_Prt06_Battle", "$Territory_Prt06_Kills", "$Territory_Prt06_Pending", "$Territory_Prt06_Need", "$Territory_Prt06_Attacker";
+	if ($Territory_Prt05_Battle && $Territory_Prt05_Attacker == .@aid)
+		callfunc "F_PowerCrystalCancelBattle", "prt_fild05", "TerritoryCrystalPrt05::OnMonsterDead", "$Territory_Prt05_Battle", "$Territory_Prt05_Kills", "$Territory_Prt05_Pending", "$Territory_Prt05_Need", "$Territory_Prt05_Attacker";
 	end;
 }

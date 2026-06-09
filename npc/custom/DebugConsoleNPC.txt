@@ -108,7 +108,7 @@ function	script	F_DebugResetMenu	{
 		mes "Equivalent a des @set a 0, lance depuis ce NPC.";
 		next;
 
-		.@choice = select("All custom test vars:Faction + territoires:Eterites:Contracts:Tutos:Ascension:Clone styles:Mission contracts:Other custom:Show @set list:Back");
+		.@choice = select("All custom test vars:Faction + territoires:Eterites:Contracts:Tutos:Ascension:Mission contracts:Other custom:Show @set list:Back");
 
 		if (.@choice == 1) {
 			callfunc "F_DebugResetAllCustom";
@@ -141,21 +141,16 @@ function	script	F_DebugResetMenu	{
 			mes "Ascension reset.";
 			next;
 		} else if (.@choice == 7) {
-			callfunc "F_DebugResetCloneStyles";
-			mes "[CONSOLE DEBUG]";
-			mes "Clone styles reset.";
-			next;
-		} else if (.@choice == 8) {
 			callfunc "F_DebugResetMissionContracts";
 			mes "[CONSOLE DEBUG]";
 			mes "Mission contracts reset.";
 			next;
-		} else if (.@choice == 9) {
+		} else if (.@choice == 8) {
 			callfunc "F_DebugResetOtherCustom";
 			mes "[CONSOLE DEBUG]";
 			mes "Other custom vars reset.";
 			next;
-		} else if (.@choice == 10) {
+		} else if (.@choice == 9) {
 			callfunc "F_DebugShowSetList";
 			next;
 		} else {
@@ -170,7 +165,6 @@ function	script	F_DebugResetAllCustom	{
 	callfunc "F_DebugResetContracts";
 	callfunc "F_DebugResetTutos";
 	callfunc "F_DebugResetAscension";
-	callfunc "F_DebugResetCloneStyles";
 	callfunc "F_DebugResetMissionContracts";
 	callfunc "F_DebugResetOtherCustom";
 	return;
@@ -186,16 +180,22 @@ function	script	F_DebugResetFactionTerritories	{
 	$Territory_Prt08_Kills = 0;
 	$Territory_Prt08_Pending = 0;
 	$Territory_Prt08_Need = 0;
+	$Territory_Prt08_Attacker = 0;
+	killmonster "prt_fild08", "TerritoryCrystalPrt08::OnMonsterDead";
 	$Territory_Prt06_Alignment = 0;
 	$Territory_Prt06_Battle = 0;
 	$Territory_Prt06_Kills = 0;
 	$Territory_Prt06_Pending = 0;
 	$Territory_Prt06_Need = 0;
+	$Territory_Prt06_Attacker = 0;
+	killmonster "prt_fild06", "TerritoryCrystalPrt06::OnMonsterDead";
 	$Territory_Prt05_Alignment = 0;
 	$Territory_Prt05_Battle = 0;
 	$Territory_Prt05_Kills = 0;
 	$Territory_Prt05_Pending = 0;
 	$Territory_Prt05_Need = 0;
+	$Territory_Prt05_Attacker = 0;
+	killmonster "prt_fild05", "TerritoryCrystalPrt05::OnMonsterDead";
 	return;
 }
 
@@ -262,77 +262,6 @@ function	script	F_DebugResetMissionContracts	{
 		$MissionContract_Reward$[.@i] = "";
 		$MissionContract_Duration$[.@i] = "";
 		$MissionContract_Expire[.@i] = 0;
-	}
-	return;
-}
-
-function	script	F_DebugResetCloneStyles	{
-	for (.@slot = 1; .@slot <= 10; .@slot++) {
-		$CloneStyle_Saved[.@slot] = 0;
-		$CloneStyle_SaveVersion[.@slot] = 0;
-		$CloneStyle_Name$[.@slot] = "";
-		$CloneStyle_SourceName$[.@slot] = "";
-		$CloneStyle_SourceCID[.@slot] = 0;
-		$CloneStyle_SourceAID[.@slot] = 0;
-		$CloneStyle_SourceGuild$[.@slot] = "";
-		$CloneStyle_SourceGID[.@slot] = 0;
-		$CloneStyle_Class[.@slot] = 0;
-		$CloneStyle_Sex[.@slot] = 0;
-		$CloneStyle_BaseLevel[.@slot] = 0;
-		$CloneStyle_JobLevel[.@slot] = 0;
-		$CloneStyle_BaseJob[.@slot] = 0;
-		$CloneStyle_BaseClass[.@slot] = 0;
-		$CloneStyle_Upper[.@slot] = 0;
-		$CloneStyle_Hp[.@slot] = 0;
-		$CloneStyle_MaxHp[.@slot] = 0;
-		$CloneStyle_Sp[.@slot] = 0;
-		$CloneStyle_MaxSp[.@slot] = 0;
-		$CloneStyle_Str[.@slot] = 0;
-		$CloneStyle_Agi[.@slot] = 0;
-		$CloneStyle_Vit[.@slot] = 0;
-		$CloneStyle_Int[.@slot] = 0;
-		$CloneStyle_Dex[.@slot] = 0;
-		$CloneStyle_Luk[.@slot] = 0;
-		$CloneStyle_AtkRange[.@slot] = 0;
-		$CloneStyle_AtkMin[.@slot] = 0;
-		$CloneStyle_AtkMax[.@slot] = 0;
-		$CloneStyle_MatkMin[.@slot] = 0;
-		$CloneStyle_MatkMax[.@slot] = 0;
-		$CloneStyle_Def[.@slot] = 0;
-		$CloneStyle_Mdef[.@slot] = 0;
-		$CloneStyle_Hit[.@slot] = 0;
-		$CloneStyle_Flee[.@slot] = 0;
-		$CloneStyle_PDodge[.@slot] = 0;
-		$CloneStyle_Crit[.@slot] = 0;
-		$CloneStyle_EleType[.@slot] = 0;
-		$CloneStyle_EleLevel[.@slot] = 0;
-		$CloneStyle_Hair[.@slot] = 0;
-		$CloneStyle_HairColor[.@slot] = 0;
-		$CloneStyle_ClothColor[.@slot] = 0;
-		$CloneStyle_HeadTop[.@slot] = 0;
-		$CloneStyle_HeadMid[.@slot] = 0;
-		$CloneStyle_HeadBottom[.@slot] = 0;
-		$CloneStyle_Weapon[.@slot] = 0;
-		$CloneStyle_Shield[.@slot] = 0;
-		$CloneStyle_Robe[.@slot] = 0;
-		$CloneStyle_Body2[.@slot] = 0;
-		$CloneStyle_Cart[.@slot] = 0;
-		$CloneStyle_CartType[.@slot] = 0;
-		$CloneStyle_CartOption[.@slot] = 0;
-		$CloneStyle_EquipHeadTop[.@slot] = 0;
-		$CloneStyle_EquipHeadMid[.@slot] = 0;
-		$CloneStyle_EquipHeadLow[.@slot] = 0;
-		$CloneStyle_EquipArmor[.@slot] = 0;
-		$CloneStyle_EquipHandL[.@slot] = 0;
-		$CloneStyle_EquipHandR[.@slot] = 0;
-		$CloneStyle_EquipGarment[.@slot] = 0;
-		$CloneStyle_EquipShoes[.@slot] = 0;
-		$CloneStyle_EquipAccL[.@slot] = 0;
-		$CloneStyle_EquipAccR[.@slot] = 0;
-		$CloneStyle_EquipCostumeTop[.@slot] = 0;
-		$CloneStyle_EquipCostumeMid[.@slot] = 0;
-		$CloneStyle_EquipCostumeLow[.@slot] = 0;
-		$CloneStyle_EquipCostumeGarment[.@slot] = 0;
 	}
 	return;
 }
