@@ -184,7 +184,7 @@ new_1-1,65,115,4	script	Tuto 1	10382,{
 	setquest 65020;
 	$Novice_Tuto_RiderBusy = getcharid(CHAR_ID_ACCOUNT);
 	getitem 12622,1;
-	setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, true);
+	setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND, true);
 	specialeffect 562, AREA, "Tuto 1 - 1";
 	specialeffect 562, AREA, playerattached();
 	sleep2 4000;
@@ -196,7 +196,7 @@ new_1-1,65,115,4	script	Tuto 1	10382,{
 	if (!hascashmount()) {
 		if (countitem(12622) > 0)
 			delitem 12622,1;
-		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, false);
+		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND, false);
 		$Novice_Tuto_RiderBusy = 0;
 		mes "[Tuto 1]";
 		mes "The mount refuses to move for now.";
@@ -234,7 +234,7 @@ new_1-1,65,115,4	script	Tuto 1	10382,{
 	if (countitem(12622) > 0)
 		delitem 12622,1;
 
-	setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, false);
+	setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND, false);
 	$Novice_Tuto_RiderBusy = 0;
 	message strcharinfo(PC_NAME), "Tuto 1: you have arrived near Captain Tuto 2.";
 	sleep2 400;
@@ -331,7 +331,7 @@ OnPCLogoutEvent:
 		sc_end(SC_ALL_RIDING);
 		if (countitem(12622) > 0)
 			delitem 12622,1;
-		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, false);
+		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND, false);
 		$Novice_Tuto_RiderBusy = 0;
 	}
 	end;
