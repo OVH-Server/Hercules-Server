@@ -156,7 +156,7 @@ OnCloneDead:
 	end;
 }
 
-prontera,170,153,4	script	Mamoko#vendor	HIDDEN_NPC,{
+prontera,170,153,4	script	Vendor Mamoko#vendor	HIDDEN_NPC,{
 	callshop "CloneMamokoVendorShop",1;
 	npcshopattach "CloneMamokoVendorShop";
 	end;
