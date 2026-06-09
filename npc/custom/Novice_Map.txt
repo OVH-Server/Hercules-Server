@@ -1,2 +1,274 @@
 //===== Hercules Script ======================================
-//Spawn initial des joueurs 53,111
+// Initial player spawn: 53,111
+
+// Custom novice tutorial map.
+// Quest state:
+// Novice_Tuto_State 0 = not started
+// Novice_Tuto_State 1 = sent to Tuto 2
+// Novice_Tuto_State 2 = briefed by Tuto 2
+// Novice_Tuto3_Gone 1 = Tuto3 refused and no longer speaks
+
+new_1-1,65,115,4	script	Tuto 1	10382,{
+	mes "[Tuto 1]";
+	mes "This is a disaster.";
+	next;
+	mes "[Tuto 1]";
+	mes "There are too few of us left to keep the portal closed.";
+	next;
+	mes "[Tuto 1]";
+	mes "We need everyone who can still stand!";
+	mes "But you cannot stay here. You cannot help us from this spot.";
+	next;
+	mes "[Tuto 1]";
+	mes "Go see the Captain, Tuto 2, at the castle entrance!";
+	next;
+
+	if (select("I will help.:I refuse.") == 2) {
+		mes "[Tuto 1]";
+		mes "As you wish.";
+		mes "But do not be surprised when you see creatures no one has ever seen before.";
+		close;
+	}
+
+	if ($Novice_Tuto_RiderBusy) {
+		mes "[Tuto 1]";
+		mes "Someone is already being escorted.";
+		mes "Wait a few seconds, then try again.";
+		close;
+	}
+
+	if (checkmount() || hascashmount()) {
+		mes "[Tuto 1]";
+		mes "Dismount first. I need the halter to answer only to my route.";
+		close;
+	}
+
+	if (!checkweight(12622,1)) {
+		mes "[Tuto 1]";
+		mes "Your inventory is too heavy to receive the Boarding Halter.";
+		close;
+	}
+
+	if (questprogress(65020))
+		erasequest 65020;
+
+	Novice_Tuto_State = 1;
+	setquest 65020;
+	$Novice_Tuto_RiderBusy = getcharid(CHAR_ID_ACCOUNT);
+	getitem 12622,1;
+	consumeitem 12622;
+	sleep2 300;
+
+	if (!hascashmount()) {
+		if (countitem(12622) > 0)
+			delitem 12622,1;
+		$Novice_Tuto_RiderBusy = 0;
+		mes "[Tuto 1]";
+		mes "The mount refuses to move for now.";
+		mes "Try again in a few moments.";
+		close;
+	}
+
+	mes "[Tuto 1]";
+	mes "Good. Hold tight, and do not look back.";
+	close2;
+
+	setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, true);
+	sleep2 600;
+
+	callsub S_MoveTo, 113,112, 1800;
+	sleep2 500;
+	callsub S_MoveTo, 112,116, 1100;
+	callsub S_MoveTo, 128,130, 2600;
+	callsub S_MoveTo, 139,133, 2100;
+	callsub S_MoveTo, 138,121, 2100;
+	callsub S_MoveTo, 138,108, 2200;
+	callsub S_MoveTo, 131,107, 1600;
+	callsub S_MoveTo, 141,105, 1900;
+	callsub S_MoveTo, 143,114, 1800;
+
+	sc_end(SC_ALL_RIDING);
+	if (countitem(12622) > 0)
+		delitem 12622,1;
+
+	setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, false);
+	$Novice_Tuto_RiderBusy = 0;
+	message strcharinfo(PC_NAME), "Tuto 1: you have arrived near Captain Tuto 2.";
+	sleep2 400;
+
+	callsub S_Tuto2Intro;
+	end;
+
+S_Tuto2Intro:
+	mes "[Tuto 2]";
+	mes "Did Tuto 1 brief you before sending you here?";
+	next;
+
+	if (select("Yes.:No.") == 1) {
+		mes "[Tuto 2]";
+		mes "Then you know what to expect?";
+		mes "Good. We have little time and less room for panic.";
+		Novice_Tuto_State = 2;
+		if (questprogress(65020))
+			completequest 65020;
+		close;
+	}
+
+	mes "[Tuto 2]";
+	mes "Then listen carefully.";
+	next;
+	mes "[Tuto 2]";
+	mes "A magical portal opened beneath the old stones of this castle.";
+	mes "It is unstable, hungry, and getting wider every hour.";
+	next;
+	mes "[Tuto 2]";
+	mes "The High Wizards are holding it shut with layered seals, but the seals are cracking.";
+	mes "If their focus breaks, creatures from beyond our world will pour through.";
+	next;
+	mes "[Tuto 2]";
+	mes "These are not monsters from our fields or caves.";
+	mes "They are things no adventurer has named, studied, or survived long enough to describe.";
+	next;
+	mes "[Tuto 2]";
+	mes "That is why every pair of hands matters.";
+	mes "Stay sharp, novice.";
+	Novice_Tuto_State = 2;
+	if (questprogress(65020))
+		completequest 65020;
+	close;
+
+S_MoveTo:
+	.@pc_gid = getcharid(CHAR_ID_ACCOUNT);
+	.@timeout = getarg(2);
+	.@elapsed = 0;
+
+	unitwalk(.@pc_gid, getarg(0), getarg(1));
+	sleep2 75;
+	.@elapsed += 75;
+
+	while (.@elapsed < .@timeout) {
+		getmapxy(.@map$, .@x, .@y, UNITTYPE_PC);
+		.@dx = getarg(0) - .@x;
+		.@dy = getarg(1) - .@y;
+		if (.@dx < 0)
+			.@dx = -.@dx;
+		if (.@dy < 0)
+			.@dy = -.@dy;
+		if (.@dx <= 3 && .@dy <= 3)
+			return;
+
+		if (unitiswalking(.@pc_gid) != 1 && .@elapsed > 250)
+			unitwalk(.@pc_gid, getarg(0), getarg(1));
+
+		sleep2 75;
+		.@elapsed += 75;
+	}
+
+	return;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer10000:
+	npctalk "Adventurer! Do not stay there!";
+	initnpctimer;
+	end;
+
+OnPCLogoutEvent:
+	if ($Novice_Tuto_RiderBusy == getcharid(CHAR_ID_ACCOUNT)) {
+		sc_end(SC_ALL_RIDING);
+		if (countitem(12622) > 0)
+			delitem 12622,1;
+		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, false);
+		$Novice_Tuto_RiderBusy = 0;
+	}
+	end;
+}
+
+new_1-1,146,115,4	script	Tuto 2	10378,{
+	mes "[Tuto 2]";
+	mes "Did Tuto 1 brief you before sending you here?";
+	next;
+
+	if (select("Yes.:No.") == 1) {
+		mes "[Tuto 2]";
+		mes "Then you know what to expect?";
+		mes "Good. We have little time and less room for panic.";
+		if (Novice_Tuto_State < 2)
+			Novice_Tuto_State = 2;
+		if (questprogress(65020))
+			completequest 65020;
+		close;
+	}
+
+	mes "[Tuto 2]";
+	mes "Then listen carefully.";
+	next;
+	mes "[Tuto 2]";
+	mes "A magical portal opened beneath the old stones of this castle.";
+	mes "It is unstable, hungry, and getting wider every hour.";
+	next;
+	mes "[Tuto 2]";
+	mes "The High Wizards are holding it shut with layered seals, but the seals are cracking.";
+	mes "If their focus breaks, creatures from beyond our world will pour through.";
+	next;
+	mes "[Tuto 2]";
+	mes "These are not monsters from our fields or caves.";
+	mes "They are things no adventurer has named, studied, or survived long enough to describe.";
+	next;
+	mes "[Tuto 2]";
+	mes "That is why every pair of hands matters.";
+	mes "Stay sharp, novice.";
+	if (Novice_Tuto_State < 2)
+		Novice_Tuto_State = 2;
+	if (questprogress(65020))
+		completequest 65020;
+	close;
+}
+
+new_1-1,105,102,4	script	Tuto3	10295,{
+	if (Novice_Tuto3_Gone) {
+		message strcharinfo(PC_NAME), "Tuto3 is nowhere to be found.";
+		end;
+	}
+
+	mes "[Tuto3]";
+	mes "Well, well... Does an open portal not thrill you, no?";
+	next;
+	mes "[Tuto3]";
+	mes "All those solemn faces, all that chanting, no?";
+	mes "Pointless. Holding the portal shut will change nothing.";
+	next;
+	mes "[Tuto3]";
+	mes "The High Wizards think they understand the tear because they can draw circles around it, no?";
+	mes "They are incompetent. Painfully incompetent.";
+	next;
+	mes "[Tuto3]";
+	mes "They keep feeding power into the wound, no?";
+	mes "Any fool can see the portal is not a door. It is a mouth.";
+	next;
+	mes "[Tuto3]";
+	mes "Sooner or later it will open wider, and all their proud little seals will snap.";
+	mes "That is how these things always end, no?";
+	next;
+	mes "[Tuto3]";
+	mes "Tell me, novice. You see it too, do you not?";
+	next;
+
+	if (select("Honestly, I completely agree with you!:No, you seem strange to me...") == 1) {
+		warp "new_1-1",105,101;
+		message strcharinfo(PC_NAME), "Tuto3: Come on, I will take you somewhere you should enjoy.";
+		close;
+	}
+
+	mes "[Tuto3]";
+	mes "You are the strange one, no?";
+	next;
+	mes "[Tuto3]";
+	mes "*cough*";
+	close2;
+	Novice_Tuto3_Gone = 1;
+	message strcharinfo(PC_NAME), "Tuto3 vanishes before you can question him again.";
+	end;
+}
