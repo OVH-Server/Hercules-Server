@@ -249,16 +249,16 @@ S_Tuto2Intro:
 
 	if (select("Yes.:No.") == 1) {
 		mes "[Tuto 2]";
-		mes "Tu sais a quoi t'attendre alors...";
-		mes "Par contre tu as l'air tres mal equipe.";
+		mes "Then you know what to expect...";
+		mes "However, you look poorly equipped.";
 		next;
 		mes "[Tuto 2]";
-		mes "Je te conseille de passer voir a l'interieur du chateau.";
-		mes "Tu trouveras toutes les informations et de l'aide pour nous aider au mieux!";
+		mes "I advise you to go inside the castle.";
+		mes "You will find all the information and help you need to support us properly!";
 		next;
 		mes "[Tuto 2]";
-		mes "Va donc voir l'instructeur qui est au centre de la piece!";
-		mes "Allez, a la prochaine!";
+		mes "Go see the instructor in the center of the room!";
+		mes "Now go. See you next time!";
 		Novice_Tuto_State = 2;
 		if (questprogress(65020))
 			completequest 65020;
@@ -344,16 +344,16 @@ new_1-1,146,115,4	script	Tuto 2	10378,{
 
 	if (select("Yes.:No.") == 1) {
 		mes "[Tuto 2]";
-		mes "Tu sais a quoi t'attendre alors...";
-		mes "Par contre tu as l'air tres mal equipe.";
+		mes "Then you know what to expect...";
+		mes "However, you look poorly equipped.";
 		next;
 		mes "[Tuto 2]";
-		mes "Je te conseille de passer voir a l'interieur du chateau.";
-		mes "Tu trouveras toutes les informations et de l'aide pour nous aider au mieux!";
+		mes "I advise you to go inside the castle.";
+		mes "You will find all the information and help you need to support us properly!";
 		next;
 		mes "[Tuto 2]";
-		mes "Va donc voir l'instructeur qui est au centre de la piece!";
-		mes "Allez, a la prochaine!";
+		mes "Go see the instructor in the center of the room!";
+		mes "Now go. See you next time!";
 		if (Novice_Tuto_State < 2)
 			Novice_Tuto_State = 2;
 		if (questprogress(65020))
@@ -386,7 +386,7 @@ new_1-1,146,115,4	script	Tuto 2	10378,{
 	close;
 }
 
-new_1-1,105,97,4	script	Tuto3	10295,{
+new_1-1,105,98,4	script	Tuto3	10295,{
 	if (Novice_Tuto3_Gone) {
 		message strcharinfo(PC_NAME), "Tuto3 is nowhere to be found.";
 		end;
@@ -416,9 +416,30 @@ new_1-1,105,97,4	script	Tuto3	10295,{
 	next;
 
 	if (select("Honestly, I completely agree with you!:No, you seem strange to me...") == 1) {
-		warp "new_1-1",105,101;
-		message strcharinfo(PC_NAME), "Tuto3: Come on, I will take you somewhere you should enjoy.";
-		close;
+		warp "new_1-1",105,96;
+		sleep2 300;
+		mes "[Tuto3]";
+		mes "Surprised?";
+		mes "You cannot even imagine what else we can do...";
+		next;
+		mes "[Tuto3]";
+		mes "Anyway, we do not have more time to talk here.";
+		mes "Come on, I will take you.";
+		next;
+
+		if (select("Yes.:No.") == 1) {
+			close2;
+			warp "new_1-1",118,52;
+			end;
+		}
+
+		mes "[Tuto3]";
+		mes "I thought you were someone sensible...";
+		close2;
+		Novice_Tuto3_Gone = 1;
+		hideonnpc strnpcinfo(NPC_NAME);
+		message strcharinfo(PC_NAME), "Tuto3 vanishes before you can question him again.";
+		end;
 	}
 
 	mes "[Tuto3]";
