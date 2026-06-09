@@ -26,70 +26,113 @@ new_1-1,64,117,4	script	Tuto 1 - 1	735,{
 
 new_1-1,51,122,0	script	General	657,{
 	mes "[General]";
-	mes "Tu sors d'ou soldat ?!";
-	mes "Va te cacher, t'es un poids sur le champ de bataille !";
+	mes "Where did you come from, soldier?!";
+	mes "Go hide. You are dead weight on the battlefield!";
 	close;
 }
 
 new_1-1,49,120,0	script	Saint#novice_a	616,{
+	mes "[Saint]";
+	mes "We are part of the Royal Guard.";
+	mes "We are here to defend the kingdom!";
 	close;
 }
 
 new_1-1,48,124,0	script	Saint#novice_b	616,{
+	mes "[Saint]";
+	mes "We are part of the Royal Guard.";
+	mes "We are here to defend the kingdom!";
 	close;
 }
 
 new_1-1,58,105,4	script	Lieutenant#novice_a	469,{
+	mes "[Lieutenant]";
+	mes "We are part of the Royal Guard.";
+	mes "We are here to defend the kingdom!";
 	close;
 }
 
 new_1-1,50,101,4	script	Lieutenant#novice_b	469,{
+	mes "[Lieutenant]";
+	mes "We are part of the Royal Guard.";
+	mes "We are here to defend the kingdom!";
 	close;
 }
 
 new_1-1,66,108,4	script	Cynthia	601,{
 	mes "[Cynthia]";
-	mes "Je fais partie de la garde royale, tracez votre chemin soldat !";
+	mes "We are part of the Royal Guard.";
+	mes "We are here to defend the kingdom!";
 	close;
 }
 
 new_1-1,131,116,4	script	Royal Guard#novice_a	419,{
+	mes "[Royal Guard]";
+	mes "We are part of the Royal Guard.";
+	mes "We are here to defend the kingdom!";
 	close;
 }
 
-new_1-1,113,116,4	script	Royal Guard#novice_a	419,{
+new_1-1,113,116,4	script	Royal Guard#novice_i	419,{
+	mes "[Royal Guard]";
+	mes "We are part of the Royal Guard.";
+	mes "We are here to defend the kingdom!";
 	close;
 }
 
 new_1-1,113,107,4	script	Royal Guard#novice_b	419,{
+	mes "[Royal Guard]";
+	mes "We are part of the Royal Guard.";
+	mes "We are here to defend the kingdom!";
 	close;
 }
 
 new_1-1,144,121,4	script	Royal Guard#novice_c	417,{
+	mes "[Royal Guard]";
+	mes "We are part of the Royal Guard.";
+	mes "We are here to defend the kingdom!";
 	close;
 }
 
 new_1-1,144,105,4	script	Royal Guard#novice_d	417,{
+	mes "[Royal Guard]";
+	mes "We are part of the Royal Guard.";
+	mes "We are here to defend the kingdom!";
 	close;
 }
 
 new_1-1,144,102,4	script	Royal guard#novice_e	413,{
+	mes "[Royal Guard]";
+	mes "We are part of the Royal Guard.";
+	mes "We are here to defend the kingdom!";
 	close;
 }
 
 new_1-1,144,118,4	script	Royal guard#novice_f	413,{
+	mes "[Royal Guard]";
+	mes "We are part of the Royal Guard.";
+	mes "We are here to defend the kingdom!";
 	close;
 }
 
 new_1-1,124,102,4	script	Ryoal Gunslinger	632,{
+	mes "[Royal Gunslinger]";
+	mes "We are part of the Royal Guard.";
+	mes "We are here to defend the kingdom!";
 	close;
 }
 
 new_1-1,141,116,4	script	Royal Guard#novice_g	418,{
+	mes "[Royal Guard]";
+	mes "We are part of the Royal Guard.";
+	mes "We are here to defend the kingdom!";
 	close;
 }
 
 new_1-1,140,112,4	script	Royal Guard#novice_h	420,{
+	mes "[Royal Guard]";
+	mes "We are part of the Royal Guard.";
+	mes "We are here to defend the kingdom!";
 	close;
 }
 
