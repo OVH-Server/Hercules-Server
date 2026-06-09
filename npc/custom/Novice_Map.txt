@@ -62,15 +62,19 @@ new_1-1,65,115,4	script	Tuto 1	10382,{
 	setquest 65020;
 	$Novice_Tuto_RiderBusy = getcharid(CHAR_ID_ACCOUNT);
 	getitem 12622,1;
+	setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, true);
 	specialeffect 562, AREA, "Tuto 1 - 1";
-	sleep2 2000;
+	specialeffect 562, AREA, playerattached();
+	sleep2 4000;
 	removespecialeffect 562, AREA, "Tuto 1 - 1";
+	removespecialeffect 562, AREA, playerattached();
 	consumeitem 12622;
-	sleep2 300;
+	sleep2 1000;
 
 	if (!hascashmount()) {
 		if (countitem(12622) > 0)
 			delitem 12622,1;
+		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, false);
 		$Novice_Tuto_RiderBusy = 0;
 		mes "[Tuto 1]";
 		mes "The mount refuses to move for now.";
@@ -82,8 +86,8 @@ new_1-1,65,115,4	script	Tuto 1	10382,{
 	mes "Good. Hold tight, and do not look back.";
 	close2;
 
-	setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, true);
-	sleep2 600;
+	npctalk "Bon courage ! Le monde Midgard a besoin de toi !";
+	sleep2 1000;
 
 	callsub S_MoveTo, 62,113, 3000;
 	callsub S_MoveTo, 68,114, 3000;
@@ -245,7 +249,6 @@ new_1-1,146,115,4	script	Tuto 2	10378,{
 
 new_1-1,105,102,4	script	Tuto3	10295,{
 	if (Novice_Tuto3_Gone) {
-		hideonnpc strnpcinfo(NPC_NAME);
 		message strcharinfo(PC_NAME), "Tuto3 is nowhere to be found.";
 		end;
 	}
