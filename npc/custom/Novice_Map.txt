@@ -39,53 +39,57 @@ new_1-1,48,124,0	script	Saint#novice_b	616,{
 	close;
 }
 
-new_1-1,58,105,0	script	Lieutenant#novice_a	469,{
+new_1-1,58,105,4	script	Lieutenant#novice_a	469,{
 	close;
 }
 
-new_1-1,50,101,0	script	Lieutenant#novice_b	469,{
+new_1-1,50,101,4	script	Lieutenant#novice_b	469,{
 	close;
 }
 
-new_1-1,66,108,0	script	Cynthia	601,{
+new_1-1,66,108,4	script	Cynthia	601,{
 	mes "[Cynthia]";
 	mes "Je fais partie de la garde royale, tracez votre chemin soldat !";
 	close;
 }
 
-new_1-1,133,116,0	script	Royal Guard#novice_a	419,{
+new_1-1,131,116,4	script	Royal Guard#novice_a	419,{
 	close;
 }
 
-new_1-1,113,107,0	script	Royal Guard#novice_b	419,{
+new_1-1,113,116,4	script	Royal Guard#novice_a	419,{
 	close;
 }
 
-new_1-1,144,121,0	script	Royal Guard#novice_c	417,{
+new_1-1,113,107,4	script	Royal Guard#novice_b	419,{
 	close;
 }
 
-new_1-1,144,105,0	script	Royal Guard#novice_d	417,{
+new_1-1,144,121,4	script	Royal Guard#novice_c	417,{
 	close;
 }
 
-new_1-1,144,102,0	script	Royal guard#novice_e	413,{
+new_1-1,144,105,4	script	Royal Guard#novice_d	417,{
 	close;
 }
 
-new_1-1,144,118,0	script	Royal guard#novice_f	413,{
+new_1-1,144,102,4	script	Royal guard#novice_e	413,{
 	close;
 }
 
-new_1-1,124,102,0	script	Ryoal Gunslinger	632,{
+new_1-1,144,118,4	script	Royal guard#novice_f	413,{
 	close;
 }
 
-new_1-1,141,116,0	script	Royal Guard#novice_g	418,{
+new_1-1,124,102,4	script	Ryoal Gunslinger	632,{
 	close;
 }
 
-new_1-1,140,112,0	script	Royal Guard#novice_h	420,{
+new_1-1,141,116,4	script	Royal Guard#novice_g	418,{
+	close;
+}
+
+new_1-1,140,112,4	script	Royal Guard#novice_h	420,{
 	close;
 }
 
