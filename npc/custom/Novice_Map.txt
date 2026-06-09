@@ -24,6 +24,71 @@ new_1-1,64,117,4	script	Tuto 1 - 1	735,{
 	close;
 }
 
+new_1-1,51,122,0	script	General	657,{
+	mes "[General]";
+	mes "Tu sors d'ou soldat ?!";
+	mes "Va te cacher, t'es un poids sur le champ de bataille !";
+	close;
+}
+
+new_1-1,49,120,0	script	Saint#novice_a	616,{
+	close;
+}
+
+new_1-1,48,124,0	script	Saint#novice_b	616,{
+	close;
+}
+
+new_1-1,58,105,0	script	Lieutenant#novice_a	469,{
+	close;
+}
+
+new_1-1,50,101,0	script	Lieutenant#novice_b	469,{
+	close;
+}
+
+new_1-1,66,108,0	script	Cynthia	601,{
+	mes "[Cynthia]";
+	mes "Je fais partie de la garde royale, tracez votre chemin soldat !";
+	close;
+}
+
+new_1-1,133,116,0	script	Royal Guard#novice_a	419,{
+	close;
+}
+
+new_1-1,113,107,0	script	Royal Guard#novice_b	419,{
+	close;
+}
+
+new_1-1,144,121,0	script	Royal Guard#novice_c	417,{
+	close;
+}
+
+new_1-1,144,105,0	script	Royal Guard#novice_d	417,{
+	close;
+}
+
+new_1-1,144,102,0	script	Royal guard#novice_e	413,{
+	close;
+}
+
+new_1-1,144,118,0	script	Royal guard#novice_f	413,{
+	close;
+}
+
+new_1-1,124,102,0	script	Ryoal Gunslinger	632,{
+	close;
+}
+
+new_1-1,141,116,0	script	Royal Guard#novice_g	418,{
+	close;
+}
+
+new_1-1,140,112,0	script	Royal Guard#novice_h	420,{
+	close;
+}
+
 new_1-1,65,115,4	script	Tuto 1	10382,{
 	mes "[Tuto 1]";
 	mes "This is a disaster.";
@@ -137,8 +202,16 @@ S_Tuto2Intro:
 
 	if (select("Yes.:No.") == 1) {
 		mes "[Tuto 2]";
-		mes "Then you know what to expect?";
-		mes "Good. We have little time and less room for panic.";
+		mes "Tu sais a quoi t'attendre alors...";
+		mes "Par contre tu as l'air tres mal equipe.";
+		next;
+		mes "[Tuto 2]";
+		mes "Je te conseille de passer voir a l'interieur du chateau.";
+		mes "Tu trouveras toutes les informations et de l'aide pour nous aider au mieux!";
+		next;
+		mes "[Tuto 2]";
+		mes "Va donc voir l'instructeur qui est au centre de la piece!";
+		mes "Allez, a la prochaine!";
 		Novice_Tuto_State = 2;
 		if (questprogress(65020))
 			completequest 65020;
@@ -201,7 +274,7 @@ OnInit:
 	initnpctimer;
 	end;
 
-OnTimer10000:
+OnTimer30000:
 	npctalk "Adventurer! Do not stay there!";
 	initnpctimer;
 	end;
@@ -224,8 +297,16 @@ new_1-1,146,115,4	script	Tuto 2	10378,{
 
 	if (select("Yes.:No.") == 1) {
 		mes "[Tuto 2]";
-		mes "Then you know what to expect?";
-		mes "Good. We have little time and less room for panic.";
+		mes "Tu sais a quoi t'attendre alors...";
+		mes "Par contre tu as l'air tres mal equipe.";
+		next;
+		mes "[Tuto 2]";
+		mes "Je te conseille de passer voir a l'interieur du chateau.";
+		mes "Tu trouveras toutes les informations et de l'aide pour nous aider au mieux!";
+		next;
+		mes "[Tuto 2]";
+		mes "Va donc voir l'instructeur qui est au centre de la piece!";
+		mes "Allez, a la prochaine!";
 		if (Novice_Tuto_State < 2)
 			Novice_Tuto_State = 2;
 		if (questprogress(65020))
@@ -258,7 +339,7 @@ new_1-1,146,115,4	script	Tuto 2	10378,{
 	close;
 }
 
-new_1-1,105,102,4	script	Tuto3	10295,{
+new_1-1,105,97,4	script	Tuto3	10295,{
 	if (Novice_Tuto3_Gone) {
 		message strcharinfo(PC_NAME), "Tuto3 is nowhere to be found.";
 		end;
