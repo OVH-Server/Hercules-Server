@@ -152,39 +152,44 @@ function	script	F_PowerCrystalTalk	{
 	}
 
 	mes "Ce territoire est neutre.";
-	mes "Quelle force soutiens-tu sur ce territoire ?";
-	next;
-
-	.@alignment = select("Anges:Demons:Annuler");
-	if (.@alignment == 3) {
-		mes "[Cristal de Puissance]";
-		mes "Reviens lorsque ton choix sera clair.";
+	if (Faction != 1 && Faction != 2) {
+		mes "Je ne ressens aucune faction en toi.";
+		mes "Va d'abord choisir ton camp aupres du NPC Ange ou Demon.";
 		return;
 	}
 
+	mes "Souhaites-tu attaquer le Cristal de Puissance ?";
+	next;
+
+	if (select("Oui:Non") == 2) {
+		mes "[Cristal de Puissance]";
+		mes "Reviens lorsque tu seras pret.";
+		return;
+	}
+
+	.@alignment = Faction;
 	setd .@battle_var$, 1;
 	setd .@kills_var$, 0;
 	setd .@pending_var$, .@alignment;
+	setd .@need_var$, 5;
 
 	mes "[Cristal de Puissance]";
 	if (.@alignment == 1) {
 		mes "Tu soutiens les Anges.";
 		mes "D'accord, tres bien.";
 		mes "Le cristal invoque des Poring. Terrasse-les pour revendiquer ce territoire.";
-		setd .@need_var$, 6;
-		callfunc "F_PowerCrystalSpawnSides", .@map$, .@x, .@y, PORING, "Poring du Cristal", .@event$;
+		callfunc "F_PowerCrystalSpawnFive", .@map$, .@x, .@y, PORING, "Poring du Cristal", .@event$;
 	} else {
 		mes "Tu soutiens les Demons.";
 		mes "D'accord, tres bien.";
-		mes "Le cristal invoque des Chonchon. Terrasse-les pour revendiquer ce territoire.";
-		setd .@need_var$, 3;
-		callfunc "F_PowerCrystalSpawnThree", .@map$, .@x, .@y, CHONCHON, "Chonchon du Cristal", .@event$;
+		mes "Le cristal invoque des Lunatic. Terrasse-les pour revendiquer ce territoire.";
+		callfunc "F_PowerCrystalSpawnFive", .@map$, .@x, .@y, 1063, "Lunatic du Cristal", .@event$;
 	}
 	specialeffect(EF_BEGINSPELL6, AREA, .@npc$);
 	return;
 }
 
-function	script	F_PowerCrystalSpawnSides	{
+function	script	F_PowerCrystalSpawnFive	{
 	.@map$ = getarg(0);
 	.@x = getarg(1);
 	.@y = getarg(2);
@@ -192,26 +197,11 @@ function	script	F_PowerCrystalSpawnSides	{
 	.@mob_name$ = getarg(4);
 	.@event$ = getarg(5);
 
-	monster .@map$, .@x - 2, .@y - 1, .@mob_name$, .@mob_id, 1, .@event$;
 	monster .@map$, .@x - 2, .@y, .@mob_name$, .@mob_id, 1, .@event$;
-	monster .@map$, .@x - 2, .@y + 1, .@mob_name$, .@mob_id, 1, .@event$;
-	monster .@map$, .@x + 2, .@y - 1, .@mob_name$, .@mob_id, 1, .@event$;
 	monster .@map$, .@x + 2, .@y, .@mob_name$, .@mob_id, 1, .@event$;
-	monster .@map$, .@x + 2, .@y + 1, .@mob_name$, .@mob_id, 1, .@event$;
-	return;
-}
-
-function	script	F_PowerCrystalSpawnThree	{
-	.@map$ = getarg(0);
-	.@x = getarg(1);
-	.@y = getarg(2);
-	.@mob_id = getarg(3);
-	.@mob_name$ = getarg(4);
-	.@event$ = getarg(5);
-
-	monster .@map$, .@x + 2, .@y - 1, .@mob_name$, .@mob_id, 1, .@event$;
-	monster .@map$, .@x + 2, .@y, .@mob_name$, .@mob_id, 1, .@event$;
-	monster .@map$, .@x + 2, .@y + 1, .@mob_name$, .@mob_id, 1, .@event$;
+	monster .@map$, .@x, .@y - 2, .@mob_name$, .@mob_id, 1, .@event$;
+	monster .@map$, .@x, .@y + 2, .@mob_name$, .@mob_id, 1, .@event$;
+	monster .@map$, .@x + 1, .@y + 1, .@mob_name$, .@mob_id, 1, .@event$;
 	return;
 }
 

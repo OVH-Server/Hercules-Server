@@ -143,7 +143,7 @@ OnInit:
 	.CloneX = 170;
 	.CloneY = 153;
 
-	.CloneGID = monster("prontera", .CloneX, .CloneY, "Mamoko", 1905, 1, "CloneMamokoVendor::OnCloneDead");
+	.CloneGID = monster("prontera", .CloneX, .CloneY, "Vendor Mamoko", 1905, 1, "CloneMamokoVendor::OnCloneDead");
 	callfunc "F_ApplyCloneStyle", .CloneGID, .CloneSlot;
 	setunitdata(.CloneGID, UDT_SPEED, 120);
 	setunitdata(.CloneGID, UDT_MODE, MD_NOKNOCKBACK);
