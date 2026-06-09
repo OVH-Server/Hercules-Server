@@ -651,7 +651,7 @@ new_1-2,99,105,3	script	Interfaces Tutor#nv1	4_M_CRU,{
 	}
 }
 
-new_1-2,83,111,3	script	Skill Tutor#nv	4_M_MONK,{
+new_1-2,97,105,3	script	Skill Tutor#nv	4_M_MONK,{
 	if (nov_get_item02 > 9 && nov_get_item03 > 9 && nov_get_item04 > 9) {
 		mes "[Cecil]";
 		mes "Huh...?";
@@ -908,7 +908,8 @@ new_1-2,83,111,3	script	Skill Tutor#nv	4_M_MONK,{
 	}
 }
 
-new_1-2,115,111,3	script	Item Tutor#nv	4_F_JOB_BLACKSMITH,{
+
+new_1-2,101,105,3	script	Item Tutor#nv	4_F_JOB_BLACKSMITH,{
 	if (nov_get_item02 > 9 && nov_get_item03 > 9 && nov_get_item04 > 9) {
 		mes "[Alice]";
 		mes "Huh...?";
@@ -1256,6 +1257,8 @@ new_1-2,115,111,3	script	Item Tutor#nv	4_F_JOB_BLACKSMITH,{
 	}
 }
 
+
+/*
 new_1-2,118,108,3	script	Kafra Employee#nv1	4_F_KAFRA1,{
 	mes "[Kafra Employee]";
 	mes "Welcome to";
@@ -1553,6 +1556,7 @@ new_1-2,118,108,3	script	Kafra Employee#nv1	4_F_KAFRA1,{
 		}
 	}
 }
+*/
 
 //== Interface Assistant ===================================
 new_1-2,161,182,5	script	Instructor#nv	4_F_03,{
@@ -2175,6 +2179,7 @@ new_1-2,184,172,1	script	Understandings of Skills	1_M_01,{
 	}
 }
 
+/*
 new_1-2,121,101,2	script	Guide Soldier#nv1	8W_SOLDIER,{
 	mes "[Guide Soldier]";
 	mes "We Guide Soldiers provide location information at the entrance of every town. You can easily find us by our special uniforms.";
@@ -2187,6 +2192,7 @@ new_1-2,121,101,2	script	Guide Soldier#nv1	8W_SOLDIER,{
 	mes "If you wish to take an Informative class, please walk around and speak to the various tutors in these Training Grounds. Have a good day.";
 	close;
 }
+*/
 
 new_1-2,17,182,5	script	Helper#nv	4_M_02,{
 	if (nov_2nd_cos < 11) {
