@@ -92,15 +92,16 @@ new_1-1,65,115,4	script	Tuto 1	10382,{
 	callsub S_MoveTo, 95,112, 4500;
 	callsub S_MoveTo, 105,112, 4500;
 	callsub S_MoveTo, 113,112, 4500;
-	sleep2 500;
-	callsub S_MoveTo, 112,116, 3500;
+	sleep2 1000;
+    callsub S_MoveTo, 123,117, 4500;
 	callsub S_MoveTo, 128,130, 6500;
 	callsub S_MoveTo, 139,133, 5000;
-	callsub S_MoveTo, 138,121, 5000;
-	callsub S_MoveTo, 138,108, 5500;
-	callsub S_MoveTo, 131,107, 4000;
-	callsub S_MoveTo, 141,105, 4500;
-	callsub S_MoveTo, 143,114, 4500;
+    callsub S_MoveTo, 139,123, 4500;
+	callsub S_MoveTo, 134,114, 5000;
+	callsub S_MoveTo, 129,105, 5500;
+	callsub S_MoveTo, 136,98, 4000;
+	callsub S_MoveTo, 142,104, 4500;
+	callsub S_MoveTo, 143,113, 4500;
 
 	sc_end(SC_ALL_RIDING);
 	if (countitem(12622) > 0)
