@@ -42,7 +42,7 @@
 
 //== Bulletin Board ========================================
 
-*/
+/*
 new_1-1,66,114,4	script	Bulletin Board#nv	HIDDEN_NPC,{
 	mes "^FF0000=================================^000000";
 	mes "^E40CAA[Welcome]^CC0000 to ^FF9000Novice^7FFF00 Training ^00FF00Grounds ^E40CAA[Welcome]^000000";
@@ -77,7 +77,7 @@ new_1-1,144,107,2	script	Guard#nv2	8W_SOLDIER,{
 	}
 	close;
 }
-/*
+*/
 
 //== Receptionist ==========================================
 new_1-2,100,29,4	script	Receptionist#nv1	4_M_04,{
