@@ -86,8 +86,9 @@ new_1-1,65,115,4	script	Tuto 1	10382,{
 	mes "Good. Hold tight, and do not look back.";
 	close2;
 
-	npctalk "Bon courage ! Le monde Midgard a besoin de toi !";
-	sleep2 1000;
+	sleep2 300;
+	unittalk(getnpcid("Tuto 1"), "Bon courage ! Le monde Midgard a besoin de toi !", true);
+	sleep2 1700;
 
 	callsub S_MoveTo, 62,113, 3000;
 	callsub S_MoveTo, 68,114, 3000;
