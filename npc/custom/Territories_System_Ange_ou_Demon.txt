@@ -119,6 +119,7 @@ OnAttackEffect:
 	end;
 
 OnInit:
+	setnpcdisplay strnpcinfo(3), "Cristal de Puissance", 10547, 2;
 	initnpctimer;
 	end;
 
@@ -145,6 +146,7 @@ OnAttackEffect:
 	end;
 
 OnInit:
+	setnpcdisplay strnpcinfo(3), "Cristal de Puissance", 10547, 2;
 	initnpctimer;
 	end;
 
@@ -171,6 +173,7 @@ OnAttackEffect:
 	end;
 
 OnInit:
+	setnpcdisplay strnpcinfo(3), "Cristal de Puissance", 10547, 2;
 	initnpctimer;
 	end;
 
