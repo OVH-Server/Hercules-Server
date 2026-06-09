@@ -49,14 +49,18 @@ new_1-1,66,114,4	script	Bulletin Board#nv	HIDDEN_NPC,{
 	mes "^FF0000=================================^000000";
 	close;
 }
+*/
 
+/*
 new_1-1,144,116,2	script	Guard#nv1	8W_SOLDIER,{
 	mes "[Training Grounds Guard]";
 	mes "Welcome to the Training Grounds.";
 	mes "You are now in the outer court yard. Please go inside the castle to begin your training.";
 	close;
 }
+*/
 
+/*
 new_1-1,144,107,2	script	Guard#nv2	8W_SOLDIER,{
 	mes "[Training Grounds Guard]";
 	if(rand(2)) {

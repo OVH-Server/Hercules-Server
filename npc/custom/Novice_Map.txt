@@ -1,0 +1,2 @@
+//===== Hercules Script ======================================
+//Spawn initial des joueurs 53,111
