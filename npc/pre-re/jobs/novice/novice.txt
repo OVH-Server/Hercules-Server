@@ -1559,7 +1559,7 @@ new_1-2,118,108,3	script	Kafra Employee#nv1	4_F_KAFRA1,{
 */
 
 //== Interface Assistant ===================================
-new_1-2,161,182,5	script	Instructor#nv	4_F_03,{
+new_1-2,105,105,5	script	Instructor#nv	4_F_03,{
 	mes "[Edwin]";
 	mes "Welcome to my class.";
 	mes "Choose the subject you";
@@ -1728,7 +1728,7 @@ new_1-2,161,182,5	script	Instructor#nv	4_F_03,{
 	}
 }
 
-new_1-2,182,182,3	script	Somatology Instructor	4_M_SAGE_A,{
+new_1-2,107,105,4	script	Somatology Instructor	4_M_SAGE_A,{
 	mes "[Jare Riotte]";
 	mes "Welcome, new adventurer.";
 	mes "I, Jare Riotte will help you to learn about the fundamental";
@@ -1919,7 +1919,7 @@ new_1-2,182,182,3	script	Somatology Instructor	4_M_SAGE_A,{
 	}
 }
 
-new_1-2,184,172,1	script	Understandings of Skills	1_M_01,{
+new_1-2,109,105,4	script	Understandings of Skills	1_M_01,{
 	mes "[Leo Handerson]";
 	mes "Welcome~";
 	mes "Oh look at this";
@@ -2194,7 +2194,7 @@ new_1-2,121,101,2	script	Guide Soldier#nv1	8W_SOLDIER,{
 }
 */
 
-new_1-2,17,182,5	script	Helper#nv	4_M_02,{
+new_1-2,91,105,5	script	Helper#nv	4_M_02,{
 	if (nov_2nd_cos < 11) {
 		mes "[Elmeen]";
 		mes "Congratulations!";
@@ -2480,7 +2480,7 @@ new_1-2,17,182,5	script	Helper#nv	4_M_02,{
 	}
 }
 
-new_1-2,38,182,3	script	Entrance Guard#nv	4_F_03,{
+new_1-2,93,105,3	script	Entrance Guard#nv	4_F_03,{
 	if (nov_2nd_cos == 0) {
 		mes "[Muriel]";
 		mes "I'm sorry, but I can't let anybody who hasn't been instructed on fighting enter the Field Combat Training Grounds.";
@@ -2648,6 +2648,8 @@ new_1-2,38,182,3	script	Entrance Guard#nv	4_F_03,{
 }
 
 //== Teleport NPC ==========================================
+
+/*
 new_1-3,95,30,4	script	Trainer#nv1::NovHoffman	4_M_02,{
 	mes "[Hoffman]";
 	mes "Hey there~";
@@ -2720,11 +2722,13 @@ new_1-3,95,30,4	script	Trainer#nv1::NovHoffman	4_M_02,{
 		close;
 	}
 }
-
+*/
+/*
 new_2-3,95,30,4	duplicate(NovHoffman)	Trainer#nv2	4_M_02
 new_3-3,95,30,4	duplicate(NovHoffman)	Trainer#nv3	4_M_02
 new_4-3,95,30,4	duplicate(NovHoffman)	Trainer#nv4	4_M_02
 new_5-3,95,30,4	duplicate(NovHoffman)	Trainer#nv5	4_M_02
+*/
 
 new_1-3,96,174,3	script	Test Examiner#nv1::NovKeyman	4_M_03,{
 	mes "[Keyman]";
@@ -2752,13 +2756,17 @@ new_1-3,96,174,3	script	Test Examiner#nv1::NovKeyman	4_M_03,{
 	}
 }
 
+/*
 new_2-3,96,174,3	duplicate(NovKeyman)	Test Examiner#nv2	4_M_03
 new_3-3,96,174,3	duplicate(NovKeyman)	Test Examiner#nv3	4_M_03
 new_4-3,96,174,3	duplicate(NovKeyman)	Test Examiner#nv4	4_M_03
 new_5-3,96,174,3	duplicate(NovKeyman)	Test Examiner#nv5	4_M_03
+*/
 
 //== Potato Merchant =======================================
+/*
 new_1-2,28,185,4	shop	Potato Merchant	4_F_01,516:15
+*/
 
 new_1-4,100,29,1	script	Hanson#nv	1_ETC_01,{
 	if (checkweight(Jellopy,400) == 0) {
