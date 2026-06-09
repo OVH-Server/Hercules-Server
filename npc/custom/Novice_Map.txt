@@ -8,7 +8,7 @@
 // Novice_Tuto_State 2 = briefed by Tuto 2
 // Novice_Tuto3_Gone 1 = Tuto3 refused and no longer speaks
 
-new_1-1,61,117,4	script	Tuto 1 - 1	735,{
+new_1-1,64,117,4	script	Tuto 1 - 1	735,{
 	mes "[Tuto 1 - 1]";
 	mes "Keep moving. I will prepare the mount spell.";
 	close;
