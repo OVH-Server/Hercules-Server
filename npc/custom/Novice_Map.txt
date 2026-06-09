@@ -10,7 +10,17 @@
 
 new_1-1,64,117,4	script	Tuto 1 - 1	735,{
 	mes "[Tuto 1 - 1]";
-	mes "Keep moving. I will prepare the mount spell.";
+	mes "Honestly, I would not refuse some help with the portal!";
+	next;
+	mes "[Tuto 1 - 1]";
+	mes "I fully support the Captain. If he says we need every brave soul we can find, then I believe him completely!";
+	next;
+	mes "[Tuto 1 - 1]";
+	mes "And between us, I am proud he chose me for this post.";
+	mes "Not every wizard knows the mount invocation spell, you know!";
+	next;
+	mes "[Tuto 1 - 1]";
+	mes "Just give me a moment when the time comes, and I will call a mount for you with style!";
 	close;
 }
 
@@ -86,11 +96,11 @@ new_1-1,65,115,4	script	Tuto 1	10382,{
 	mes "Good. Hold tight, and do not look back.";
 	close2;
 
-	sleep2 300;
-	unittalk(getnpcid("Tuto 1"), "Bon courage ! Le monde Midgard a besoin de toi !", true);
-	sleep2 1700;
-
 	callsub S_MoveTo, 62,113, 3000;
+	callsub S_MoveTo, 65,114, 3000;
+	sleep2 1000;
+	unittalk(getnpcid("Tuto 1"), "Good luck! The world of Midgard needs you!", true);
+	sleep2 1800;
 	callsub S_MoveTo, 68,114, 3000;
 	callsub S_MoveTo, 76,113, 3500;
 	callsub S_MoveTo, 85,112, 4000;
