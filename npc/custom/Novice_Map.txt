@@ -62,9 +62,9 @@ new_1-1,65,115,4	script	Tuto 1	10382,{
 	setquest 65020;
 	$Novice_Tuto_RiderBusy = getcharid(CHAR_ID_ACCOUNT);
 	getitem 12622,1;
-	specialeffect 532, AREA, "Tuto 1 - 1";
+	specialeffect 562, AREA, "Tuto 1 - 1";
 	sleep2 2000;
-	removespecialeffect 532, AREA, "Tuto 1 - 1";
+	removespecialeffect 562, AREA, "Tuto 1 - 1";
 	consumeitem 12622;
 	sleep2 300;
 
@@ -82,10 +82,16 @@ new_1-1,65,115,4	script	Tuto 1	10382,{
 	mes "Good. Hold tight, and do not look back.";
 	close2;
 
-	setpcblock(PCBLOCK_MOVE|PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, true);
+	setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, true);
 	sleep2 600;
 
-	callsub S_MoveTo, 113,112, 12000;
+	callsub S_MoveTo, 62,113, 3000;
+	callsub S_MoveTo, 68,114, 3000;
+	callsub S_MoveTo, 76,113, 3500;
+	callsub S_MoveTo, 85,112, 4000;
+	callsub S_MoveTo, 95,112, 4500;
+	callsub S_MoveTo, 105,112, 4500;
+	callsub S_MoveTo, 113,112, 4500;
 	sleep2 500;
 	callsub S_MoveTo, 112,116, 3500;
 	callsub S_MoveTo, 128,130, 6500;
@@ -100,7 +106,7 @@ new_1-1,65,115,4	script	Tuto 1	10382,{
 	if (countitem(12622) > 0)
 		delitem 12622,1;
 
-	setpcblock(PCBLOCK_MOVE|PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, false);
+	setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, false);
 	$Novice_Tuto_RiderBusy = 0;
 	message strcharinfo(PC_NAME), "Tuto 1: you have arrived near Captain Tuto 2.";
 	sleep2 400;
@@ -189,7 +195,7 @@ OnPCLogoutEvent:
 		sc_end(SC_ALL_RIDING);
 		if (countitem(12622) > 0)
 			delitem 12622,1;
-		setpcblock(PCBLOCK_MOVE|PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, false);
+		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, false);
 		$Novice_Tuto_RiderBusy = 0;
 	}
 	end;
