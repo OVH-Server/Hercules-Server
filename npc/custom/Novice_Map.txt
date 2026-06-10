@@ -6,6 +6,7 @@
 // Novice_Tuto_State 0 = not started
 // Novice_Tuto_State 1 = sent to Tuto 2
 // Novice_Tuto_State 2 = briefed by Tuto 2
+// Novice_Tuto_Done 1 = tutorial quest completed
 // Novice_Tuto3_Gone 1 = Tuto3 refused and no longer speaks
 
 new_1-1,64,117,4	script	Tuto 1 - 1	735,{
@@ -138,6 +139,14 @@ new_1-1,140,112,4	script	Royal Guard#novice_h	420,{
 
 new_1-1,65,115,4	script	Tuto 1	10382,{
 	mes "[Tuto 1]";
+
+	if (Novice_Tuto_Done || Novice_Tuto_State >= 2) {
+		Novice_Tuto_Done = 1;
+		mes "What are you waiting for? Run and get equipped!";
+		mes "There is no time to waste!";
+		close;
+	}
+
 	mes "This is a disaster.";
 	next;
 	mes "[Tuto 1]";
@@ -262,6 +271,7 @@ S_Tuto2Intro:
 		Novice_Tuto_State = 2;
 		if (questprogress(65020))
 			completequest 65020;
+		Novice_Tuto_Done = 1;
 		close;
 	}
 
@@ -286,6 +296,7 @@ S_Tuto2Intro:
 	Novice_Tuto_State = 2;
 	if (questprogress(65020))
 		completequest 65020;
+	Novice_Tuto_Done = 1;
 	close;
 
 S_MoveTo:
@@ -339,6 +350,14 @@ OnPCLogoutEvent:
 
 new_1-1,146,115,4	script	Tuto 2	10378,{
 	mes "[Tuto 2]";
+
+	if (Novice_Tuto_Done || Novice_Tuto_State >= 2) {
+		Novice_Tuto_Done = 1;
+		mes "What are you waiting for? Run and get equipped!";
+		mes "There is no time to waste!";
+		close;
+	}
+
 	mes "Did Tuto 1 brief you before sending you here?";
 	next;
 
@@ -358,6 +377,7 @@ new_1-1,146,115,4	script	Tuto 2	10378,{
 			Novice_Tuto_State = 2;
 		if (questprogress(65020))
 			completequest 65020;
+		Novice_Tuto_Done = 1;
 		close;
 	}
 
@@ -383,6 +403,7 @@ new_1-1,146,115,4	script	Tuto 2	10378,{
 		Novice_Tuto_State = 2;
 	if (questprogress(65020))
 		completequest 65020;
+	Novice_Tuto_Done = 1;
 	close;
 }
 

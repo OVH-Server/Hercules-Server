@@ -242,6 +242,14 @@ function	script	F_DebugResetTutos	{
 	Tuto4_State = 0;
 	#Tuto4_RewardClaimed = 0;
 	$Tuto4_RiderBusy = 0;
+
+	Novice_Tuto_State = 0;
+	Novice_Tuto_Done = 0;
+	Novice_Tuto3_Gone = 0;
+	$Novice_Tuto_RiderBusy = 0;
+	if (questprogress(65020))
+		erasequest 65020;
+	hideoffnpc "Tuto3";
 	return;
 }
 
@@ -321,6 +329,9 @@ function	script	F_DebugShowSetList	{
 	mes "@set Tuto2_State 0";
 	mes "@set Tuto3_State 0";
 	mes "@set Tuto4_State 0";
+	mes "@set Novice_Tuto_State 0";
+	mes "@set Novice_Tuto_Done 0";
+	mes "@set Novice_Tuto3_Gone 0";
 	next;
 
 	mes "[CONSOLE DEBUG]";
