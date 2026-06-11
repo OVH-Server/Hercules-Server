@@ -587,16 +587,16 @@ new_1-1,146,115,4	script	Sagard	10378,{
 
 new_1-1,114,46,0	script	Shadow Ritual#novice	FAKE_NPC,{
 OnInit:
-	specialeffect 1025, AREA, getnpcid(0);
-	specialeffect 61, AREA, getnpcid(0);
-	specialeffect 36, AREA, getnpcid(0);
+	specialeffect(1025, AREA, "Shadow Ritual#novice");
+	specialeffect(61, AREA, "Shadow Ritual#novice");
+	specialeffect(36, AREA, "Shadow Ritual#novice");
 	initnpctimer;
 	end;
 
 OnTimer1000:
-	specialeffect 1025, AREA, getnpcid(0);
-	specialeffect 61, AREA, getnpcid(0);
-	specialeffect 36, AREA, getnpcid(0);
+	specialeffect(1025, AREA, "Shadow Ritual#novice");
+	specialeffect(61, AREA, "Shadow Ritual#novice");
+	specialeffect(36, AREA, "Shadow Ritual#novice");
 	stopnpctimer;
 	setnpctimer 0;
 	initnpctimer;
@@ -722,15 +722,15 @@ new_1-1,124,63,4	duplicate(Shadow_Summoner_Template)	Magaleta Clone	596
 
 new_1-1,118,64,0	script	Portal Arrival#novice	FAKE_NPC,{
 OnInit:
-	specialeffect 61, AREA, getnpcid(0);
-	specialeffect 35, AREA, getnpcid(0);
-	specialeffect 36, AREA, getnpcid(0);
+	specialeffect(61, AREA, "Portal Arrival#novice");
+	specialeffect(35, AREA, "Portal Arrival#novice");
+	specialeffect(36, AREA, "Portal Arrival#novice");
 	initnpctimer;
 	end;
 
 OnTimer60000:
-	specialeffect 61, AREA, getnpcid(0);
-	specialeffect 36, AREA, getnpcid(0);
+	specialeffect(61, AREA, "Portal Arrival#novice");
+	specialeffect(36, AREA, "Portal Arrival#novice");
 	stopnpctimer;
 	setnpctimer 0;
 	initnpctimer;
@@ -752,11 +752,13 @@ OnTimer20000:
 	.@mob = .Portal_Mob[.Portal_Index];
 	.@gid = monster("new_1-1", 114, 46, .@name$, .@mob, 1, "Portal Soldier Controller#novice::OnCloneDead");
 	setunitdata(.@gid, UDT_SPEED, 100);
-	setunitdata(.@gid, UDT_MODE, MD_NOKNOCKBACK);
+	setunitdata(.@gid, UDT_MODE, MD_CANMOVE | MD_NOKNOCKBACK);
 	setunitdata(.@gid, UDT_AI, AI_NONE);
+	sleep 100;
 	setunitdata(.@gid, UDT_WALKTOXY, 118, 64);
-	specialeffect 61, AREA, getnpcid("Shadow Ritual#novice");
-	specialeffect 61, AREA, getnpcid("Portal Arrival#novice");
+	unitwalk(.@gid, 118, 64);
+	specialeffect(61, AREA, "Shadow Ritual#novice");
+	specialeffect(61, AREA, "Portal Arrival#novice");
 	.Portal_Index++;
 	if (.Portal_Index >= 4)
 		.Portal_Index = 0;
