@@ -591,7 +591,7 @@ OnInit:
 	initnpctimer;
 	end;
 
-OnTimer60000:
+OnTimer1000:
 	specialeffect 1025;
 	stopnpctimer;
 	setnpctimer 0;
@@ -665,11 +665,11 @@ new_1-1,124,53,1	script	Higg, the Chaotic	2030,{
 	}
 }
 
-new_1-1,123,51,4	script	Nightmare#higg_1	1061,{
+new_1-1,123,51,6	script	Nightmare#higg_1	1061,{
 	end;
 }
 
-new_1-1,127,53,4	script	Nightmare#higg_2	1061,{
+new_1-1,127,53,6	script	Nightmare#higg_2	1061,{
 	end;
 }
 
@@ -714,7 +714,7 @@ new_1-1,128,57,6	script	Bella	667,{
 	}
 }
 
-new_1-1,124,63,4	duplicate(Shadow_Summoner_Template)	Magaleta Clone	596
+new_1-1,124,63,3	duplicate(Shadow_Summoner_Template)	Magaleta Clone#ritual	596
 
 new_1-1,118,64,0	script	Portal Arrival#novice	HIDDEN_NPC,{
 OnInit:
@@ -737,26 +737,21 @@ OnPortalWalk:
 	stopnpctimer;
 	setnpctimer 0;
 	npcspeed 100;
-	npcwalkto 115,50;
+	npcwalkto 118,64;
 	initnpctimer;
 	end;
 
-OnTimer2500:
-	npcwalkto 116,54;
-	end;
-
-OnTimer5000:
-	npcwalkto 117,59;
-	end;
-
-OnTimer7500:
-	npcwalkto 118,64;
-	end;
-
-OnTimer10000:
-	disablenpc strnpcinfo(0);
-	stopnpctimer;
+OnTimer500:
+	if (getmapxy(.@map$, .@x, .@y, UNITTYPE_NPC, strnpcinfo(0)) == 0) {
+		if (.@x == 118 && .@y == 64) {
+			disablenpc strnpcinfo(0);
+			stopnpctimer;
+			setnpctimer 0;
+			end;
+		}
+	}
 	setnpctimer 0;
+	initnpctimer;
 	end;
 }
 
