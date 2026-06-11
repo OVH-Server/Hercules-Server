@@ -661,7 +661,7 @@ new_1-1,123,51,6	script	Nightmare#higg_1	1061,{
 	end;
 }
 
-new_1-1,127,53,6	script	Nightmare#higg_2	1061,{
+new_1-1,127,53,4	script	Nightmare#higg_2	1061,{
 	end;
 }
 
@@ -708,7 +708,7 @@ new_1-1,128,57,6	script	Bella	667,{
 
 new_1-1,124,63,3	duplicate(Shadow_Summoner_Template)	Magaleta Clone#ritual	596
 
-new_1-1,118,64,0	script	Portal Arrival#novice	HIDDEN_NPC,{
+new_1-1,118,64,0	script	Portal Arrival#novice	FAKE_NPC,{
 OnInit:
 	specialeffect 61;
 	end;
@@ -718,30 +718,18 @@ OnInit:
 	end;
 
 OnPortalWalk:
+	.@npc$ = strnpcinfo(0);
 	stopnpctimer;
 	setnpctimer 0;
 	npcspeed 100;
 	npcwalkto 118,64;
-	initnpctimer;
-	end;
-
-OnTimer500:
-	if (getmapxy(.@map$, .@x, .@y, UNITTYPE_NPC, strnpcinfo(0)) == 0) {
-		if (.@x >= 117 && .@x <= 119 && .@y >= 63 && .@y <= 65) {
-			disablenpc strnpcinfo(0);
-			stopnpctimer;
-			setnpctimer 0;
-			end;
-		}
+	sleep 500;
+	for (.@i = 0; .@i < 40; .@i++) {
+		if (unitiswalking(getnpcid(.@npc$)) != 1)
+			break;
+		sleep 500;
 	}
-	setnpctimer 0;
-	initnpctimer;
-	end;
-
-OnTimer12000:
-	disablenpc strnpcinfo(0);
-	stopnpctimer;
-	setnpctimer 0;
+	disablenpc .@npc$;
 	end;
 }
 
@@ -782,6 +770,14 @@ OnTimer20000:
 	end;
 
 OnCloneDead:
+	end;
+
+OnPCLoadMapEvent:
+	if (strcharinfo(PC_MAP) != "new_1-1")
+		end;
+	sleep2 1000;
+	specialeffect 1025, AREA, "Shadow Ritual#novice";
+	specialeffect 61, AREA, "Portal Arrival#novice";
 	end;
 }
 
