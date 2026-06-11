@@ -341,7 +341,7 @@ OnInit:
 	end;
 
 OnTimer30000:
-	npctalk "Adventurer! Do not stay there!";
+	npctalk "Adventurer! Do not stay here!";
 	sleep 2000;
 	npctalk "Quick! Come to me!";
 	initnpctimer;
