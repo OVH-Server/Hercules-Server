@@ -137,7 +137,15 @@ new_1-1,140,112,4	script	Royal Guard#novice_h	420,{
 	close;
 }
 
-new_1-1,65,115,4	script	Tuto 1	10382,{
+new_1-1,65,115,4	script	Tuto 1	10382,5,5,{
+	goto L_Tuto1Dialog;
+
+OnTouch:
+	if (Novice_Tuto_Done || Novice_Tuto_State >= 1)
+		end;
+	goto L_Tuto1Dialog;
+
+L_Tuto1Dialog:
 	mes "[Tuto 1]";
 
 	if (Novice_Tuto_Done || Novice_Tuto_State >= 2) {
@@ -334,6 +342,8 @@ OnInit:
 
 OnTimer30000:
 	npctalk "Adventurer! Do not stay there!";
+	sleep 2000;
+	npctalk "Quick! Come to me!";
 	initnpctimer;
 	end;
 
