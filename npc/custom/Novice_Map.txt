@@ -596,7 +596,7 @@ OnInit:
 	initnpctimer;
 	end;
 
-OnTimer3000:
+OnTimer2000:
 	specialeffect 844;
 	initnpctimer;
 	end;
@@ -608,41 +608,151 @@ new_1-1,117,42,1	duplicate(Shadow_Summoner_Template)	Shadow Summoner#novice_3	11
 new_1-1,111,42,7	duplicate(Shadow_Summoner_Template)	Shadow Summoner#novice_4	1198
 new_1-1,109,48,5	duplicate(Shadow_Summoner_Template)	Shadow Summoner#novice_5	1198
 
-new_1-1,124,53,4	script	Higg, the Chaotic	2030,{
+new_1-1,124,53,1	script	Higg, the Chaotic	2030,{
 	mes "[^0000FFHigg, the Chaotic^000000]";
-	close;
+	mes "Humans... h-human things...";
+	mes "They smile, they pray, they s-say pretty words...";
+	next;
+	mes "[^0000FFHigg, the Chaotic^000000]";
+	mes "But inside? Rotten. All of them. Mad... completely mad.";
+	mes "They bite each other with laws, with crowns, with gold...";
+	next;
+	mes "[^0000FFHigg, the Chaotic^000000]";
+	mes "We are many. We are strong.";
+	mes "And above all... we have ambition...";
+	next;
+	mes "[^0000FFHigg, the Chaotic^000000]";
+	mes "*Higg coughs violently.*";
+	mes "*He spits on the ground and laughs through his breath.*";
+	next;
+	mes "[^0000FFHigg, the Chaotic^000000]";
+	mes "You will see it. Sooner or... no, later... soon.";
+	mes "The world cracks. Humans made the cracks. We only... widen them.";
+	next;
+	mes "[^0000FFHigg, the Chaotic^000000]";
+	mes "So tell me, little thing...";
+	mes "What would you rather be?";
+	next;
+	switch(select("A human:With you")) {
+	case 1:
+		mes "[^0000FFHigg, the Chaotic^000000]";
+		mes "Of course. I am not surprised...";
+		mes "It was written all over your face anyway.";
+		next;
+		mes "[^0000FFHigg, the Chaotic^000000]";
+		mes "You do not deserve to be here.";
+		close2;
+		percentheal -100, -100;
+		end;
+	case 2:
+		mes "[^0000FFHigg, the Chaotic^000000]";
+		mes "Good... good. You made the right choice.";
+		mes "If you are not convinced yet...";
+		next;
+		mes "[^0000FFHigg, the Chaotic^000000]";
+		mes "You will see it for yourself anyway.";
+		close;
+	}
 }
 
-new_1-1,123,54,4	script	Nightmare#higg_1	1061,{
+new_1-1,123,51,4	script	Nightmare#higg_1	1061,{
 	end;
 }
 
-new_1-1,125,54,4	script	Nightmare#higg_2	1061,{
+new_1-1,127,53,4	script	Nightmare#higg_2	1061,{
 	end;
 }
 
 new_1-1,128,57,6	script	Bella	667,{
-	end;
+	mes "[^0000FFBella^000000]";
+	if (!Novice_Bella_Talked) {
+		Novice_Bella_Talked = 1;
+		mes "Well then?";
+		mes "Did you get fooled by that idiot Toly?";
+		next;
+		mes "[^0000FFBella^000000]";
+		mes "I am going to tell you something...";
+		mes "...";
+		next;
+		mes "[^0000FFBella^000000]";
+		mes "Actually, no.";
+		mes "I am not going to tell you anything. That is better.";
+		close;
+	}
+	mes "What do you want now?";
+	mes "I told you I would not tell you anything.";
+	next;
+	switch(select("I did not ask you anything, madam...:You are completely insane!")) {
+	case 1:
+		mes "[^0000FFBella^000000]";
+		mes "Huh?";
+		mes "Fine. I will tell you. You win.";
+		next;
+		mes "[^0000FFBella^000000]";
+		mes "Come see me when you get out of here.";
+		mes "I will be somewhere in Prontera.";
+		next;
+		mes "[^0000FFBella^000000]";
+		mes "You will find me. I am sure of it...";
+		close;
+	case 2:
+		mes "[^0000FFBella^000000]";
+		mes "Wrong answer.";
+		close2;
+		percentheal -100, -100;
+		end;
+	}
 }
 
 new_1-1,124,63,4	duplicate(Shadow_Summoner_Template)	Magaleta Clone	596
 
-new_1-1,188,64,0	script	Portal Arrival#novice	HIDDEN_NPC,{
+new_1-1,188,64,0	script	Portal Arrival#novice	WARPNPC,1,1,{
 OnInit:
-	specialeffect 61;
+	specialeffect 61, AREA;
 	initnpctimer;
 	end;
 
 OnTimer1000:
-	specialeffect 61;
+	specialeffect 61, AREA;
 	initnpctimer;
 	end;
 }
 
-new_1-1,114,46,4	script	Ygnizem Clone#novice	594,{ end; }
-new_1-1,114,46,4	script	Rawrel Clone#novice	591,{ end; }
-new_1-1,114,46,4	script	Magaleta Clone#portal	596,{ end; }
-new_1-1,114,46,4	script	Seyren Clone#novice	599,{ end; }
+new_1-1,114,46,4	script	Ygnizem Clone#novice	594,{
+	end;
+
+OnPortalWalk:
+	npcspeed 100;
+	npcwalkto 188,64;
+	end;
+}
+
+new_1-1,114,46,4	script	Rawrel Clone#novice	591,{
+	end;
+
+OnPortalWalk:
+	npcspeed 100;
+	npcwalkto 188,64;
+	end;
+}
+
+new_1-1,114,46,4	script	Magaleta Clone#portal	596,{
+	end;
+
+OnPortalWalk:
+	npcspeed 100;
+	npcwalkto 188,64;
+	end;
+}
+
+new_1-1,114,46,4	script	Seyren Clone#novice	599,{
+	end;
+
+OnPortalWalk:
+	npcspeed 100;
+	npcwalkto 188,64;
+	end;
+}
 
 new_1-1,114,46,0	script	Portal Soldier Controller#novice	HIDDEN_NPC,{
 OnInit:
@@ -664,7 +774,7 @@ OnTimer20000:
 	movenpc .@npc$, 114, 46, 4;
 	enablenpc .@npc$;
 	sleep 100;
-	unitwalk(getnpcid(.@npc$), 188, 64);
+	donpcevent .@npc$ + "::OnPortalWalk";
 	.Portal_Index++;
 	if (.Portal_Index >= 4)
 		.Portal_Index = 0;
