@@ -588,14 +588,6 @@ new_1-1,146,115,4	script	Sagard	10378,{
 new_1-1,114,46,0	script	Shadow Ritual#novice	HIDDEN_NPC,{
 OnInit:
 	specialeffect 1025;
-	initnpctimer;
-	end;
-
-OnTimer1000:
-	specialeffect 1025;
-	stopnpctimer;
-	setnpctimer 0;
-	initnpctimer;
 	end;
 }
 
@@ -719,14 +711,6 @@ new_1-1,124,63,3	duplicate(Shadow_Summoner_Template)	Magaleta Clone#ritual	596
 new_1-1,118,64,0	script	Portal Arrival#novice	HIDDEN_NPC,{
 OnInit:
 	specialeffect 61;
-	initnpctimer;
-	end;
-
-OnTimer60000:
-	specialeffect 61;
-	stopnpctimer;
-	setnpctimer 0;
-	initnpctimer;
 	end;
 }
 
@@ -743,7 +727,7 @@ OnPortalWalk:
 
 OnTimer500:
 	if (getmapxy(.@map$, .@x, .@y, UNITTYPE_NPC, strnpcinfo(0)) == 0) {
-		if (.@x == 118 && .@y == 64) {
+		if (.@x >= 117 && .@x <= 119 && .@y >= 63 && .@y <= 65) {
 			disablenpc strnpcinfo(0);
 			stopnpctimer;
 			setnpctimer 0;
@@ -752,6 +736,12 @@ OnTimer500:
 	}
 	setnpctimer 0;
 	initnpctimer;
+	end;
+
+OnTimer12000:
+	disablenpc strnpcinfo(0);
+	stopnpctimer;
+	setnpctimer 0;
 	end;
 }
 
@@ -783,8 +773,6 @@ OnTimer20000:
 	enablenpc .@npc$;
 	sleep 100;
 	donpcevent .@npc$ + "::OnPortalWalk";
-	specialeffect 61, AREA, "Shadow Ritual#novice";
-	specialeffect 61, AREA, "Portal Arrival#novice";
 	.Portal_Index++;
 	if (.Portal_Index >= 4)
 		.Portal_Index = 0;
