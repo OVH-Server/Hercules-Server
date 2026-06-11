@@ -708,9 +708,9 @@ new_1-1,128,57,6	script	Bella	667,{
 
 new_1-1,124,63,3	duplicate(Shadow_Summoner_Template)	Magaleta Clone#ritual	596
 
-new_1-1,118,64,0	script	Portal Arrival#novice	FAKE_NPC,{
+new_1-1,118,64,0	script	Portal Arrival#novice	CLEAR_NPC,{
 OnInit:
-	specialeffect 61;
+	specialeffect 61, AREA, "Portal Arrival#novice";
 	end;
 }
 
@@ -718,7 +718,7 @@ OnInit:
 	end;
 
 OnPortalWalk:
-	.@npc$ = strnpcinfo(0);
+	.@npc$ = strnpcinfo(NPC_NAME_UNIQUE);
 	stopnpctimer;
 	setnpctimer 0;
 	npcspeed 100;
