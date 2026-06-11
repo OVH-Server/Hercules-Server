@@ -608,37 +608,46 @@ new_1-1,117,42,1	duplicate(Shadow_Summoner_Template)	Shadow Summoner#novice_3	11
 new_1-1,111,42,7	duplicate(Shadow_Summoner_Template)	Shadow Summoner#novice_4	1198
 new_1-1,109,48,5	duplicate(Shadow_Summoner_Template)	Shadow Summoner#novice_5	1198
 
-new_1-1,124,55,4	script	Higg, the Chaotic	2030,{
+new_1-1,124,53,4	script	Higg, the Chaotic	2030,{
 	mes "[^0000FFHigg, the Chaotic^000000]";
 	close;
 }
 
-new_1-1,124,60,6	script	Bella	667,{
+new_1-1,123,54,4	script	Nightmare#higg_1	1061,{
+	end;
+}
+
+new_1-1,125,54,4	script	Nightmare#higg_2	1061,{
+	end;
+}
+
+new_1-1,128,57,6	script	Bella	667,{
 	end;
 }
 
 new_1-1,124,63,4	duplicate(Shadow_Summoner_Template)	Magaleta Clone	596
 
-new_1-1,121,163,0	script	Portal Arrival#novice	HIDDEN_NPC,{
+new_1-1,188,64,0	script	Portal Arrival#novice	HIDDEN_NPC,{
 OnInit:
-	specialeffect EF_WARPZONE2;
+	specialeffect 61;
 	initnpctimer;
 	end;
 
-OnTimer3000:
-	specialeffect EF_WARPZONE2;
+OnTimer1000:
+	specialeffect 61;
 	initnpctimer;
 	end;
 }
 
-new_1-1,114,46,4	script	Portal Soldier#novice_1	594,{ end; }
-new_1-1,114,46,4	script	Portal Soldier#novice_2	591,{ end; }
-new_1-1,114,46,4	script	Portal Soldier#novice_3	596,{ end; }
-new_1-1,114,46,4	script	Portal Soldier#novice_4	599,{ end; }
+new_1-1,114,46,4	script	Ygnizem Clone#novice	594,{ end; }
+new_1-1,114,46,4	script	Rawrel Clone#novice	591,{ end; }
+new_1-1,114,46,4	script	Magaleta Clone#portal	596,{ end; }
+new_1-1,114,46,4	script	Seyren Clone#novice	599,{ end; }
 
 new_1-1,114,46,0	script	Portal Soldier Controller#novice	HIDDEN_NPC,{
 OnInit:
-	setarray .Portal_Npc$[0], "Portal Soldier#novice_1", "Portal Soldier#novice_2", "Portal Soldier#novice_3", "Portal Soldier#novice_4";
+	setarray .Portal_Npc$[0], "Ygnizem Clone#novice", "Rawrel Clone#novice", "Magaleta Clone#portal", "Seyren Clone#novice";
+	setarray .Portal_Name$[0], "Ygnizem Clone", "Rawrel Clone", "Magaleta Clone", "Seyren Clone";
 	setarray .Portal_Sprite[0], 594, 591, 596, 599;
 	.Portal_Index = 0;
 	for (.@i = 0; .@i < 4; .@i++)
@@ -648,12 +657,14 @@ OnInit:
 
 OnTimer20000:
 	.@npc$ = .Portal_Npc$[.Portal_Index];
+	.@name$ = .Portal_Name$[.Portal_Index];
 	.@sprite = .Portal_Sprite[.Portal_Index];
 	disablenpc .@npc$;
-	setnpcdisplay .@npc$, "Portal Soldier", .@sprite;
+	setnpcdisplay .@npc$, .@name$, .@sprite;
 	movenpc .@npc$, 114, 46, 4;
 	enablenpc .@npc$;
-	unitwalk(getnpcid(.@npc$), 121, 163);
+	sleep 100;
+	unitwalk(getnpcid(.@npc$), 188, 64);
 	.Portal_Index++;
 	if (.Portal_Index >= 4)
 		.Portal_Index = 0;
