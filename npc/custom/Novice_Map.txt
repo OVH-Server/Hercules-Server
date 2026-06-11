@@ -588,12 +588,6 @@ new_1-1,146,115,4	script	Sagard	10378,{
 new_1-1,114,46,0	script	Shadow Ritual#novice	HIDDEN_NPC,{
 OnInit:
 	specialeffect 1025;
-	initnpctimer;
-	end;
-
-OnTimer2000:
-	specialeffect 1025;
-	initnpctimer;
 	end;
 }
 
@@ -602,21 +596,69 @@ OnInit:
 	initnpctimer;
 	end;
 
-OnTimer5000:
+OnTimer3000:
 	specialeffect 844;
 	initnpctimer;
 	end;
 }
 
-new_1-1,114,51,4	duplicate(Shadow_Summoner_Template)	Invocateur de l'ombre#novice_1	1198
-new_1-1,119,48,3	duplicate(Shadow_Summoner_Template)	Invocateur de l'ombre#novice_2	1198
-new_1-1,117,42,1	duplicate(Shadow_Summoner_Template)	Invocateur de l'ombre#novice_3	1198
-new_1-1,111,42,7	duplicate(Shadow_Summoner_Template)	Invocateur de l'ombre#novice_4	1198
-new_1-1,109,48,5	duplicate(Shadow_Summoner_Template)	Invocateur de l'ombre#novice_5	1198
+new_1-1,114,51,4	duplicate(Shadow_Summoner_Template)	Shadow Summoner#novice_1	1198
+new_1-1,119,48,3	duplicate(Shadow_Summoner_Template)	Shadow Summoner#novice_2	1198
+new_1-1,117,42,1	duplicate(Shadow_Summoner_Template)	Shadow Summoner#novice_3	1198
+new_1-1,111,42,7	duplicate(Shadow_Summoner_Template)	Shadow Summoner#novice_4	1198
+new_1-1,109,48,5	duplicate(Shadow_Summoner_Template)	Shadow Summoner#novice_5	1198
 
-new_1-1,122,49,4	script	Higg, le chaotique	2030,{
+new_1-1,124,55,4	script	Higg, the Chaotic	2030,{
 	mes "[^0000FFHigg, the Chaotic^000000]";
 	close;
+}
+
+new_1-1,124,60,6	script	Bella	667,{
+	end;
+}
+
+new_1-1,124,63,4	duplicate(Shadow_Summoner_Template)	Magaleta Clone	596
+
+new_1-1,121,163,0	script	Portal Arrival#novice	HIDDEN_NPC,{
+OnInit:
+	specialeffect EF_WARPZONE2;
+	initnpctimer;
+	end;
+
+OnTimer3000:
+	specialeffect EF_WARPZONE2;
+	initnpctimer;
+	end;
+}
+
+new_1-1,114,46,4	script	Portal Soldier#novice_1	594,{ end; }
+new_1-1,114,46,4	script	Portal Soldier#novice_2	591,{ end; }
+new_1-1,114,46,4	script	Portal Soldier#novice_3	596,{ end; }
+new_1-1,114,46,4	script	Portal Soldier#novice_4	599,{ end; }
+
+new_1-1,114,46,0	script	Portal Soldier Controller#novice	HIDDEN_NPC,{
+OnInit:
+	setarray .Portal_Npc$[0], "Portal Soldier#novice_1", "Portal Soldier#novice_2", "Portal Soldier#novice_3", "Portal Soldier#novice_4";
+	setarray .Portal_Sprite[0], 594, 591, 596, 599;
+	.Portal_Index = 0;
+	for (.@i = 0; .@i < 4; .@i++)
+		disablenpc .Portal_Npc$[.@i];
+	initnpctimer;
+	end;
+
+OnTimer20000:
+	.@npc$ = .Portal_Npc$[.Portal_Index];
+	.@sprite = .Portal_Sprite[.Portal_Index];
+	disablenpc .@npc$;
+	setnpcdisplay .@npc$, "Portal Soldier", .@sprite;
+	movenpc .@npc$, 114, 46, 4;
+	enablenpc .@npc$;
+	unitwalk(getnpcid(.@npc$), 121, 163);
+	.Portal_Index++;
+	if (.Portal_Index >= 4)
+		.Portal_Index = 0;
+	initnpctimer;
+	end;
 }
 
 new_1-1,105,98,4	script	Toly	10295,{
