@@ -32,14 +32,14 @@ new_1-1,51,122,0	script	General David	657,{
 	close;
 }
 
-new_1-1,49,120,0	script	Saint Rulf	616,{
+new_1-1,49,120,1	script	Saint Rulf	616,{
 	mes "[Saint Rulf]";
 	mes "We are part of the Royal Guard.";
 	mes "We are here to defend the kingdom!";
 	close;
 }
 
-new_1-1,48,124,5	script	Saint Olibrand	616,{
+new_1-1,48,124,3	script	Saint Olibrand	616,{
 	mes "[Saint Olibrand]";
 	mes "We are part of the Royal Guard.";
 	mes "We are here to defend the kingdom!";
