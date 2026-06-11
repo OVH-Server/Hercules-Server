@@ -53,71 +53,155 @@ new_1-1,58,105,4	script	Lieutenant Amelina	469,{
 	close;
 }
 
-new_1-1,61,102,4	script	Royal Guard#amelina_001	417,{ end; }
-new_1-1,60,102,4	script	Royal Guard#amelina_002	417,{ end; }
-new_1-1,59,102,4	script	Royal Guard#amelina_003	417,{ end; }
-new_1-1,57,102,4	script	Royal Guard#amelina_004	417,{ end; }
-new_1-1,56,102,4	script	Royal Guard#amelina_005	417,{ end; }
-new_1-1,55,102,4	script	Royal Guard#amelina_006	417,{ end; }
-new_1-1,61,101,4	script	Royal Guard#amelina_007	417,{ end; }
-new_1-1,60,101,4	script	Royal Guard#amelina_008	417,{ end; }
-new_1-1,59,101,4	script	Royal Guard#amelina_009	417,{ end; }
-new_1-1,57,101,4	script	Royal Guard#amelina_010	417,{ end; }
-new_1-1,56,101,4	script	Royal Guard#amelina_011	417,{ end; }
-new_1-1,55,101,4	script	Royal Guard#amelina_012	417,{ end; }
-new_1-1,61,100,4	script	Royal Guard#amelina_013	417,{ end; }
-new_1-1,60,100,4	script	Royal Guard#amelina_014	417,{ end; }
-new_1-1,59,100,4	script	Royal Guard#amelina_015	417,{ end; }
-new_1-1,57,100,4	script	Royal Guard#amelina_016	417,{ end; }
-new_1-1,56,100,4	script	Royal Guard#amelina_017	417,{ end; }
-new_1-1,55,100,4	script	Royal Guard#amelina_018	417,{ end; }
-new_1-1,61,99,4	script	Royal Guard#amelina_019	417,{ end; }
-new_1-1,60,99,4	script	Royal Guard#amelina_020	417,{ end; }
-new_1-1,59,99,4	script	Royal Guard#amelina_021	417,{ end; }
-new_1-1,57,99,4	script	Royal Guard#amelina_022	417,{ end; }
-new_1-1,56,99,4	script	Royal Guard#amelina_023	417,{ end; }
-new_1-1,55,99,4	script	Royal Guard#amelina_024	417,{ end; }
-new_1-1,61,98,4	script	Royal Guard#amelina_025	417,{ end; }
-new_1-1,60,98,4	script	Royal Guard#amelina_026	417,{ end; }
-new_1-1,59,98,4	script	Royal Guard#amelina_027	417,{ end; }
-new_1-1,57,98,4	script	Royal Guard#amelina_028	417,{ end; }
-new_1-1,56,98,4	script	Royal Guard#amelina_029	417,{ end; }
-new_1-1,55,98,4	script	Royal Guard#amelina_030	417,{ end; }
-new_1-1,61,97,4	script	Royal Guard#amelina_031	417,{ end; }
-new_1-1,60,97,4	script	Royal Guard#amelina_032	417,{ end; }
-new_1-1,59,97,4	script	Royal Guard#amelina_033	417,{ end; }
-new_1-1,57,97,4	script	Royal Guard#amelina_034	417,{ end; }
-new_1-1,56,97,4	script	Royal Guard#amelina_035	417,{ end; }
-new_1-1,55,97,4	script	Royal Guard#amelina_036	417,{ end; }
-new_1-1,61,96,4	script	Royal Guard#amelina_037	417,{ end; }
-new_1-1,60,96,4	script	Royal Guard#amelina_038	417,{ end; }
-new_1-1,59,96,4	script	Royal Guard#amelina_039	417,{ end; }
-new_1-1,57,96,4	script	Royal Guard#amelina_040	417,{ end; }
-new_1-1,56,96,4	script	Royal Guard#amelina_041	417,{ end; }
-new_1-1,55,96,4	script	Royal Guard#amelina_042	417,{ end; }
-new_1-1,61,95,4	script	Royal Guard#amelina_043	417,{ end; }
-new_1-1,60,95,4	script	Royal Guard#amelina_044	417,{ end; }
-new_1-1,59,95,4	script	Royal Guard#amelina_045	417,{ end; }
-new_1-1,57,95,4	script	Royal Guard#amelina_046	417,{ end; }
-new_1-1,56,95,4	script	Royal Guard#amelina_047	417,{ end; }
-new_1-1,55,95,4	script	Royal Guard#amelina_048	417,{ end; }
-new_1-1,61,94,4	script	Royal Guard#amelina_049	417,{ end; }
-new_1-1,60,94,4	script	Royal Guard#amelina_050	417,{ end; }
-new_1-1,59,94,4	script	Royal Guard#amelina_051	417,{ end; }
-new_1-1,57,94,4	script	Royal Guard#amelina_052	417,{ end; }
-new_1-1,56,94,4	script	Royal Guard#amelina_053	417,{ end; }
-new_1-1,55,94,4	script	Royal Guard#amelina_054	417,{ end; }
-new_1-1,61,93,4	script	Royal Guard#amelina_055	417,{ end; }
-new_1-1,60,93,4	script	Royal Guard#amelina_056	417,{ end; }
-new_1-1,59,93,4	script	Royal Guard#amelina_057	417,{ end; }
-new_1-1,57,93,4	script	Royal Guard#amelina_058	417,{ end; }
-new_1-1,56,93,4	script	Royal Guard#amelina_059	417,{ end; }
-new_1-1,55,93,4	script	Royal Guard#amelina_060	417,{ end; }
+-	script	Royal Guard#amelina_template	417,{ end; }
+-	script	Royal Guard#imayn_template	413,{ end; }
+
+new_1-1,61,102,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_001	417
+new_1-1,60,102,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_002	417
+new_1-1,59,102,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_003	417
+new_1-1,57,102,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_004	417
+new_1-1,56,102,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_005	417
+new_1-1,55,102,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_006	417
+new_1-1,61,101,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_007	417
+new_1-1,60,101,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_008	417
+new_1-1,59,101,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_009	417
+new_1-1,57,101,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_010	417
+new_1-1,56,101,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_011	417
+new_1-1,55,101,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_012	417
+new_1-1,61,100,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_013	417
+new_1-1,60,100,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_014	417
+new_1-1,59,100,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_015	417
+new_1-1,57,100,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_016	417
+new_1-1,56,100,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_017	417
+new_1-1,55,100,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_018	417
+new_1-1,61,99,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_019	417
+new_1-1,60,99,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_020	417
+new_1-1,59,99,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_021	417
+new_1-1,57,99,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_022	417
+new_1-1,56,99,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_023	417
+new_1-1,55,99,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_024	417
+new_1-1,61,98,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_025	417
+new_1-1,60,98,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_026	417
+new_1-1,59,98,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_027	417
+new_1-1,57,98,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_028	417
+new_1-1,56,98,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_029	417
+new_1-1,55,98,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_030	417
+new_1-1,61,97,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_031	417
+new_1-1,60,97,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_032	417
+new_1-1,59,97,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_033	417
+new_1-1,57,97,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_034	417
+new_1-1,56,97,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_035	417
+new_1-1,55,97,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_036	417
+new_1-1,61,96,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_037	417
+new_1-1,60,96,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_038	417
+new_1-1,59,96,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_039	417
+new_1-1,57,96,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_040	417
+new_1-1,56,96,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_041	417
+new_1-1,55,96,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_042	417
+new_1-1,61,95,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_043	417
+new_1-1,60,95,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_044	417
+new_1-1,59,95,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_045	417
+new_1-1,57,95,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_046	417
+new_1-1,56,95,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_047	417
+new_1-1,55,95,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_048	417
+new_1-1,61,94,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_049	417
+new_1-1,60,94,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_050	417
+new_1-1,59,94,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_051	417
+new_1-1,57,94,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_052	417
+new_1-1,56,94,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_053	417
+new_1-1,55,94,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_054	417
+new_1-1,61,93,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_055	417
+new_1-1,60,93,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_056	417
+new_1-1,59,93,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_057	417
+new_1-1,57,93,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_058	417
+new_1-1,56,93,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_059	417
+new_1-1,55,93,0	duplicate(Royal Guard#amelina_template)	Royal Guard#amelina_060	417
 
 new_1-1,50,101,4	script	Lieutenant Imayn	469,{
 	mes "[Lieutenant Imayn]";
 	mes "We are part of the Royal Guard.";
 	mes "We are here to defend the kingdom!";
+	close;
+}
+
+new_1-1,53,98,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_001	413
+new_1-1,52,98,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_002	413
+new_1-1,51,98,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_003	413
+new_1-1,49,98,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_004	413
+new_1-1,48,98,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_005	413
+new_1-1,47,98,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_006	413
+new_1-1,53,97,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_007	413
+new_1-1,52,97,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_008	413
+new_1-1,51,97,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_009	413
+new_1-1,49,97,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_010	413
+new_1-1,48,97,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_011	413
+new_1-1,47,97,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_012	413
+new_1-1,53,96,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_013	413
+new_1-1,52,96,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_014	413
+new_1-1,51,96,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_015	413
+new_1-1,49,96,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_016	413
+new_1-1,48,96,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_017	413
+new_1-1,47,96,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_018	413
+new_1-1,53,95,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_019	413
+new_1-1,52,95,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_020	413
+new_1-1,51,95,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_021	413
+new_1-1,49,95,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_022	413
+new_1-1,48,95,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_023	413
+new_1-1,47,95,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_024	413
+new_1-1,53,94,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_025	413
+new_1-1,52,94,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_026	413
+new_1-1,51,94,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_027	413
+new_1-1,49,94,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_028	413
+new_1-1,48,94,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_029	413
+new_1-1,47,94,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_030	413
+new_1-1,53,93,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_031	413
+new_1-1,52,93,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_032	413
+new_1-1,51,93,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_033	413
+new_1-1,49,93,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_034	413
+new_1-1,48,93,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_035	413
+new_1-1,47,93,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_036	413
+new_1-1,53,92,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_037	413
+new_1-1,52,92,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_038	413
+new_1-1,51,92,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_039	413
+new_1-1,49,92,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_040	413
+new_1-1,48,92,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_041	413
+new_1-1,47,92,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_042	413
+new_1-1,53,91,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_043	413
+new_1-1,52,91,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_044	413
+new_1-1,51,91,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_045	413
+new_1-1,49,91,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_046	413
+new_1-1,48,91,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_047	413
+new_1-1,47,91,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_048	413
+new_1-1,53,90,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_049	413
+new_1-1,52,90,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_050	413
+new_1-1,51,90,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_051	413
+new_1-1,49,90,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_052	413
+new_1-1,48,90,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_053	413
+new_1-1,47,90,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_054	413
+new_1-1,53,89,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_055	413
+new_1-1,52,89,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_056	413
+new_1-1,51,89,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_057	413
+new_1-1,49,89,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_058	413
+new_1-1,48,89,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_059	413
+new_1-1,47,89,0	duplicate(Royal Guard#imayn_template)	Royal Guard#imayn_060	413
+
+new_1-1,48,113,4	script	Sir Oweyn	902,{
+	mes "[Sir Oweyn]";
+	close;
+}
+
+new_1-1,46,107,4	script	General, Triston	654,{
+	mes "[General, Triston]";
+	close;
+}
+
+new_1-1,66,123,4	script	Saint Azur	936,{
+	mes "[Saint Azur]";
+	close;
+}
+
+new_1-1,61,124,4	script	Yda, la froide	655,{
+	mes "[Yda, la froide]";
 	close;
 }
 
@@ -568,3 +652,4 @@ OnInit:
 	hideoffnpc strnpcinfo(NPC_NAME);
 	end;
 }
+
