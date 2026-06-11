@@ -585,18 +585,14 @@ new_1-1,146,115,4	script	Sagard	10378,{
 	close;
 }
 
-new_1-1,114,46,0	script	Shadow Ritual#novice	FAKE_NPC,{
+new_1-1,114,46,0	script	Shadow Ritual#novice	HIDDEN_NPC,{
 OnInit:
-	specialeffect(1025, AREA, "Shadow Ritual#novice");
-	specialeffect(61, AREA, "Shadow Ritual#novice");
-	specialeffect(36, AREA, "Shadow Ritual#novice");
+	specialeffect 1025;
 	initnpctimer;
 	end;
 
-OnTimer1000:
-	specialeffect(1025, AREA, "Shadow Ritual#novice");
-	specialeffect(61, AREA, "Shadow Ritual#novice");
-	specialeffect(36, AREA, "Shadow Ritual#novice");
+OnTimer60000:
+	specialeffect 1025;
 	stopnpctimer;
 	setnpctimer 0;
 	initnpctimer;
@@ -720,45 +716,80 @@ new_1-1,128,57,6	script	Bella	667,{
 
 new_1-1,124,63,4	duplicate(Shadow_Summoner_Template)	Magaleta Clone	596
 
-new_1-1,118,64,0	script	Portal Arrival#novice	FAKE_NPC,{
+new_1-1,118,64,0	script	Portal Arrival#novice	HIDDEN_NPC,{
 OnInit:
-	specialeffect(61, AREA, "Portal Arrival#novice");
-	specialeffect(35, AREA, "Portal Arrival#novice");
-	specialeffect(36, AREA, "Portal Arrival#novice");
+	specialeffect 61;
 	initnpctimer;
 	end;
 
 OnTimer60000:
-	specialeffect(61, AREA, "Portal Arrival#novice");
-	specialeffect(36, AREA, "Portal Arrival#novice");
+	specialeffect 61;
 	stopnpctimer;
 	setnpctimer 0;
 	initnpctimer;
 	end;
 }
 
+-	script	Portal_Clone_Template	594,{
+	end;
+
+OnPortalWalk:
+	stopnpctimer;
+	setnpctimer 0;
+	npcspeed 100;
+	npcwalkto 115,50;
+	initnpctimer;
+	end;
+
+OnTimer2500:
+	npcwalkto 116,54;
+	end;
+
+OnTimer5000:
+	npcwalkto 117,59;
+	end;
+
+OnTimer7500:
+	npcwalkto 118,64;
+	end;
+
+OnTimer10000:
+	disablenpc strnpcinfo(0);
+	stopnpctimer;
+	setnpctimer 0;
+	end;
+}
+
+new_1-1,114,46,4	duplicate(Portal_Clone_Template)	Ygnizem Clone#novice	594
+new_1-1,114,46,4	duplicate(Portal_Clone_Template)	Rawrel Clone#novice	591
+new_1-1,114,46,4	duplicate(Portal_Clone_Template)	Magaleta Clone#portal	596
+new_1-1,114,46,4	duplicate(Portal_Clone_Template)	Seyren Clone#novice	599
+
 new_1-1,114,46,0	script	Portal Soldier Controller#novice	HIDDEN_NPC,{
 OnInit:
 	killmonster "new_1-1", "Portal Soldier Controller#novice::OnCloneDead";
+	setarray .Portal_Npc$[0], "Ygnizem Clone#novice", "Rawrel Clone#novice", "Magaleta Clone#portal", "Seyren Clone#novice";
 	setarray .Portal_Name$[0], "Ygnizem Clone", "Rawrel Clone", "Magaleta Clone", "Seyren Clone";
-	setarray .Portal_Mob[0], 1652, 1657, 1637, 1634;
+	setarray .Portal_Sprite[0], 594, 591, 596, 599;
 	.Portal_Index = 0;
+	for (.@i = 0; .@i < 4; .@i++)
+		disablenpc .Portal_Npc$[.@i];
 	setnpctimer 19000;
 	initnpctimer;
 	end;
 
 OnTimer20000:
+	.@npc$ = .Portal_Npc$[.Portal_Index];
 	.@name$ = .Portal_Name$[.Portal_Index];
-	.@mob = .Portal_Mob[.Portal_Index];
-	.@gid = monster("new_1-1", 114, 46, .@name$, .@mob, 1, "Portal Soldier Controller#novice::OnCloneDead");
-	setunitdata(.@gid, UDT_SPEED, 100);
-	setunitdata(.@gid, UDT_MODE, MD_CANMOVE | MD_NOKNOCKBACK);
-	setunitdata(.@gid, UDT_AI, AI_NONE);
+	.@sprite = .Portal_Sprite[.Portal_Index];
+	disablenpc .@npc$;
+	setnpcdisplay .@npc$, .@name$, .@sprite;
+	movenpc .@npc$, 114, 46, 4;
+	enablenpc .@npc$;
 	sleep 100;
-	setunitdata(.@gid, UDT_WALKTOXY, 118, 64);
-	unitwalk(.@gid, 118, 64);
-	specialeffect(61, AREA, "Shadow Ritual#novice");
-	specialeffect(61, AREA, "Portal Arrival#novice");
+	donpcevent .@npc$ + "::OnPortalWalk";
+	specialeffect 61, AREA, "Shadow Ritual#novice";
+	specialeffect 61, AREA, "Portal Arrival#novice";
 	.Portal_Index++;
 	if (.Portal_Index >= 4)
 		.Portal_Index = 0;
