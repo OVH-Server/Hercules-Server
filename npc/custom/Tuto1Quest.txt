@@ -1,5 +1,5 @@
 //===== Hercules Script ======================================
-// Main Quest Tuto 1
+// Main Quest Milon
 // Flow:
 // Olga -> kill 2 Poring, kill 2 Lunatic, visit checkpoint
 // Olgi -> validates the first part
@@ -29,13 +29,13 @@ new_1-3,99,30,4	script	Olga	4_F_KAFRA1,{
 	mes "[Olga]";
 
 	if (Tuto1_State >= 40 || questprogress(65002) == 2) {
-		mes "You already completed Main Quest Tuto 1.";
+		mes "You already completed Main Quest Milon.";
 		close;
 	}
 
 	if (Tuto1_State == 0) {
 		mes "Welcome.";
-		mes "This is Main Quest Tuto 1.";
+		mes "This is Main Quest Milon.";
 		mes "Your first mission:";
 		mes "- Kill 2 Poring";
 		mes "- Kill 2 Lunatic";
@@ -68,7 +68,7 @@ new_1-3,99,30,4	script	Olga	4_F_KAFRA1,{
 
 		setquest 65000;
 
-		message strcharinfo(PC_NAME), "Main Quest Tuto 1: Poring 0/2, Lunatic 0/2, Location 0/1.";
+		message strcharinfo(PC_NAME), "Main Quest Milon: Poring 0/2, Lunatic 0/2, Location 0/1.";
 
 		mes "[Olga]";
 		mes "Quest started.";
@@ -119,7 +119,7 @@ new_1-3,99,30,4	script	Olga	4_F_KAFRA1,{
 
 		completequest 65002;
 
-		message strcharinfo(PC_NAME), "Main Quest Tuto 1: completed.";
+		message strcharinfo(PC_NAME), "Main Quest Milon: completed.";
 
 		mes "[Olga]";
 		mes "Quest complete.";
@@ -167,7 +167,7 @@ new_1-3,99,32,4	script	Olgi	4_M_03,{
 		completequest 65000;
 		setquest 65001;
 
-		message strcharinfo(PC_NAME), "Main Quest Tuto 1: first task validated. Go speak with Olgu.";
+		message strcharinfo(PC_NAME), "Main Quest Milon: first task validated. Go speak with Olgu.";
 
 		mes "[Olgi]";
 		mes "Good. Everything is complete.";
@@ -187,7 +187,7 @@ new_1-3,99,32,4	script	Olgi	4_M_03,{
 	}
 
 	if (Tuto1_State >= 40) {
-		mes "You already completed Main Quest Tuto 1.";
+		mes "You already completed Main Quest Milon.";
 		close;
 	}
 
@@ -203,10 +203,10 @@ new_1-3,87,32,0	script	Tuto1_Checkpoint	HIDDEN_NPC,2,2,{
 OnTouch:
 	if (Tuto1_State == 10 && Tuto1_Checkpoint < 1) {
 		Tuto1_Checkpoint = 1;
-		message strcharinfo(PC_NAME), "Main Quest Tuto 1: Location visited 1/1.";
+		message strcharinfo(PC_NAME), "Main Quest Milon: Location visited 1/1.";
 		if (Tuto1_Poring >= 2 && Tuto1_Lunatic >= 2 && !Tuto1_First_Done) {
 			Tuto1_First_Done = 1;
-			message strcharinfo(PC_NAME), "Main Quest Tuto 1: all objectives complete. Go validate with Olgi.";
+			message strcharinfo(PC_NAME), "Main Quest Milon: all objectives complete. Go validate with Olgi.";
 		}
 	}
 	end;
@@ -240,7 +240,7 @@ new_1-3,116,45,4	script	Olgu	4_M_02,{
 		completequest 65001;
 		setquest 65002;
 
-		message strcharinfo(PC_NAME), "Main Quest Tuto 1: collect 5 Jellopy, then return to Olga.";
+		message strcharinfo(PC_NAME), "Main Quest Milon: collect 5 Jellopy, then return to Olga.";
 		addtimer 2000, "Tuto1_Tracker::OnJellopyCheck";
 
 		mes "[Olgu]";
@@ -280,7 +280,7 @@ OnNPCKillEvent:
 		Tuto1_Poring++;
 		if (Tuto1_Poring >= 2 && !Tuto1_Poring_Done) {
 			Tuto1_Poring_Done = 1;
-			message strcharinfo(PC_NAME), "Main Quest Tuto 1: Poring complete 2/2.";
+			message strcharinfo(PC_NAME), "Main Quest Milon: Poring complete 2/2.";
 		}
 	}
 
@@ -288,13 +288,13 @@ OnNPCKillEvent:
 		Tuto1_Lunatic++;
 		if (Tuto1_Lunatic >= 2 && !Tuto1_Lunatic_Done) {
 			Tuto1_Lunatic_Done = 1;
-			message strcharinfo(PC_NAME), "Main Quest Tuto 1: Lunatic complete 2/2.";
+			message strcharinfo(PC_NAME), "Main Quest Milon: Lunatic complete 2/2.";
 		}
 	}
 
 	if (Tuto1_Poring >= 2 && Tuto1_Lunatic >= 2 && Tuto1_Checkpoint >= 1 && !Tuto1_First_Done) {
 		Tuto1_First_Done = 1;
-		message strcharinfo(PC_NAME), "Main Quest Tuto 1: all objectives complete. Go validate with Olgi.";
+		message strcharinfo(PC_NAME), "Main Quest Milon: all objectives complete. Go validate with Olgi.";
 	}
 
 	end;
@@ -311,7 +311,7 @@ OnJellopyCheck:
 
 	if (Tuto1_Jellopy_Last != .@jellopy) {
 		Tuto1_Jellopy_Last = .@jellopy;
-		message strcharinfo(PC_NAME), "Main Quest Tuto 1: Jellopy " + .@jellopy + "/5.";
+		message strcharinfo(PC_NAME), "Main Quest Milon: Jellopy " + .@jellopy + "/5.";
 	}
 
 	if (.@jellopy >= 5) {
@@ -319,7 +319,7 @@ OnJellopyCheck:
 			end;
 
 		Tuto1_Jellopy_Done = 1;
-		message strcharinfo(PC_NAME), "Main Quest Tuto 1: Jellopy complete. Return to Olga.";
+		message strcharinfo(PC_NAME), "Main Quest Milon: Jellopy complete. Return to Olga.";
 		Tuto1_Jellopy_Timer = 0;
 		end;
 	}

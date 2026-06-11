@@ -1,5 +1,5 @@
 //===== Hercules Script ======================================
-// Main Quest Tuto 2
+// Main Quest Sagard
 // Valkyrie starts a repeatable quest and calls a merchant taxi.
 // The taxi waits beside her, picks up the player, carries them along
 // its route, then returns beside the Valkyrie.
@@ -16,7 +16,7 @@
 //============================================================
 
 prontera,159,167,4	script	Taxi 1	10531,{
-	callfunc "F_DebugConsole","Valkyrie Tuto 2","Click. State=" + Tuto2_State;
+	callfunc "F_DebugConsole","Valkyrie Sagard","Click. State=" + Tuto2_State;
 
 	mes "[Valkyrie]";
 
@@ -84,7 +84,7 @@ prontera,159,167,4	script	Taxi 1	10531,{
 	Tuto2_State++;
 	completequest 65010;
 	erasequest 65010;
-	message strcharinfo(PC_NAME), "Main Quest Tuto 2: taxi ride complete. You can restart the quest whenever you want.";
+	message strcharinfo(PC_NAME), "Main Quest Sagard: taxi ride complete. You can restart the quest whenever you want.";
 
 	movenpc "Merchant Taxi#tuto2",160,167,4;
 	setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND|PCBLOCK_NPC, false);

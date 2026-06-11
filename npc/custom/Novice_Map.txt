@@ -4,57 +4,57 @@
 // Custom novice tutorial map.
 // Quest state:
 // Novice_Tuto_State 0 = not started
-// Novice_Tuto_State 1 = sent to Tuto 2
-// Novice_Tuto_State 2 = briefed by Tuto 2
+// Novice_Tuto_State 1 = sent to Sagard
+// Novice_Tuto_State 2 = briefed by Sagard
 // Novice_Tuto_Done 1 = tutorial quest completed
-// Novice_Tuto3_Gone 1 = Tuto3 refused and no longer speaks
+// Novice_Tuto3_Gone 1 = Toly refused and no longer speaks
 
-new_1-1,64,117,4	script	Tuto 1 - 1	735,{
-	mes "[Tuto 1 - 1]";
+new_1-1,64,117,4	script	Alfan	735,{
+	mes "[Alfan]";
 	mes "Honestly, I would not refuse some help with the portal!";
 	next;
-	mes "[Tuto 1 - 1]";
+	mes "[Alfan]";
 	mes "I fully support the Captain. If he says we need every brave soul we can find, then I believe him completely!";
 	next;
-	mes "[Tuto 1 - 1]";
+	mes "[Alfan]";
 	mes "And between us, I am proud he chose me for this post.";
 	mes "Not every wizard knows the mount invocation spell, you know!";
 	next;
-	mes "[Tuto 1 - 1]";
+	mes "[Alfan]";
 	mes "Just give me a moment when the time comes, and I will call a mount for you with style!";
 	close;
 }
 
-new_1-1,51,122,0	script	General	657,{
-	mes "[General]";
+new_1-1,51,122,0	script	General David	657,{
+	mes "[General David]";
 	mes "Where did you come from, soldier?!";
 	mes "Go hide. You are dead weight on the battlefield!";
 	close;
 }
 
-new_1-1,49,120,0	script	Saint#novice_a	616,{
-	mes "[Saint]";
+new_1-1,49,120,0	script	Saint Rulf	616,{
+	mes "[Saint Rulf]";
 	mes "We are part of the Royal Guard.";
 	mes "We are here to defend the kingdom!";
 	close;
 }
 
-new_1-1,48,124,0	script	Saint#novice_b	616,{
-	mes "[Saint]";
+new_1-1,48,124,0	script	Saint Olibrand	616,{
+	mes "[Saint Olibrand]";
 	mes "We are part of the Royal Guard.";
 	mes "We are here to defend the kingdom!";
 	close;
 }
 
-new_1-1,58,105,4	script	Lieutenant#novice_a	469,{
-	mes "[Lieutenant]";
+new_1-1,58,105,4	script	Lieutenant Amelina	469,{
+	mes "[Lieutenant Amelina]";
 	mes "We are part of the Royal Guard.";
 	mes "We are here to defend the kingdom!";
 	close;
 }
 
-new_1-1,50,101,4	script	Lieutenant#novice_b	469,{
-	mes "[Lieutenant]";
+new_1-1,50,101,4	script	Lieutenant Imayn	469,{
+	mes "[Lieutenant Imayn]";
 	mes "We are part of the Royal Guard.";
 	mes "We are here to defend the kingdom!";
 	close;
@@ -67,131 +67,133 @@ new_1-1,66,108,4	script	Cynthia	601,{
 	close;
 }
 
-new_1-1,131,116,4	script	Royal Guard#novice_a	419,{
-	mes "[Royal Guard]";
+new_1-1,131,116,4	script	Royal Guard Derric	419,{
+	mes "[Royal Guard Derric]";
 	mes "We are part of the Royal Guard.";
 	mes "We are here to defend the kingdom!";
 	close;
 }
 
-new_1-1,113,116,4	script	Royal Guard#novice_i	419,{
-	mes "[Royal Guard]";
+new_1-1,113,116,4	script	Royal Guard Adri	419,{
+	mes "[Royal Guard Adri]";
 	mes "We are part of the Royal Guard.";
 	mes "We are here to defend the kingdom!";
 	close;
 }
 
-new_1-1,113,107,4	script	Royal Guard#novice_b	419,{
-	mes "[Royal Guard]";
+new_1-1,113,107,4	script	Royal Guard Louis	419,{
+	mes "[Royal Guard Louis]";
 	mes "We are part of the Royal Guard.";
 	mes "We are here to defend the kingdom!";
 	close;
 }
 
-new_1-1,144,121,4	script	Royal Guard#novice_c	417,{
-	mes "[Royal Guard]";
+new_1-1,144,121,4	script	Royal Guard Gerbold	417,{
+	mes "[Royal Guard Gerbold]";
 	mes "We are part of the Royal Guard.";
 	mes "We are here to defend the kingdom!";
 	close;
 }
 
-new_1-1,144,105,4	script	Royal Guard#novice_d	417,{
-	mes "[Royal Guard]";
+new_1-1,144,105,4	script	Royal Guard Topher	417,{
+	mes "[Royal Guard Topher]";
 	mes "We are part of the Royal Guard.";
 	mes "We are here to defend the kingdom!";
 	close;
 }
 
-new_1-1,144,102,4	script	Royal guard#novice_e	413,{
-	mes "[Royal Guard]";
+new_1-1,144,102,4	script	Royal Guard Drystan	413,{
+	mes "[Royal Guard Drystan]";
 	mes "We are part of the Royal Guard.";
 	mes "We are here to defend the kingdom!";
 	close;
 }
 
-new_1-1,144,118,4	script	Royal guard#novice_f	413,{
-	mes "[Royal Guard]";
+new_1-1,144,118,4	script	Royal Guard Jervis	413,{
+	mes "[Royal Guard Jervis]";
 	mes "We are part of the Royal Guard.";
 	mes "We are here to defend the kingdom!";
 	close;
 }
 
-new_1-1,124,102,4	script	Ryoal Gunslinger	632,{
-	mes "[Royal Gunslinger]";
+new_1-1,124,102,4	script	Royal Gunslinger Pers	632,{
+	mes "[Royal Gunslinger Pers]";
 	mes "We are part of the Royal Guard.";
 	mes "We are here to defend the kingdom!";
 	close;
 }
 
-new_1-1,141,116,4	script	Royal Guard#novice_g	418,{
-	mes "[Royal Guard]";
+new_1-1,141,116,4	script	Royal Guard Allan	418,{
+	mes "[Royal Guard Allan]";
 	mes "We are part of the Royal Guard.";
 	mes "We are here to defend the kingdom!";
 	close;
 }
 
-new_1-1,140,112,4	script	Royal Guard#novice_h	420,{
-	mes "[Royal Guard]";
+new_1-1,140,112,4	script	Royal Guard Erart	420,{
+	mes "[Royal Guard Erart]";
 	mes "We are part of the Royal Guard.";
 	mes "We are here to defend the kingdom!";
 	close;
 }
 
-new_1-1,65,115,4	script	Tuto 1	10382,5,5,{
+new_1-1,65,115,4	script	Milon	10382,5,5,{
 	goto L_Tuto1Dialog;
 
 OnTouch:
-	if (Novice_Tuto_Done || Novice_Tuto_State >= 1)
+	if (.Milon_DialogOpen || Novice_Tuto_Done || Novice_Tuto_State >= 1)
 		end;
 	goto L_Tuto1Dialog;
 
 L_Tuto1Dialog:
-	mes "[Tuto 1]";
+	.Milon_DialogOpen++;
+	.@milon_dialog_counted = true;
+	mes "[Milon]";
 
 	if (Novice_Tuto_Done || Novice_Tuto_State >= 2) {
 		Novice_Tuto_Done = 1;
 		mes "What are you waiting for? Run and get equipped!";
 		mes "There is no time to waste!";
-		close;
+		goto L_MilonClose;
 	}
 
 	mes "This is a disaster.";
 	next;
-	mes "[Tuto 1]";
+	mes "[Milon]";
 	mes "There are too few of us left to keep the portal closed.";
 	next;
-	mes "[Tuto 1]";
+	mes "[Milon]";
 	mes "We need everyone who can still stand!";
 	mes "But you cannot stay here. You cannot help us from this spot.";
 	next;
-	mes "[Tuto 1]";
-	mes "Go see the Captain, Tuto 2, at the castle entrance!";
+	mes "[Milon]";
+	mes "Go see the Captain, Sagard, at the castle entrance!";
 	next;
 
 	if (select("I will help.:I refuse.") == 2) {
-		mes "[Tuto 1]";
+		mes "[Milon]";
 		mes "As you wish.";
 		mes "But do not be surprised when you see creatures no one has ever seen before.";
-		close;
+		goto L_MilonClose;
 	}
 
 	if ($Novice_Tuto_RiderBusy) {
-		mes "[Tuto 1]";
+		mes "[Milon]";
 		mes "Someone is already being escorted.";
 		mes "Wait a few seconds, then try again.";
-		close;
+		goto L_MilonClose;
 	}
 
 	if (checkmount() || hascashmount()) {
-		mes "[Tuto 1]";
+		mes "[Milon]";
 		mes "Dismount first. I need the halter to answer only to my route.";
-		close;
+		goto L_MilonClose;
 	}
 
 	if (!checkweight(12622,1)) {
-		mes "[Tuto 1]";
+		mes "[Milon]";
 		mes "Your inventory is too heavy to receive the Boarding Halter.";
-		close;
+		goto L_MilonClose;
 	}
 
 	if (questprogress(65020))
@@ -202,10 +204,10 @@ L_Tuto1Dialog:
 	$Novice_Tuto_RiderBusy = getcharid(CHAR_ID_ACCOUNT);
 	getitem 12622,1;
 	setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND, true);
-	specialeffect 562, AREA, "Tuto 1 - 1";
+	specialeffect 562, AREA, "Alfan";
 	specialeffect 562, AREA, playerattached();
 	sleep2 4000;
-	removespecialeffect 562, AREA, "Tuto 1 - 1";
+	removespecialeffect 562, AREA, "Alfan";
 	removespecialeffect 562, AREA, playerattached();
 	consumeitem 12622;
 	sleep2 1000;
@@ -215,20 +217,26 @@ L_Tuto1Dialog:
 			delitem 12622,1;
 		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND, false);
 		$Novice_Tuto_RiderBusy = 0;
-		mes "[Tuto 1]";
+		mes "[Milon]";
 		mes "The mount refuses to move for now.";
 		mes "Try again in a few moments.";
-		close;
+		goto L_MilonClose;
 	}
 
-	mes "[Tuto 1]";
+	mes "[Milon]";
 	mes "Good. Hold tight, and do not look back.";
 	close2;
+	if (.@milon_dialog_counted) {
+		.Milon_DialogOpen--;
+		if (.Milon_DialogOpen < 0)
+			.Milon_DialogOpen = 0;
+		.@milon_dialog_counted = false;
+	}
 
 	callsub S_MoveTo, 62,113, 3000;
 	callsub S_MoveTo, 65,114, 3000;
 	sleep2 1000;
-	unittalk(getnpcid("Tuto 1"), "Good luck! The world of Midgard needs you!", true);
+	unittalk(getnpcid("Milon"), "Good luck! The world of Midgard needs you!", true);
 	sleep2 1800;
 	callsub S_MoveTo, 68,114, 3000;
 	callsub S_MoveTo, 76,113, 3500;
@@ -253,59 +261,70 @@ L_Tuto1Dialog:
 
 	setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND, false);
 	$Novice_Tuto_RiderBusy = 0;
-	message strcharinfo(PC_NAME), "Tuto 1: you have arrived near Captain Tuto 2.";
+	message strcharinfo(PC_NAME), "Milon: you have arrived near Captain Sagard.";
 	sleep2 400;
 
+	.Milon_DialogOpen++;
+	.@milon_dialog_counted = true;
 	callsub S_Tuto2Intro;
 	end;
 
 S_Tuto2Intro:
-	mes "[Tuto 2]";
-	mes "Did Tuto 1 brief you before sending you here?";
+	mes "[Sagard]";
+	mes "Did Milon brief you before sending you here?";
 	next;
 
 	if (select("Yes.:No.") == 1) {
-		mes "[Tuto 2]";
+		mes "[Sagard]";
 		mes "Then you know what to expect...";
 		mes "However, you look poorly equipped.";
 		next;
-		mes "[Tuto 2]";
+		mes "[Sagard]";
 		mes "I advise you to go inside the castle.";
 		mes "You will find all the information and help you need to support us properly!";
 		next;
-		mes "[Tuto 2]";
+		mes "[Sagard]";
 		mes "Go see the instructor in the center of the room!";
 		mes "Now go. See you next time!";
 		Novice_Tuto_State = 2;
 		if (questprogress(65020))
 			completequest 65020;
 		Novice_Tuto_Done = 1;
-		close;
+		goto L_MilonClose;
 	}
 
-	mes "[Tuto 2]";
+	mes "[Sagard]";
 	mes "Then listen carefully.";
 	next;
-	mes "[Tuto 2]";
+	mes "[Sagard]";
 	mes "A magical portal opened beneath the old stones of this castle.";
 	mes "It is unstable, hungry, and getting wider every hour.";
 	next;
-	mes "[Tuto 2]";
+	mes "[Sagard]";
 	mes "The High Wizards are holding it shut with layered seals, but the seals are cracking.";
 	mes "If their focus breaks, creatures from beyond our world will pour through.";
 	next;
-	mes "[Tuto 2]";
+	mes "[Sagard]";
 	mes "These are not monsters from our fields or caves.";
 	mes "They are things no adventurer has named, studied, or survived long enough to describe.";
 	next;
-	mes "[Tuto 2]";
+	mes "[Sagard]";
 	mes "That is why every pair of hands matters.";
 	mes "Stay sharp, novice.";
 	Novice_Tuto_State = 2;
 	if (questprogress(65020))
 		completequest 65020;
 	Novice_Tuto_Done = 1;
-	close;
+	goto L_MilonClose;
+
+L_MilonClose:
+	close2;
+	if (.@milon_dialog_counted) {
+		.Milon_DialogOpen--;
+		if (.Milon_DialogOpen < 0)
+			.Milon_DialogOpen = 0;
+	}
+	end;
 
 S_MoveTo:
 	.@pc_gid = getcharid(CHAR_ID_ACCOUNT);
@@ -337,13 +356,13 @@ S_MoveTo:
 	return;
 
 OnInit:
+	.Milon_DialogOpen = 0;
 	initnpctimer;
 	end;
 
 OnTimer30000:
-	npctalk "Adventurer! Do not stay here!";
-	sleep 2000;
-	npctalk "Quick! Come to me!";
+	if (!.Milon_DialogOpen)
+		npctalk "Adventurer! Do not stay here! Quick! Come to me!";
 	initnpctimer;
 	end;
 
@@ -358,8 +377,8 @@ OnPCLogoutEvent:
 	end;
 }
 
-new_1-1,146,115,4	script	Tuto 2	10378,{
-	mes "[Tuto 2]";
+new_1-1,146,115,4	script	Sagard	10378,{
+	mes "[Sagard]";
 
 	if (Novice_Tuto_Done || Novice_Tuto_State >= 2) {
 		Novice_Tuto_Done = 1;
@@ -368,19 +387,19 @@ new_1-1,146,115,4	script	Tuto 2	10378,{
 		close;
 	}
 
-	mes "Did Tuto 1 brief you before sending you here?";
+	mes "Did Milon brief you before sending you here?";
 	next;
 
 	if (select("Yes.:No.") == 1) {
-		mes "[Tuto 2]";
+		mes "[Sagard]";
 		mes "Then you know what to expect...";
 		mes "However, you look poorly equipped.";
 		next;
-		mes "[Tuto 2]";
+		mes "[Sagard]";
 		mes "I advise you to go inside the castle.";
 		mes "You will find all the information and help you need to support us properly!";
 		next;
-		mes "[Tuto 2]";
+		mes "[Sagard]";
 		mes "Go see the instructor in the center of the room!";
 		mes "Now go. See you next time!";
 		if (Novice_Tuto_State < 2)
@@ -391,22 +410,22 @@ new_1-1,146,115,4	script	Tuto 2	10378,{
 		close;
 	}
 
-	mes "[Tuto 2]";
+	mes "[Sagard]";
 	mes "Then listen carefully.";
 	next;
-	mes "[Tuto 2]";
+	mes "[Sagard]";
 	mes "A magical portal opened beneath the old stones of this castle.";
 	mes "It is unstable, hungry, and getting wider every hour.";
 	next;
-	mes "[Tuto 2]";
+	mes "[Sagard]";
 	mes "The High Wizards are holding it shut with layered seals, but the seals are cracking.";
 	mes "If their focus breaks, creatures from beyond our world will pour through.";
 	next;
-	mes "[Tuto 2]";
+	mes "[Sagard]";
 	mes "These are not monsters from our fields or caves.";
 	mes "They are things no adventurer has named, studied, or survived long enough to describe.";
 	next;
-	mes "[Tuto 2]";
+	mes "[Sagard]";
 	mes "That is why every pair of hands matters.";
 	mes "Stay sharp, novice.";
 	if (Novice_Tuto_State < 2)
@@ -417,43 +436,43 @@ new_1-1,146,115,4	script	Tuto 2	10378,{
 	close;
 }
 
-new_1-1,105,98,4	script	Tuto3	10295,{
+new_1-1,105,98,4	script	Toly	10295,{
 	if (Novice_Tuto3_Gone) {
-		message strcharinfo(PC_NAME), "Tuto3 is nowhere to be found.";
+		message strcharinfo(PC_NAME), "Toly is nowhere to be found.";
 		end;
 	}
 
-	mes "[Tuto3]";
+	mes "[Toly]";
 	mes "Well, well... Does an open portal not thrill you, no?";
 	next;
-	mes "[Tuto3]";
+	mes "[Toly]";
 	mes "All those solemn faces, all that chanting, no?";
 	mes "Pointless. Holding the portal shut will change nothing.";
 	next;
-	mes "[Tuto3]";
+	mes "[Toly]";
 	mes "The High Wizards think they understand the tear because they can draw circles around it, no?";
 	mes "They are incompetent. Painfully incompetent.";
 	next;
-	mes "[Tuto3]";
+	mes "[Toly]";
 	mes "They keep feeding power into the wound, no?";
 	mes "Any fool can see the portal is not a door. It is a mouth.";
 	next;
-	mes "[Tuto3]";
+	mes "[Toly]";
 	mes "Sooner or later it will open wider, and all their proud little seals will snap.";
 	mes "That is how these things always end, no?";
 	next;
-	mes "[Tuto3]";
+	mes "[Toly]";
 	mes "Tell me, novice. You see it too, do you not?";
 	next;
 
 	if (select("Honestly, I completely agree with you!:No, you seem strange to me...") == 1) {
 		warp "new_1-1",105,96;
 		sleep2 300;
-		mes "[Tuto3]";
+		mes "[Toly]";
 		mes "Surprised?";
 		mes "You cannot even imagine what else we can do...";
 		next;
-		mes "[Tuto3]";
+		mes "[Toly]";
 		mes "Anyway, we do not have more time to talk here.";
 		mes "Come on, I will take you.";
 		next;
@@ -464,24 +483,24 @@ new_1-1,105,98,4	script	Tuto3	10295,{
 			end;
 		}
 
-		mes "[Tuto3]";
+		mes "[Toly]";
 		mes "I thought you were someone sensible...";
 		close2;
 		Novice_Tuto3_Gone = 1;
 		hideonnpc strnpcinfo(NPC_NAME);
-		message strcharinfo(PC_NAME), "Tuto3 vanishes before you can question him again.";
+		message strcharinfo(PC_NAME), "Toly vanishes before you can question him again.";
 		end;
 	}
 
-	mes "[Tuto3]";
+	mes "[Toly]";
 	mes "You are the strange one, no?";
 	next;
-	mes "[Tuto3]";
+	mes "[Toly]";
 	mes "*cough*";
 	close2;
 	Novice_Tuto3_Gone = 1;
 	hideonnpc strnpcinfo(NPC_NAME);
-	message strcharinfo(PC_NAME), "Tuto3 vanishes before you can question him again.";
+	message strcharinfo(PC_NAME), "Toly vanishes before you can question him again.";
 	end;
 
 OnInit:

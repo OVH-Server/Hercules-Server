@@ -249,7 +249,7 @@ function	script	F_DebugResetTutos	{
 	$Novice_Tuto_RiderBusy = 0;
 	if (questprogress(65020))
 		erasequest 65020;
-	hideoffnpc "Tuto3";
+	hideoffnpc "Toly";
 	return;
 }
 
