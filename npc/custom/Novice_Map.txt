@@ -585,6 +585,40 @@ new_1-1,146,115,4	script	Sagard	10378,{
 	close;
 }
 
+new_1-1,114,46,0	script	Shadow Ritual#novice	HIDDEN_NPC,{
+OnInit:
+	specialeffect 1025;
+	initnpctimer;
+	end;
+
+OnTimer2000:
+	specialeffect 1025;
+	initnpctimer;
+	end;
+}
+
+-	script	Shadow_Summoner_Template	1198,{
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer5000:
+	specialeffect 844;
+	initnpctimer;
+	end;
+}
+
+new_1-1,114,51,4	duplicate(Shadow_Summoner_Template)	Invocateur de l'ombre#novice_1	1198
+new_1-1,119,48,3	duplicate(Shadow_Summoner_Template)	Invocateur de l'ombre#novice_2	1198
+new_1-1,117,42,1	duplicate(Shadow_Summoner_Template)	Invocateur de l'ombre#novice_3	1198
+new_1-1,111,42,7	duplicate(Shadow_Summoner_Template)	Invocateur de l'ombre#novice_4	1198
+new_1-1,109,48,5	duplicate(Shadow_Summoner_Template)	Invocateur de l'ombre#novice_5	1198
+
+new_1-1,122,49,4	script	Higg, le chaotique	2030,{
+	mes "[^0000FFHigg, the Chaotic^000000]";
+	close;
+}
+
 new_1-1,105,98,4	script	Toly	10295,{
 	if (Novice_Tuto3_Gone) {
 		message strcharinfo(PC_NAME), "Toly is nowhere to be found.";
