@@ -452,7 +452,7 @@ S_Tuto2Intro:
 		mes "You will find all the information and help you need to support us properly!";
 		next;
 		mes "[^0000FFSagard^000000]";
-		mes "Go see the instructor in the center of the room!";
+		mes "Go see ^0000FFKriss^000000 in the center of the hall!";
 		mes "Now go. See you next time!";
 		Novice_Tuto_State = 2;
 		if (questprogress(65020))
@@ -573,7 +573,7 @@ new_1-1,146,115,4	script	Sagard	10378,{
 		mes "You will find all the information and help you need to support us properly!";
 		next;
 		mes "[^0000FFSagard^000000]";
-		mes "Go see the instructor in the center of the room!";
+		mes "Go see ^0000FFKriss^000000 in the center of the hall!";
 		mes "Now go. See you next time!";
 		if (Novice_Tuto_State < 2)
 			Novice_Tuto_State = 2;
@@ -914,7 +914,7 @@ OnCloneDead:
 new_1-2,97,31,0	warp	new11_to_new12	1,1,new_1-2,96,71
 new_1-2,102,31,0	warp	new11_to_new12	1,1,new_1-2,102,71
 
-new_1-2,96,68,0	warp	new12_to_new11	1,1,new_1-2,97,28
+new_1-2,97,68,0	warp	new12_to_new11	1,1,new_1-2,97,28
 new_1-2,102,68,0	warp	new12_to_new11	1,1,new_1-2,102,28
 //============================================================
 // FIN MAP: NEW_1-1
@@ -928,12 +928,56 @@ new_1-2,102,68,0	warp	new12_to_new11	1,1,new_1-2,102,28
 // Debut des scripts de transition pour la map new_1-2.
 //============================================================
 
+//============================================================
+// NPC NEW_1-2 - ENTREE DU HALL
+// Deux Royal Guard orientent le joueur vers Kriss.
+//============================================================
+new_1-2,96,10,7	script	Royal Guard#new12_entry_1	420,{
+	mes "[^0000FFRoyal Guard^000000]";
+	mes "^0000FFKriss^000000 is waiting for you in the center of the hall.";
+	close;
+}
+
+new_1-2,103,10,1	script	Royal Guard#new12_entry_2	420,{
+	mes "[^0000FFRoyal Guard^000000]";
+	mes "^0000FFKriss^000000 is waiting for you in the center of the hall.";
+	close;
+}
+
+//============================================================
+// NPC NEW_1-2 - GARDES DU HALL
+// Gardes decoratifs orientes vers le centre du hall.
+//============================================================
+new_1-2,107,79,2	script	Royal Guard#new12_hall_1	105,{
+	end;
+}
+
+new_1-2,107,87,2	script	Royal Guard#new12_hall_2	105,{
+	end;
+}
+
+new_1-2,107,95,2	script	Royal Guard#new12_hall_3	105,{
+	end;
+}
+
+new_1-2,92,95,6	script	Royal Guard#new12_hall_4	105,{
+	end;
+}
+
+new_1-2,92,87,6	script	Royal Guard#new12_hall_5	105,{
+	end;
+}
+
+new_1-2,92,79,6	script	Royal Guard#new12_hall_6	105,{
+	end;
+}
+
 
 //============================================================
 // WARP NEW_1-2 -> NEW_1-3
 // Passage vers la prochaine map du tutoriel.
 //============================================================
-new_1-2,23,190,0	warp	new12_to_new13	1,1,new_1-3,96,13
+new_1-2,23,190,0	warp	new12_to_new13	1,1,new_1-3,95,21
 new_1-3,95,18,0	warp	new13_to_new12	1,1,new_1-2,23,187
 
 
