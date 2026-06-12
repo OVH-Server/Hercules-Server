@@ -1262,8 +1262,8 @@ new_1-2,101,105,3	script	Item Tutor#nv	4_F_JOB_BLACKSMITH,{
 }
 
 
-/*
-new_1-2,118,108,3	script	Kafra Employee#nv1	4_F_KAFRA1,{
+
+new_1-2,115,115,4	script	Kafra Employee#nv1	4_F_KAFRA1,{
 	mes "[Kafra Employee]";
 	mes "Welcome to";
 	mes "Kafra Corporation.";
@@ -1560,10 +1560,10 @@ new_1-2,118,108,3	script	Kafra Employee#nv1	4_F_KAFRA1,{
 		}
 	}
 }
-*/
+
 
 //== Interface Assistant ===================================
-new_1-2,121,189,2	script	Instructor#nv	4_F_03,{
+new_1-2,121,89,2	script	Instructor#nv	4_F_03,{
 	mes "[Edwin]";
 	mes "Welcome to my class.";
 	mes "Choose the subject you";

@@ -948,27 +948,27 @@ new_1-2,103,10,1	script	Royal Guard#new12_entry_2	420,{
 // NPC NEW_1-2 - GARDES DU HALL
 // Gardes decoratifs orientes vers le centre du hall.
 //============================================================
-new_1-2,107,79,2	script	Royal Guard#new12_hall_1	105,{
+new_1-2,107,79,2	script	Guard#new12_hall_1	105,{
 	end;
 }
 
-new_1-2,107,87,2	script	Royal Guard#new12_hall_2	105,{
+new_1-2,107,87,2	script	Guard#new12_hall_2	105,{
 	end;
 }
 
-new_1-2,107,95,2	script	Royal Guard#new12_hall_3	105,{
+new_1-2,107,95,2	script	Guard#new12_hall_3	105,{
 	end;
 }
 
-new_1-2,92,95,6	script	Royal Guard#new12_hall_4	105,{
+new_1-2,92,95,6	script	Guard#new12_hall_4	105,{
 	end;
 }
 
-new_1-2,92,87,6	script	Royal Guard#new12_hall_5	105,{
+new_1-2,92,87,6	script	Guard#new12_hall_5	105,{
 	end;
 }
 
-new_1-2,92,79,6	script	Royal Guard#new12_hall_6	105,{
+new_1-2,92,79,6	script	Guard#new12_hall_6	105,{
 	end;
 }
 
