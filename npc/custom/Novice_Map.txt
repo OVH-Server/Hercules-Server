@@ -930,7 +930,7 @@ new_1-2,102,68,0	warp	new12_to_new11	1,1,new_1-2,102,28
 
 //============================================================
 // NPC NEW_1-2 - ENTREE DU HALL
-// Deux Royal Guard orientent le joueur vers Kriss.
+// Deux Royal Guard orientes vers le warp en 100,6.
 //============================================================
 new_1-2,96,10,7	script	Royal Guard#new12_entry_1	420,{
 	mes "[^0000FFRoyal Guard^000000]";
@@ -1048,7 +1048,6 @@ new_1-2,84,81,4	script	Somtori	637,{
 	mes "Ninja Quest - Step 1.";
 	close;
 }
-
 
 //============================================================
 // WARP NEW_1-2 -> NEW_1-3

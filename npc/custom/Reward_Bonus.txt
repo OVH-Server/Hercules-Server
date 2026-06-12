@@ -1,0 +1,124 @@
+//===== Hercules Script ======================================
+// Hourly and daily account rewards.
+// Single reward NPC, kept outside map files as a standalone system.
+// Notifications are sent when the player changes map.
+//============================================================
+
+new_1-2,28,185,4	script	Reward Bonus	4_VENDING_MACHINE,{
+	mes "[^0000FFReward Bonus^000000]";
+	mes "You can claim your hourly or daily reward here.";
+	next;
+
+	switch(select("Claim hourly reward:Claim daily reward:Cancel")) {
+	case 1:
+		callsub S_ClaimHourly;
+		close;
+	case 2:
+		callsub S_ClaimDaily;
+		close;
+	case 3:
+		mes "[^0000FFReward Bonus^000000]";
+		mes "Come back whenever you want to claim a reward.";
+		close;
+	}
+
+OnInit:
+	.HatLocMask = EQP_HEAD_LOW | EQP_HEAD_MID | EQP_HEAD_TOP | EQP_COSTUME_HEAD_LOW | EQP_COSTUME_HEAD_MID | EQP_COSTUME_HEAD_TOP;
+	.HatMin = 500;
+	.HatMax = 100000;
+	.FallbackHat = 2201;
+	end;
+
+OnPCLoadMapEvent:
+	callsub S_NotifyPlayer;
+	end;
+
+S_ClaimHourly:
+	mes "[^0000FFReward Bonus^000000]";
+	.@now = gettimetick(2);
+	if (#HourlyBonus_LastClaim && .@now < #HourlyBonus_LastClaim + 3600) {
+		.@left = (#HourlyBonus_LastClaim + 3600) - .@now;
+		mes "Your hourly reward is not available yet.";
+		mes "Time remaining: " + (.@left / 60) + " minute(s).";
+		return;
+	}
+
+	if (!checkweight(607,1)) {
+		mes "Your inventory is too heavy.";
+		mes "Come back with some free space to receive your Yggdrasil Berry.";
+		return;
+	}
+
+	getitem 607,1;
+	#HourlyBonus_LastClaim = .@now;
+
+	mes "Here is your hourly reward:";
+	mes "^00AAFF" + getitemname(607) + "^000000 x1";
+	dispbottom "[Reward Bonus] You received 1 " + getitemname(607) + ".";
+	return;
+
+S_ClaimDaily:
+	mes "[^0000FFReward Bonus^000000]";
+	.@today = gettimetick(2) / 86400;
+	if (#DailyReward_LastDay == .@today) {
+		mes "You have already claimed your daily reward today.";
+		mes "Come back tomorrow.";
+		return;
+	}
+
+	callsub S_RandomHat;
+	.@hat_id = .RandomHat;
+
+	if (!checkweight(.@hat_id,1)) {
+		mes "Your inventory is too heavy.";
+		mes "Come back with some free space to receive your hat.";
+		return;
+	}
+
+	Zeny += 10000;
+	getitem .@hat_id,1;
+	#DailyReward_LastDay = .@today;
+
+	mes "Here is your daily reward:";
+	mes "^00AAFF10,000 Zeny^000000";
+	mes "^00AAFF" + getitemname(.@hat_id) + "^000000 x1";
+	dispbottom "[Reward Bonus] You received 10,000 Zeny and " + getitemname(.@hat_id) + ".";
+	return;
+
+S_RandomHat:
+	.RandomHat = .FallbackHat;
+
+	for (.@try = 0; .@try < 1000; .@try++) {
+		.@id = rand(.HatMin,.HatMax);
+		if (getiteminfo(.@id, ITEMINFO_TYPE) != IT_ARMOR)
+			continue;
+
+		.@loc = getiteminfo(.@id, ITEMINFO_LOC);
+		if (!(.@loc & .HatLocMask))
+			continue;
+
+		.RandomHat = .@id;
+		return;
+	}
+	return;
+
+S_NotifyPlayer:
+	.@now = gettimetick(2);
+	.@today = .@now / 86400;
+	.@hourly_available = (!#HourlyBonus_LastClaim || .@now >= #HourlyBonus_LastClaim + 3600);
+	.@daily_available = (#DailyReward_LastDay != .@today);
+
+	if (.@hourly_available && .@daily_available) {
+		dispbottom "[Reward Bonus] Your hourly and daily rewards are available at new_1-2 28 185.";
+		return;
+	}
+
+	if (.@hourly_available) {
+		dispbottom "[Reward Bonus] Your hourly reward is available at new_1-2 28 185.";
+		return;
+	}
+
+	if (.@daily_available)
+		dispbottom "[Reward Bonus] Your daily reward is available at new_1-2 28 185.";
+	return;
+}
