@@ -537,7 +537,9 @@ new_1-2,99,112,3	script	Kriss, the Defender	4_M_CRU,{
 			}
 			next;
 			mes "[Kris]";
-			mes "Now, why don't you speak to Edwin? He will teach you more regarding the basic use of Skills. Ah, and let me give you a small present: a Tattered Novice Ninja Suit!";
+			mes "Now, go speak with ^0000FFOlga^000000.";
+			mes "She is waiting at ^0000FFnew_1-2, 38, 183^000000.";
+			mes "Ah, and let me give you a small present: a Tattered Novice Ninja Suit!";
 			nov_get_item02 = 12;
 			getitem Novice_Plate,1;
 			close;

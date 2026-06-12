@@ -1283,6 +1283,122 @@ new_1-2,88,111,4	script	Villager Guide#new12	719,{
 new_1-2,23,190,0	warp	new12_to_new13	1,1,new_1-3,95,21
 new_1-3,95,18,0	warp	new13_to_new12	1,1,new_1-2,23,187
 
+//============================================================
+// QUETE TUTORIEL 1-3 - OLGA
+// Etape apres Kriss: Olga lance la suite de la quete tutoriel.
+//============================================================
+new_1-2,38,183,4	script	Olga	4_F_KAFRA1,{
+	callfunc "F_DebugConsole","Olga","Click. State=" + Tuto1_State;
+
+	mes "[^0000FFOlga^000000]";
+
+	if (Tuto1_State >= 40 || questprogress(65002) == 2) {
+		mes "You already completed Main Quest Milon.";
+		close;
+	}
+
+	if (Tuto1_State == 0) {
+		mes "Welcome.";
+		mes "This is Main Quest Milon.";
+		mes "Your first mission:";
+		mes "- Kill 2 Poring";
+		mes "- Kill 2 Lunatic";
+		mes "- Visit new_1-3,87,32";
+		next;
+
+		if (select("Accept:Decline") == 2) {
+			mes "[^0000FFOlga^000000]";
+			mes "Come back when you are ready.";
+			close;
+		}
+
+		if (questprogress(65000))
+			erasequest 65000;
+		if (questprogress(65001))
+			erasequest 65001;
+		if (questprogress(65002))
+			erasequest 65002;
+
+		Tuto1_State = 10;
+		Tuto1_Poring = 0;
+		Tuto1_Lunatic = 0;
+		Tuto1_Checkpoint = 0;
+		Tuto1_Jellopy_Last = -1;
+		Tuto1_Jellopy_Timer = 0;
+		Tuto1_Poring_Done = 0;
+		Tuto1_Lunatic_Done = 0;
+		Tuto1_First_Done = 0;
+		Tuto1_Jellopy_Done = 0;
+
+		setquest 65000;
+
+		message strcharinfo(PC_NAME), "Main Quest Milon: Poring 0/2, Lunatic 0/2, Location 0/1.";
+
+		mes "[^0000FFOlga^000000]";
+		mes "Quest started.";
+		mes "The monster kills are visible in your quest list.";
+		mes "Once everything is done, go speak with Olgi.";
+		close;
+	}
+
+	if (Tuto1_State == 10) {
+		mes "Current task:";
+		mes "Poring: " + Tuto1_Poring + "/2";
+		mes "Lunatic: " + Tuto1_Lunatic + "/2";
+		mes "Location: " + Tuto1_Checkpoint + "/1";
+		mes "Olgi will validate this part.";
+		close;
+	}
+
+	if (Tuto1_State == 20) {
+		mes "Olgi validated your first task.";
+		mes "Go speak with Olgu.";
+		close;
+	}
+
+	if (Tuto1_State == 30) {
+		.@jellopy = countitem(909);
+		if (.@jellopy > 5)
+			.@jellopy = 5;
+
+		mes "Olgu sent you back to me.";
+		mes "Bring me 5 Jellopy.";
+		mes "Current progress: " + .@jellopy + "/5";
+		next;
+
+		if (countitem(909) < 5) {
+			mes "[^0000FFOlga^000000]";
+			mes "You do not have 5 Jellopy yet.";
+			close;
+		}
+
+		delitem 909,5;
+		Zeny += 100000;
+		getitem 12622,1;
+
+		Tuto1_State = 40;
+		Tuto1_Jellopy_Timer = 0;
+		Tuto1_Jellopy_Last = -1;
+		Tuto1_Jellopy_Done = 1;
+
+		completequest 65002;
+
+		message strcharinfo(PC_NAME), "Main Quest Milon: completed.";
+
+		mes "[^0000FFOlga^000000]";
+		mes "Quest complete.";
+		mes "Reward:";
+		mes "100,000 Zeny";
+		mes "1 Halter Lead";
+		close;
+	}
+
+	mes "Your tutorial state was invalid.";
+	mes "I reset it. Please speak with me again.";
+	Tuto1_State = 0;
+	close;
+}
+
 
 
 
@@ -1291,4 +1407,216 @@ new_1-3,95,18,0	warp	new13_to_new12	1,1,new_1-2,23,187
 // Debut des scripts de transition pour la map new_1-3.
 //============================================================
 
+//============================================================
+// QUETE TUTORIEL 1-3 - SUITE OLGA
+// Objectifs, validation et recompenses de la quete tutoriel 1.
+//============================================================
+new_1-3,99,32,4	script	Olgi	4_M_03,{
+	callfunc "F_DebugConsole","Olgi","Click. State=" + Tuto1_State + " Poring=" + Tuto1_Poring + " Lunatic=" + Tuto1_Lunatic + " Checkpoint=" + Tuto1_Checkpoint;
 
+	mes "[^0000FFOlgi^000000]";
+
+	if (Tuto1_State == 0) {
+		mes "Speak with Olga first.";
+		close;
+	}
+
+	if (Tuto1_State == 10) {
+		mes "I can validate Olga's first task.";
+		mes "Let me check your progress.";
+		next;
+
+		if (Tuto1_Poring < 2 || Tuto1_Lunatic < 2 || Tuto1_Checkpoint < 1) {
+			mes "[^0000FFOlgi^000000]";
+			mes "You are not done yet.";
+			mes "Poring: " + Tuto1_Poring + "/2";
+			mes "Lunatic: " + Tuto1_Lunatic + "/2";
+			mes "Location: " + Tuto1_Checkpoint + "/1";
+			close;
+		}
+
+		Tuto1_State = 20;
+		completequest 65000;
+		setquest 65001;
+
+		message strcharinfo(PC_NAME), "Main Quest Milon: first task validated. Go speak with Olgu.";
+
+		mes "[^0000FFOlgi^000000]";
+		mes "Good. Everything is complete.";
+		mes "Now go speak with Olgu.";
+		close;
+	}
+
+	if (Tuto1_State == 20) {
+		mes "Go speak with Olgu.";
+		close;
+	}
+
+	if (Tuto1_State == 30) {
+		mes "Olgu sent you back to Olga.";
+		mes "Bring Olga 5 Jellopy.";
+		close;
+	}
+
+	if (Tuto1_State >= 40) {
+		mes "You already completed Main Quest Milon.";
+		close;
+	}
+
+	mes "Your tutorial state was invalid.";
+	close;
+}
+
+new_1-3,87,32,0	script	Tuto1_Checkpoint	HIDDEN_NPC,2,2,{
+OnTouch:
+	if (Tuto1_State == 10 && Tuto1_Checkpoint < 1) {
+		Tuto1_Checkpoint = 1;
+		message strcharinfo(PC_NAME), "Main Quest Milon: Location visited 1/1.";
+		if (Tuto1_Poring >= 2 && Tuto1_Lunatic >= 2 && !Tuto1_First_Done) {
+			Tuto1_First_Done = 1;
+			message strcharinfo(PC_NAME), "Main Quest Milon: all objectives complete. Go validate with Olgi.";
+		}
+	}
+	end;
+}
+
+new_1-3,116,45,4	script	Olgu	4_M_02,{
+	callfunc "F_DebugConsole","Olgu","Click. State=" + Tuto1_State;
+
+	mes "[^0000FFOlgu^000000]";
+
+	if (Tuto1_State < 20) {
+		mes "You are not ready for me yet.";
+		mes "Go follow Olga's instructions first.";
+		close;
+	}
+
+	if (Tuto1_State == 20) {
+		mes "Olgi sent you?";
+		mes "Good.";
+		mes "Return to Olga with 5 Jellopy in your inventory.";
+		next;
+
+		Tuto1_State = 30;
+		Tuto1_Jellopy_Last = -1;
+		Tuto1_Jellopy_Timer = 1;
+
+		completequest 65001;
+		setquest 65002;
+
+		message strcharinfo(PC_NAME), "Main Quest Milon: collect 5 Jellopy, then return to Olga.";
+		addtimer 2000, "Tuto1_Tracker::OnJellopyCheck";
+
+		mes "[^0000FFOlgu^000000]";
+		mes "Olga will handle your final reward.";
+		close;
+	}
+
+	if (Tuto1_State == 30) {
+		.@jellopy = countitem(909);
+		if (.@jellopy > 5)
+			.@jellopy = 5;
+
+		mes "Return to Olga with 5 Jellopy.";
+		mes "Current progress: " + .@jellopy + "/5";
+		close;
+	}
+
+	if (Tuto1_State >= 40) {
+		mes "You already completed this tutorial.";
+		close;
+	}
+
+	mes "Your tutorial state was invalid.";
+	close;
+}
+
+-	script	Tuto1_Tracker	FAKE_NPC,{
+OnNPCKillEvent:
+	if (Tuto1_State != 10)
+		end;
+
+	if (killedrid == 1002 && Tuto1_Poring < 2) {
+		Tuto1_Poring++;
+		if (Tuto1_Poring >= 2 && !Tuto1_Poring_Done) {
+			Tuto1_Poring_Done = 1;
+			message strcharinfo(PC_NAME), "Main Quest Milon: Poring complete 2/2.";
+		}
+	}
+
+	if (killedrid == 1063 && Tuto1_Lunatic < 2) {
+		Tuto1_Lunatic++;
+		if (Tuto1_Lunatic >= 2 && !Tuto1_Lunatic_Done) {
+			Tuto1_Lunatic_Done = 1;
+			message strcharinfo(PC_NAME), "Main Quest Milon: Lunatic complete 2/2.";
+		}
+	}
+
+	if (Tuto1_Poring >= 2 && Tuto1_Lunatic >= 2 && Tuto1_Checkpoint >= 1 && !Tuto1_First_Done) {
+		Tuto1_First_Done = 1;
+		message strcharinfo(PC_NAME), "Main Quest Milon: all objectives complete. Go validate with Olgi.";
+	}
+
+	end;
+
+OnJellopyCheck:
+	if (Tuto1_State != 30) {
+		Tuto1_Jellopy_Timer = 0;
+		end;
+	}
+
+	.@jellopy = countitem(909);
+	if (.@jellopy > 5)
+		.@jellopy = 5;
+
+	if (Tuto1_Jellopy_Last != .@jellopy) {
+		Tuto1_Jellopy_Last = .@jellopy;
+		message strcharinfo(PC_NAME), "Main Quest Milon: Jellopy " + .@jellopy + "/5.";
+	}
+
+	if (.@jellopy >= 5) {
+		if (Tuto1_Jellopy_Done)
+			end;
+
+		Tuto1_Jellopy_Done = 1;
+		message strcharinfo(PC_NAME), "Main Quest Milon: Jellopy complete. Return to Olga.";
+		Tuto1_Jellopy_Timer = 0;
+		end;
+	}
+
+	addtimer 2000, "Tuto1_Tracker::OnJellopyCheck";
+	end;
+
+OnPCLoginEvent:
+	if (Tuto1_State == 30 && !Tuto1_Jellopy_Timer) {
+		Tuto1_Jellopy_Timer = 1;
+		addtimer 2000, "Tuto1_Tracker::OnJellopyCheck";
+	}
+	end;
+}
+
+new_1-3,102,30,4	script	Tuto Quest 1	10509,{
+	mes "[Tuto Quest 1]";
+	mes "Do you want to go to Prontera?";
+	next;
+
+	if (select("Yes:No") == 1)
+		warp "prontera",162,170;
+
+	close;
+}
+
+prontera,162,170,4	script	Tuto Quest 1	10509,{
+	mes "[Tuto Quest 1]";
+	mes "Do you want to go to the tutorial area?";
+	next;
+
+	if (select("Yes:No") == 1)
+		warp "new_1-3",102,30;
+
+	close;
+}
+
+//============================================================
+// FIN DES NPC SUR LA MAP NEW_1-3
+//============================================================
