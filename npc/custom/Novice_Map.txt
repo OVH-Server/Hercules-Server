@@ -585,17 +585,28 @@ new_1-1,146,115,4	script	Sagard	10378,{
 	close;
 }
 
-new_1-1,114,46,0	script	Shadow Ritual#novice	HIDDEN_NPC,{
+new_1-1,114,46,0	script	Shadow Ritual#novice	HIDDEN_NPC,50,50,{
 OnInit:
 	specialeffect 1025;
-	initnpctimer;
 	end;
 
-OnTimer60000:
+OnTouch:
+	if (gettimetick(2) < .NextEffect)
+		end;
+	.NextEffect = gettimetick(2) + 55;
 	specialeffect 1025;
-	stopnpctimer;
-	setnpctimer 0;
-	initnpctimer;
+	end;
+
+OnPCLoadMapEvent:
+	if (strcharinfo(PC_MAP) != "new_1-1")
+		end;
+	getmapxy(.@map$, .@x, .@y, UNITTYPE_PC);
+	if (distance(.@x, .@y, 114, 46) > 50)
+		end;
+	if (gettimetick(2) < .NextEffect)
+		end;
+	.NextEffect = gettimetick(2) + 55;
+	specialeffect 1025;
 	end;
 }
 
@@ -716,17 +727,30 @@ new_1-1,128,57,6	script	Bella	667,{
 
 new_1-1,124,63,3	duplicate(Shadow_Summoner_Template)	Shadow Summoner#portal_watcher	1198
 
-new_1-1,118,64,0	script	Portal Arrival#novice	CLEAR_NPC,{
-OnInit:
-	specialeffect 61, AREA, "Portal Arrival#novice";
-	initnpctimer;
+new_1-1,118,64,0	script	Portal Arrival#novice	CLEAR_NPC,50,50,{
 	end;
 
-OnTimer60000:
+OnInit:
 	specialeffect 61, AREA, "Portal Arrival#novice";
-	stopnpctimer;
-	setnpctimer 0;
-	initnpctimer;
+	end;
+
+OnTouch:
+	if (gettimetick(2) < .NextEffect)
+		end;
+	.NextEffect = gettimetick(2) + 55;
+	specialeffect 61, AREA, "Portal Arrival#novice";
+	end;
+
+OnPCLoadMapEvent:
+	if (strcharinfo(PC_MAP) != "new_1-1")
+		end;
+	getmapxy(.@map$, .@x, .@y, UNITTYPE_PC);
+	if (distance(.@x, .@y, 118, 64) > 50)
+		end;
+	if (gettimetick(2) < .NextEffect)
+		end;
+	.NextEffect = gettimetick(2) + 55;
+	specialeffect 61, AREA, "Portal Arrival#novice";
 	end;
 }
 
@@ -763,11 +787,18 @@ OnInit:
 	.Portal_Index = 0;
 	for (.@i = 0; .@i < 4; .@i++)
 		disablenpc .Portal_Npc$[.@i];
-	setnpctimer 19000;
+	callsub S_SpawnClone;
 	initnpctimer;
 	end;
 
-OnTimer20000:
+OnTimer10000:
+	callsub S_SpawnClone;
+	stopnpctimer;
+	setnpctimer 0;
+	initnpctimer;
+	end;
+
+S_SpawnClone:
 	.@npc$ = .Portal_Npc$[.Portal_Index];
 	.@name$ = .Portal_Name$[.Portal_Index];
 	.@sprite = .Portal_Sprite[.Portal_Index];
@@ -780,20 +811,9 @@ OnTimer20000:
 	.Portal_Index++;
 	if (.Portal_Index >= 4)
 		.Portal_Index = 0;
-	stopnpctimer;
-	setnpctimer 0;
-	initnpctimer;
-	end;
+	return;
 
 OnCloneDead:
-	end;
-
-OnPCLoadMapEvent:
-	if (strcharinfo(PC_MAP) != "new_1-1")
-		end;
-	sleep2 1000;
-	specialeffect 1025, AREA, "Shadow Ritual#novice";
-	specialeffect 61, AREA, "Portal Arrival#novice";
 	end;
 }
 
