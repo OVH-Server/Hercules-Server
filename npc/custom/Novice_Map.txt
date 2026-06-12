@@ -217,7 +217,7 @@ new_1-1,66,123,2	script	Saint Azur	936,{
 	close;
 }
 
-new_1-1,61,124,2	script	Yda, la froide	655,{
+new_1-1,61,124,2	script	Yda, the Cold	655,{
 	mes "[^0000FFYda, the Cold^000000]";
 	mes "Leave me alone. I do not deal with little ones...";
 	close;
