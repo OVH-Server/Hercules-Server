@@ -655,7 +655,7 @@ new_1-2,89,113,3	script	Kriss, the Defender	4_M_CRU,{
 	}
 }
 
-new_1-2,97,105,3	script	Skill Tutor#nv	4_M_MONK,{
+new_1-2,97,115,3	script	Cecil	4_M_MONK,{
 	if (nov_get_item02 > 9 && nov_get_item03 > 9 && nov_get_item04 > 9) {
 		mes "[Cecil]";
 		mes "Huh...?";
@@ -913,7 +913,7 @@ new_1-2,97,105,3	script	Skill Tutor#nv	4_M_MONK,{
 }
 
 
-new_1-2,101,105,3	script	Item Tutor#nv	4_F_JOB_BLACKSMITH,{
+new_1-2,101,114,3	script	Alice	4_F_JOB_BLACKSMITH,{
 	if (nov_get_item02 > 9 && nov_get_item03 > 9 && nov_get_item04 > 9) {
 		mes "[Alice]";
 		mes "Huh...?";
