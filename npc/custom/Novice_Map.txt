@@ -587,11 +587,15 @@ new_1-1,146,115,4	script	Sagard	10378,{
 
 new_1-1,114,46,0	script	Shadow Ritual#novice	HIDDEN_NPC,20,20,{
 OnInit:
-	specialeffect 1025;
+	specialeffect 1025, AREA, "Shadow Ritual#novice";
+	end;
+}
+
+new_1-1,114,46,0	script	Shadow Ritual Scanner#novice	FAKE_NPC,20,20,{
 	end;
 
 OnTouch:
-	specialeffect 1025;
+	specialeffect 1025, AREA, "Shadow Ritual#novice";
 	end;
 
 OnPCLoadMapEvent:
@@ -600,7 +604,7 @@ OnPCLoadMapEvent:
 	getmapxy(.@map$, .@x, .@y, UNITTYPE_PC);
 	if (distance(.@x, .@y, 114, 46) > 20)
 		end;
-	specialeffect 1025;
+	specialeffect 1025, AREA, "Shadow Ritual#novice";
 	end;
 }
 
@@ -726,6 +730,10 @@ new_1-1,118,64,0	script	Portal Arrival#novice	CLEAR_NPC,20,20,{
 
 OnInit:
 	specialeffect 61, AREA, "Portal Arrival#novice";
+	end;
+}
+
+new_1-1,118,64,0	script	Portal Arrival Scanner#novice	FAKE_NPC,20,20,{
 	end;
 
 OnTouch:
