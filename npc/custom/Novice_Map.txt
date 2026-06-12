@@ -588,6 +588,14 @@ new_1-1,146,115,4	script	Sagard	10378,{
 new_1-1,114,46,0	script	Shadow Ritual#novice	HIDDEN_NPC,{
 OnInit:
 	specialeffect 1025;
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	specialeffect 1025;
+	stopnpctimer;
+	setnpctimer 0;
+	initnpctimer;
 	end;
 }
 
@@ -706,11 +714,19 @@ new_1-1,128,57,6	script	Bella	667,{
 	}
 }
 
-new_1-1,124,63,3	duplicate(Shadow_Summoner_Template)	Magaleta Clone#ritual	596
+new_1-1,124,63,3	duplicate(Shadow_Summoner_Template)	Shadow Summoner#portal_watcher	1198
 
 new_1-1,118,64,0	script	Portal Arrival#novice	CLEAR_NPC,{
 OnInit:
 	specialeffect 61, AREA, "Portal Arrival#novice";
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	specialeffect 61, AREA, "Portal Arrival#novice";
+	stopnpctimer;
+	setnpctimer 0;
+	initnpctimer;
 	end;
 }
 
@@ -738,9 +754,9 @@ new_1-1,114,46,4	duplicate(Portal_Clone_Template)	Rawrel Clone#novice	591
 new_1-1,114,46,4	duplicate(Portal_Clone_Template)	Magaleta Clone#portal	596
 new_1-1,114,46,4	duplicate(Portal_Clone_Template)	Seyren Clone#novice	599
 
-new_1-1,114,46,0	script	Portal Soldier Controller#novice	HIDDEN_NPC,{
+new_1-1,114,46,0	script	Shadow Portal#novice	HIDDEN_NPC,{
 OnInit:
-	killmonster "new_1-1", "Portal Soldier Controller#novice::OnCloneDead";
+	killmonster "new_1-1", "Shadow Portal#novice::OnCloneDead";
 	setarray .Portal_Npc$[0], "Ygnizem Clone#novice", "Rawrel Clone#novice", "Magaleta Clone#portal", "Seyren Clone#novice";
 	setarray .Portal_Name$[0], "Ygnizem Clone", "Rawrel Clone", "Magaleta Clone", "Seyren Clone";
 	setarray .Portal_Sprite[0], 594, 591, 596, 599;
