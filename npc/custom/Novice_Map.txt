@@ -665,11 +665,11 @@ new_1-1,124,53,1	script	Higg, the Chaotic	2030,{
 	}
 }
 
-new_1-1,123,51,2	script	Nightmare#higg_1	1061,{
+new_1-1,124,50,2	script	Nightmare#higg_1	1061,{
 	end;
 }
 
-new_1-1,127,53,4	script	Nightmare#higg_2	1061,{
+new_1-1,127,53,2	script	Nightmare#higg_2	1061,{
 	end;
 }
 
