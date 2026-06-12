@@ -1563,7 +1563,7 @@ new_1-2,115,115,4	script	Kafra Employee#nv1	4_F_KAFRA1,{
 
 
 //== Interface Assistant ===================================
-new_1-2,121,89,2	script	Instructor#nv	4_F_03,{
+new_1-2,121,89,3	script	Instructor#nv	4_F_03,{
 	mes "[Edwin]";
 	mes "Welcome to my class.";
 	mes "Choose the subject you";
@@ -1732,7 +1732,7 @@ new_1-2,121,89,2	script	Instructor#nv	4_F_03,{
 	}
 }
 
-new_1-2,115,91,2	script	Somatology Instructor	4_M_SAGE_A,{
+new_1-2,115,91,4	script	Somatology Instructor	4_M_SAGE_A,{
 	mes "[Jare Riotte]";
 	mes "Welcome, new adventurer.";
 	mes "I, Jare Riotte will help you to learn about the fundamental";
