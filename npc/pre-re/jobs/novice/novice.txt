@@ -2484,7 +2484,7 @@ new_1-2,16,177,6	script	Helper#nv	4_M_02,{
 	}
 }
 
-new_1-2,17,82,6	script	Entrance Guard#nv	4_F_03,{
+new_1-2,17,182,6	script	Entrance Guard#nv	4_F_03,{
 	if (nov_2nd_cos == 0) {
 		mes "[Muriel]";
 		mes "I'm sorry, but I can't let anybody who hasn't been instructed on fighting enter the Field Combat Training Grounds.";
