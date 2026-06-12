@@ -378,7 +378,7 @@ new_1-1,53,114,4	script	Shion#nv1	4_F_JOB_HUNTER,{
 */
 
 //== Interfaces Tutor ======================================
-new_1-2,89,113,3	script	Kriss, the Defender	4_M_CRU,{
+new_1-2,99,112,3	script	Kriss, the Defender	4_M_CRU,{
 	if (nov_get_item02 > 9 && nov_get_item03 > 9 && nov_get_item04 > 9) {
 		mes "[Kris]";
 		mes "You've completed all the essential courses. Have you spoken to the assistant tutors already? The field combat training will be your next course. Would you like to proceed?";
@@ -1370,6 +1370,11 @@ new_1-2,115,115,4	script	Kafra Employee#nv1	4_F_KAFRA1,{
 				mes "The Kafra Corporation";
 				mes "provides our valued customers with a convenient Teleport Service which greatly cuts down on your";
 				mes "traveling time.";
+				next;
+				mes "[Kafra Employee]";
+				mes "However, teleportation";
+				mes "to towns is currently";
+				mes "disabled on this map.";
 				next;
 				mes "[Kafra Employee]";
 				mes "Our Teleport Service is safe and comfortable, and will allow you to fully explore the various lands of the Rune-Midgard continent.";

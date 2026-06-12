@@ -972,6 +972,83 @@ new_1-2,92,79,6	script	Guard#new12_hall_6	105,{
 	end;
 }
 
+//============================================================
+// QUETE ANGE 1-1
+// Paul, emissaire de Yuno, presente la capitale des Anges.
+//============================================================
+new_1-2,89,94,4	script	Yuno Emissary#paul	989,{
+	mes "[^0000FFPaul^000000]";
+	mes "Yuno is the capital of the Angels.";
+	mes "We strongly support Prontera and human civilization.";
+	next;
+	mes "[^0000FFPaul^000000]";
+	mes "We maintain balance and make sure the forces of evil are stopped.";
+	next;
+	mes "[^0000FFPaul^000000]";
+	mes "But these recent times have been difficult.";
+	mes "Recruitment has become harder because evil is rising across the world.";
+	next;
+	mes "[^0000FFPaul^000000]";
+	mes "Our ranks grow smaller and smaller.";
+	mes "Every brave soul matters now.";
+	next;
+	mes "[^0000FFPaul^000000]";
+	mes "If you wish to join us, you should speak with our emissary in Prontera.";
+	mes "Would you like to help Yuno?";
+	next;
+	switch(select("Yes.:No.")) {
+	case 1:
+		mes "[^0000FFPaul^000000]";
+		mes "Magnificent!";
+		mes "I knew we could count on someone like you...";
+		next;
+		mes "[^0000FFPaul^000000]";
+		mes "If only everyone were like you...";
+		next;
+		mes "[^0000FFPaul^000000]";
+		mes "Go see the Yuno emissary in Prontera.";
+		mes "His name is ^0000FFCole^000000. You cannot miss him!";
+		close;
+	case 2:
+		mes "[^0000FFPaul^000000]";
+		mes "No problem. I will give you time to think.";
+		next;
+		mes "[^0000FFPaul^000000]";
+		mes "Go see the emissary in Prontera if you change your mind!";
+		close;
+	}
+}
+
+//============================================================
+// QUETE GUNSLINGER 1
+// Helene marque le debut de la quete Gunslinger.
+//============================================================
+new_1-2,82,89,4	script	Helene	633,{
+	mes "[^0000FFHelene^000000]";
+	mes "Gunslinger Quest - Step 1.";
+	close;
+}
+
+//============================================================
+// QUETE TAEKWON 1
+// Eua marque le debut de la quete Taekwon.
+//============================================================
+new_1-2,88,87,2	script	Eua	644,{
+	mes "[^0000FFEua^000000]";
+	mes "Taekwon Quest - Step 1.";
+	close;
+}
+
+//============================================================
+// QUETE NINJA 1
+// Somtori marque le debut de la quete Ninja.
+//============================================================
+new_1-2,84,81,4	script	Somtori	637,{
+	mes "[^0000FFSomtori^000000]";
+	mes "Ninja Quest - Step 1.";
+	close;
+}
+
 
 //============================================================
 // WARP NEW_1-2 -> NEW_1-3
