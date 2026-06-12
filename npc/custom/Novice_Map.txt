@@ -911,11 +911,11 @@ OnCloneDead:
 // WARP NEW_1-1 -> NEW_1-2
 // Passage vers la prochaine map du tutoriel.
 //============================================================
-new_1-1,97,31,0	warp	new11_to_new12	1,1,new_1-2,96,72
-new_1-2,100,68,0	warp	new12_to_new11	1,1,new_1-1,97,28
+new_1-2,97,31,0	warp	new11_to_new12	1,1,new_1-2,96,72
+new_1-2,100,68,0	warp	new12_to_new11	1,1,new_1-2,97,28
 
-new_1-1,102,31,0	warp	new11_to_new12	1,1,new_1-2,102,72
-new_1-2,102,68,0	warp	new12_to_new11	1,1,new_1-1,102,28
+new_1-2,102,31,0	warp	new11_to_new12	1,1,new_1-2,102,72
+new_1-2,102,68,0	warp	new12_to_new11	1,1,new_1-2,102,28
 //============================================================
 // FIN MAP: NEW_1-1
 // Fin des NPC et scripts places sur la map new_1-1.
