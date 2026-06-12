@@ -9,6 +9,18 @@
 // Novice_Tuto_Done 1 = tutorial quest completed
 // Novice_Tuto3_Gone 1 = Toly refused and no longer speaks
 
+//============================================================
+// MAP: NEW_1-1
+// Tous les NPC ci-dessous appartiennent a la map new_1-1.
+// Le prochain fichier/bloc a organiser sera pour new_1-2.
+//
+// Organisation rapide:
+// - General, Milon  : Quete Tutoriel 1-1.
+// - Sagard          : Quete Tutoriel 1-2.
+// - Toly            : Quete Demon 1-1.
+// - Higg/Bella      : Quete Demon 1-2.
+//============================================================
+
 new_1-1,64,117,4	script	Alfan	735,{
 	mes "[^0000FFAlfan^000000]";
 	mes "Honestly, I would not refuse some help with the portal!";
@@ -56,6 +68,7 @@ new_1-1,58,105,4	script	Lieutenant Amelina	469,{
 -	script	RG_Amelina_Template	417,{ end; }
 -	script	RG_Imayn_Template	413,{ end; }
 
+// Armee du Lieutenant Amelina: 10 rangees de Royal Guard, sprite 417.
 new_1-1,61,102,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_001	417
 new_1-1,60,102,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_002	417
 new_1-1,59,102,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_003	417
@@ -124,6 +137,7 @@ new_1-1,50,101,4	script	Lieutenant Imayn	469,{
 	close;
 }
 
+// Armee du Lieutenant Imayn: 10 rangees de Royal Guard, sprite 413.
 new_1-1,53,98,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_001	413
 new_1-1,52,98,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_002	413
 new_1-1,51,98,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_003	413
@@ -286,6 +300,11 @@ new_1-1,140,112,4	script	Royal Guard Erart	420,{
 	close;
 }
 
+//============================================================
+// QUETE TUTORIEL 1-1
+// General, Milon lance la quete tutoriel sur new_1-1.
+// Il envoie ensuite le joueur vers Sagard.
+//============================================================
 new_1-1,65,115,4	script	General, Milon	10382,5,5,{
 	goto L_Tuto1Dialog;
 
@@ -526,6 +545,11 @@ OnPCLogoutEvent:
 	end;
 }
 
+//============================================================
+// QUETE TUTORIEL 1-2
+// Sagard est le deuxieme NPC du tutoriel sur new_1-1.
+// Il explique la situation du portail et termine l'introduction.
+//============================================================
 new_1-1,146,115,4	script	Sagard	10378,{
 	mes "[^0000FFSagard^000000]";
 
@@ -585,39 +609,86 @@ new_1-1,146,115,4	script	Sagard	10378,{
 	close;
 }
 
-new_1-1,114,46,0	script	Shadow Ritual#novice	HIDDEN_NPC,{
-OnInit:
-	specialeffect 1025, AREA, "Shadow Ritual#novice";
-	initnpctimer;
+//============================================================
+// QUETE DEMON 1-1
+// Toly declenche la suite demon et teleporte le joueur vers Higg/Bella.
+//============================================================
+new_1-1,105,98,4	script	Toly	10295,{
+	if (Novice_Tuto3_Gone) {
+		message strcharinfo(PC_NAME), "Toly is nowhere to be found.";
+		end;
+	}
+
+	mes "[^0000FFToly^000000]";
+	mes "Well, well... Does an open portal not thrill you, no?";
+	next;
+	mes "[^0000FFToly^000000]";
+	mes "All those solemn faces, all that chanting, no?";
+	mes "Pointless. Holding the portal shut will change nothing.";
+	next;
+	mes "[^0000FFToly^000000]";
+	mes "The High Wizards think they understand the tear because they can draw circles around it, no?";
+	mes "They are incompetent. Painfully incompetent.";
+	next;
+	mes "[^0000FFToly^000000]";
+	mes "They keep feeding power into the wound, no?";
+	mes "Any fool can see the portal is not a door. It is a mouth.";
+	next;
+	mes "[^0000FFToly^000000]";
+	mes "Sooner or later it will open wider, and all their proud little seals will snap.";
+	mes "That is how these things always end, no?";
+	next;
+	mes "[^0000FFToly^000000]";
+	mes "Tell me, novice. You see it too, do you not?";
+	next;
+
+	if (select("Honestly, I completely agree with you!:No, you seem strange to me...") == 1) {
+		warp "new_1-1",105,96;
+		sleep2 300;
+		mes "[^0000FFToly^000000]";
+		mes "Surprised?";
+		mes "You cannot even imagine what else we can do...";
+		next;
+		mes "[^0000FFToly^000000]";
+		mes "Anyway, we do not have more time to talk here.";
+		mes "Come on, I will take you.";
+		next;
+
+		if (select("Yes.:No.") == 1) {
+			close2;
+			warp "new_1-1",116,61;
+			end;
+		}
+
+		mes "[^0000FFToly^000000]";
+		mes "I thought you were someone sensible...";
+		close2;
+		Novice_Tuto3_Gone = 1;
+		hideonnpc strnpcinfo(NPC_NAME);
+		message strcharinfo(PC_NAME), "Toly vanishes before you can question him again.";
+		end;
+	}
+
+	mes "[^0000FFToly^000000]";
+	mes "You are the strange one, no?";
+	next;
+	mes "[^0000FFToly^000000]";
+	mes "*cough*";
+	close2;
+	Novice_Tuto3_Gone = 1;
+	hideonnpc strnpcinfo(NPC_NAME);
+	message strcharinfo(PC_NAME), "Toly vanishes before you can question him again.";
 	end;
 
-OnTimer45000:
-	specialeffect 1025, AREA, "Shadow Ritual#novice";
-	stopnpctimer;
-	setnpctimer 0;
-	initnpctimer;
+OnInit:
+	hideoffnpc strnpcinfo(NPC_NAME);
 	end;
 }
 
--	script	Shadow_Summoner_Template	1198,{
-OnInit:
-	initnpctimer;
-	end;
-
-OnTimer1000:
-	specialeffect 844;
-	stopnpctimer;
-	setnpctimer 0;
-	initnpctimer;
-	end;
-}
-
-new_1-1,114,51,4	duplicate(Shadow_Summoner_Template)	Shadow Summoner#novice_1	1198
-new_1-1,119,48,3	duplicate(Shadow_Summoner_Template)	Shadow Summoner#novice_2	1198
-new_1-1,117,42,1	duplicate(Shadow_Summoner_Template)	Shadow Summoner#novice_3	1198
-new_1-1,111,42,7	duplicate(Shadow_Summoner_Template)	Shadow Summoner#novice_4	1198
-new_1-1,109,48,5	duplicate(Shadow_Summoner_Template)	Shadow Summoner#novice_5	1198
-
+//============================================================
+// QUETE DEMON 1-2 - HIGG
+// Higg presente le point de vue demon et propose un choix au joueur.
+//============================================================
 new_1-1,124,53,1	script	Higg, the Chaotic	2030,{
 	mes "[^0000FFHigg, the Chaotic^000000]";
 	mes "Humans... h-human things...";
@@ -673,6 +744,10 @@ new_1-1,127,53,2	script	Nightmare#higg_2	1061,{
 	end;
 }
 
+//============================================================
+// QUETE DEMON 1-2 - BELLA
+// Bella est la suite directe apres Toly/Higg et amorce la suite a Prontera.
+//============================================================
 new_1-1,128,57,6	script	Bella	667,{
 	mes "[^0000FFBella^000000]";
 	if (!Novice_Bella_Talked) {
@@ -713,6 +788,43 @@ new_1-1,128,57,6	script	Bella	667,{
 		end;
 	}
 }
+
+//============================================================
+// QUETE DEMON - PORTAILS ET CLONES
+// Decor, rituel, invocateurs et clones lies a la suite demon.
+//============================================================
+new_1-1,114,46,0	script	Shadow Ritual#novice	HIDDEN_NPC,{
+OnInit:
+	specialeffect 1025, AREA, "Shadow Ritual#novice";
+	initnpctimer;
+	end;
+
+OnTimer45000:
+	specialeffect 1025, AREA, "Shadow Ritual#novice";
+	stopnpctimer;
+	setnpctimer 0;
+	initnpctimer;
+	end;
+}
+
+-	script	Shadow_Summoner_Template	1198,{
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	specialeffect 844;
+	stopnpctimer;
+	setnpctimer 0;
+	initnpctimer;
+	end;
+}
+
+new_1-1,114,51,4	duplicate(Shadow_Summoner_Template)	Shadow Summoner#novice_1	1198
+new_1-1,119,48,3	duplicate(Shadow_Summoner_Template)	Shadow Summoner#novice_2	1198
+new_1-1,117,42,1	duplicate(Shadow_Summoner_Template)	Shadow Summoner#novice_3	1198
+new_1-1,111,42,7	duplicate(Shadow_Summoner_Template)	Shadow Summoner#novice_4	1198
+new_1-1,109,48,5	duplicate(Shadow_Summoner_Template)	Shadow Summoner#novice_5	1198
 
 new_1-1,124,63,3	duplicate(Shadow_Summoner_Template)	Shadow Summoner#portal_watcher	1198
 
@@ -795,75 +907,42 @@ OnCloneDead:
 	end;
 }
 
-new_1-1,105,98,4	script	Toly	10295,{
-	if (Novice_Tuto3_Gone) {
-		message strcharinfo(PC_NAME), "Toly is nowhere to be found.";
-		end;
-	}
+//============================================================
+// WARP NEW_1-1 -> NEW_1-2
+// Passage vers la prochaine map du tutoriel.
+//============================================================
+new_1-1,100,30,0	warp	new11_to_new12	1,1,new_1-2,100,71
 
-	mes "[^0000FFToly^000000]";
-	mes "Well, well... Does an open portal not thrill you, no?";
-	next;
-	mes "[^0000FFToly^000000]";
-	mes "All those solemn faces, all that chanting, no?";
-	mes "Pointless. Holding the portal shut will change nothing.";
-	next;
-	mes "[^0000FFToly^000000]";
-	mes "The High Wizards think they understand the tear because they can draw circles around it, no?";
-	mes "They are incompetent. Painfully incompetent.";
-	next;
-	mes "[^0000FFToly^000000]";
-	mes "They keep feeding power into the wound, no?";
-	mes "Any fool can see the portal is not a door. It is a mouth.";
-	next;
-	mes "[^0000FFToly^000000]";
-	mes "Sooner or later it will open wider, and all their proud little seals will snap.";
-	mes "That is how these things always end, no?";
-	next;
-	mes "[^0000FFToly^000000]";
-	mes "Tell me, novice. You see it too, do you not?";
-	next;
+//============================================================
+// FIN MAP: NEW_1-1
+// Fin des NPC et scripts places sur la map new_1-1.
+//============================================================
 
-	if (select("Honestly, I completely agree with you!:No, you seem strange to me...") == 1) {
-		warp "new_1-1",105,96;
-		sleep2 300;
-		mes "[^0000FFToly^000000]";
-		mes "Surprised?";
-		mes "You cannot even imagine what else we can do...";
-		next;
-		mes "[^0000FFToly^000000]";
-		mes "Anyway, we do not have more time to talk here.";
-		mes "Come on, I will take you.";
-		next;
+//============================================================
+// MAP: NEW_1-2
+// Debut des scripts de transition pour la map new_1-2.
+//============================================================
 
-		if (select("Yes.:No.") == 1) {
-			close2;
-			warp "new_1-1",116,61;
-			end;
-		}
+//============================================================
+// WARP NEW_1-2 -> NEW_1-1
+// Retour vers la premiere map du tutoriel.
+//============================================================
+new_1-2,100,71,0	warp	new12_to_new11	1,1,new_1-1,100,30
 
-		mes "[^0000FFToly^000000]";
-		mes "I thought you were someone sensible...";
-		close2;
-		Novice_Tuto3_Gone = 1;
-		hideonnpc strnpcinfo(NPC_NAME);
-		message strcharinfo(PC_NAME), "Toly vanishes before you can question him again.";
-		end;
-	}
+//============================================================
+// WARP NEW_1-2 -> NEW_1-3
+// Passage vers la prochaine map du tutoriel.
+//============================================================
+new_1-2,23,190,0	warp	new12_to_new13	1,1,new_1-3,96,20
 
-	mes "[^0000FFToly^000000]";
-	mes "You are the strange one, no?";
-	next;
-	mes "[^0000FFToly^000000]";
-	mes "*cough*";
-	close2;
-	Novice_Tuto3_Gone = 1;
-	hideonnpc strnpcinfo(NPC_NAME);
-	message strcharinfo(PC_NAME), "Toly vanishes before you can question him again.";
-	end;
+//============================================================
+// MAP: NEW_1-3
+// Debut des scripts de transition pour la map new_1-3.
+//============================================================
 
-OnInit:
-	hideoffnpc strnpcinfo(NPC_NAME);
-	end;
-}
+//============================================================
+// WARP NEW_1-3 -> NEW_1-2
+// Retour vers la map precedente du tutoriel.
+//============================================================
+new_1-3,96,20,0	warp	new13_to_new12	1,1,new_1-2,23,190
 
