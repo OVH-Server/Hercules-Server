@@ -933,8 +933,8 @@ new_1-2,102,68,0	warp	new12_to_new11	1,1,new_1-2,102,28
 // WARP NEW_1-2 -> NEW_1-3
 // Passage vers la prochaine map du tutoriel.
 //============================================================
-new_1-2,23,190,0	warp	new12_to_new13	1,1,new_1-3,96,23
-new_1-3,96,20,0	warp	new13_to_new12	1,1,new_1-2,23,187
+new_1-2,23,190,0	warp	new12_to_new13	1,1,new_1-3,96,13
+new_1-3,95,18,0	warp	new13_to_new12	1,1,new_1-2,23,187
 
 
 
