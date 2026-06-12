@@ -911,10 +911,10 @@ OnCloneDead:
 // WARP NEW_1-1 -> NEW_1-2
 // Passage vers la prochaine map du tutoriel.
 //============================================================
-new_1-2,97,31,0	warp	new11_to_new12	1,1,new_1-2,96,72
-new_1-2,100,68,0	warp	new12_to_new11	1,1,new_1-2,97,28
+new_1-2,97,31,0	warp	new11_to_new12	1,1,new_1-2,96,71
+new_1-2,102,31,0	warp	new11_to_new12	1,1,new_1-2,102,71
 
-new_1-2,102,31,0	warp	new11_to_new12	1,1,new_1-2,102,72
+new_1-2,96,68,0	warp	new12_to_new11	1,1,new_1-2,97,28
 new_1-2,102,68,0	warp	new12_to_new11	1,1,new_1-2,102,28
 //============================================================
 // FIN MAP: NEW_1-1
@@ -933,7 +933,8 @@ new_1-2,102,68,0	warp	new12_to_new11	1,1,new_1-2,102,28
 // WARP NEW_1-2 -> NEW_1-3
 // Passage vers la prochaine map du tutoriel.
 //============================================================
-new_1-2,23,190,0	warp	new12_to_new13	1,1,new_1-3,96,20
+new_1-2,23,190,0	warp	new12_to_new13	1,1,new_1-3,96,23
+new_1-3,96,20,0	warp	new13_to_new12	1,1,new_1-2,18,190
 
 
 
@@ -943,9 +944,4 @@ new_1-2,23,190,0	warp	new12_to_new13	1,1,new_1-3,96,20
 // Debut des scripts de transition pour la map new_1-3.
 //============================================================
 
-//============================================================
-// WARP NEW_1-3 -> NEW_1-2
-// Retour vers la map precedente du tutoriel.
-//============================================================
-new_1-3,96,20,0	warp	new13_to_new12	1,1,new_1-2,23,190
 
