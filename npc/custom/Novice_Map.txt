@@ -1061,15 +1061,15 @@ new_1-2,84,114,4	script	System Guide#new12	758,{
 		switch(select("Territories:Pillar of Ascension:City contracts:Class contracts:Team contracts:Eterites:Drop Protector:Leave")) {
 		case 1:
 			mes "[^0000FFSystem Guide^000000]";
-			mes "Territories are areas influenced by Angels or Demons.";
-			mes "Some maps have a Power Crystal that can be defended or conquered.";
+			mes "Territories are areas that can be developed and controlled through server progression.";
+			mes "They are not tied to the Angel or Demon faction story.";
 			next;
 			mes "[^0000FFSystem Guide^000000]";
-			mes "When a faction protects or captures a crystal, its influence grows.";
-			mes "If the defense succeeds, the territory can become aligned with that faction.";
+			mes "A territory can unlock local advantages, services, or vendors depending on its progress.";
+			mes "Players help a territory by completing related objectives and systems.";
 			next;
 			mes "[^0000FFSystem Guide^000000]";
-			mes "The territory NPC in Prontera lets you check which fields, cities, or dungeons are currently controlled.";
+			mes "Think of territories as a world-control and development system, separate from the Angel and Demon conflict.";
 			break;
 		case 2:
 			mes "[^0000FFSystem Guide^000000]";
@@ -1116,8 +1116,12 @@ new_1-2,84,114,4	script	System Guide#new12	758,{
 			mes "Inactive Eterites require monster kills on their map before they awaken.";
 			next;
 			mes "[^0000FFSystem Guide^000000]";
+			mes "Eterites are connected to the Angel and Demon conflict.";
+			mes "Their activation and control can reflect the influence of those forces.";
+			next;
+			mes "[^0000FFSystem Guide^000000]";
 			mes "Once an Eterite is active, you can use the main Eterite NPC to travel to that field faster.";
-			mes "They are useful shortcuts for exploration and farming.";
+			mes "They are useful shortcuts for exploration, farming, and faction-related progression.";
 			break;
 		case 7:
 			mes "[^0000FFSystem Guide^000000]";
@@ -1147,55 +1151,72 @@ new_1-2,79,112,4	script	Profession Guide#new12	659,{
 		switch(select("Professions:Progression:Resources:Lerbo:Mining:Archaeology:Boxes:Leave")) {
 		case 1:
 			mes "[^0000FFProfession Guide^000000]";
-			mes "Professions are gathering specializations.";
-			mes "You choose one profession, then harvest matching resources in the world.";
+			mes "There are three gathering professions:";
+			mes "^228B22Herbalist^000000, ^8B4513Miner^000000, and ^4169E1Archaeologist^000000.";
 			next;
 			mes "[^0000FFProfession Guide^000000]";
-			mes "Your profession determines what you can gather efficiently.";
-			mes "Changing profession may require a resource cost.";
+			mes "Your profession determines which resources you can gather.";
+			mes "Herbalists gather plants, Miners gather ores, and Archaeologists recover ancient traces.";
+			next;
+			mes "[^0000FFProfession Guide^000000]";
+			mes "Your first profession choice is free.";
+			mes "After that, changing profession costs ^0000FF1 Log^000000.";
 			break;
 		case 2:
 			mes "[^0000FFProfession Guide^000000]";
-			mes "Each valid gathering action gives profession points.";
-			mes "At certain point thresholds, your profession level rises.";
+			mes "Each valid gathering action gives 1 point to the matching profession.";
 			next;
 			mes "[^0000FFProfession Guide^000000]";
-			mes "Higher levels represent experience with that resource type.";
-			mes "Keep gathering to improve your profession over time.";
+			mes "At 10 points, that profession reaches level 2.";
+			mes "At 20 points, it reaches level 3.";
+			next;
+			mes "[^0000FFProfession Guide^000000]";
+			mes "At level 3, you can continue gathering up to 100 points.";
+			mes "Your progress is tracked separately for Herbalist, Miner, and Archaeologist.";
 			break;
 		case 3:
 			mes "[^0000FFProfession Guide^000000]";
-			mes "Resources can drop from gathering nodes.";
-			mes "Plants may give natural materials, mining nodes may give ores, and archaeology spots may give relics.";
+			mes "Resources come from gathering spots placed in the world.";
+			mes "Plants are for Herbalists, ores are for Miners, and relic traces are for Archaeologists.";
 			next;
 			mes "[^0000FFProfession Guide^000000]";
-			mes "Those materials can be used by other systems, vendors, upgrades, or future crafting content.";
+			mes "When you gather successfully, the node can give its resource item and increase your counters.";
+			mes "Those resources may be useful for exchanges, upgrades, quests, or future crafting systems.";
 			break;
 		case 4:
 			mes "[^0000FFProfession Guide^000000]";
-			mes "Lerbo is part of the gathering ecosystem.";
-			mes "When you see Lerbo-related resources or NPCs, treat them as profession content.";
+			mes "Lerbo is tied to the gathering economy.";
+			mes "If you see Lerbo resources, NPCs, or requests, treat them as part of the profession ecosystem.";
 			next;
 			mes "[^0000FFProfession Guide^000000]";
-			mes "Check the harvest master and gathering spots to learn where Lerbo resources are useful.";
+			mes "Gathering resources and profession progress may help you interact with Lerbo-related content later.";
 			break;
 		case 5:
 			mes "[^0000FFProfession Guide^000000]";
-			mes "Mining focuses on mineral nodes.";
-			mes "A miner gathers ores and stone-like resources that may be useful for upgrades or exchanges.";
+			mes "Miner is the profession for ore and mineral nodes.";
+			mes "Only a Miner can gather mining resources properly.";
+			next;
+			mes "[^0000FFProfession Guide^000000]";
+			mes "The system tracks your Miner level and Miner points separately.";
+			mes "Keep mining to raise that profession's progress.";
 			break;
 		case 6:
 			mes "[^0000FFProfession Guide^000000]";
-			mes "Archaeology focuses on ancient traces and relic spots.";
-			mes "An archaeologist gathers forgotten materials that other players may ignore.";
+			mes "Archaeologist is the profession for ancient traces and relic spots.";
+			mes "Only an Archaeologist can recover archaeology resources properly.";
+			next;
+			mes "[^0000FFProfession Guide^000000]";
+			mes "The system tracks your Archaeologist level and Archaeologist points separately.";
+			mes "Keep recovering relics to raise that profession's progress.";
 			break;
 		case 7:
 			mes "[^0000FFProfession Guide^000000]";
 			mes "Boxes are separate from professions.";
-			mes "They are not a job, and everyone can gather them even without choosing a profession.";
+			mes "They are not a job.";
 			next;
 			mes "[^0000FFProfession Guide^000000]";
-			mes "Think of boxes as a shared exploration reward, not a profession path.";
+			mes "Everyone can gather boxes, even without choosing a profession.";
+			mes "The system still tracks your total box gathering count.";
 			break;
 		case 8:
 			close;
