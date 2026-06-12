@@ -266,7 +266,6 @@ new_1-1,53,114,4	script	Shion#nv1	4_F_JOB_HUNTER,{
 		mes "Oh, and before you leave,";
 		mes "learn how to treat a lady nice, okay? Then they might give you gifts like this!";
 		nov_1st_cos = 3;
-		getexp 9,0;
 		close;
 	}
 	else if (nov_1st_cos == 1) {
@@ -283,7 +282,6 @@ new_1-1,53,114,4	script	Shion#nv1	4_F_JOB_HUNTER,{
 		mes "You can even gain";
 		mes "experience like this!";
 		nov_1st_cos = 3;
-		getexp 9,0;
 		next;
 		mes "[Shion]";
 		mes "Everything you'll learn here in the Training Grounds will benefit your gameplay. So just think positive, okay?";
@@ -465,13 +463,6 @@ new_1-2,99,112,3	script	Kriss, the Defender	4_M_CRU,{
 				mes "Once it is 100 % full, you gain an experience level, and the gauge is reset to 0.";
 				nov_get_item02 = 10;
 				switch (BaseLevel) {
-				case 1: getexp 10,0; break;
-				case 2: getexp 17,0; break;
-				case 3: getexp 26,0; break;
-				case 4: getexp 37,0; break;
-				case 5: getexp 78,0; break;
-				case 6: getexp 115,0; break;
-				case 7: getexp 155,0; break;
 				}
 			}
 			else {
@@ -538,12 +529,6 @@ new_1-2,99,112,3	script	Kriss, the Defender	4_M_CRU,{
 				mes "Let me give you a little bit of Job experience points. Open your Skill Window and distribute your Skill Points into ^3355FFBasic Skills^000000.";
 				nov_get_item02 = 11;
 				switch (JobLevel) {
-				case 1: getexp 0,10; break;
-				case 2: getexp 0,18; break;
-				case 3: getexp 0,28; break;
-				case 4: getexp 0,40; break;
-				case 5: getexp 0,91; break;
-				case 6: getexp 0,151; break;
 				}
 			}
 			else {
@@ -754,12 +739,6 @@ new_1-2,97,115,3	script	Cecil	4_M_MONK,{
 				mes "Open your Skill Window ('Alt' + 'S') and click the '^3355FFLv Up^000000' button next to the Basic Skill icon to allocate a Skill Point to your Basic Skills.";
 				nov_get_item03 = 10;
 				switch (JobLevel) {
-				case 1: getexp 0,10; break;
-				case 2: getexp 0,18; break;
-				case 3: getexp 0,28; break;
-				case 4: getexp 0,40; break;
-				case 5: getexp 0,91; break;
-				case 6: getexp 0,151; break;
 				}
 			}
 			else {
@@ -789,12 +768,6 @@ new_1-2,97,115,3	script	Cecil	4_M_MONK,{
 				mes "amount of Job experience.^000000";
 				nov_get_item03 = 12;
 				switch (JobLevel) {
-				case 1: getexp 0,10; break;
-				case 2: getexp 0,18; break;
-				case 3: getexp 0,28; break;
-				case 4: getexp 0,40; break;
-				case 5: getexp 0,91; break;
-				case 6: getexp 0,151; break;
 				}
 			}
 			next;
@@ -815,13 +788,6 @@ new_1-2,97,115,3	script	Cecil	4_M_MONK,{
 				mes "Behold: bonus experience!";
 				nov_get_item03 = 13;
 				switch (BaseLevel) {
-				case 1: getexp 10,0; break;
-				case 2: getexp 17,0; break;
-				case 3: getexp 26,0; break;
-				case 4: getexp 37,0; break;
-				case 5: getexp 78,0; break;
-				case 6: getexp 115,0; break;
-				case 7: getexp 155,0; break;
 				}
 			}
 			else {
@@ -996,13 +962,6 @@ new_1-2,101,114,3	script	Alice	4_F_JOB_BLACKSMITH,{
 					mes "just for listening.";
 					nov_get_item04 = 11;
 					switch (BaseLevel) {
-					case 1: getexp 10,0; break;
-					case 2: getexp 17,0; break;
-					case 3: getexp 26,0; break;
-					case 4: getexp 37,0; break;
-					case 5: getexp 78,0; break;
-					case 6: getexp 115,0; break;
-					case 7: getexp 155,0; break;
 					}
 				}
 				else {
@@ -1042,13 +1001,6 @@ new_1-2,101,114,3	script	Alice	4_F_JOB_BLACKSMITH,{
 					mes "You deserve a reward!";
 					nov_get_item04 = 13;
 					switch (BaseLevel) {
-					case 1: getexp 10,0; break;
-					case 2: getexp 17,0; break;
-					case 3: getexp 26,0; break;
-					case 4: getexp 37,0; break;
-					case 5: getexp 78,0; break;
-					case 6: getexp 115,0; break;
-					case 7: getexp 155,0; break;
 					}
 				}
 				else {
@@ -1087,12 +1039,6 @@ new_1-2,101,114,3	script	Alice	4_F_JOB_BLACKSMITH,{
 			nov_get_item04 = 14;
 			if (JobLevel < 7) {
 				switch (JobLevel) {
-				case 1: getexp 0,10; break;
-				case 2: getexp 0,18; break;
-				case 3: getexp 0,28; break;
-				case 4: getexp 0,40; break;
-				case 5: getexp 0,91; break;
-				case 6: getexp 0,151; break;
 				}
 			}
 			next;
@@ -1115,12 +1061,6 @@ new_1-2,101,114,3	script	Alice	4_F_JOB_BLACKSMITH,{
 				mes "you some Job experience!";
 				nov_get_item04 = 16;
 				switch (JobLevel) {
-				case 1: getexp 0,10; break;
-				case 2: getexp 0,18; break;
-				case 3: getexp 0,28; break;
-				case 4: getexp 0,40; break;
-				case 5: getexp 0,91; break;
-				case 6: getexp 0,151; break;
 				}
 			}
 			else {
@@ -1311,13 +1251,6 @@ new_1-2,115,115,4	script	Kafra Employee#nv1	4_F_KAFRA1,{
 				if (nov_1st_cos < 20) {
 					nov_1st_cos = 20;
 					switch (BaseLevel) {
-					case 1: getexp 10,0; break;
-					case 2: getexp 17,0; break;
-					case 3: getexp 26,0; break;
-					case 4: getexp 37,0; break;
-					case 5: getexp 78,0; break;
-					case 6: getexp 115,0; break;
-					case 7: getexp 155,0; break;
 					}
 				}
 				next;
@@ -1354,12 +1287,6 @@ new_1-2,115,115,4	script	Kafra Employee#nv1	4_F_KAFRA1,{
 					if (JobLevel < 7) {
 						nov_3_archer = 20;
 						switch (JobLevel) {
-						case 1: getexp 0,10; break;
-						case 2: getexp 0,18; break;
-						case 3: getexp 0,28; break;
-						case 4: getexp 0,40; break;
-						case 5: getexp 0,91; break;
-						case 6: getexp 0,151; break;
 						}
 					}
 				}
@@ -2100,31 +2027,24 @@ new_1-2,16,177,6	script	Helper#nv	4_M_02,{
 			if (nov_2nd_cos < 1) {
 				if (BaseLevel == 1) {
 					nov_2nd_cos = 12;
-					getexp 9,0;
 				}
 				else if (BaseLevel == 2) {
 					nov_2nd_cos = 13;
-					getexp 16,0;
 				}
 				else if (BaseLevel == 3) {
 					nov_2nd_cos = 14;
-					getexp 25,0;
 				}
 				else if (BaseLevel == 4) {
 					nov_2nd_cos = 15;
-					getexp 36,0;
 				}
 				else if (BaseLevel == 5) {
 					nov_2nd_cos = 16;
-					getexp 77,0;
 				}
 				else if (BaseLevel == 6) {
 					nov_2nd_cos = 17;
-					getexp 112,0;
 				}
 				else if (BaseLevel >= 7) {
 					nov_2nd_cos = 18;
-					getexp 153,0;
 				}
 			}
 			next;
@@ -2429,35 +2349,27 @@ new_1-2,17,182,6	script	Entrance Guard#nv	4_F_03,{
 			mes "Please be careful!";
 			if (nov_2nd_cos == 22) {
 				nov_2nd_cos = 33;
-				getexp 16,0;
 			}
 			else if (nov_2nd_cos == 23) {
 				nov_2nd_cos = 34;
-				getexp 25,0;
 			}
 			else if (nov_2nd_cos == 24) {
 				nov_2nd_cos = 35;
-				getexp 36,0;
 			}
 			else if (nov_2nd_cos == 25) {
 				nov_2nd_cos = 36;
-				getexp 77,0;
 			}
 			else if (nov_2nd_cos == 26) {
 				nov_2nd_cos = 37;
-				getexp 112,0;
 			}
 			else if (nov_2nd_cos == 27) {
 				nov_2nd_cos = 38;
-				getexp 153,0;
 			}
 			else if (nov_2nd_cos == 28) {
 				nov_2nd_cos = 39;
-				getexp 200,0;
 			}
 			else if (nov_2nd_cos == 29) {
 				nov_2nd_cos = 40;
-				getexp 200,0;
 			}
 			percentheal 100,0;
 			getitem Novice_Potion,50;

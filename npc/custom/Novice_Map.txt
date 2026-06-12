@@ -1050,6 +1050,209 @@ new_1-2,84,81,4	script	Somtori	637,{
 }
 
 //============================================================
+// GUIDE SYSTEMES SERVEUR
+// Explique territoires, ascension, contrats, Eterites et Drop Protector.
+//============================================================
+new_1-2,84,114,4	script	System Guide#new12	758,{
+	mes "[^0000FFSystem Guide^000000]";
+	mes "I can explain the main server systems.";
+	next;
+	while (true) {
+		switch(select("Territories:Pillar of Ascension:City contracts:Class contracts:Team contracts:Eterites:Drop Protector:Leave")) {
+		case 1:
+			mes "[^0000FFSystem Guide^000000]";
+			mes "Territories are areas influenced by Angels or Demons.";
+			mes "Some maps have a Power Crystal that can be defended or conquered.";
+			next;
+			mes "[^0000FFSystem Guide^000000]";
+			mes "When a faction protects or captures a crystal, its influence grows.";
+			mes "If the defense succeeds, the territory can become aligned with that faction.";
+			next;
+			mes "[^0000FFSystem Guide^000000]";
+			mes "The territory NPC in Prontera lets you check which fields, cities, or dungeons are currently controlled.";
+			break;
+		case 2:
+			mes "[^0000FFSystem Guide^000000]";
+			mes "The Pillar of Ascension is a global progression system.";
+			mes "Players feed it required items to awaken and upgrade it.";
+			next;
+			mes "[^0000FFSystem Guide^000000]";
+			mes "As the pillar reaches new stages, the server unlocks new progression milestones.";
+			mes "Its progress is shared, so every contribution matters.";
+			break;
+		case 3:
+			mes "[^0000FFSystem Guide^000000]";
+			mes "City contracts are local missions tied to a city, such as Prontera.";
+			mes "You accept a target, defeat it, then return to validate the contract.";
+			next;
+			mes "[^0000FFSystem Guide^000000]";
+			mes "Completing city contracts grants city points.";
+			mes "Those points can unlock advantages and access to special city vendors.";
+			next;
+			mes "[^0000FFSystem Guide^000000]";
+			mes "Think of them as a way to support a city while opening its local services.";
+			break;
+		case 4:
+			mes "[^0000FFSystem Guide^000000]";
+			mes "Class contracts depend on your current class.";
+			mes "The contract NPC gives you a monster target that fits your class path.";
+			next;
+			mes "[^0000FFSystem Guide^000000]";
+			mes "Completing class contracts gives class points.";
+			mes "After enough points, you can unlock class equipment or class-related advantages.";
+			break;
+		case 5:
+			mes "[^0000FFSystem Guide^000000]";
+			mes "Team contracts are designed for parties.";
+			mes "The party leader accepts a contract and the whole party contributes to the objectives.";
+			next;
+			mes "[^0000FFSystem Guide^000000]";
+			mes "When the objectives are complete, the leader validates the contract.";
+			mes "Online party members receive the reward together.";
+			break;
+		case 6:
+			mes "[^0000FFSystem Guide^000000]";
+			mes "Eterites are unlockable teleport points.";
+			mes "Inactive Eterites require monster kills on their map before they awaken.";
+			next;
+			mes "[^0000FFSystem Guide^000000]";
+			mes "Once an Eterite is active, you can use the main Eterite NPC to travel to that field faster.";
+			mes "They are useful shortcuts for exploration and farming.";
+			break;
+		case 7:
+			mes "[^0000FFSystem Guide^000000]";
+			mes "Drop Protector lets you focus on a monster and one of its drops.";
+			mes "You select the monster, choose the item you want, then trade essence through the system.";
+			next;
+			mes "[^0000FFSystem Guide^000000]";
+			mes "It is meant to protect your farming time and help you progress toward a specific drop.";
+			mes "Check your essence balance before choosing your target.";
+			break;
+		case 8:
+			close;
+		}
+		next;
+	}
+}
+
+//============================================================
+// GUIDE METIERS
+// Explique recolte, progression, ressources et box.
+//============================================================
+new_1-2,79,112,4	script	Profession Guide#new12	659,{
+	mes "[^0000FFProfession Guide^000000]";
+	mes "I can explain gathering professions and resource systems.";
+	next;
+	while (true) {
+		switch(select("Professions:Progression:Resources:Lerbo:Mining:Archaeology:Boxes:Leave")) {
+		case 1:
+			mes "[^0000FFProfession Guide^000000]";
+			mes "Professions are gathering specializations.";
+			mes "You choose one profession, then harvest matching resources in the world.";
+			next;
+			mes "[^0000FFProfession Guide^000000]";
+			mes "Your profession determines what you can gather efficiently.";
+			mes "Changing profession may require a resource cost.";
+			break;
+		case 2:
+			mes "[^0000FFProfession Guide^000000]";
+			mes "Each valid gathering action gives profession points.";
+			mes "At certain point thresholds, your profession level rises.";
+			next;
+			mes "[^0000FFProfession Guide^000000]";
+			mes "Higher levels represent experience with that resource type.";
+			mes "Keep gathering to improve your profession over time.";
+			break;
+		case 3:
+			mes "[^0000FFProfession Guide^000000]";
+			mes "Resources can drop from gathering nodes.";
+			mes "Plants may give natural materials, mining nodes may give ores, and archaeology spots may give relics.";
+			next;
+			mes "[^0000FFProfession Guide^000000]";
+			mes "Those materials can be used by other systems, vendors, upgrades, or future crafting content.";
+			break;
+		case 4:
+			mes "[^0000FFProfession Guide^000000]";
+			mes "Lerbo is part of the gathering ecosystem.";
+			mes "When you see Lerbo-related resources or NPCs, treat them as profession content.";
+			next;
+			mes "[^0000FFProfession Guide^000000]";
+			mes "Check the harvest master and gathering spots to learn where Lerbo resources are useful.";
+			break;
+		case 5:
+			mes "[^0000FFProfession Guide^000000]";
+			mes "Mining focuses on mineral nodes.";
+			mes "A miner gathers ores and stone-like resources that may be useful for upgrades or exchanges.";
+			break;
+		case 6:
+			mes "[^0000FFProfession Guide^000000]";
+			mes "Archaeology focuses on ancient traces and relic spots.";
+			mes "An archaeologist gathers forgotten materials that other players may ignore.";
+			break;
+		case 7:
+			mes "[^0000FFProfession Guide^000000]";
+			mes "Boxes are separate from professions.";
+			mes "They are not a job, and everyone can gather them even without choosing a profession.";
+			next;
+			mes "[^0000FFProfession Guide^000000]";
+			mes "Think of boxes as a shared exploration reward, not a profession path.";
+			break;
+		case 8:
+			close;
+		}
+		next;
+	}
+}
+
+//============================================================
+// GUIDE VILLAGEOIS
+// Explique villageois vendeurs, quetes et interactions diverses.
+//============================================================
+new_1-2,88,111,4	script	Villager Guide#new12	719,{
+	mes "[^0000FFVillager Guide^000000]";
+	mes "I can explain the villager system.";
+	next;
+	while (true) {
+		switch(select("Villagers:Merchant villagers:Quest villagers:Interaction villagers:Leave")) {
+		case 1:
+			mes "[^0000FFVillager Guide^000000]";
+			mes "Villagers are living NPCs placed in towns and important areas.";
+			mes "Some are decorative, but many have a role in the world.";
+			next;
+			mes "[^0000FFVillager Guide^000000]";
+			mes "They make cities feel alive and can guide you toward shops, quests, or special systems.";
+			break;
+		case 2:
+			mes "[^0000FFVillager Guide^000000]";
+			mes "Merchant villagers sell items or services.";
+			mes "Some may offer basic supplies, while others can be tied to city progression or special unlocks.";
+			break;
+		case 3:
+			mes "[^0000FFVillager Guide^000000]";
+			mes "Quest villagers give or continue quests.";
+			mes "They may ask for items, send you to another NPC, or unlock a later story step.";
+			next;
+			mes "[^0000FFVillager Guide^000000]";
+			mes "If a villager has unusual dialogue, remember their name and location.";
+			mes "They may matter later.";
+			break;
+		case 4:
+			mes "[^0000FFVillager Guide^000000]";
+			mes "Some villagers are made for varied interactions.";
+			mes "They can move, react to proximity, talk differently, or support small world events.";
+			next;
+			mes "[^0000FFVillager Guide^000000]";
+			mes "Not every villager is a vendor or quest giver.";
+			mes "Some exist to make the world react to the player.";
+			break;
+		case 5:
+			close;
+		}
+		next;
+	}
+}
+
+//============================================================
 // WARP NEW_1-2 -> NEW_1-3
 // Passage vers la prochaine map du tutoriel.
 //============================================================
