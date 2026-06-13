@@ -613,7 +613,7 @@ new_1-1,146,115,4	script	Sagard	10378,{
 // QUETE DEMON 1-1
 // Le messager cache lance la quete demon, puis Toly poursuit la suite.
 //============================================================
-new_1-1,79,76,4	script	???#demon_intro	10029,{
+new_1-2,79,76,4	script	???#demon_intro	10029,{
 	mes "[^0000FF???^000000]";
 	mes "Are you honest?";
 	next;
