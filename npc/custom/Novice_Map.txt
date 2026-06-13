@@ -611,8 +611,47 @@ new_1-1,146,115,4	script	Sagard	10378,{
 
 //============================================================
 // QUETE DEMON 1-1
-// Toly declenche la suite demon et teleporte le joueur vers Higg/Bella.
+// Le messager cache lance la quete demon, puis Toly poursuit la suite.
 //============================================================
+new_1-1,79,76,4	script	???#demon_intro	10029,{
+	mes "[^0000FF???^000000]";
+	mes "Are you honest?";
+	next;
+	.@honest = select("Yes:No");
+
+	mes "[^0000FF???^000000]";
+	mes "Are you loyal?";
+	next;
+	.@loyal = select("Yes:No");
+
+	mes "[^0000FF???^000000]";
+	mes "Are you benevolent?";
+	next;
+	.@benevolent = select("Yes:No");
+
+	if (.@honest == 2 && .@loyal == 2 && .@benevolent == 2) {
+		mes "[^0000FF???^000000]";
+		mes "You are promising, human...";
+		close2;
+		warp "new_1-1",122,54;
+		end;
+	}
+
+	mes "[^0000FF???^000000]";
+	mes "Then you are not ready.";
+	close;
+
+OnInit:
+	hideonnpc strnpcinfo(NPC_NAME);
+	end;
+}
+
+new_1-1,79,76,0	script	Demon Intro Reveal#new11	HIDDEN_NPC,14,14,{
+OnTouch:
+	hideoffnpc "???#demon_intro";
+	end;
+}
+
 new_1-1,105,98,4	script	Toly	10295,{
 	if (Novice_Tuto3_Gone) {
 		message strcharinfo(PC_NAME), "Toly is nowhere to be found.";
@@ -1293,7 +1332,7 @@ new_1-2,38,183,4	script	Olga	4_F_KAFRA1,5,5,{
 	mes "[^0000FFOlga^000000]";
 
 	if (Tuto1_State >= 40 || questprogress(65002) == 2) {
-		mes "You already completed Main Quest Milon.";
+		mes "You already completed Tutorial Quest.";
 		close;
 	}
 
@@ -1339,7 +1378,7 @@ new_1-2,38,183,4	script	Olga	4_F_KAFRA1,5,5,{
 
 		setquest 65000;
 
-		message strcharinfo(PC_NAME), "Main Quest Milon: Poring 0/2, Lunatic 0/2, Location 0/1.";
+		message strcharinfo(PC_NAME), "Tutorial Quest: Poring 0/2, Lunatic 0/2, Location 0/1.";
 
 		mes "[^0000FFOlga^000000]";
 		mes "Quest started.";
@@ -1390,7 +1429,7 @@ new_1-2,38,183,4	script	Olga	4_F_KAFRA1,5,5,{
 
 		completequest 65002;
 
-		message strcharinfo(PC_NAME), "Main Quest Milon: completed.";
+		message strcharinfo(PC_NAME), "Tutorial Quest: completed.";
 
 		mes "[^0000FFOlga^000000]";
 		mes "Quest complete.";
@@ -1451,7 +1490,7 @@ new_1-3,99,32,4	script	Olgi	4_M_03,{
 		completequest 65000;
 		setquest 65001;
 
-		message strcharinfo(PC_NAME), "Main Quest Milon: first task validated. Go speak with Olgu.";
+		message strcharinfo(PC_NAME), "Tutorial Quest: first task validated. Go speak with Olgu.";
 
 		mes "[^0000FFOlgi^000000]";
 		mes "Good. Everything is complete.";
@@ -1471,7 +1510,7 @@ new_1-3,99,32,4	script	Olgi	4_M_03,{
 	}
 
 	if (Tuto1_State >= 40) {
-		mes "You already completed Main Quest Milon.";
+		mes "You already completed Tutorial Quest.";
 		close;
 	}
 
@@ -1483,10 +1522,10 @@ new_1-3,87,32,0	script	Tuto1_Checkpoint	HIDDEN_NPC,2,2,{
 OnTouch:
 	if (Tuto1_State == 10 && Tuto1_Checkpoint < 1) {
 		Tuto1_Checkpoint = 1;
-		message strcharinfo(PC_NAME), "Main Quest Milon: Location visited 1/1.";
+		message strcharinfo(PC_NAME), "Tutorial Quest: Location visited 1/1.";
 		if (Tuto1_Poring >= 2 && Tuto1_Lunatic >= 2 && !Tuto1_First_Done) {
 			Tuto1_First_Done = 1;
-			message strcharinfo(PC_NAME), "Main Quest Milon: all objectives complete. Go validate with Olgi.";
+			message strcharinfo(PC_NAME), "Tutorial Quest: all objectives complete. Go validate with Olgi.";
 		}
 	}
 	end;
@@ -1516,7 +1555,7 @@ new_1-3,116,45,4	script	Olgu	4_M_02,{
 		completequest 65001;
 		setquest 65002;
 
-		message strcharinfo(PC_NAME), "Main Quest Milon: collect 5 Jellopy, then return to Olga.";
+		message strcharinfo(PC_NAME), "Tutorial Quest: collect 5 Jellopy, then return to Olga.";
 		addtimer 2000, "Tuto1_Tracker::OnJellopyCheck";
 
 		mes "[^0000FFOlgu^000000]";
@@ -1552,7 +1591,7 @@ OnNPCKillEvent:
 		Tuto1_Poring++;
 		if (Tuto1_Poring >= 2 && !Tuto1_Poring_Done) {
 			Tuto1_Poring_Done = 1;
-			message strcharinfo(PC_NAME), "Main Quest Milon: Poring complete 2/2.";
+			message strcharinfo(PC_NAME), "Tutorial Quest: Poring complete 2/2.";
 		}
 	}
 
@@ -1560,13 +1599,13 @@ OnNPCKillEvent:
 		Tuto1_Lunatic++;
 		if (Tuto1_Lunatic >= 2 && !Tuto1_Lunatic_Done) {
 			Tuto1_Lunatic_Done = 1;
-			message strcharinfo(PC_NAME), "Main Quest Milon: Lunatic complete 2/2.";
+			message strcharinfo(PC_NAME), "Tutorial Quest: Lunatic complete 2/2.";
 		}
 	}
 
 	if (Tuto1_Poring >= 2 && Tuto1_Lunatic >= 2 && Tuto1_Checkpoint >= 1 && !Tuto1_First_Done) {
 		Tuto1_First_Done = 1;
-		message strcharinfo(PC_NAME), "Main Quest Milon: all objectives complete. Go validate with Olgi.";
+		message strcharinfo(PC_NAME), "Tutorial Quest: all objectives complete. Go validate with Olgi.";
 	}
 
 	end;
@@ -1583,7 +1622,7 @@ OnJellopyCheck:
 
 	if (Tuto1_Jellopy_Last != .@jellopy) {
 		Tuto1_Jellopy_Last = .@jellopy;
-		message strcharinfo(PC_NAME), "Main Quest Milon: Jellopy " + .@jellopy + "/5.";
+		message strcharinfo(PC_NAME), "Tutorial Quest: Jellopy " + .@jellopy + "/5.";
 	}
 
 	if (.@jellopy >= 5) {
@@ -1591,7 +1630,7 @@ OnJellopyCheck:
 			end;
 
 		Tuto1_Jellopy_Done = 1;
-		message strcharinfo(PC_NAME), "Main Quest Milon: Jellopy complete. Return to Olga.";
+		message strcharinfo(PC_NAME), "Tutorial Quest: Jellopy complete. Return to Olga.";
 		Tuto1_Jellopy_Timer = 0;
 		end;
 	}
