@@ -160,7 +160,7 @@ new_1-1,64,152,0	script	#NovicePortal04	HIDDEN_NPC,{ end; }
 new_1-1,58,146,0	script	#NovicePortal05	HIDDEN_NPC,{ end; }
 new_1-1,53,138,0	script	#NovicePortal06	HIDDEN_NPC,{ end; }
 
-// Portail d'apparition separe et unique: effet 1025 permanent, relance toutes les 60 secondes.
+// Portail d'apparition separe et unique: effet 1025 maintenu en continu.
 new_1-1,61,139,0	script	#NoviceSpawnPortal	HIDDEN_NPC,{
 	end;
 
@@ -169,13 +169,10 @@ OnInit:
 	initnpctimer;
 	end;
 
-OnTimer59000:
+OnTimer5000:
 	removespecialeffect 1025, AREA, "#NoviceSpawnPortal";
-	end;
-
-OnTimer60000:
-	stopnpctimer;
 	specialeffect 1025, AREA, "#NoviceSpawnPortal";
+	stopnpctimer;
 	initnpctimer;
 	end;
 }
