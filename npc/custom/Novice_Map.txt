@@ -89,6 +89,20 @@ OnTimer30000:
 	end;
 }
 
+// Pulse central du portail: effet 840 toutes les secondes.
+new_1-1,61,139,0	script	#NovicePortalCenterCore	HIDDEN_NPC,{
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	specialeffect 840, AREA, "#NovicePortalCenterCore";
+	setnpctimer 0;
+	end;
+}
+
 // Anneau autour du portail: effet 994 en rotation rapide, boucle toutes les 2 secondes.
 new_1-1,61,142,0	script	#NovicePortalRing01	HIDDEN_NPC,{
 	end;
@@ -404,8 +418,7 @@ OnTimer2000:
 	.BatchId++;
 	if (.BatchId > 2)
 		.BatchId = 0;
-	stopnpctimer;
-	initnpctimer;
+	setnpctimer 0;
 	end;
 
 OnRemoveBatch0:
