@@ -13,23 +13,36 @@
 //============================================================
 // PORTAIL ANIME - NEW_1-1
 // Hidden NPC uniquement pour eviter un sprite visible au sol.
-// Effet 1025 au centre, relance toutes les 2 secondes apres retrait de l'ancien effet.
+// Effet 1025 au centre, relance toutes les 2 secondes avec chevauchement leger.
 //============================================================
-new_1-1,61,139,0	script	#NoviceSpawnPortal	HIDDEN_NPC,{
+new_1-1,61,139,0	script	#NoviceSpawnPortalA	HIDDEN_NPC,{
 	end;
 
 OnInit:
-	specialeffect 1025, AREA, "#NoviceSpawnPortal";
+	specialeffect 1025, AREA, "#NoviceSpawnPortalA";
 	initnpctimer;
 	end;
 
 OnTimer2000:
-	removespecialeffect 1025, AREA, "#NoviceSpawnPortal";
-	specialeffect 1025, AREA, "#NoviceSpawnPortal";
+	specialeffect 1025, AREA, "#NoviceSpawnPortalB";
+	end;
+
+OnTimer2500:
+	removespecialeffect 1025, AREA, "#NoviceSpawnPortalA";
+	end;
+
+OnTimer4000:
+	specialeffect 1025, AREA, "#NoviceSpawnPortalA";
+	end;
+
+OnTimer4500:
+	removespecialeffect 1025, AREA, "#NoviceSpawnPortalB";
 	stopnpctimer;
 	initnpctimer;
 	end;
 }
+
+new_1-1,61,139,0	script	#NoviceSpawnPortalB	HIDDEN_NPC,{ end; }
 
 //============================================================
 // MAP: NEW_1-1
