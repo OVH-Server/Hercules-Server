@@ -44,6 +44,80 @@ OnTimer4500:
 
 new_1-1,61,139,0	script	#NoviceSpawnPortalB	HIDDEN_NPC,{ end; }
 
+// Anneau autour du portail: effet 994 en rotation rapide, boucle toutes les 2 secondes.
+new_1-1,61,141,0	script	#NovicePortalRing01	HIDDEN_NPC,{
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer100:
+	specialeffect 994, AREA, "#NovicePortalRing01";
+	end;
+
+OnTimer200:
+	specialeffect 994, AREA, "#NovicePortalRing02";
+	end;
+
+OnTimer300:
+	specialeffect 994, AREA, "#NovicePortalRing03";
+	end;
+
+OnTimer400:
+	specialeffect 994, AREA, "#NovicePortalRing04";
+	end;
+
+OnTimer500:
+	specialeffect 994, AREA, "#NovicePortalRing05";
+	end;
+
+OnTimer600:
+	specialeffect 994, AREA, "#NovicePortalRing06";
+	end;
+
+OnTimer700:
+	specialeffect 994, AREA, "#NovicePortalRing07";
+	end;
+
+OnTimer800:
+	specialeffect 994, AREA, "#NovicePortalRing08";
+	end;
+
+OnTimer900:
+	specialeffect 994, AREA, "#NovicePortalRing09";
+	end;
+
+OnTimer1000:
+	specialeffect 994, AREA, "#NovicePortalRing10";
+	end;
+
+OnTimer1100:
+	specialeffect 994, AREA, "#NovicePortalRing11";
+	end;
+
+OnTimer1200:
+	specialeffect 994, AREA, "#NovicePortalRing12";
+	end;
+
+OnTimer2000:
+	stopnpctimer;
+	initnpctimer;
+	end;
+}
+
+new_1-1,62,141,0	script	#NovicePortalRing02	HIDDEN_NPC,{ end; }
+new_1-1,63,140,0	script	#NovicePortalRing03	HIDDEN_NPC,{ end; }
+new_1-1,63,139,0	script	#NovicePortalRing04	HIDDEN_NPC,{ end; }
+new_1-1,63,138,0	script	#NovicePortalRing05	HIDDEN_NPC,{ end; }
+new_1-1,62,137,0	script	#NovicePortalRing06	HIDDEN_NPC,{ end; }
+new_1-1,61,137,0	script	#NovicePortalRing07	HIDDEN_NPC,{ end; }
+new_1-1,60,137,0	script	#NovicePortalRing08	HIDDEN_NPC,{ end; }
+new_1-1,59,138,0	script	#NovicePortalRing09	HIDDEN_NPC,{ end; }
+new_1-1,59,139,0	script	#NovicePortalRing10	HIDDEN_NPC,{ end; }
+new_1-1,59,140,0	script	#NovicePortalRing11	HIDDEN_NPC,{ end; }
+new_1-1,60,141,0	script	#NovicePortalRing12	HIDDEN_NPC,{ end; }
+
 //============================================================
 // MAP: NEW_1-1
 // Tous les NPC ci-dessous appartiennent a la map new_1-1.
