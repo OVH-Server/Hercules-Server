@@ -210,9 +210,8 @@ new_1-1,44,112,4	duplicate(SO_Army_Template)	Royal Alchemist#oweyn_001	744
 new_1-1,46,110,6	duplicate(SO_Army_Template)	Royal Alchemist#oweyn_002	740
 new_1-1,43,111,0	duplicate(SO_Army_Template)	Royal Alchemist#oweyn_003	750
 new_1-1,41,111,6	duplicate(SO_Army_Template)	Royal Alchemist#oweyn_004	542
-new_1-1,41,110,6	duplicate(SO_Army_Template)	Royal Alchemist#oweyn_005	542
+new_1-1,40,110,6	duplicate(SO_Army_Template)	Royal Alchemist#oweyn_005	542
 new_1-1,42,108,6	duplicate(SO_Army_Template)	Royal Alchemist#oweyn_006	558
-new_1-1,43,108,6	duplicate(SO_Army_Template)	Royal Alchemist#oweyn_007	558
 
 new_1-1,46,107,4	script	General, Triston	654,{
 	mes "[^0000FFGeneral, Triston^000000]";
@@ -225,8 +224,8 @@ new_1-1,44,104,0	duplicate(SO_Army_Template)	Royal Crusader#triston_002	745
 new_1-1,43,106,6	duplicate(SO_Army_Template)	Royal Crusader#triston_003	745
 new_1-1,41,104,0	duplicate(SO_Army_Template)	Archer Recruit#triston_004	634
 new_1-1,41,103,0	duplicate(SO_Army_Template)	Archer Recruit#triston_005	634
-new_1-1,43,102,0	duplicate(SO_Army_Template)	Swordman Recruit#triston_006	645
-new_1-1,44,102,0	duplicate(SO_Army_Template)	Royal Swordman#triston_007	635
+new_1-1,43,100,0	duplicate(SO_Army_Template)	Swordman Recruit#triston_006	645
+new_1-1,44,100,0	duplicate(SO_Army_Template)	Royal Swordman#triston_007	635
 
 new_1-1,66,123,2	script	Saint Azur	936,{
 	mes "[^0000FFSaint Azur^000000]";
