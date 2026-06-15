@@ -13,7 +13,7 @@
 //============================================================
 // PORTAIL ANIME - NEW_1-1
 // Hidden NPC uniquement pour eviter un sprite visible au sol.
-// Effet 1025 au centre, relance toutes les 2 secondes avec chevauchement leger.
+// Effet 1025 au centre, relance toutes les 2 secondes avec chevauchement tres court.
 //============================================================
 new_1-1,61,139,0	script	#NoviceSpawnPortalA	HIDDEN_NPC,{
 	end;
@@ -27,7 +27,7 @@ OnTimer2000:
 	specialeffect 1025, AREA, "#NoviceSpawnPortalB";
 	end;
 
-OnTimer2500:
+OnTimer2100:
 	removespecialeffect 1025, AREA, "#NoviceSpawnPortalA";
 	end;
 
@@ -35,7 +35,7 @@ OnTimer4000:
 	specialeffect 1025, AREA, "#NoviceSpawnPortalA";
 	end;
 
-OnTimer4500:
+OnTimer4100:
 	removespecialeffect 1025, AREA, "#NoviceSpawnPortalB";
 	stopnpctimer;
 	initnpctimer;
@@ -44,8 +44,53 @@ OnTimer4500:
 
 new_1-1,61,139,0	script	#NoviceSpawnPortalB	HIDDEN_NPC,{ end; }
 
+// Pulse central du portail: effet 923 toutes les 5 secondes.
+new_1-1,61,139,0	script	#NovicePortalCenterPulse	HIDDEN_NPC,{
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer5000:
+	specialeffect 923, AREA, "#NovicePortalCenterPulse";
+	stopnpctimer;
+	initnpctimer;
+	end;
+}
+
+// Pulse central du portail: effet 927 toutes les 10 secondes.
+new_1-1,61,139,0	script	#NovicePortalCenterBurst	HIDDEN_NPC,{
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer10000:
+	specialeffect 927, AREA, "#NovicePortalCenterBurst";
+	stopnpctimer;
+	initnpctimer;
+	end;
+}
+
+// Pulse central du portail: effet 915 toutes les 30 secondes.
+new_1-1,61,139,0	script	#NovicePortalCenterWave	HIDDEN_NPC,{
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer30000:
+	specialeffect 915, AREA, "#NovicePortalCenterWave";
+	stopnpctimer;
+	initnpctimer;
+	end;
+}
+
 // Anneau autour du portail: effet 994 en rotation rapide, boucle toutes les 2 secondes.
-new_1-1,61,141,0	script	#NovicePortalRing01	HIDDEN_NPC,{
+new_1-1,61,143,0	script	#NovicePortalRing01	HIDDEN_NPC,{
 	end;
 
 OnInit:
@@ -100,23 +145,302 @@ OnTimer1200:
 	specialeffect 994, AREA, "#NovicePortalRing12";
 	end;
 
+OnTimer1300:
+	specialeffect 994, AREA, "#NovicePortalRing13";
+	end;
+
+OnTimer1400:
+	specialeffect 994, AREA, "#NovicePortalRing14";
+	end;
+
+OnTimer1500:
+	specialeffect 994, AREA, "#NovicePortalRing15";
+	end;
+
+OnTimer1600:
+	specialeffect 994, AREA, "#NovicePortalRing16";
+	end;
+
 OnTimer2000:
 	stopnpctimer;
 	initnpctimer;
 	end;
 }
 
-new_1-1,62,141,0	script	#NovicePortalRing02	HIDDEN_NPC,{ end; }
-new_1-1,63,140,0	script	#NovicePortalRing03	HIDDEN_NPC,{ end; }
-new_1-1,63,139,0	script	#NovicePortalRing04	HIDDEN_NPC,{ end; }
-new_1-1,63,138,0	script	#NovicePortalRing05	HIDDEN_NPC,{ end; }
-new_1-1,62,137,0	script	#NovicePortalRing06	HIDDEN_NPC,{ end; }
-new_1-1,61,137,0	script	#NovicePortalRing07	HIDDEN_NPC,{ end; }
-new_1-1,60,137,0	script	#NovicePortalRing08	HIDDEN_NPC,{ end; }
-new_1-1,59,138,0	script	#NovicePortalRing09	HIDDEN_NPC,{ end; }
-new_1-1,59,139,0	script	#NovicePortalRing10	HIDDEN_NPC,{ end; }
-new_1-1,59,140,0	script	#NovicePortalRing11	HIDDEN_NPC,{ end; }
-new_1-1,60,141,0	script	#NovicePortalRing12	HIDDEN_NPC,{ end; }
+new_1-1,63,143,0	script	#NovicePortalRing02	HIDDEN_NPC,{ end; }
+new_1-1,64,142,0	script	#NovicePortalRing03	HIDDEN_NPC,{ end; }
+new_1-1,65,141,0	script	#NovicePortalRing04	HIDDEN_NPC,{ end; }
+new_1-1,65,139,0	script	#NovicePortalRing05	HIDDEN_NPC,{ end; }
+new_1-1,65,137,0	script	#NovicePortalRing06	HIDDEN_NPC,{ end; }
+new_1-1,64,136,0	script	#NovicePortalRing07	HIDDEN_NPC,{ end; }
+new_1-1,63,135,0	script	#NovicePortalRing08	HIDDEN_NPC,{ end; }
+new_1-1,61,135,0	script	#NovicePortalRing09	HIDDEN_NPC,{ end; }
+new_1-1,59,135,0	script	#NovicePortalRing10	HIDDEN_NPC,{ end; }
+new_1-1,58,136,0	script	#NovicePortalRing11	HIDDEN_NPC,{ end; }
+new_1-1,57,137,0	script	#NovicePortalRing12	HIDDEN_NPC,{ end; }
+new_1-1,57,139,0	script	#NovicePortalRing13	HIDDEN_NPC,{ end; }
+new_1-1,57,141,0	script	#NovicePortalRing14	HIDDEN_NPC,{ end; }
+new_1-1,58,142,0	script	#NovicePortalRing15	HIDDEN_NPC,{ end; }
+new_1-1,59,143,0	script	#NovicePortalRing16	HIDDEN_NPC,{ end; }
+
+// Anneau large autour du portail: effet 1064 en rotation, boucle toutes les 4 secondes.
+new_1-1,61,147,0	script	#NovicePortalOuterRing01	HIDDEN_NPC,{
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer100:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing01";
+	end;
+
+OnTimer200:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing02";
+	end;
+
+OnTimer300:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing03";
+	end;
+
+OnTimer400:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing04";
+	end;
+
+OnTimer500:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing05";
+	end;
+
+OnTimer600:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing06";
+	end;
+
+OnTimer700:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing07";
+	end;
+
+OnTimer800:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing08";
+	end;
+
+OnTimer900:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing09";
+	end;
+
+OnTimer1000:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing10";
+	end;
+
+OnTimer1100:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing11";
+	end;
+
+OnTimer1200:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing12";
+	end;
+
+OnTimer1300:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing13";
+	end;
+
+OnTimer1400:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing14";
+	end;
+
+OnTimer1500:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing15";
+	end;
+
+OnTimer1600:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing16";
+	end;
+
+OnTimer1700:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing17";
+	end;
+
+OnTimer1800:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing18";
+	end;
+
+OnTimer1900:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing19";
+	end;
+
+OnTimer2000:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing20";
+	end;
+
+OnTimer2100:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing21";
+	end;
+
+OnTimer2200:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing22";
+	end;
+
+OnTimer2300:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing23";
+	end;
+
+OnTimer2400:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing24";
+	end;
+
+OnTimer2500:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing25";
+	end;
+
+OnTimer2600:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing26";
+	end;
+
+OnTimer2700:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing27";
+	end;
+
+OnTimer2800:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing28";
+	end;
+
+OnTimer2900:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing29";
+	end;
+
+OnTimer3000:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing30";
+	end;
+
+OnTimer3100:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing31";
+	end;
+
+OnTimer3200:
+	specialeffect 1064, AREA, "#NovicePortalOuterRing32";
+	end;
+
+OnTimer4000:
+	stopnpctimer;
+	initnpctimer;
+	end;
+}
+
+new_1-1,63,147,0	script	#NovicePortalOuterRing02	HIDDEN_NPC,{ end; }
+new_1-1,65,146,0	script	#NovicePortalOuterRing03	HIDDEN_NPC,{ end; }
+new_1-1,67,145,0	script	#NovicePortalOuterRing04	HIDDEN_NPC,{ end; }
+new_1-1,68,143,0	script	#NovicePortalOuterRing05	HIDDEN_NPC,{ end; }
+new_1-1,69,141,0	script	#NovicePortalOuterRing06	HIDDEN_NPC,{ end; }
+new_1-1,69,139,0	script	#NovicePortalOuterRing07	HIDDEN_NPC,{ end; }
+new_1-1,69,137,0	script	#NovicePortalOuterRing08	HIDDEN_NPC,{ end; }
+new_1-1,68,135,0	script	#NovicePortalOuterRing09	HIDDEN_NPC,{ end; }
+new_1-1,67,133,0	script	#NovicePortalOuterRing10	HIDDEN_NPC,{ end; }
+new_1-1,65,132,0	script	#NovicePortalOuterRing11	HIDDEN_NPC,{ end; }
+new_1-1,63,131,0	script	#NovicePortalOuterRing12	HIDDEN_NPC,{ end; }
+new_1-1,61,131,0	script	#NovicePortalOuterRing13	HIDDEN_NPC,{ end; }
+new_1-1,59,131,0	script	#NovicePortalOuterRing14	HIDDEN_NPC,{ end; }
+new_1-1,57,132,0	script	#NovicePortalOuterRing15	HIDDEN_NPC,{ end; }
+new_1-1,55,133,0	script	#NovicePortalOuterRing16	HIDDEN_NPC,{ end; }
+new_1-1,54,135,0	script	#NovicePortalOuterRing17	HIDDEN_NPC,{ end; }
+new_1-1,53,137,0	script	#NovicePortalOuterRing18	HIDDEN_NPC,{ end; }
+new_1-1,53,139,0	script	#NovicePortalOuterRing19	HIDDEN_NPC,{ end; }
+new_1-1,53,141,0	script	#NovicePortalOuterRing20	HIDDEN_NPC,{ end; }
+new_1-1,54,143,0	script	#NovicePortalOuterRing21	HIDDEN_NPC,{ end; }
+new_1-1,55,145,0	script	#NovicePortalOuterRing22	HIDDEN_NPC,{ end; }
+new_1-1,57,146,0	script	#NovicePortalOuterRing23	HIDDEN_NPC,{ end; }
+new_1-1,59,147,0	script	#NovicePortalOuterRing24	HIDDEN_NPC,{ end; }
+new_1-1,61,147,0	script	#NovicePortalOuterRing25	HIDDEN_NPC,{ end; }
+new_1-1,65,147,0	script	#NovicePortalOuterRing26	HIDDEN_NPC,{ end; }
+new_1-1,69,143,0	script	#NovicePortalOuterRing27	HIDDEN_NPC,{ end; }
+new_1-1,69,135,0	script	#NovicePortalOuterRing28	HIDDEN_NPC,{ end; }
+new_1-1,65,131,0	script	#NovicePortalOuterRing29	HIDDEN_NPC,{ end; }
+new_1-1,57,131,0	script	#NovicePortalOuterRing30	HIDDEN_NPC,{ end; }
+new_1-1,53,135,0	script	#NovicePortalOuterRing31	HIDDEN_NPC,{ end; }
+new_1-1,53,143,0	script	#NovicePortalOuterRing32	HIDDEN_NPC,{ end; }
+
+// Sparks lointains autour du portail: 1066 puis 1083 pendant 5 secondes, aleatoire toutes les 2 secondes.
+new_1-1,61,139,0	script	#NovicePortalFarSparks	HIDDEN_NPC,{
+	end;
+
+OnInit:
+	setarray .FarSpark1066$[0],
+		"#NoviceFarSpark1066_01", "#NoviceFarSpark1066_02", "#NoviceFarSpark1066_03", "#NoviceFarSpark1066_04", "#NoviceFarSpark1066_05",
+		"#NoviceFarSpark1066_06", "#NoviceFarSpark1066_07", "#NoviceFarSpark1066_08", "#NoviceFarSpark1066_09", "#NoviceFarSpark1066_10",
+		"#NoviceFarSpark1066_11", "#NoviceFarSpark1066_12", "#NoviceFarSpark1066_13", "#NoviceFarSpark1066_14", "#NoviceFarSpark1066_15",
+		"#NoviceFarSpark1066_16", "#NoviceFarSpark1066_17", "#NoviceFarSpark1066_18", "#NoviceFarSpark1066_19", "#NoviceFarSpark1066_20",
+		"#NoviceFarSpark1066_21", "#NoviceFarSpark1066_22", "#NoviceFarSpark1066_23", "#NoviceFarSpark1066_24", "#NoviceFarSpark1066_25",
+		"#NoviceFarSpark1066_26", "#NoviceFarSpark1066_27", "#NoviceFarSpark1066_28", "#NoviceFarSpark1066_29", "#NoviceFarSpark1066_30",
+		"#NoviceFarSpark1066_31", "#NoviceFarSpark1066_32", "#NoviceFarSpark1066_33", "#NoviceFarSpark1066_34", "#NoviceFarSpark1066_35",
+		"#NoviceFarSpark1066_36", "#NoviceFarSpark1066_37", "#NoviceFarSpark1066_38", "#NoviceFarSpark1066_39", "#NoviceFarSpark1066_40",
+		"#NoviceFarSpark1066_41", "#NoviceFarSpark1066_42", "#NoviceFarSpark1066_43", "#NoviceFarSpark1066_44", "#NoviceFarSpark1066_45",
+		"#NoviceFarSpark1066_46", "#NoviceFarSpark1066_47", "#NoviceFarSpark1066_48", "#NoviceFarSpark1066_49", "#NoviceFarSpark1066_50";
+	initnpctimer;
+	end;
+
+OnTimer2000:
+	.LastSpark$ = .FarSpark1066$[rand(getarraysize(.FarSpark1066$))];
+	specialeffect 1066, AREA, .LastSpark$;
+	specialeffect 1083, AREA, .LastSpark$;
+	addtimer 5000, "#NovicePortalFarSparks::OnRemove1083";
+	stopnpctimer;
+	initnpctimer;
+	end;
+
+OnRemove1083:
+	if (.LastSpark$ != "")
+		removespecialeffect 1083, AREA, .LastSpark$;
+	end;
+}
+
+new_1-1,61,150,0	script	#NoviceFarSpark1066_01	HIDDEN_NPC,{ end; }
+new_1-1,64,150,0	script	#NoviceFarSpark1066_02	HIDDEN_NPC,{ end; }
+new_1-1,68,149,0	script	#NoviceFarSpark1066_03	HIDDEN_NPC,{ end; }
+new_1-1,71,147,0	script	#NoviceFarSpark1066_04	HIDDEN_NPC,{ end; }
+new_1-1,73,144,0	script	#NoviceFarSpark1066_05	HIDDEN_NPC,{ end; }
+new_1-1,74,141,0	script	#NoviceFarSpark1066_06	HIDDEN_NPC,{ end; }
+new_1-1,74,137,0	script	#NoviceFarSpark1066_07	HIDDEN_NPC,{ end; }
+new_1-1,73,134,0	script	#NoviceFarSpark1066_08	HIDDEN_NPC,{ end; }
+new_1-1,71,131,0	script	#NoviceFarSpark1066_09	HIDDEN_NPC,{ end; }
+new_1-1,68,129,0	script	#NoviceFarSpark1066_10	HIDDEN_NPC,{ end; }
+new_1-1,64,128,0	script	#NoviceFarSpark1066_11	HIDDEN_NPC,{ end; }
+new_1-1,61,128,0	script	#NoviceFarSpark1066_12	HIDDEN_NPC,{ end; }
+new_1-1,58,128,0	script	#NoviceFarSpark1066_13	HIDDEN_NPC,{ end; }
+new_1-1,54,129,0	script	#NoviceFarSpark1066_14	HIDDEN_NPC,{ end; }
+new_1-1,51,131,0	script	#NoviceFarSpark1066_15	HIDDEN_NPC,{ end; }
+new_1-1,49,134,0	script	#NoviceFarSpark1066_16	HIDDEN_NPC,{ end; }
+new_1-1,48,137,0	script	#NoviceFarSpark1066_17	HIDDEN_NPC,{ end; }
+new_1-1,48,141,0	script	#NoviceFarSpark1066_18	HIDDEN_NPC,{ end; }
+new_1-1,49,144,0	script	#NoviceFarSpark1066_19	HIDDEN_NPC,{ end; }
+new_1-1,51,147,0	script	#NoviceFarSpark1066_20	HIDDEN_NPC,{ end; }
+new_1-1,54,149,0	script	#NoviceFarSpark1066_21	HIDDEN_NPC,{ end; }
+new_1-1,58,150,0	script	#NoviceFarSpark1066_22	HIDDEN_NPC,{ end; }
+new_1-1,61,153,0	script	#NoviceFarSpark1066_23	HIDDEN_NPC,{ end; }
+new_1-1,66,153,0	script	#NoviceFarSpark1066_24	HIDDEN_NPC,{ end; }
+new_1-1,70,152,0	script	#NoviceFarSpark1066_25	HIDDEN_NPC,{ end; }
+new_1-1,75,149,0	script	#NoviceFarSpark1066_26	HIDDEN_NPC,{ end; }
+new_1-1,77,145,0	script	#NoviceFarSpark1066_27	HIDDEN_NPC,{ end; }
+new_1-1,79,141,0	script	#NoviceFarSpark1066_28	HIDDEN_NPC,{ end; }
+new_1-1,79,137,0	script	#NoviceFarSpark1066_29	HIDDEN_NPC,{ end; }
+new_1-1,77,133,0	script	#NoviceFarSpark1066_30	HIDDEN_NPC,{ end; }
+new_1-1,75,129,0	script	#NoviceFarSpark1066_31	HIDDEN_NPC,{ end; }
+new_1-1,70,126,0	script	#NoviceFarSpark1066_32	HIDDEN_NPC,{ end; }
+new_1-1,66,125,0	script	#NoviceFarSpark1066_33	HIDDEN_NPC,{ end; }
+new_1-1,61,125,0	script	#NoviceFarSpark1066_34	HIDDEN_NPC,{ end; }
+new_1-1,56,125,0	script	#NoviceFarSpark1066_35	HIDDEN_NPC,{ end; }
+new_1-1,52,126,0	script	#NoviceFarSpark1066_36	HIDDEN_NPC,{ end; }
+new_1-1,47,129,0	script	#NoviceFarSpark1066_37	HIDDEN_NPC,{ end; }
+new_1-1,45,133,0	script	#NoviceFarSpark1066_38	HIDDEN_NPC,{ end; }
+new_1-1,43,137,0	script	#NoviceFarSpark1066_39	HIDDEN_NPC,{ end; }
+new_1-1,43,141,0	script	#NoviceFarSpark1066_40	HIDDEN_NPC,{ end; }
+new_1-1,45,145,0	script	#NoviceFarSpark1066_41	HIDDEN_NPC,{ end; }
+new_1-1,47,149,0	script	#NoviceFarSpark1066_42	HIDDEN_NPC,{ end; }
+new_1-1,52,152,0	script	#NoviceFarSpark1066_43	HIDDEN_NPC,{ end; }
+new_1-1,56,153,0	script	#NoviceFarSpark1066_44	HIDDEN_NPC,{ end; }
+new_1-1,61,156,0	script	#NoviceFarSpark1066_45	HIDDEN_NPC,{ end; }
+new_1-1,69,155,0	script	#NoviceFarSpark1066_46	HIDDEN_NPC,{ end; }
+new_1-1,81,145,0	script	#NoviceFarSpark1066_47	HIDDEN_NPC,{ end; }
+new_1-1,81,133,0	script	#NoviceFarSpark1066_48	HIDDEN_NPC,{ end; }
+new_1-1,69,123,0	script	#NoviceFarSpark1066_49	HIDDEN_NPC,{ end; }
+new_1-1,53,123,0	script	#NoviceFarSpark1066_50	HIDDEN_NPC,{ end; }
 
 //============================================================
 // MAP: NEW_1-1
