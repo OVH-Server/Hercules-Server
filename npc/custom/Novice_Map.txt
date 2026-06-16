@@ -438,77 +438,94 @@ new_1-1,67,146,3	script	#RoyalWizardBook_portal_3	10373,{
 
 new_1-1,62,109,4	script	Quest Reset Kafra#new11	4_F_KAFRA1,{
 	mes "[^0000FFQuest Reset Kafra^000000]";
-	mes "Which novice quest do you want to reset?";
+	mes "Which reset category do you want to open?";
 	next;
 
-	switch(select("Reset Milon:Reset Alfan + Sagard:Reset Toly:Reset Bella:Reset Cynthia:Reset Saint Azur:Reset General David:Reset Sir Oweyn:Reset General Triston:Reset All Recommendations:Cancel")) {
+	switch(select("Main Tutorial Quest:Recommendations:Demon Quest:Cancel")) {
 	case 1:
-		Novice_Tuto_State = 0; Novice_Tuto_Done = 0; $Novice_Tuto_RiderBusy = 0;
-		sc_end(SC_ALL_RIDING);
-		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND, false);
-		if (countitem(12622) > 0)
-			delitem 12622,1;
-		erasequest 65020;
 		mes "[^0000FFQuest Reset Kafra^000000]";
-		mes "Milon has been reset.";
+		mes "Which main tutorial step do you want to reset?";
+		next;
+		switch(select("Reset Milon:Reset Alfan + Sagard:Back")) {
+		case 1:
+			Novice_Tuto_State = 0; Novice_Tuto_Done = 0; Novice_Tuto_RiderBusy = 0;
+			sc_end(SC_ALL_RIDING);
+			setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND, false);
+			if (countitem(12622) > 0)
+				delitem 12622,1;
+			erasequest 65020;
+			mes "[^0000FFQuest Reset Kafra^000000]";
+			mes "Milon has been reset.";
+			close;
+		case 2:
+			Novice_Tuto_State = 1; Novice_Tuto_Done = 0; Novice_Tuto_RiderBusy = 0;
+			sc_end(SC_ALL_RIDING);
+			setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND, false);
+			if (countitem(12622) > 0)
+				delitem 12622,1;
+			erasequest 65020;
+			setquest 65020;
+			mes "[^0000FFQuest Reset Kafra^000000]";
+			mes "Alfan and Sagard have been reset.";
+			close;
+		}
 		close;
 	case 2:
-		Novice_Tuto_State = 1; Novice_Tuto_Done = 0; $Novice_Tuto_RiderBusy = 0;
-		sc_end(SC_ALL_RIDING);
-		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND, false);
-		if (countitem(12622) > 0)
-			delitem 12622,1;
-		erasequest 65020;
-		setquest 65020;
 		mes "[^0000FFQuest Reset Kafra^000000]";
-		mes "Alfan and Sagard have been reset.";
+		mes "Which recommendation do you want to reset?";
+		next;
+		switch(select("Reset Saint Azur:Reset General David:Reset Sir Oweyn:Reset General Triston:Reset All Recommendations:Back")) {
+		case 1:
+			Novice_Azur_Recommendation = 0;
+			mes "[^0000FFQuest Reset Kafra^000000]";
+			mes "Saint Azur has been reset.";
+			close;
+		case 2:
+			Novice_David_Recommendation = 0;
+			mes "[^0000FFQuest Reset Kafra^000000]";
+			mes "General David has been reset.";
+			close;
+		case 3:
+			Novice_Oweyn_Recommendation = 0;
+			mes "[^0000FFQuest Reset Kafra^000000]";
+			mes "Sir Oweyn has been reset.";
+			close;
+		case 4:
+			Novice_Triston_Recommendation = 0;
+			mes "[^0000FFQuest Reset Kafra^000000]";
+			mes "General Triston has been reset.";
+			close;
+		case 5:
+			Novice_Azur_Recommendation = 0;
+			Novice_David_Recommendation = 0;
+			Novice_Oweyn_Recommendation = 0;
+			Novice_Triston_Recommendation = 0;
+			mes "[^0000FFQuest Reset Kafra^000000]";
+			mes "All recommendations have been reset.";
+			close;
+		}
 		close;
 	case 3:
-		Novice_Tuto3_Gone = 0; hideoffnpc "Toly";
 		mes "[^0000FFQuest Reset Kafra^000000]";
-		mes "Toly has been reset.";
+		mes "Which demon quest step do you want to reset?";
+		next;
+		switch(select("Reset Toly:Reset Bella:Back")) {
+		case 1:
+			Novice_Tuto3_Gone = 0;
+			Novice_Demon_Intro_Revealed = 0;
+			cloakoffnpc "Toly", playerattached();
+			cloakonnpc "???#demon_intro", playerattached();
+			mes "[^0000FFQuest Reset Kafra^000000]";
+			mes "Toly has been reset.";
+			close;
+		case 2:
+			Novice_Bella_Talked = 0;
+			mes "[^0000FFQuest Reset Kafra^000000]";
+			mes "Bella has been reset.";
+			close;
+		}
 		close;
 	case 4:
-		Novice_Bella_Talked = 0;
-		mes "[^0000FFQuest Reset Kafra^000000]";
-		mes "Bella has been reset.";
-		close;
-	case 5:
-		Novice_Cynthia_Quest = 0;
-		erasequest 65021;
-		mes "[^0000FFQuest Reset Kafra^000000]";
-		mes "Cynthia has been reset.";
-		close;
-	case 6:
-		Novice_Cynthia_Quest = 1;
-		erasequest 65021;
-		setquest 65021;
-		mes "[^0000FFQuest Reset Kafra^000000]";
-		mes "Saint Azur has been reset.";
-		close;
-	case 7:
-		Novice_David_Recommendation = 0;
-		mes "[^0000FFQuest Reset Kafra^000000]";
-		mes "General David has been reset.";
-		close;
-	case 8:
-		Novice_Oweyn_Recommendation = 0;
-		mes "[^0000FFQuest Reset Kafra^000000]";
-		mes "Sir Oweyn has been reset.";
-		close;
-	case 9:
-		Novice_Triston_Recommendation = 0;
-		mes "[^0000FFQuest Reset Kafra^000000]";
-		mes "General Triston has been reset.";
-		close;
-	case 10:
-		Novice_Cynthia_Quest = 0;
-		Novice_David_Recommendation = 0;
-		Novice_Oweyn_Recommendation = 0;
-		Novice_Triston_Recommendation = 0;
-		erasequest 65021;
-		mes "[^0000FFQuest Reset Kafra^000000]";
-		mes "All recommendation quests have been reset.";
 		close;
 	}
 
@@ -551,9 +568,9 @@ new_1-1,65,115,4	script	Alfan	735,{
 	mes "Let yourself be guided! See you next time!";
 	next;
 
-	if ($Novice_Tuto_RiderBusy) {
+	if (Novice_Tuto_RiderBusy) {
 		mes "[^0000FFAlfan^000000]";
-		mes "Someone is already being escorted.";
+		mes "You are already being escorted.";
 		mes "Wait a few seconds, then try again.";
 		close;
 	}
@@ -570,14 +587,14 @@ new_1-1,65,115,4	script	Alfan	735,{
 		close;
 	}
 
-	$Novice_Tuto_RiderBusy = getcharid(CHAR_ID_ACCOUNT);
+	Novice_Tuto_RiderBusy = 1;
 	getitem 12622,1;
 	setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND, true);
-	specialeffect 562, AREA, "Alfan";
-	specialeffect 562, AREA, playerattached();
+	specialeffect 562, SELF, "Alfan";
+	specialeffect 562, SELF, playerattached();
 	sleep2 1800;
-	removespecialeffect 562, AREA, "Alfan";
-	removespecialeffect 562, AREA, playerattached();
+	removespecialeffect 562, SELF, "Alfan";
+	removespecialeffect 562, SELF, playerattached();
 	consumeitem 12622;
 	sleep2 300;
 
@@ -585,7 +602,7 @@ new_1-1,65,115,4	script	Alfan	735,{
 		if (countitem(12622) > 0)
 			delitem 12622,1;
 		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND, false);
-		$Novice_Tuto_RiderBusy = 0;
+		Novice_Tuto_RiderBusy = 0;
 		mes "[^0000FFAlfan^000000]";
 		mes "The mount refuses to move for now.";
 		mes "Try again in a few moments.";
@@ -595,7 +612,7 @@ new_1-1,65,115,4	script	Alfan	735,{
 	close2;
 
 	callsub S_MoveToSagard, 65,114, 1000;
-	unittalk(getnpcid("Alfan"), "Hold tight! I will send you to Captain Sagard!", true);
+	unittalk(getnpcid("Alfan"), "Hold tight! I will send you to Captain Sagard!", true, SELF, playerattached());
 	sleep2 500;
 	callsub S_MoveToSagard, 76,113, 2500;
 	callsub S_MoveToSagard, 88,112, 3000;
@@ -614,7 +631,7 @@ new_1-1,65,115,4	script	Alfan	735,{
 		delitem 12622,1;
 
 	setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND, false);
-	$Novice_Tuto_RiderBusy = 0;
+	Novice_Tuto_RiderBusy = 0;
 	end;
 
 S_MoveToSagard:
@@ -955,20 +972,19 @@ new_1-1,66,123,2	script	Saint Azur	936,{
 	mes "You should focus on getting equipped and come back to help us.";
 	mes "Go see ^0000FFGeneral Milon^000000. He will be glad to guide you!";
 
-	if (Novice_Cynthia_Quest == 1) {
-		next;
-		if (select("Ah, thank you. I will go see him.:Cynthia advised me to come see you. I have great respect for healers.") == 2) {
-			mes "[^0000FFSaint Azur^000000]";
-			mes "What a thoughtful child. Here, life is precious.";
+	next;
+	if (select("Ah, thank you. I will go see him.:Cynthia advised me to come see you. I have great respect for healers.") == 2) {
+		mes "[^0000FFSaint Azur^000000]";
+		mes "What a thoughtful child. Here, life is precious.";
+		if (!Novice_Azur_Recommendation) {
 			if (!checkweight(7416,1)) {
 				mes "Your inventory is too heavy. Come back after lightening it.";
 				close;
 			}
 			getitem 7416,1;
-			Novice_Cynthia_Quest = 2;
-			if (questprogress(65021))
-				completequest 65021;
-			close;
+			Novice_Azur_Recommendation = 1;
+		} else {
+			mes "I already gave you my recommendation. Make good use of it.";
 		}
 	}
 	close;
@@ -997,23 +1013,6 @@ new_1-1,66,108,2	script	Cynthia	601,{
 	next;
 	mes "[^0000FFCynthia^000000]";
 	mes "Some are more atypical, but they are worth speaking to.";
-
-	if (!Novice_Cynthia_Quest) {
-		Novice_Cynthia_Quest = 1;
-		if (!questprogress(65021))
-			setquest 65021;
-		next;
-		mes "[^0000FFCynthia^000000]";
-		mes "Quest started: ^0000FFEquipment for Recommendations!^000000";
-	} else if (Novice_Cynthia_Quest == 1) {
-		next;
-		mes "[^0000FFCynthia^000000]";
-		mes "Go speak with ^0000FFSaint Azur^000000. He can surely help you.";
-	} else {
-		next;
-		mes "[^0000FFCynthia^000000]";
-		mes "Thank you for taking the time to meet Saint Azur.";
-	}
 	close;
 }
 
@@ -1092,10 +1091,7 @@ new_1-1,140,112,4	script	Royal Guard Erart	420,{
 // General, Milon lance la quete tutoriel sur new_1-1.
 // Il envoie ensuite le joueur vers Sagard.
 //============================================================
-new_1-1,57,120,4	script	General, Milon	10382,5,5,{
-	goto L_Tuto1Dialog;
-
-OnTouch:
+new_1-1,57,120,4	script	General, Milon	10382,{
 	goto L_Tuto1Dialog;
 
 L_Tuto1Dialog:
@@ -1176,12 +1172,12 @@ OnTimer34000:
 	end;
 
 OnPCLogoutEvent:
-	if ($Novice_Tuto_RiderBusy == getcharid(CHAR_ID_ACCOUNT)) {
+	if (Novice_Tuto_RiderBusy) {
 		sc_end(SC_ALL_RIDING);
 		if (countitem(12622) > 0)
 			delitem 12622,1;
 		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND, false);
-		$Novice_Tuto_RiderBusy = 0;
+		Novice_Tuto_RiderBusy = 0;
 	}
 	end;
 }
@@ -1254,7 +1250,33 @@ new_1-1,146,115,4	script	Sagard	10378,{
 // QUETE DEMON 1-1
 // Le messager cache lance la quete demon, puis Toly poursuit la suite.
 //============================================================
+new_1-1	mapflag	loadevent
+new_1-2	mapflag	loadevent
+
+-	script	Novice_Map_Visual_State	FAKE_NPC,{
+OnPCLoadMapEvent:
+	getmapxy(.@map$, .@x, .@y, UNITTYPE_PC);
+	if (.@map$ == "new_1-1") {
+		if (Novice_Tuto3_Gone)
+			cloakonnpc "Toly", playerattached();
+		else
+			cloakoffnpc "Toly", playerattached();
+	}
+	if (.@map$ == "new_1-2") {
+		if (Novice_Demon_Intro_Revealed)
+			cloakoffnpc "???#demon_intro", playerattached();
+		else
+			cloakonnpc "???#demon_intro", playerattached();
+	}
+	end;
+}
+
 new_1-2,79,76,4	script	???#demon_intro	10029,{
+	if (!Novice_Demon_Intro_Revealed) {
+		message strcharinfo(PC_NAME), "There is nothing here.";
+		end;
+	}
+
 	mes "[^0000FF???^000000]";
 	mes "Are you honest?";
 	next;
@@ -1283,13 +1305,14 @@ new_1-2,79,76,4	script	???#demon_intro	10029,{
 	close;
 
 OnInit:
-	hideonnpc strnpcinfo(NPC_NAME);
+	cloakonnpc strnpcinfo(NPC_NAME);
 	end;
 }
 
 new_1-1,79,76,0	script	Demon Intro Reveal#new11	HIDDEN_NPC,14,14,{
 OnTouch:
-	hideoffnpc "???#demon_intro";
+	Novice_Demon_Intro_Revealed = 1;
+	cloakoffnpc "???#demon_intro", playerattached();
 	end;
 }
 
@@ -1344,7 +1367,7 @@ new_1-1,105,98,4	script	Toly	10295,{
 		mes "I thought you were someone sensible...";
 		close2;
 		Novice_Tuto3_Gone = 1;
-		hideonnpc strnpcinfo(NPC_NAME);
+		cloakonnpc strnpcinfo(NPC_NAME), playerattached();
 		message strcharinfo(PC_NAME), "Toly vanishes before you can question him again.";
 		end;
 	}
@@ -1356,12 +1379,12 @@ new_1-1,105,98,4	script	Toly	10295,{
 	mes "*cough*";
 	close2;
 	Novice_Tuto3_Gone = 1;
-	hideonnpc strnpcinfo(NPC_NAME);
+	cloakonnpc strnpcinfo(NPC_NAME), playerattached();
 	message strcharinfo(PC_NAME), "Toly vanishes before you can question him again.";
 	end;
 
 OnInit:
-	hideoffnpc strnpcinfo(NPC_NAME);
+	cloakoffnpc strnpcinfo(NPC_NAME);
 	end;
 }
 
@@ -1473,19 +1496,285 @@ new_1-1,128,57,6	script	Bella	667,{
 // QUETE DEMON - PORTAILS ET CLONES
 // Decor, rituel, invocateurs et clones lies a la suite demon.
 //============================================================
-new_1-1,114,46,0	script	Shadow Ritual#novice	HIDDEN_NPC,{
+new_1-1,114,46,0	script	#DemonShadowPortalA	HIDDEN_NPC,{
+	end;
+
 OnInit:
-	specialeffect 1025, AREA, "Shadow Ritual#novice";
+	specialeffect 1025, AREA, "#DemonShadowPortalA";
 	initnpctimer;
 	end;
 
-OnTimer45000:
-	specialeffect 1025, AREA, "Shadow Ritual#novice";
+OnTimer2000:
+	specialeffect 1025, AREA, "#DemonShadowPortalB";
+	end;
+
+OnTimer2100:
+	removespecialeffect 1025, AREA, "#DemonShadowPortalA";
+	end;
+
+OnTimer4000:
+	specialeffect 1025, AREA, "#DemonShadowPortalA";
+	end;
+
+OnTimer4100:
+	removespecialeffect 1025, AREA, "#DemonShadowPortalB";
 	stopnpctimer;
-	setnpctimer 0;
 	initnpctimer;
 	end;
 }
+
+new_1-1,114,46,0	script	#DemonShadowPortalB	HIDDEN_NPC,{ end; }
+
+new_1-1,114,46,0	script	#DemonShadowPortalCore	HIDDEN_NPC,{
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	specialeffect 840, AREA, "#DemonShadowPortalCore";
+	setnpctimer 0;
+	end;
+}
+
+new_1-1,114,46,0	script	#DemonShadowPortalAura	HIDDEN_NPC,{
+	end;
+
+OnInit:
+	specialeffect 1048, AREA, "#DemonShadowPortalAura";
+	specialeffect 992, AREA, "#DemonShadowPortalAura";
+	initnpctimer;
+	end;
+
+OnTimer10000:
+	removespecialeffect 1048, AREA, "#DemonShadowPortalAura";
+	removespecialeffect 992, AREA, "#DemonShadowPortalAura";
+	specialeffect 1048, AREA, "#DemonShadowPortalAura";
+	specialeffect 992, AREA, "#DemonShadowPortalAura";
+	setnpctimer 0;
+	end;
+}
+
+new_1-1,114,49,0	script	#DemonShadowPortalRing01	HIDDEN_NPC,{
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer100:
+	specialeffect 994, AREA, "#DemonShadowPortalRing01";
+	end;
+OnTimer200:
+	specialeffect 994, AREA, "#DemonShadowPortalRing02";
+	end;
+OnTimer300:
+	specialeffect 994, AREA, "#DemonShadowPortalRing03";
+	end;
+OnTimer400:
+	specialeffect 994, AREA, "#DemonShadowPortalRing04";
+	end;
+OnTimer500:
+	specialeffect 994, AREA, "#DemonShadowPortalRing05";
+	end;
+OnTimer600:
+	specialeffect 994, AREA, "#DemonShadowPortalRing06";
+	end;
+OnTimer700:
+	specialeffect 994, AREA, "#DemonShadowPortalRing07";
+	end;
+OnTimer800:
+	specialeffect 994, AREA, "#DemonShadowPortalRing08";
+	end;
+OnTimer900:
+	specialeffect 994, AREA, "#DemonShadowPortalRing09";
+	end;
+OnTimer1000:
+	specialeffect 994, AREA, "#DemonShadowPortalRing10";
+	end;
+OnTimer1100:
+	specialeffect 994, AREA, "#DemonShadowPortalRing11";
+	end;
+OnTimer1200:
+	specialeffect 994, AREA, "#DemonShadowPortalRing12";
+	end;
+OnTimer1300:
+	specialeffect 994, AREA, "#DemonShadowPortalRing13";
+	end;
+OnTimer1400:
+	specialeffect 994, AREA, "#DemonShadowPortalRing14";
+	end;
+OnTimer1500:
+	specialeffect 994, AREA, "#DemonShadowPortalRing15";
+	end;
+OnTimer1600:
+	specialeffect 994, AREA, "#DemonShadowPortalRing16";
+	end;
+
+OnTimer2000:
+	stopnpctimer;
+	initnpctimer;
+	end;
+}
+
+new_1-1,115,49,0	script	#DemonShadowPortalRing02	HIDDEN_NPC,{ end; }
+new_1-1,116,48,0	script	#DemonShadowPortalRing03	HIDDEN_NPC,{ end; }
+new_1-1,117,47,0	script	#DemonShadowPortalRing04	HIDDEN_NPC,{ end; }
+new_1-1,117,46,0	script	#DemonShadowPortalRing05	HIDDEN_NPC,{ end; }
+new_1-1,117,45,0	script	#DemonShadowPortalRing06	HIDDEN_NPC,{ end; }
+new_1-1,116,44,0	script	#DemonShadowPortalRing07	HIDDEN_NPC,{ end; }
+new_1-1,115,43,0	script	#DemonShadowPortalRing08	HIDDEN_NPC,{ end; }
+new_1-1,114,43,0	script	#DemonShadowPortalRing09	HIDDEN_NPC,{ end; }
+new_1-1,113,43,0	script	#DemonShadowPortalRing10	HIDDEN_NPC,{ end; }
+new_1-1,112,44,0	script	#DemonShadowPortalRing11	HIDDEN_NPC,{ end; }
+new_1-1,111,45,0	script	#DemonShadowPortalRing12	HIDDEN_NPC,{ end; }
+new_1-1,111,46,0	script	#DemonShadowPortalRing13	HIDDEN_NPC,{ end; }
+new_1-1,111,47,0	script	#DemonShadowPortalRing14	HIDDEN_NPC,{ end; }
+new_1-1,112,48,0	script	#DemonShadowPortalRing15	HIDDEN_NPC,{ end; }
+new_1-1,113,49,0	script	#DemonShadowPortalRing16	HIDDEN_NPC,{ end; }
+
+new_1-1,114,51,0	script	#DemonShadowPortalOuterRing01	HIDDEN_NPC,{
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer100:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing01";
+	end;
+OnTimer200:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing02";
+	end;
+OnTimer300:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing03";
+	end;
+OnTimer400:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing04";
+	end;
+OnTimer500:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing05";
+	end;
+OnTimer600:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing06";
+	end;
+OnTimer700:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing07";
+	end;
+OnTimer800:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing08";
+	end;
+OnTimer900:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing09";
+	end;
+OnTimer1000:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing10";
+	end;
+OnTimer1100:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing11";
+	end;
+OnTimer1200:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing12";
+	end;
+OnTimer1300:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing13";
+	end;
+OnTimer1400:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing14";
+	end;
+OnTimer1500:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing15";
+	end;
+OnTimer1600:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing16";
+	end;
+OnTimer1700:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing17";
+	end;
+OnTimer1800:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing18";
+	end;
+OnTimer1900:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing19";
+	end;
+OnTimer2000:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing20";
+	end;
+OnTimer2100:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing21";
+	end;
+OnTimer2200:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing22";
+	end;
+OnTimer2300:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing23";
+	end;
+OnTimer2400:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing24";
+	end;
+OnTimer2500:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing25";
+	end;
+OnTimer2600:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing26";
+	end;
+OnTimer2700:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing27";
+	end;
+OnTimer2800:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing28";
+	end;
+OnTimer2900:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing29";
+	end;
+OnTimer3000:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing30";
+	end;
+OnTimer3100:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing31";
+	end;
+OnTimer3200:
+	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing32";
+	end;
+
+OnTimer4000:
+	stopnpctimer;
+	initnpctimer;
+	end;
+}
+
+new_1-1,115,51,0	script	#DemonShadowPortalOuterRing02	HIDDEN_NPC,{ end; }
+new_1-1,117,50,0	script	#DemonShadowPortalOuterRing03	HIDDEN_NPC,{ end; }
+new_1-1,118,49,0	script	#DemonShadowPortalOuterRing04	HIDDEN_NPC,{ end; }
+new_1-1,119,48,0	script	#DemonShadowPortalOuterRing05	HIDDEN_NPC,{ end; }
+new_1-1,119,47,0	script	#DemonShadowPortalOuterRing06	HIDDEN_NPC,{ end; }
+new_1-1,119,46,0	script	#DemonShadowPortalOuterRing07	HIDDEN_NPC,{ end; }
+new_1-1,119,45,0	script	#DemonShadowPortalOuterRing08	HIDDEN_NPC,{ end; }
+new_1-1,119,44,0	script	#DemonShadowPortalOuterRing09	HIDDEN_NPC,{ end; }
+new_1-1,118,43,0	script	#DemonShadowPortalOuterRing10	HIDDEN_NPC,{ end; }
+new_1-1,117,42,0	script	#DemonShadowPortalOuterRing11	HIDDEN_NPC,{ end; }
+new_1-1,115,41,0	script	#DemonShadowPortalOuterRing12	HIDDEN_NPC,{ end; }
+new_1-1,114,41,0	script	#DemonShadowPortalOuterRing13	HIDDEN_NPC,{ end; }
+new_1-1,113,41,0	script	#DemonShadowPortalOuterRing14	HIDDEN_NPC,{ end; }
+new_1-1,111,42,0	script	#DemonShadowPortalOuterRing15	HIDDEN_NPC,{ end; }
+new_1-1,110,43,0	script	#DemonShadowPortalOuterRing16	HIDDEN_NPC,{ end; }
+new_1-1,109,44,0	script	#DemonShadowPortalOuterRing17	HIDDEN_NPC,{ end; }
+new_1-1,109,45,0	script	#DemonShadowPortalOuterRing18	HIDDEN_NPC,{ end; }
+new_1-1,109,46,0	script	#DemonShadowPortalOuterRing19	HIDDEN_NPC,{ end; }
+new_1-1,109,47,0	script	#DemonShadowPortalOuterRing20	HIDDEN_NPC,{ end; }
+new_1-1,109,48,0	script	#DemonShadowPortalOuterRing21	HIDDEN_NPC,{ end; }
+new_1-1,110,49,0	script	#DemonShadowPortalOuterRing22	HIDDEN_NPC,{ end; }
+new_1-1,111,50,0	script	#DemonShadowPortalOuterRing23	HIDDEN_NPC,{ end; }
+new_1-1,113,51,0	script	#DemonShadowPortalOuterRing24	HIDDEN_NPC,{ end; }
+new_1-1,114,51,0	script	#DemonShadowPortalOuterRing25	HIDDEN_NPC,{ end; }
+new_1-1,117,51,0	script	#DemonShadowPortalOuterRing26	HIDDEN_NPC,{ end; }
+new_1-1,119,49,0	script	#DemonShadowPortalOuterRing27	HIDDEN_NPC,{ end; }
+new_1-1,119,43,0	script	#DemonShadowPortalOuterRing28	HIDDEN_NPC,{ end; }
+new_1-1,117,41,0	script	#DemonShadowPortalOuterRing29	HIDDEN_NPC,{ end; }
+new_1-1,111,41,0	script	#DemonShadowPortalOuterRing30	HIDDEN_NPC,{ end; }
+new_1-1,109,43,0	script	#DemonShadowPortalOuterRing31	HIDDEN_NPC,{ end; }
+new_1-1,109,49,0	script	#DemonShadowPortalOuterRing32	HIDDEN_NPC,{ end; }
 
 -	script	Shadow_Summoner_Template	1198,{
 OnInit:
@@ -1508,21 +1797,285 @@ new_1-1,109,48,5	duplicate(Shadow_Summoner_Template)	Shadow Summoner#novice_5	11
 
 new_1-1,124,63,3	duplicate(Shadow_Summoner_Template)	Shadow Summoner#portal_watcher	1198
 
-new_1-1,118,64,0	script	Portal Arrival#novice	HIDDEN_NPC,{
+new_1-1,118,64,0	script	#DemonPortalArrivalA	HIDDEN_NPC,{
 	end;
 
 OnInit:
-	specialeffect 61, AREA, "Portal Arrival#novice";
+	specialeffect 1025, AREA, "#DemonPortalArrivalA";
 	initnpctimer;
 	end;
 
-OnTimer45000:
-	specialeffect 61, AREA, "Portal Arrival#novice";
+OnTimer2000:
+	specialeffect 1025, AREA, "#DemonPortalArrivalB";
+	end;
+
+OnTimer2100:
+	removespecialeffect 1025, AREA, "#DemonPortalArrivalA";
+	end;
+
+OnTimer4000:
+	specialeffect 1025, AREA, "#DemonPortalArrivalA";
+	end;
+
+OnTimer4100:
+	removespecialeffect 1025, AREA, "#DemonPortalArrivalB";
 	stopnpctimer;
-	setnpctimer 0;
 	initnpctimer;
 	end;
 }
+
+new_1-1,118,64,0	script	#DemonPortalArrivalB	HIDDEN_NPC,{ end; }
+
+new_1-1,118,64,0	script	#DemonPortalArrivalCore	HIDDEN_NPC,{
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	specialeffect 840, AREA, "#DemonPortalArrivalCore";
+	setnpctimer 0;
+	end;
+}
+
+new_1-1,118,64,0	script	#DemonPortalArrivalAura	HIDDEN_NPC,{
+	end;
+
+OnInit:
+	specialeffect 1048, AREA, "#DemonPortalArrivalAura";
+	specialeffect 992, AREA, "#DemonPortalArrivalAura";
+	initnpctimer;
+	end;
+
+OnTimer10000:
+	removespecialeffect 1048, AREA, "#DemonPortalArrivalAura";
+	removespecialeffect 992, AREA, "#DemonPortalArrivalAura";
+	specialeffect 1048, AREA, "#DemonPortalArrivalAura";
+	specialeffect 992, AREA, "#DemonPortalArrivalAura";
+	setnpctimer 0;
+	end;
+}
+
+new_1-1,118,67,0	script	#DemonPortalArrivalRing01	HIDDEN_NPC,{
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer100:
+	specialeffect 994, AREA, "#DemonPortalArrivalRing01";
+	end;
+OnTimer200:
+	specialeffect 994, AREA, "#DemonPortalArrivalRing02";
+	end;
+OnTimer300:
+	specialeffect 994, AREA, "#DemonPortalArrivalRing03";
+	end;
+OnTimer400:
+	specialeffect 994, AREA, "#DemonPortalArrivalRing04";
+	end;
+OnTimer500:
+	specialeffect 994, AREA, "#DemonPortalArrivalRing05";
+	end;
+OnTimer600:
+	specialeffect 994, AREA, "#DemonPortalArrivalRing06";
+	end;
+OnTimer700:
+	specialeffect 994, AREA, "#DemonPortalArrivalRing07";
+	end;
+OnTimer800:
+	specialeffect 994, AREA, "#DemonPortalArrivalRing08";
+	end;
+OnTimer900:
+	specialeffect 994, AREA, "#DemonPortalArrivalRing09";
+	end;
+OnTimer1000:
+	specialeffect 994, AREA, "#DemonPortalArrivalRing10";
+	end;
+OnTimer1100:
+	specialeffect 994, AREA, "#DemonPortalArrivalRing11";
+	end;
+OnTimer1200:
+	specialeffect 994, AREA, "#DemonPortalArrivalRing12";
+	end;
+OnTimer1300:
+	specialeffect 994, AREA, "#DemonPortalArrivalRing13";
+	end;
+OnTimer1400:
+	specialeffect 994, AREA, "#DemonPortalArrivalRing14";
+	end;
+OnTimer1500:
+	specialeffect 994, AREA, "#DemonPortalArrivalRing15";
+	end;
+OnTimer1600:
+	specialeffect 994, AREA, "#DemonPortalArrivalRing16";
+	end;
+
+OnTimer2000:
+	stopnpctimer;
+	initnpctimer;
+	end;
+}
+
+new_1-1,119,67,0	script	#DemonPortalArrivalRing02	HIDDEN_NPC,{ end; }
+new_1-1,120,66,0	script	#DemonPortalArrivalRing03	HIDDEN_NPC,{ end; }
+new_1-1,121,65,0	script	#DemonPortalArrivalRing04	HIDDEN_NPC,{ end; }
+new_1-1,121,64,0	script	#DemonPortalArrivalRing05	HIDDEN_NPC,{ end; }
+new_1-1,121,63,0	script	#DemonPortalArrivalRing06	HIDDEN_NPC,{ end; }
+new_1-1,120,62,0	script	#DemonPortalArrivalRing07	HIDDEN_NPC,{ end; }
+new_1-1,119,61,0	script	#DemonPortalArrivalRing08	HIDDEN_NPC,{ end; }
+new_1-1,118,61,0	script	#DemonPortalArrivalRing09	HIDDEN_NPC,{ end; }
+new_1-1,117,61,0	script	#DemonPortalArrivalRing10	HIDDEN_NPC,{ end; }
+new_1-1,116,62,0	script	#DemonPortalArrivalRing11	HIDDEN_NPC,{ end; }
+new_1-1,115,63,0	script	#DemonPortalArrivalRing12	HIDDEN_NPC,{ end; }
+new_1-1,115,64,0	script	#DemonPortalArrivalRing13	HIDDEN_NPC,{ end; }
+new_1-1,115,65,0	script	#DemonPortalArrivalRing14	HIDDEN_NPC,{ end; }
+new_1-1,116,66,0	script	#DemonPortalArrivalRing15	HIDDEN_NPC,{ end; }
+new_1-1,117,67,0	script	#DemonPortalArrivalRing16	HIDDEN_NPC,{ end; }
+
+new_1-1,118,69,0	script	#DemonPortalArrivalOuterRing01	HIDDEN_NPC,{
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer100:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing01";
+	end;
+OnTimer200:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing02";
+	end;
+OnTimer300:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing03";
+	end;
+OnTimer400:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing04";
+	end;
+OnTimer500:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing05";
+	end;
+OnTimer600:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing06";
+	end;
+OnTimer700:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing07";
+	end;
+OnTimer800:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing08";
+	end;
+OnTimer900:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing09";
+	end;
+OnTimer1000:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing10";
+	end;
+OnTimer1100:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing11";
+	end;
+OnTimer1200:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing12";
+	end;
+OnTimer1300:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing13";
+	end;
+OnTimer1400:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing14";
+	end;
+OnTimer1500:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing15";
+	end;
+OnTimer1600:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing16";
+	end;
+OnTimer1700:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing17";
+	end;
+OnTimer1800:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing18";
+	end;
+OnTimer1900:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing19";
+	end;
+OnTimer2000:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing20";
+	end;
+OnTimer2100:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing21";
+	end;
+OnTimer2200:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing22";
+	end;
+OnTimer2300:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing23";
+	end;
+OnTimer2400:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing24";
+	end;
+OnTimer2500:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing25";
+	end;
+OnTimer2600:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing26";
+	end;
+OnTimer2700:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing27";
+	end;
+OnTimer2800:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing28";
+	end;
+OnTimer2900:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing29";
+	end;
+OnTimer3000:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing30";
+	end;
+OnTimer3100:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing31";
+	end;
+OnTimer3200:
+	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing32";
+	end;
+
+OnTimer4000:
+	stopnpctimer;
+	initnpctimer;
+	end;
+}
+
+new_1-1,119,69,0	script	#DemonPortalArrivalOuterRing02	HIDDEN_NPC,{ end; }
+new_1-1,121,68,0	script	#DemonPortalArrivalOuterRing03	HIDDEN_NPC,{ end; }
+new_1-1,122,67,0	script	#DemonPortalArrivalOuterRing04	HIDDEN_NPC,{ end; }
+new_1-1,123,66,0	script	#DemonPortalArrivalOuterRing05	HIDDEN_NPC,{ end; }
+new_1-1,123,65,0	script	#DemonPortalArrivalOuterRing06	HIDDEN_NPC,{ end; }
+new_1-1,123,64,0	script	#DemonPortalArrivalOuterRing07	HIDDEN_NPC,{ end; }
+new_1-1,123,63,0	script	#DemonPortalArrivalOuterRing08	HIDDEN_NPC,{ end; }
+new_1-1,123,62,0	script	#DemonPortalArrivalOuterRing09	HIDDEN_NPC,{ end; }
+new_1-1,122,61,0	script	#DemonPortalArrivalOuterRing10	HIDDEN_NPC,{ end; }
+new_1-1,121,60,0	script	#DemonPortalArrivalOuterRing11	HIDDEN_NPC,{ end; }
+new_1-1,119,59,0	script	#DemonPortalArrivalOuterRing12	HIDDEN_NPC,{ end; }
+new_1-1,118,59,0	script	#DemonPortalArrivalOuterRing13	HIDDEN_NPC,{ end; }
+new_1-1,117,59,0	script	#DemonPortalArrivalOuterRing14	HIDDEN_NPC,{ end; }
+new_1-1,115,60,0	script	#DemonPortalArrivalOuterRing15	HIDDEN_NPC,{ end; }
+new_1-1,114,61,0	script	#DemonPortalArrivalOuterRing16	HIDDEN_NPC,{ end; }
+new_1-1,113,62,0	script	#DemonPortalArrivalOuterRing17	HIDDEN_NPC,{ end; }
+new_1-1,113,63,0	script	#DemonPortalArrivalOuterRing18	HIDDEN_NPC,{ end; }
+new_1-1,113,64,0	script	#DemonPortalArrivalOuterRing19	HIDDEN_NPC,{ end; }
+new_1-1,113,65,0	script	#DemonPortalArrivalOuterRing20	HIDDEN_NPC,{ end; }
+new_1-1,113,66,0	script	#DemonPortalArrivalOuterRing21	HIDDEN_NPC,{ end; }
+new_1-1,114,67,0	script	#DemonPortalArrivalOuterRing22	HIDDEN_NPC,{ end; }
+new_1-1,115,68,0	script	#DemonPortalArrivalOuterRing23	HIDDEN_NPC,{ end; }
+new_1-1,117,69,0	script	#DemonPortalArrivalOuterRing24	HIDDEN_NPC,{ end; }
+new_1-1,118,69,0	script	#DemonPortalArrivalOuterRing25	HIDDEN_NPC,{ end; }
+new_1-1,121,69,0	script	#DemonPortalArrivalOuterRing26	HIDDEN_NPC,{ end; }
+new_1-1,123,67,0	script	#DemonPortalArrivalOuterRing27	HIDDEN_NPC,{ end; }
+new_1-1,123,61,0	script	#DemonPortalArrivalOuterRing28	HIDDEN_NPC,{ end; }
+new_1-1,121,59,0	script	#DemonPortalArrivalOuterRing29	HIDDEN_NPC,{ end; }
+new_1-1,115,59,0	script	#DemonPortalArrivalOuterRing30	HIDDEN_NPC,{ end; }
+new_1-1,113,61,0	script	#DemonPortalArrivalOuterRing31	HIDDEN_NPC,{ end; }
+new_1-1,113,67,0	script	#DemonPortalArrivalOuterRing32	HIDDEN_NPC,{ end; }
 
 -	script	Portal_Clone_Template	594,{
 	end;
