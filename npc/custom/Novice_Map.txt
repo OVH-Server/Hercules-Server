@@ -350,21 +350,21 @@ new_1-1,55,130,7	script	Royal High Wizard#portal_1	10469,{
 	end;
 
 OnInit:
+	.AuraTick = 0;
 	specialeffect 1048, AREA, strnpcinfo(3);
 	specialeffect 992, AREA, strnpcinfo(3);
-	addtimer 1000, "Royal High Wizard#portal_1::On992Loop";
 	initnpctimer;
 	end;
 
-OnTimer3200:
-	removespecialeffect 1048, AREA, strnpcinfo(3);
-	specialeffect 1048, AREA, strnpcinfo(3);
-	setnpctimer 0;
-	end;
-
-On992Loop:
+OnTimer1000:
 	specialeffect 992, AREA, strnpcinfo(3);
-	addtimer 1000, "Royal High Wizard#portal_1::On992Loop";
+	.AuraTick++;
+	if (.AuraTick >= 4) {
+		removespecialeffect 1048, AREA, strnpcinfo(3);
+		specialeffect 1048, AREA, strnpcinfo(3);
+		.AuraTick = 0;
+	}
+	setnpctimer 0;
 	end;
 }
 
@@ -376,21 +376,21 @@ new_1-1,53,144,5	script	Royal High Wizard#portal_2	10467,{
 	end;
 
 OnInit:
+	.AuraTick = 0;
 	specialeffect 1048, AREA, strnpcinfo(3);
 	specialeffect 992, AREA, strnpcinfo(3);
-	addtimer 1000, "Royal High Wizard#portal_2::On992Loop";
 	initnpctimer;
 	end;
 
-OnTimer3900:
-	removespecialeffect 1048, AREA, strnpcinfo(3);
-	specialeffect 1048, AREA, strnpcinfo(3);
-	setnpctimer 0;
-	end;
-
-On992Loop:
+OnTimer1000:
 	specialeffect 992, AREA, strnpcinfo(3);
-	addtimer 1000, "Royal High Wizard#portal_2::On992Loop";
+	.AuraTick++;
+	if (.AuraTick >= 4) {
+		removespecialeffect 1048, AREA, strnpcinfo(3);
+		specialeffect 1048, AREA, strnpcinfo(3);
+		.AuraTick = 0;
+	}
+	setnpctimer 0;
 	end;
 }
 
@@ -402,21 +402,21 @@ new_1-1,68,147,3	script	Royal High Wizard#portal_3	10468,{
 	end;
 
 OnInit:
+	.AuraTick = 0;
 	specialeffect 1048, AREA, strnpcinfo(3);
 	specialeffect 992, AREA, strnpcinfo(3);
-	addtimer 1000, "Royal High Wizard#portal_3::On992Loop";
 	initnpctimer;
 	end;
 
-OnTimer4600:
-	removespecialeffect 1048, AREA, strnpcinfo(3);
-	specialeffect 1048, AREA, strnpcinfo(3);
-	setnpctimer 0;
-	end;
-
-On992Loop:
+OnTimer1000:
 	specialeffect 992, AREA, strnpcinfo(3);
-	addtimer 1000, "Royal High Wizard#portal_3::On992Loop";
+	.AuraTick++;
+	if (.AuraTick >= 4) {
+		removespecialeffect 1048, AREA, strnpcinfo(3);
+		specialeffect 1048, AREA, strnpcinfo(3);
+		.AuraTick = 0;
+	}
+	setnpctimer 0;
 	end;
 }
 
