@@ -545,20 +545,147 @@ new_1-1,62,109,4	script	Quest Reset Kafra#new11	4_F_KAFRA1,{
 	close;
 }
 
-new_1-1,64,117,4	script	Alfan	735,{
+new_1-1,65,115,4	script	Alfan	735,{
 	mes "[^0000FFAlfan^000000]";
-	mes "Honestly, I would not refuse some help with the portal!";
+	if (Novice_Tuto_State < 1 && !Novice_Tuto_Done) {
+		mes "Oh, hello adventurer!";
+		mes "Please speak with ^0000FFGeneral Milon^000000 first.";
+		close;
+	}
+
+	if (Novice_Tuto_Done || Novice_Tuto_State >= 2) {
+		mes "Sagard is waiting near the castle entrance.";
+		mes "Please hurry!";
+		close;
+	}
+
+	mes "Oh, hello adventurer!";
+	mes "You must be here on behalf of General Milon.";
 	next;
 	mes "[^0000FFAlfan^000000]";
-	mes "I fully support the Captain. If he says we need every brave soul we can find, then I believe him completely!";
+	mes "I assist him completely, and I have absolute trust in him.";
+	mes "You can trust him too. He is so... hum.";
 	next;
 	mes "[^0000FFAlfan^000000]";
-	mes "And between us, I am proud he chose me for this post.";
+	mes "He must have sent you to me so I can take you to Captain Sagard.";
+	mes "I am proud he chose me for this post.";
 	mes "Not every wizard knows the mount invocation spell, you know!";
 	next;
+	mes "[^0000FF" + strcharinfo(PC_NAME) + "^000000]";
+	mes "Mount invocation?";
+	next;
 	mes "[^0000FFAlfan^000000]";
-	mes "Just give me a moment when the time comes, and I will call a mount for you with style!";
-	close;
+	mes "Yes, yes, and I can say I master it rather well.";
+	mes "When the time comes, come back to me and I will summon a mount especially for you!";
+	next;
+	mes "[^0000FFAlfan^000000]";
+	mes "But that is not the question right now.";
+	mes "I will summon a mount that will take you to Sagard by itself.";
+	mes "Let yourself be guided! See you next time!";
+	next;
+
+	if ($Novice_Tuto_RiderBusy) {
+		mes "[^0000FFAlfan^000000]";
+		mes "Someone is already being escorted.";
+		mes "Wait a few seconds, then try again.";
+		close;
+	}
+
+	if (checkmount() || hascashmount()) {
+		mes "[^0000FFAlfan^000000]";
+		mes "Dismount first. I need the halter to answer only to my route.";
+		close;
+	}
+
+	if (!checkweight(12622,1)) {
+		mes "[^0000FFAlfan^000000]";
+		mes "Your inventory is too heavy to receive the Boarding Halter.";
+		close;
+	}
+
+	$Novice_Tuto_RiderBusy = getcharid(CHAR_ID_ACCOUNT);
+	getitem 12622,1;
+	setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND, true);
+	specialeffect 562, AREA, "Alfan";
+	specialeffect 562, AREA, playerattached();
+	sleep2 4000;
+	removespecialeffect 562, AREA, "Alfan";
+	removespecialeffect 562, AREA, playerattached();
+	consumeitem 12622;
+	sleep2 1000;
+
+	if (!hascashmount()) {
+		if (countitem(12622) > 0)
+			delitem 12622,1;
+		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND, false);
+		$Novice_Tuto_RiderBusy = 0;
+		mes "[^0000FFAlfan^000000]";
+		mes "The mount refuses to move for now.";
+		mes "Try again in a few moments.";
+		close;
+	}
+
+	close2;
+
+	callsub S_MoveToSagard, 62,113, 3000;
+	callsub S_MoveToSagard, 65,114, 3000;
+	sleep2 1000;
+	unittalk(getnpcid("Alfan"), "Hold tight! I will send you to Captain Sagard!", true);
+	sleep2 1800;
+	callsub S_MoveToSagard, 68,114, 3000;
+	callsub S_MoveToSagard, 76,113, 3500;
+	callsub S_MoveToSagard, 85,112, 4000;
+	callsub S_MoveToSagard, 95,112, 4500;
+	callsub S_MoveToSagard, 105,112, 4500;
+	callsub S_MoveToSagard, 113,112, 4500;
+	sleep2 1000;
+	callsub S_MoveToSagard, 123,117, 4500;
+	callsub S_MoveToSagard, 128,130, 6500;
+	callsub S_MoveToSagard, 139,133, 5000;
+	callsub S_MoveToSagard, 139,123, 4500;
+	callsub S_MoveToSagard, 134,114, 5000;
+	callsub S_MoveToSagard, 129,105, 5500;
+	callsub S_MoveToSagard, 136,98, 4000;
+	callsub S_MoveToSagard, 142,104, 4500;
+	callsub S_MoveToSagard, 143,113, 4500;
+
+	sc_end(SC_ALL_RIDING);
+	if (countitem(12622) > 0)
+		delitem 12622,1;
+
+	setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND, false);
+	$Novice_Tuto_RiderBusy = 0;
+	message strcharinfo(PC_NAME), "Alfan: you have arrived near Captain Sagard.";
+	end;
+
+S_MoveToSagard:
+	.@pc_gid = getcharid(CHAR_ID_ACCOUNT);
+	.@timeout = getarg(2);
+	.@elapsed = 0;
+
+	unitwalk(.@pc_gid, getarg(0), getarg(1));
+	sleep2 75;
+	.@elapsed += 75;
+
+	while (.@elapsed < .@timeout) {
+		getmapxy(.@map$, .@x, .@y, UNITTYPE_PC);
+		.@dx = getarg(0) - .@x;
+		.@dy = getarg(1) - .@y;
+		if (.@dx < 0)
+			.@dx = -.@dx;
+		if (.@dy < 0)
+			.@dy = -.@dy;
+		if (.@dx <= 1 && .@dy <= 1)
+			return;
+
+		if (unitiswalking(.@pc_gid) != 1 && .@elapsed > 250)
+			unitwalk(.@pc_gid, getarg(0), getarg(1));
+
+		sleep2 75;
+		.@elapsed += 75;
+	}
+
+	return;
 }
 
 new_1-1,51,122,0	script	General David	657,{
@@ -847,7 +974,7 @@ new_1-1,140,112,4	script	Royal Guard Erart	420,{
 // General, Milon lance la quete tutoriel sur new_1-1.
 // Il envoie ensuite le joueur vers Sagard.
 //============================================================
-new_1-1,65,115,4	script	General, Milon	10382,5,5,{
+new_1-1,57,120,4	script	General, Milon	10382,5,5,{
 	goto L_Tuto1Dialog;
 
 OnTouch:
@@ -873,158 +1000,29 @@ L_Tuto1Dialog:
 	mes "There are too few of us left to keep the portal closed.";
 	next;
 	mes "[^0000FFGeneral, Milon^000000]";
-	mes "We need everyone who can still stand!";
-	mes "But you cannot stay here. You cannot help us from this spot.";
-	next;
-	mes "[^0000FFGeneral, Milon^000000]";
-	mes "Go see the Captain, ^0000FFSagard^000000, at the castle entrance!";
+	mes "We need everyone who can still stand! But you cannot stay here.";
+	mes "You cannot help us from this spot.";
 	next;
 
-	if (select("I will help.:I refuse.") == 2) {
+	if (select("I agree to help you. What should I do?:Sorry, this does not concern me.") == 2) {
 		mes "[^0000FFGeneral, Milon^000000]";
 		mes "As you wish.";
 		mes "But do not be surprised when you see creatures no one has ever seen before.";
 		goto L_MilonClose;
 	}
 
-	if ($Novice_Tuto_RiderBusy) {
-		mes "[^0000FFGeneral, Milon^000000]";
-		mes "Someone is already being escorted.";
-		mes "Wait a few seconds, then try again.";
-		goto L_MilonClose;
-	}
-
-	if (checkmount() || hascashmount()) {
-		mes "[^0000FFGeneral, Milon^000000]";
-		mes "Dismount first. I need the halter to answer only to my route.";
-		goto L_MilonClose;
-	}
-
-	if (!checkweight(12622,1)) {
-		mes "[^0000FFGeneral, Milon^000000]";
-		mes "Your inventory is too heavy to receive the Boarding Halter.";
-		goto L_MilonClose;
-	}
-
+	mes "[^0000FFGeneral, Milon^000000]";
+	mes "I cannot get lost in the details of what is happening.";
+	mes "You need to see Captain ^0000FFSagard^000000 at the castle entrance!";
+	mes "He will explain the situation.";
+	next;
+	mes "[^0000FFGeneral, Milon^000000]";
+	mes "But first, go see ^0000FFAlfan^000000.";
+	mes "She will take you to Sagard. Hurry!";
 	if (questprogress(65020))
 		erasequest 65020;
-
 	Novice_Tuto_State = 1;
 	setquest 65020;
-	$Novice_Tuto_RiderBusy = getcharid(CHAR_ID_ACCOUNT);
-	getitem 12622,1;
-	setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND, true);
-	specialeffect 562, AREA, "Alfan";
-	specialeffect 562, AREA, playerattached();
-	sleep2 4000;
-	removespecialeffect 562, AREA, "Alfan";
-	removespecialeffect 562, AREA, playerattached();
-	consumeitem 12622;
-	sleep2 1000;
-
-	if (!hascashmount()) {
-		if (countitem(12622) > 0)
-			delitem 12622,1;
-		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND, false);
-		$Novice_Tuto_RiderBusy = 0;
-		mes "[^0000FFGeneral, Milon^000000]";
-		mes "The mount refuses to move for now.";
-		mes "Try again in a few moments.";
-		goto L_MilonClose;
-	}
-
-	mes "[^0000FFGeneral, Milon^000000]";
-	mes "Good. Hold tight, and do not look back.";
-	close2;
-	if (.@milon_dialog_counted) {
-		.Milon_DialogOpen--;
-		if (.Milon_DialogOpen < 0)
-			.Milon_DialogOpen = 0;
-		.@milon_dialog_counted = false;
-	}
-
-	callsub S_MoveTo, 62,113, 3000;
-	callsub S_MoveTo, 65,114, 3000;
-	sleep2 1000;
-	unittalk(getnpcid("General, Milon"), "Good luck! The world of Midgard needs you!", true);
-	sleep2 1800;
-	callsub S_MoveTo, 68,114, 3000;
-	callsub S_MoveTo, 76,113, 3500;
-	callsub S_MoveTo, 85,112, 4000;
-	callsub S_MoveTo, 95,112, 4500;
-	callsub S_MoveTo, 105,112, 4500;
-	callsub S_MoveTo, 113,112, 4500;
-	sleep2 1000;
-    callsub S_MoveTo, 123,117, 4500;
-	callsub S_MoveTo, 128,130, 6500;
-	callsub S_MoveTo, 139,133, 5000;
-    callsub S_MoveTo, 139,123, 4500;
-	callsub S_MoveTo, 134,114, 5000;
-	callsub S_MoveTo, 129,105, 5500;
-	callsub S_MoveTo, 136,98, 4000;
-	callsub S_MoveTo, 142,104, 4500;
-	callsub S_MoveTo, 143,113, 4500;
-
-	sc_end(SC_ALL_RIDING);
-	if (countitem(12622) > 0)
-		delitem 12622,1;
-
-	setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND, false);
-	$Novice_Tuto_RiderBusy = 0;
-	message strcharinfo(PC_NAME), "General Milon: you have arrived near Captain Sagard.";
-	sleep2 400;
-
-	.Milon_DialogOpen++;
-	.@milon_dialog_counted = true;
-	callsub S_Tuto2Intro;
-	end;
-
-S_Tuto2Intro:
-	mes "[^0000FFSagard^000000]";
-	mes "Did ^0000FFGeneral Milon^000000 brief you before sending you here?";
-	next;
-
-	if (select("Yes.:No.") == 1) {
-		mes "[^0000FFSagard^000000]";
-		mes "Then you know what to expect...";
-		mes "However, you look poorly equipped.";
-		next;
-		mes "[^0000FFSagard^000000]";
-		mes "I advise you to go inside the castle.";
-		mes "You will find all the information and help you need to support us properly!";
-		next;
-		mes "[^0000FFSagard^000000]";
-		mes "Go see ^0000FFKriss^000000 in the center of the hall!";
-		mes "Now go. See you next time!";
-		Novice_Tuto_State = 2;
-		if (questprogress(65020))
-			completequest 65020;
-		Novice_Tuto_Done = 1;
-		goto L_MilonClose;
-	}
-
-	mes "[^0000FFSagard^000000]";
-	mes "Then listen carefully.";
-	next;
-	mes "[^0000FFSagard^000000]";
-	mes "A magical portal opened beneath the old stones of this castle.";
-	mes "It is unstable, hungry, and getting wider every hour.";
-	next;
-	mes "[^0000FFSagard^000000]";
-	mes "The High Wizards are holding it shut with layered seals, but the seals are cracking.";
-	mes "If their focus breaks, creatures from beyond our world will pour through.";
-	next;
-	mes "[^0000FFSagard^000000]";
-	mes "These are not monsters from our fields or caves.";
-	mes "They are things no adventurer has named, studied, or survived long enough to describe.";
-	next;
-	mes "[^0000FFSagard^000000]";
-	mes "That is why every pair of hands matters.";
-	mes "Stay sharp, novice.";
-	Novice_Tuto_State = 2;
-	if (questprogress(65020))
-		completequest 65020;
-	Novice_Tuto_Done = 1;
 	goto L_MilonClose;
 
 L_MilonClose:
@@ -1035,35 +1033,6 @@ L_MilonClose:
 			.Milon_DialogOpen = 0;
 	}
 	end;
-
-S_MoveTo:
-	.@pc_gid = getcharid(CHAR_ID_ACCOUNT);
-	.@timeout = getarg(2);
-	.@elapsed = 0;
-
-	unitwalk(.@pc_gid, getarg(0), getarg(1));
-	sleep2 75;
-	.@elapsed += 75;
-
-	while (.@elapsed < .@timeout) {
-		getmapxy(.@map$, .@x, .@y, UNITTYPE_PC);
-		.@dx = getarg(0) - .@x;
-		.@dy = getarg(1) - .@y;
-		if (.@dx < 0)
-			.@dx = -.@dx;
-		if (.@dy < 0)
-			.@dy = -.@dy;
-		if (.@dx <= 1 && .@dy <= 1)
-			return;
-
-		if (unitiswalking(.@pc_gid) != 1 && .@elapsed > 250)
-			unitwalk(.@pc_gid, getarg(0), getarg(1));
-
-		sleep2 75;
-		.@elapsed += 75;
-	}
-
-	return;
 
 OnInit:
 	.Milon_DialogOpen = 0;
