@@ -348,25 +348,109 @@ new_1-1,56,142,0	script	#NovicePortalOuterRing32	HIDDEN_NPC,{ end; }
 // Royal High Wizards autour du portail et leurs livres.
 new_1-1,55,130,5	script	Royal High Wizard#portal_1	10469,{
 	end;
+
+OnInit:
+	specialeffect 1048, AREA, strnpcinfo(3);
+	specialeffect 992, AREA, strnpcinfo(3);
+	initnpctimer;
+	end;
+
+OnTimer3200:
+	removespecialeffect 1048, AREA, strnpcinfo(3);
+	removespecialeffect 992, AREA, strnpcinfo(3);
+	specialeffect 1048, AREA, strnpcinfo(3);
+	specialeffect 992, AREA, strnpcinfo(3);
+	setnpctimer 0;
+	end;
 }
 
 new_1-1,56,131,5	script	#RoyalWizardBook_portal_1	10373,{
+	end;
+
+OnInit:
+	specialeffect 1048, AREA, strnpcinfo(3);
+	specialeffect 992, AREA, strnpcinfo(3);
+	initnpctimer;
+	end;
+
+OnTimer3600:
+	removespecialeffect 1048, AREA, strnpcinfo(3);
+	removespecialeffect 992, AREA, strnpcinfo(3);
+	specialeffect 1048, AREA, strnpcinfo(3);
+	specialeffect 992, AREA, strnpcinfo(3);
+	setnpctimer 0;
 	end;
 }
 
 new_1-1,53,144,7	script	Royal High Wizard#portal_2	10467,{
 	end;
+
+OnInit:
+	specialeffect 1048, AREA, strnpcinfo(3);
+	specialeffect 992, AREA, strnpcinfo(3);
+	initnpctimer;
+	end;
+
+OnTimer3900:
+	removespecialeffect 1048, AREA, strnpcinfo(3);
+	removespecialeffect 992, AREA, strnpcinfo(3);
+	specialeffect 1048, AREA, strnpcinfo(3);
+	specialeffect 992, AREA, strnpcinfo(3);
+	setnpctimer 0;
+	end;
 }
 
 new_1-1,54,143,7	script	#RoyalWizardBook_portal_2	10373,{
+	end;
+
+OnInit:
+	specialeffect 1048, AREA, strnpcinfo(3);
+	specialeffect 992, AREA, strnpcinfo(3);
+	initnpctimer;
+	end;
+
+OnTimer4300:
+	removespecialeffect 1048, AREA, strnpcinfo(3);
+	removespecialeffect 992, AREA, strnpcinfo(3);
+	specialeffect 1048, AREA, strnpcinfo(3);
+	specialeffect 992, AREA, strnpcinfo(3);
+	setnpctimer 0;
 	end;
 }
 
 new_1-1,68,147,1	script	Royal High Wizard#portal_3	10468,{
 	end;
+
+OnInit:
+	specialeffect 1048, AREA, strnpcinfo(3);
+	specialeffect 992, AREA, strnpcinfo(3);
+	initnpctimer;
+	end;
+
+OnTimer4600:
+	removespecialeffect 1048, AREA, strnpcinfo(3);
+	removespecialeffect 992, AREA, strnpcinfo(3);
+	specialeffect 1048, AREA, strnpcinfo(3);
+	specialeffect 992, AREA, strnpcinfo(3);
+	setnpctimer 0;
+	end;
 }
 
 new_1-1,67,146,1	script	#RoyalWizardBook_portal_3	10373,{
+	end;
+
+OnInit:
+	specialeffect 1048, AREA, strnpcinfo(3);
+	specialeffect 992, AREA, strnpcinfo(3);
+	initnpctimer;
+	end;
+
+OnTimer5000:
+	removespecialeffect 1048, AREA, strnpcinfo(3);
+	removespecialeffect 992, AREA, strnpcinfo(3);
+	specialeffect 1048, AREA, strnpcinfo(3);
+	specialeffect 992, AREA, strnpcinfo(3);
+	setnpctimer 0;
 	end;
 }
 
@@ -843,7 +927,7 @@ new_1-1,140,112,4	script	Royal Guard Erart	420,{
 // General, Milon lance la quete tutoriel sur new_1-1.
 // Il envoie ensuite le joueur vers Sagard.
 //============================================================
-new_1-1,57,120,4	script	General, Milon	10382,5,5,{
+new_1-1,57,120,4	script	General, Milon	10382,3,3,{
 	goto L_Tuto1Dialog;
 
 OnTouch:
