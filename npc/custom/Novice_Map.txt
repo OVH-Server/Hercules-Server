@@ -569,7 +569,6 @@ new_1-1,65,115,4	script	Alfan	735,{
 	mes "[^0000FFAlfan^000000]";
 	mes "He must have sent you to me so I can take you to Captain Sagard.";
 	mes "I am proud he chose me for this post.";
-	mes "Not every wizard knows the mount invocation spell, you know!";
 	next;
 	select("Mount invocation?");
 	mes "[^0000FF" + strcharinfo(PC_NAME) + "^000000]";
@@ -628,8 +627,7 @@ new_1-1,65,115,4	script	Alfan	735,{
 
 	close2;
 
-	warp "new_1-1",65,114;
-	sleep2 250;
+	callsub S_MoveToSagard, 65,114, 1000;
 	unittalk(getnpcid("Alfan"), "Hold tight! I will send you to Captain Sagard!", true);
 	sleep2 500;
 	callsub S_MoveToSagard, 76,113, 2500;
@@ -1034,9 +1032,16 @@ OnInit:
 	end;
 
 OnTimer30000:
-	if (!.Milon_DialogOpen)
-		npctalk "Adventurer! Do not stay here! Quick! Come to me!";
-	initnpctimer;
+	npctalk "Adventurer! Do not stay here!";
+	end;
+
+OnTimer32000:
+	npctalk "Quick!";
+	end;
+
+OnTimer34000:
+	npctalk "Come to me!";
+	setnpctimer 4000;
 	end;
 
 OnPCLogoutEvent:
