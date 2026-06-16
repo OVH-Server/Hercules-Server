@@ -2,7 +2,7 @@
 // Initial player spawn: 53,111
 
 // Custom novice tutorial map.
-// Portail - effets interessants a retenir: 915, 923, 927, 994, 1025, 1062, 1064, 1066, 1068, 1080, 1083.
+// Portail - effets interessants a retenir: 994, 1025, 1062, 1064, 1068, 1080.
 // Quest state:
 // Novice_Tuto_State 0 = not started
 // Novice_Tuto_State 1 = sent to Sagard
@@ -43,51 +43,6 @@ OnTimer4100:
 }
 
 new_1-1,61,139,0	script	#NoviceSpawnPortalB	HIDDEN_NPC,{ end; }
-
-// Pulse central du portail: effet 923 toutes les 5 secondes.
-new_1-1,61,139,0	script	#NovicePortalCenterPulse	HIDDEN_NPC,{
-	end;
-
-OnInit:
-	initnpctimer;
-	end;
-
-OnTimer5000:
-	specialeffect 923, AREA, "#NovicePortalCenterPulse";
-	stopnpctimer;
-	initnpctimer;
-	end;
-}
-
-// Pulse central du portail: effet 927 toutes les 10 secondes.
-new_1-1,61,139,0	script	#NovicePortalCenterBurst	HIDDEN_NPC,{
-	end;
-
-OnInit:
-	initnpctimer;
-	end;
-
-OnTimer10000:
-	specialeffect 927, AREA, "#NovicePortalCenterBurst";
-	stopnpctimer;
-	initnpctimer;
-	end;
-}
-
-// Pulse central du portail: effet 915 toutes les 30 secondes.
-new_1-1,61,139,0	script	#NovicePortalCenterWave	HIDDEN_NPC,{
-	end;
-
-OnInit:
-	initnpctimer;
-	end;
-
-OnTimer30000:
-	specialeffect 915, AREA, "#NovicePortalCenterWave";
-	stopnpctimer;
-	initnpctimer;
-	end;
-}
 
 // Pulse central du portail: effet 840 toutes les secondes.
 new_1-1,61,139,0	script	#NovicePortalCenterCore	HIDDEN_NPC,{
@@ -371,125 +326,6 @@ new_1-1,58,134,0	script	#NovicePortalOuterRing30	HIDDEN_NPC,{ end; }
 new_1-1,56,136,0	script	#NovicePortalOuterRing31	HIDDEN_NPC,{ end; }
 new_1-1,56,142,0	script	#NovicePortalOuterRing32	HIDDEN_NPC,{ end; }
 
-// Sparks lointains autour du portail: 1066 puis 1083 pendant 5 secondes, aleatoire toutes les 2 secondes.
-new_1-1,61,139,0	script	#NovicePortalFarSparks	HIDDEN_NPC,{
-	end;
-
-OnInit:
-	setarray .FarSpark1066$[0],
-		"#NoviceFarSpark1066_01", "#NoviceFarSpark1066_02", "#NoviceFarSpark1066_03", "#NoviceFarSpark1066_04", "#NoviceFarSpark1066_05",
-		"#NoviceFarSpark1066_06", "#NoviceFarSpark1066_07", "#NoviceFarSpark1066_08", "#NoviceFarSpark1066_09", "#NoviceFarSpark1066_10",
-		"#NoviceFarSpark1066_11", "#NoviceFarSpark1066_12", "#NoviceFarSpark1066_13", "#NoviceFarSpark1066_14", "#NoviceFarSpark1066_15",
-		"#NoviceFarSpark1066_16", "#NoviceFarSpark1066_17", "#NoviceFarSpark1066_18", "#NoviceFarSpark1066_19", "#NoviceFarSpark1066_20",
-		"#NoviceFarSpark1066_21", "#NoviceFarSpark1066_22", "#NoviceFarSpark1066_23", "#NoviceFarSpark1066_24", "#NoviceFarSpark1066_25",
-		"#NoviceFarSpark1066_26", "#NoviceFarSpark1066_27", "#NoviceFarSpark1066_28", "#NoviceFarSpark1066_29", "#NoviceFarSpark1066_30",
-		"#NoviceFarSpark1066_31", "#NoviceFarSpark1066_32", "#NoviceFarSpark1066_33", "#NoviceFarSpark1066_34", "#NoviceFarSpark1066_35",
-		"#NoviceFarSpark1066_36", "#NoviceFarSpark1066_37", "#NoviceFarSpark1066_38", "#NoviceFarSpark1066_39", "#NoviceFarSpark1066_40",
-		"#NoviceFarSpark1066_41", "#NoviceFarSpark1066_42", "#NoviceFarSpark1066_43", "#NoviceFarSpark1066_44", "#NoviceFarSpark1066_45",
-		"#NoviceFarSpark1066_46", "#NoviceFarSpark1066_47", "#NoviceFarSpark1066_48", "#NoviceFarSpark1066_49", "#NoviceFarSpark1066_50";
-	.BatchId = 0;
-	initnpctimer;
-	end;
-
-OnTimer2000:
-	if (.BatchId == 0)
-		deletearray .Batch0$[0], getarraysize(.Batch0$);
-	else if (.BatchId == 1)
-		deletearray .Batch1$[0], getarraysize(.Batch1$);
-	else
-		deletearray .Batch2$[0], getarraysize(.Batch2$);
-	for (.@i = 0; .@i < 6; .@i++) {
-		.@spark$ = .FarSpark1066$[rand(getarraysize(.FarSpark1066$))];
-		specialeffect 1066, AREA, .@spark$;
-		specialeffect 1083, AREA, .@spark$;
-		if (.BatchId == 0)
-			.Batch0$[.@i] = .@spark$;
-		else if (.BatchId == 1)
-			.Batch1$[.@i] = .@spark$;
-		else
-			.Batch2$[.@i] = .@spark$;
-	}
-	if (.BatchId == 0)
-		addtimer 5000, "#NovicePortalFarSparks::OnRemoveBatch0";
-	else if (.BatchId == 1)
-		addtimer 5000, "#NovicePortalFarSparks::OnRemoveBatch1";
-	else
-		addtimer 5000, "#NovicePortalFarSparks::OnRemoveBatch2";
-	.BatchId++;
-	if (.BatchId > 2)
-		.BatchId = 0;
-	setnpctimer 0;
-	end;
-
-OnRemoveBatch0:
-	for (.@i = 0; .@i < getarraysize(.Batch0$); .@i++)
-		removespecialeffect 1083, AREA, .Batch0$[.@i];
-	deletearray .Batch0$[0], getarraysize(.Batch0$);
-	end;
-
-OnRemoveBatch1:
-	for (.@i = 0; .@i < getarraysize(.Batch1$); .@i++)
-		removespecialeffect 1083, AREA, .Batch1$[.@i];
-	deletearray .Batch1$[0], getarraysize(.Batch1$);
-	end;
-
-OnRemoveBatch2:
-	for (.@i = 0; .@i < getarraysize(.Batch2$); .@i++)
-		removespecialeffect 1083, AREA, .Batch2$[.@i];
-	deletearray .Batch2$[0], getarraysize(.Batch2$);
-	end;
-}
-
-new_1-1,61,150,0	script	#NoviceFarSpark1066_01	HIDDEN_NPC,{ end; }
-new_1-1,64,150,0	script	#NoviceFarSpark1066_02	HIDDEN_NPC,{ end; }
-new_1-1,68,149,0	script	#NoviceFarSpark1066_03	HIDDEN_NPC,{ end; }
-new_1-1,71,147,0	script	#NoviceFarSpark1066_04	HIDDEN_NPC,{ end; }
-new_1-1,73,144,0	script	#NoviceFarSpark1066_05	HIDDEN_NPC,{ end; }
-new_1-1,74,141,0	script	#NoviceFarSpark1066_06	HIDDEN_NPC,{ end; }
-new_1-1,74,137,0	script	#NoviceFarSpark1066_07	HIDDEN_NPC,{ end; }
-new_1-1,73,134,0	script	#NoviceFarSpark1066_08	HIDDEN_NPC,{ end; }
-new_1-1,71,131,0	script	#NoviceFarSpark1066_09	HIDDEN_NPC,{ end; }
-new_1-1,68,129,0	script	#NoviceFarSpark1066_10	HIDDEN_NPC,{ end; }
-new_1-1,64,128,0	script	#NoviceFarSpark1066_11	HIDDEN_NPC,{ end; }
-new_1-1,61,128,0	script	#NoviceFarSpark1066_12	HIDDEN_NPC,{ end; }
-new_1-1,58,128,0	script	#NoviceFarSpark1066_13	HIDDEN_NPC,{ end; }
-new_1-1,54,129,0	script	#NoviceFarSpark1066_14	HIDDEN_NPC,{ end; }
-new_1-1,51,131,0	script	#NoviceFarSpark1066_15	HIDDEN_NPC,{ end; }
-new_1-1,49,134,0	script	#NoviceFarSpark1066_16	HIDDEN_NPC,{ end; }
-new_1-1,48,137,0	script	#NoviceFarSpark1066_17	HIDDEN_NPC,{ end; }
-new_1-1,48,141,0	script	#NoviceFarSpark1066_18	HIDDEN_NPC,{ end; }
-new_1-1,49,144,0	script	#NoviceFarSpark1066_19	HIDDEN_NPC,{ end; }
-new_1-1,51,147,0	script	#NoviceFarSpark1066_20	HIDDEN_NPC,{ end; }
-new_1-1,54,149,0	script	#NoviceFarSpark1066_21	HIDDEN_NPC,{ end; }
-new_1-1,58,150,0	script	#NoviceFarSpark1066_22	HIDDEN_NPC,{ end; }
-new_1-1,61,153,0	script	#NoviceFarSpark1066_23	HIDDEN_NPC,{ end; }
-new_1-1,66,153,0	script	#NoviceFarSpark1066_24	HIDDEN_NPC,{ end; }
-new_1-1,70,152,0	script	#NoviceFarSpark1066_25	HIDDEN_NPC,{ end; }
-new_1-1,75,149,0	script	#NoviceFarSpark1066_26	HIDDEN_NPC,{ end; }
-new_1-1,77,145,0	script	#NoviceFarSpark1066_27	HIDDEN_NPC,{ end; }
-new_1-1,79,141,0	script	#NoviceFarSpark1066_28	HIDDEN_NPC,{ end; }
-new_1-1,79,137,0	script	#NoviceFarSpark1066_29	HIDDEN_NPC,{ end; }
-new_1-1,77,133,0	script	#NoviceFarSpark1066_30	HIDDEN_NPC,{ end; }
-new_1-1,75,129,0	script	#NoviceFarSpark1066_31	HIDDEN_NPC,{ end; }
-new_1-1,70,126,0	script	#NoviceFarSpark1066_32	HIDDEN_NPC,{ end; }
-new_1-1,66,125,0	script	#NoviceFarSpark1066_33	HIDDEN_NPC,{ end; }
-new_1-1,61,125,0	script	#NoviceFarSpark1066_34	HIDDEN_NPC,{ end; }
-new_1-1,56,125,0	script	#NoviceFarSpark1066_35	HIDDEN_NPC,{ end; }
-new_1-1,52,126,0	script	#NoviceFarSpark1066_36	HIDDEN_NPC,{ end; }
-new_1-1,47,129,0	script	#NoviceFarSpark1066_37	HIDDEN_NPC,{ end; }
-new_1-1,45,133,0	script	#NoviceFarSpark1066_38	HIDDEN_NPC,{ end; }
-new_1-1,43,137,0	script	#NoviceFarSpark1066_39	HIDDEN_NPC,{ end; }
-new_1-1,43,141,0	script	#NoviceFarSpark1066_40	HIDDEN_NPC,{ end; }
-new_1-1,45,145,0	script	#NoviceFarSpark1066_41	HIDDEN_NPC,{ end; }
-new_1-1,47,149,0	script	#NoviceFarSpark1066_42	HIDDEN_NPC,{ end; }
-new_1-1,52,152,0	script	#NoviceFarSpark1066_43	HIDDEN_NPC,{ end; }
-new_1-1,56,153,0	script	#NoviceFarSpark1066_44	HIDDEN_NPC,{ end; }
-new_1-1,61,156,0	script	#NoviceFarSpark1066_45	HIDDEN_NPC,{ end; }
-new_1-1,69,155,0	script	#NoviceFarSpark1066_46	HIDDEN_NPC,{ end; }
-new_1-1,81,145,0	script	#NoviceFarSpark1066_47	HIDDEN_NPC,{ end; }
-new_1-1,81,133,0	script	#NoviceFarSpark1066_48	HIDDEN_NPC,{ end; }
-new_1-1,69,123,0	script	#NoviceFarSpark1066_49	HIDDEN_NPC,{ end; }
-new_1-1,53,123,0	script	#NoviceFarSpark1066_50	HIDDEN_NPC,{ end; }
 
 //============================================================
 // MAP: NEW_1-1
