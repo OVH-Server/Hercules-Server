@@ -356,10 +356,10 @@ OnInit:
 	initnpctimer;
 	end;
 
-OnTimer1000:
+OnTimer500:
 	specialeffect 992, AREA, strnpcinfo(3);
 	.AuraTick++;
-	if (.AuraTick >= 4) {
+	if (.AuraTick >= 8) {
 		removespecialeffect 1048, AREA, strnpcinfo(3);
 		specialeffect 1048, AREA, strnpcinfo(3);
 		.AuraTick = 0;
@@ -382,10 +382,10 @@ OnInit:
 	initnpctimer;
 	end;
 
-OnTimer1000:
+OnTimer500:
 	specialeffect 992, AREA, strnpcinfo(3);
 	.AuraTick++;
-	if (.AuraTick >= 4) {
+	if (.AuraTick >= 8) {
 		removespecialeffect 1048, AREA, strnpcinfo(3);
 		specialeffect 1048, AREA, strnpcinfo(3);
 		.AuraTick = 0;
@@ -408,10 +408,10 @@ OnInit:
 	initnpctimer;
 	end;
 
-OnTimer1000:
+OnTimer500:
 	specialeffect 992, AREA, strnpcinfo(3);
 	.AuraTick++;
-	if (.AuraTick >= 4) {
+	if (.AuraTick >= 8) {
 		removespecialeffect 1048, AREA, strnpcinfo(3);
 		specialeffect 1048, AREA, strnpcinfo(3);
 		.AuraTick = 0;
@@ -896,12 +896,10 @@ new_1-1,140,112,4	script	Royal Guard Erart	420,{
 // General, Milon lance la quete tutoriel sur new_1-1.
 // Il envoie ensuite le joueur vers Sagard.
 //============================================================
-new_1-1,57,120,4	script	General, Milon	10382,3,3,{
+new_1-1,57,120,4	script	General, Milon	10382,5,5,{
 	goto L_Tuto1Dialog;
 
 OnTouch:
-	if (.Milon_DialogOpen || Novice_Tuto_Done || Novice_Tuto_State >= 1)
-		end;
 	goto L_Tuto1Dialog;
 
 L_Tuto1Dialog:
@@ -913,6 +911,13 @@ L_Tuto1Dialog:
 		Novice_Tuto_Done = 1;
 		mes "What are you waiting for? Run and get equipped!";
 		mes "There is no time to waste!";
+		goto L_MilonClose;
+	}
+
+	if (Novice_Tuto_State >= 1) {
+		mes "Do not stay here!";
+		mes "Go see ^0000FFAlfan^000000.";
+		mes "She will take you to Captain ^0000FFSagard^000000!";
 		goto L_MilonClose;
 	}
 
