@@ -500,7 +500,7 @@ new_1-1,53,123,0	script	#NoviceFarSpark1066_50	HIDDEN_NPC,{ end; }
 // - General, Milon  : Quete Tutoriel 1-1.
 // - Sagard          : Quete Tutoriel 1-2.
 // - Toly            : Quete Demon 1-1.
-// - Higg/Bella      : Quete Demon 1-2.
+// - Bella           : Quete Demon 1-2.
 //============================================================
 
 new_1-1,62,109,4	script	Quest Reset Kafra#new11	4_F_KAFRA1,{
@@ -508,7 +508,7 @@ new_1-1,62,109,4	script	Quest Reset Kafra#new11	4_F_KAFRA1,{
 	mes "Which novice quest do you want to reset?";
 	next;
 
-	switch(select("Reset Milon:Reset Sagard:Reset Toly:Reset Higgs:Reset Bella:Cancel")) {
+	switch(select("Reset Milon:Reset Alfan + Sagard:Reset Toly:Reset Bella:Cancel")) {
 	case 1:
 		Novice_Tuto_State = 0; Novice_Tuto_Done = 0; $Novice_Tuto_RiderBusy = 0;
 		sc_end(SC_ALL_RIDING);
@@ -520,11 +520,15 @@ new_1-1,62,109,4	script	Quest Reset Kafra#new11	4_F_KAFRA1,{
 		mes "Milon has been reset.";
 		close;
 	case 2:
-		Novice_Tuto_State = 1; Novice_Tuto_Done = 0;
+		Novice_Tuto_State = 1; Novice_Tuto_Done = 0; $Novice_Tuto_RiderBusy = 0;
+		sc_end(SC_ALL_RIDING);
+		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND, false);
+		if (countitem(12622) > 0)
+			delitem 12622,1;
 		erasequest 65020;
 		setquest 65020;
 		mes "[^0000FFQuest Reset Kafra^000000]";
-		mes "Sagard has been reset.";
+		mes "Alfan and Sagard have been reset.";
 		close;
 	case 3:
 		Novice_Tuto3_Gone = 0; hideoffnpc "Toly";
@@ -532,10 +536,6 @@ new_1-1,62,109,4	script	Quest Reset Kafra#new11	4_F_KAFRA1,{
 		mes "Toly has been reset.";
 		close;
 	case 4:
-		mes "[^0000FFQuest Reset Kafra^000000]";
-		mes "Higgs has no saved quest state to reset.";
-		close;
-	case 5:
 		Novice_Bella_Talked = 0;
 		mes "[^0000FFQuest Reset Kafra^000000]";
 		mes "Bella has been reset.";
@@ -571,6 +571,7 @@ new_1-1,65,115,4	script	Alfan	735,{
 	mes "I am proud he chose me for this post.";
 	mes "Not every wizard knows the mount invocation spell, you know!";
 	next;
+	select("Mount invocation?");
 	mes "[^0000FF" + strcharinfo(PC_NAME) + "^000000]";
 	mes "Mount invocation?";
 	next;
@@ -608,11 +609,11 @@ new_1-1,65,115,4	script	Alfan	735,{
 	setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND, true);
 	specialeffect 562, AREA, "Alfan";
 	specialeffect 562, AREA, playerattached();
-	sleep2 4000;
+	sleep2 1800;
 	removespecialeffect 562, AREA, "Alfan";
 	removespecialeffect 562, AREA, playerattached();
 	consumeitem 12622;
-	sleep2 1000;
+	sleep2 300;
 
 	if (!hascashmount()) {
 		if (countitem(12622) > 0)
@@ -627,27 +628,21 @@ new_1-1,65,115,4	script	Alfan	735,{
 
 	close2;
 
-	callsub S_MoveToSagard, 62,113, 3000;
-	callsub S_MoveToSagard, 65,114, 3000;
-	sleep2 1000;
+	warp "new_1-1",65,114;
+	sleep2 250;
 	unittalk(getnpcid("Alfan"), "Hold tight! I will send you to Captain Sagard!", true);
-	sleep2 1800;
-	callsub S_MoveToSagard, 68,114, 3000;
-	callsub S_MoveToSagard, 76,113, 3500;
-	callsub S_MoveToSagard, 85,112, 4000;
-	callsub S_MoveToSagard, 95,112, 4500;
-	callsub S_MoveToSagard, 105,112, 4500;
-	callsub S_MoveToSagard, 113,112, 4500;
-	sleep2 1000;
-	callsub S_MoveToSagard, 123,117, 4500;
-	callsub S_MoveToSagard, 128,130, 6500;
-	callsub S_MoveToSagard, 139,133, 5000;
-	callsub S_MoveToSagard, 139,123, 4500;
-	callsub S_MoveToSagard, 134,114, 5000;
-	callsub S_MoveToSagard, 129,105, 5500;
-	callsub S_MoveToSagard, 136,98, 4000;
-	callsub S_MoveToSagard, 142,104, 4500;
-	callsub S_MoveToSagard, 143,113, 4500;
+	sleep2 500;
+	callsub S_MoveToSagard, 76,113, 2500;
+	callsub S_MoveToSagard, 88,112, 3000;
+	callsub S_MoveToSagard, 101,112, 3500;
+	callsub S_MoveToSagard, 114,112, 3500;
+	callsub S_MoveToSagard, 124,116, 3500;
+	callsub S_MoveToSagard, 131,126, 4000;
+	callsub S_MoveToSagard, 139,126, 3500;
+	callsub S_MoveToSagard, 137,116, 3500;
+	callsub S_MoveToSagard, 134,108, 3500;
+	callsub S_MoveToSagard, 141,106, 3000;
+	callsub S_MoveToSagard, 143,113, 3000;
 
 	sc_end(SC_ALL_RIDING);
 	if (countitem(12622) > 0)
@@ -655,7 +650,6 @@ new_1-1,65,115,4	script	Alfan	735,{
 
 	setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND, false);
 	$Novice_Tuto_RiderBusy = 0;
-	message strcharinfo(PC_NAME), "Alfan: you have arrived near Captain Sagard.";
 	end;
 
 S_MoveToSagard:
@@ -721,66 +715,66 @@ new_1-1,58,105,4	script	Lieutenant Amelina	469,{
 -	script	SO_Army_Template	744,{ end; }
 
 // Armee du Lieutenant Amelina: 10 rangees de Royal Guard, sprite 417.
-new_1-1,61,102,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_001	417
-new_1-1,60,102,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_002	417
-new_1-1,59,102,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_003	417
-new_1-1,57,102,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_004	417
-new_1-1,56,102,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_005	417
-new_1-1,55,102,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_006	417
-new_1-1,61,101,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_007	417
-new_1-1,60,101,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_008	417
-new_1-1,59,101,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_009	417
-new_1-1,57,101,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_010	417
-new_1-1,56,101,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_011	417
-new_1-1,55,101,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_012	417
-new_1-1,61,100,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_013	417
-new_1-1,60,100,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_014	417
-new_1-1,59,100,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_015	417
-new_1-1,57,100,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_016	417
-new_1-1,56,100,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_017	417
-new_1-1,55,100,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_018	417
-new_1-1,61,99,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_019	417
-new_1-1,60,99,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_020	417
-new_1-1,59,99,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_021	417
-new_1-1,57,99,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_022	417
-new_1-1,56,99,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_023	417
-new_1-1,55,99,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_024	417
-new_1-1,61,98,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_025	417
-new_1-1,60,98,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_026	417
-new_1-1,59,98,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_027	417
-new_1-1,57,98,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_028	417
-new_1-1,56,98,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_029	417
-new_1-1,55,98,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_030	417
-new_1-1,61,97,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_031	417
-new_1-1,60,97,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_032	417
-new_1-1,59,97,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_033	417
-new_1-1,57,97,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_034	417
-new_1-1,56,97,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_035	417
-new_1-1,55,97,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_036	417
-new_1-1,61,96,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_037	417
-new_1-1,60,96,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_038	417
-new_1-1,59,96,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_039	417
-new_1-1,57,96,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_040	417
-new_1-1,56,96,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_041	417
-new_1-1,55,96,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_042	417
-new_1-1,61,95,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_043	417
-new_1-1,60,95,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_044	417
-new_1-1,59,95,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_045	417
-new_1-1,57,95,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_046	417
-new_1-1,56,95,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_047	417
-new_1-1,55,95,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_048	417
-new_1-1,61,94,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_049	417
-new_1-1,60,94,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_050	417
-new_1-1,59,94,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_051	417
-new_1-1,57,94,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_052	417
-new_1-1,56,94,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_053	417
-new_1-1,55,94,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_054	417
-new_1-1,61,93,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_055	417
-new_1-1,60,93,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_056	417
-new_1-1,59,93,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_057	417
-new_1-1,57,93,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_058	417
-new_1-1,56,93,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_059	417
-new_1-1,55,93,0	duplicate(RG_Amelina_Template)	Royal Guard#amelina_060	417
+new_1-1,61,102,0	duplicate(RG_Amelina_Template)	#amelina_001	417
+new_1-1,60,102,0	duplicate(RG_Amelina_Template)	#amelina_002	417
+new_1-1,59,102,0	duplicate(RG_Amelina_Template)	#amelina_003	417
+new_1-1,57,102,0	duplicate(RG_Amelina_Template)	#amelina_004	417
+new_1-1,56,102,0	duplicate(RG_Amelina_Template)	#amelina_005	417
+new_1-1,55,102,0	duplicate(RG_Amelina_Template)	#amelina_006	417
+new_1-1,61,101,0	duplicate(RG_Amelina_Template)	#amelina_007	417
+new_1-1,60,101,0	duplicate(RG_Amelina_Template)	#amelina_008	417
+new_1-1,59,101,0	duplicate(RG_Amelina_Template)	#amelina_009	417
+new_1-1,57,101,0	duplicate(RG_Amelina_Template)	#amelina_010	417
+new_1-1,56,101,0	duplicate(RG_Amelina_Template)	#amelina_011	417
+new_1-1,55,101,0	duplicate(RG_Amelina_Template)	#amelina_012	417
+new_1-1,61,100,0	duplicate(RG_Amelina_Template)	#amelina_013	417
+new_1-1,60,100,0	duplicate(RG_Amelina_Template)	#amelina_014	417
+new_1-1,59,100,0	duplicate(RG_Amelina_Template)	#amelina_015	417
+new_1-1,57,100,0	duplicate(RG_Amelina_Template)	#amelina_016	417
+new_1-1,56,100,0	duplicate(RG_Amelina_Template)	#amelina_017	417
+new_1-1,55,100,0	duplicate(RG_Amelina_Template)	#amelina_018	417
+new_1-1,61,99,0	duplicate(RG_Amelina_Template)	#amelina_019	417
+new_1-1,60,99,0	duplicate(RG_Amelina_Template)	#amelina_020	417
+new_1-1,59,99,0	duplicate(RG_Amelina_Template)	#amelina_021	417
+new_1-1,57,99,0	duplicate(RG_Amelina_Template)	#amelina_022	417
+new_1-1,56,99,0	duplicate(RG_Amelina_Template)	#amelina_023	417
+new_1-1,55,99,0	duplicate(RG_Amelina_Template)	#amelina_024	417
+new_1-1,61,98,0	duplicate(RG_Amelina_Template)	#amelina_025	417
+new_1-1,60,98,0	duplicate(RG_Amelina_Template)	#amelina_026	417
+new_1-1,59,98,0	duplicate(RG_Amelina_Template)	#amelina_027	417
+new_1-1,57,98,0	duplicate(RG_Amelina_Template)	#amelina_028	417
+new_1-1,56,98,0	duplicate(RG_Amelina_Template)	#amelina_029	417
+new_1-1,55,98,0	duplicate(RG_Amelina_Template)	#amelina_030	417
+new_1-1,61,97,0	duplicate(RG_Amelina_Template)	#amelina_031	417
+new_1-1,60,97,0	duplicate(RG_Amelina_Template)	#amelina_032	417
+new_1-1,59,97,0	duplicate(RG_Amelina_Template)	#amelina_033	417
+new_1-1,57,97,0	duplicate(RG_Amelina_Template)	#amelina_034	417
+new_1-1,56,97,0	duplicate(RG_Amelina_Template)	#amelina_035	417
+new_1-1,55,97,0	duplicate(RG_Amelina_Template)	#amelina_036	417
+new_1-1,61,96,0	duplicate(RG_Amelina_Template)	#amelina_037	417
+new_1-1,60,96,0	duplicate(RG_Amelina_Template)	#amelina_038	417
+new_1-1,59,96,0	duplicate(RG_Amelina_Template)	#amelina_039	417
+new_1-1,57,96,0	duplicate(RG_Amelina_Template)	#amelina_040	417
+new_1-1,56,96,0	duplicate(RG_Amelina_Template)	#amelina_041	417
+new_1-1,55,96,0	duplicate(RG_Amelina_Template)	#amelina_042	417
+new_1-1,61,95,0	duplicate(RG_Amelina_Template)	#amelina_043	417
+new_1-1,60,95,0	duplicate(RG_Amelina_Template)	#amelina_044	417
+new_1-1,59,95,0	duplicate(RG_Amelina_Template)	#amelina_045	417
+new_1-1,57,95,0	duplicate(RG_Amelina_Template)	#amelina_046	417
+new_1-1,56,95,0	duplicate(RG_Amelina_Template)	#amelina_047	417
+new_1-1,55,95,0	duplicate(RG_Amelina_Template)	#amelina_048	417
+new_1-1,61,94,0	duplicate(RG_Amelina_Template)	#amelina_049	417
+new_1-1,60,94,0	duplicate(RG_Amelina_Template)	#amelina_050	417
+new_1-1,59,94,0	duplicate(RG_Amelina_Template)	#amelina_051	417
+new_1-1,57,94,0	duplicate(RG_Amelina_Template)	#amelina_052	417
+new_1-1,56,94,0	duplicate(RG_Amelina_Template)	#amelina_053	417
+new_1-1,55,94,0	duplicate(RG_Amelina_Template)	#amelina_054	417
+new_1-1,61,93,0	duplicate(RG_Amelina_Template)	#amelina_055	417
+new_1-1,60,93,0	duplicate(RG_Amelina_Template)	#amelina_056	417
+new_1-1,59,93,0	duplicate(RG_Amelina_Template)	#amelina_057	417
+new_1-1,57,93,0	duplicate(RG_Amelina_Template)	#amelina_058	417
+new_1-1,56,93,0	duplicate(RG_Amelina_Template)	#amelina_059	417
+new_1-1,55,93,0	duplicate(RG_Amelina_Template)	#amelina_060	417
 
 new_1-1,50,101,4	script	Lieutenant Imayn	469,{
 	mes "[^0000FFLieutenant Imayn^000000]";
@@ -790,66 +784,66 @@ new_1-1,50,101,4	script	Lieutenant Imayn	469,{
 }
 
 // Armee du Lieutenant Imayn: 10 rangees de Royal Guard, sprite 413.
-new_1-1,53,98,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_001	413
-new_1-1,52,98,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_002	413
-new_1-1,51,98,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_003	413
-new_1-1,49,98,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_004	413
-new_1-1,48,98,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_005	413
-new_1-1,47,98,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_006	413
-new_1-1,53,97,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_007	413
-new_1-1,52,97,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_008	413
-new_1-1,51,97,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_009	413
-new_1-1,49,97,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_010	413
-new_1-1,48,97,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_011	413
-new_1-1,47,97,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_012	413
-new_1-1,53,96,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_013	413
-new_1-1,52,96,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_014	413
-new_1-1,51,96,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_015	413
-new_1-1,49,96,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_016	413
-new_1-1,48,96,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_017	413
-new_1-1,47,96,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_018	413
-new_1-1,53,95,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_019	413
-new_1-1,52,95,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_020	413
-new_1-1,51,95,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_021	413
-new_1-1,49,95,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_022	413
-new_1-1,48,95,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_023	413
-new_1-1,47,95,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_024	413
-new_1-1,53,94,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_025	413
-new_1-1,52,94,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_026	413
-new_1-1,51,94,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_027	413
-new_1-1,49,94,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_028	413
-new_1-1,48,94,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_029	413
-new_1-1,47,94,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_030	413
-new_1-1,53,93,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_031	413
-new_1-1,52,93,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_032	413
-new_1-1,51,93,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_033	413
-new_1-1,49,93,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_034	413
-new_1-1,48,93,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_035	413
-new_1-1,47,93,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_036	413
-new_1-1,53,92,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_037	413
-new_1-1,52,92,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_038	413
-new_1-1,51,92,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_039	413
-new_1-1,49,92,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_040	413
-new_1-1,48,92,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_041	413
-new_1-1,47,92,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_042	413
-new_1-1,53,91,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_043	413
-new_1-1,52,91,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_044	413
-new_1-1,51,91,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_045	413
-new_1-1,49,91,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_046	413
-new_1-1,48,91,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_047	413
-new_1-1,47,91,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_048	413
-new_1-1,53,90,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_049	413
-new_1-1,52,90,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_050	413
-new_1-1,51,90,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_051	413
-new_1-1,49,90,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_052	413
-new_1-1,48,90,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_053	413
-new_1-1,47,90,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_054	413
-new_1-1,53,89,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_055	413
-new_1-1,52,89,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_056	413
-new_1-1,51,89,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_057	413
-new_1-1,49,89,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_058	413
-new_1-1,48,89,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_059	413
-new_1-1,47,89,0	duplicate(RG_Imayn_Template)	Royal Guard#imayn_060	413
+new_1-1,53,98,0	duplicate(RG_Imayn_Template)	#imayn_001	413
+new_1-1,52,98,0	duplicate(RG_Imayn_Template)	#imayn_002	413
+new_1-1,51,98,0	duplicate(RG_Imayn_Template)	#imayn_003	413
+new_1-1,49,98,0	duplicate(RG_Imayn_Template)	#imayn_004	413
+new_1-1,48,98,0	duplicate(RG_Imayn_Template)	#imayn_005	413
+new_1-1,47,98,0	duplicate(RG_Imayn_Template)	#imayn_006	413
+new_1-1,53,97,0	duplicate(RG_Imayn_Template)	#imayn_007	413
+new_1-1,52,97,0	duplicate(RG_Imayn_Template)	#imayn_008	413
+new_1-1,51,97,0	duplicate(RG_Imayn_Template)	#imayn_009	413
+new_1-1,49,97,0	duplicate(RG_Imayn_Template)	#imayn_010	413
+new_1-1,48,97,0	duplicate(RG_Imayn_Template)	#imayn_011	413
+new_1-1,47,97,0	duplicate(RG_Imayn_Template)	#imayn_012	413
+new_1-1,53,96,0	duplicate(RG_Imayn_Template)	#imayn_013	413
+new_1-1,52,96,0	duplicate(RG_Imayn_Template)	#imayn_014	413
+new_1-1,51,96,0	duplicate(RG_Imayn_Template)	#imayn_015	413
+new_1-1,49,96,0	duplicate(RG_Imayn_Template)	#imayn_016	413
+new_1-1,48,96,0	duplicate(RG_Imayn_Template)	#imayn_017	413
+new_1-1,47,96,0	duplicate(RG_Imayn_Template)	#imayn_018	413
+new_1-1,53,95,0	duplicate(RG_Imayn_Template)	#imayn_019	413
+new_1-1,52,95,0	duplicate(RG_Imayn_Template)	#imayn_020	413
+new_1-1,51,95,0	duplicate(RG_Imayn_Template)	#imayn_021	413
+new_1-1,49,95,0	duplicate(RG_Imayn_Template)	#imayn_022	413
+new_1-1,48,95,0	duplicate(RG_Imayn_Template)	#imayn_023	413
+new_1-1,47,95,0	duplicate(RG_Imayn_Template)	#imayn_024	413
+new_1-1,53,94,0	duplicate(RG_Imayn_Template)	#imayn_025	413
+new_1-1,52,94,0	duplicate(RG_Imayn_Template)	#imayn_026	413
+new_1-1,51,94,0	duplicate(RG_Imayn_Template)	#imayn_027	413
+new_1-1,49,94,0	duplicate(RG_Imayn_Template)	#imayn_028	413
+new_1-1,48,94,0	duplicate(RG_Imayn_Template)	#imayn_029	413
+new_1-1,47,94,0	duplicate(RG_Imayn_Template)	#imayn_030	413
+new_1-1,53,93,0	duplicate(RG_Imayn_Template)	#imayn_031	413
+new_1-1,52,93,0	duplicate(RG_Imayn_Template)	#imayn_032	413
+new_1-1,51,93,0	duplicate(RG_Imayn_Template)	#imayn_033	413
+new_1-1,49,93,0	duplicate(RG_Imayn_Template)	#imayn_034	413
+new_1-1,48,93,0	duplicate(RG_Imayn_Template)	#imayn_035	413
+new_1-1,47,93,0	duplicate(RG_Imayn_Template)	#imayn_036	413
+new_1-1,53,92,0	duplicate(RG_Imayn_Template)	#imayn_037	413
+new_1-1,52,92,0	duplicate(RG_Imayn_Template)	#imayn_038	413
+new_1-1,51,92,0	duplicate(RG_Imayn_Template)	#imayn_039	413
+new_1-1,49,92,0	duplicate(RG_Imayn_Template)	#imayn_040	413
+new_1-1,48,92,0	duplicate(RG_Imayn_Template)	#imayn_041	413
+new_1-1,47,92,0	duplicate(RG_Imayn_Template)	#imayn_042	413
+new_1-1,53,91,0	duplicate(RG_Imayn_Template)	#imayn_043	413
+new_1-1,52,91,0	duplicate(RG_Imayn_Template)	#imayn_044	413
+new_1-1,51,91,0	duplicate(RG_Imayn_Template)	#imayn_045	413
+new_1-1,49,91,0	duplicate(RG_Imayn_Template)	#imayn_046	413
+new_1-1,48,91,0	duplicate(RG_Imayn_Template)	#imayn_047	413
+new_1-1,47,91,0	duplicate(RG_Imayn_Template)	#imayn_048	413
+new_1-1,53,90,0	duplicate(RG_Imayn_Template)	#imayn_049	413
+new_1-1,52,90,0	duplicate(RG_Imayn_Template)	#imayn_050	413
+new_1-1,51,90,0	duplicate(RG_Imayn_Template)	#imayn_051	413
+new_1-1,49,90,0	duplicate(RG_Imayn_Template)	#imayn_052	413
+new_1-1,48,90,0	duplicate(RG_Imayn_Template)	#imayn_053	413
+new_1-1,47,90,0	duplicate(RG_Imayn_Template)	#imayn_054	413
+new_1-1,53,89,0	duplicate(RG_Imayn_Template)	#imayn_055	413
+new_1-1,52,89,0	duplicate(RG_Imayn_Template)	#imayn_056	413
+new_1-1,51,89,0	duplicate(RG_Imayn_Template)	#imayn_057	413
+new_1-1,49,89,0	duplicate(RG_Imayn_Template)	#imayn_058	413
+new_1-1,48,89,0	duplicate(RG_Imayn_Template)	#imayn_059	413
+new_1-1,47,89,0	duplicate(RG_Imayn_Template)	#imayn_060	413
 
 new_1-1,48,113,4	script	Sir Oweyn	902,{
 	mes "[^0000FFSir Oweyn^000000]";
@@ -857,12 +851,12 @@ new_1-1,48,113,4	script	Sir Oweyn	902,{
 }
 
 // Armee de Sir Oweyn.
-new_1-1,44,112,4	duplicate(SO_Army_Template)	Royal Alchemist#oweyn_001	744
-new_1-1,46,110,6	duplicate(SO_Army_Template)	Royal Alchemist#oweyn_002	740
-new_1-1,43,111,0	duplicate(SO_Army_Template)	Royal Alchemist#oweyn_003	750
-new_1-1,41,111,6	duplicate(SO_Army_Template)	Royal Alchemist#oweyn_004	542
-new_1-1,40,110,6	duplicate(SO_Army_Template)	Royal Alchemist#oweyn_005	542
-new_1-1,42,108,6	duplicate(SO_Army_Template)	Royal Alchemist#oweyn_006	558
+new_1-1,44,112,4	duplicate(SO_Army_Template)	Alchemist Recruit#oweyn_001	744
+new_1-1,46,110,6	duplicate(SO_Army_Template)	Alchemist Recruit#oweyn_002	740
+new_1-1,43,111,0	duplicate(SO_Army_Template)	Alchemist Recruit#oweyn_003	750
+new_1-1,41,111,6	duplicate(SO_Army_Template)	Alchemist Recruit#oweyn_004	542
+new_1-1,40,110,6	duplicate(SO_Army_Template)	Alchemist Recruit#oweyn_005	542
+new_1-1,42,108,6	duplicate(SO_Army_Template)	Alchemist Recruit#oweyn_006	558
 
 new_1-1,46,107,4	script	General, Triston	654,{
 	mes "[^0000FFGeneral, Triston^000000]";
@@ -870,13 +864,13 @@ new_1-1,46,107,4	script	General, Triston	654,{
 }
 
 // Armee de General Triston.
-new_1-1,45,102,0	duplicate(SO_Army_Template)	Royal Bard#triston_001	741
-new_1-1,44,104,0	duplicate(SO_Army_Template)	Royal Crusader#triston_002	745
-new_1-1,43,106,6	duplicate(SO_Army_Template)	Royal Crusader#triston_003	745
+new_1-1,45,102,0	duplicate(SO_Army_Template)	Bard Recruit#triston_001	741
+new_1-1,44,104,0	duplicate(SO_Army_Template)	Crusader Recruit#triston_002	745
+new_1-1,43,106,6	duplicate(SO_Army_Template)	Crusader Recruit#triston_003	745
 new_1-1,41,104,0	duplicate(SO_Army_Template)	Archer Recruit#triston_004	634
 new_1-1,41,103,0	duplicate(SO_Army_Template)	Archer Recruit#triston_005	634
 new_1-1,43,100,0	duplicate(SO_Army_Template)	Swordman Recruit#triston_006	645
-new_1-1,44,100,0	duplicate(SO_Army_Template)	Royal Swordman#triston_007	635
+new_1-1,44,100,0	duplicate(SO_Army_Template)	Swordman Recruit#triston_007	635
 
 new_1-1,66,123,2	script	Saint Azur	936,{
 	mes "[^0000FFSaint Azur^000000]";
