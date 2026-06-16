@@ -503,6 +503,48 @@ new_1-1,53,123,0	script	#NoviceFarSpark1066_50	HIDDEN_NPC,{ end; }
 // - Higg/Bella      : Quete Demon 1-2.
 //============================================================
 
+new_1-1,62,109,4	script	Quest Reset Kafra#new11	4_F_KAFRA1,{
+	mes "[^0000FFQuest Reset Kafra^000000]";
+	mes "Which novice quest do you want to reset?";
+	next;
+
+	switch(select("Reset Milon:Reset Sagard:Reset Toly:Reset Higgs:Reset Bella:Cancel")) {
+	case 1:
+		Novice_Tuto_State = 0; Novice_Tuto_Done = 0; $Novice_Tuto_RiderBusy = 0;
+		sc_end(SC_ALL_RIDING);
+		setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND, false);
+		if (countitem(12622) > 0)
+			delitem 12622,1;
+		erasequest 65020;
+		mes "[^0000FFQuest Reset Kafra^000000]";
+		mes "Milon has been reset.";
+		close;
+	case 2:
+		Novice_Tuto_State = 1; Novice_Tuto_Done = 0;
+		erasequest 65020;
+		setquest 65020;
+		mes "[^0000FFQuest Reset Kafra^000000]";
+		mes "Sagard has been reset.";
+		close;
+	case 3:
+		Novice_Tuto3_Gone = 0; hideoffnpc "Toly";
+		mes "[^0000FFQuest Reset Kafra^000000]";
+		mes "Toly has been reset.";
+		close;
+	case 4:
+		mes "[^0000FFQuest Reset Kafra^000000]";
+		mes "Higgs has no saved quest state to reset.";
+		close;
+	case 5:
+		Novice_Bella_Talked = 0;
+		mes "[^0000FFQuest Reset Kafra^000000]";
+		mes "Bella has been reset.";
+		close;
+	}
+
+	close;
+}
+
 new_1-1,64,117,4	script	Alfan	735,{
 	mes "[^0000FFAlfan^000000]";
 	mes "Honestly, I would not refuse some help with the portal!";
