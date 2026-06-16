@@ -2,7 +2,7 @@
 // Initial player spawn: 53,111
 
 // Custom novice tutorial map.
-// Portail - effets interessants a retenir: 994, 1025, 1062, 1064, 1068, 1080.
+// Portail - effets interessants a retenir: 992, 994, 1025, 1048, 1062, 1064, 1068, 1080.
 // Quest state:
 // Novice_Tuto_State 0 = not started
 // Novice_Tuto_State 1 = sent to Sagard
@@ -54,6 +54,25 @@ OnInit:
 
 OnTimer1000:
 	specialeffect 840, AREA, "#NovicePortalCenterCore";
+	setnpctimer 0;
+	end;
+}
+
+// Aura centrale du portail: effets 1048 et 992 superposes toutes les 10 secondes.
+new_1-1,61,139,0	script	#NovicePortalCenterAura	HIDDEN_NPC,{
+	end;
+
+OnInit:
+	specialeffect 1048, AREA, "#NovicePortalCenterAura";
+	specialeffect 992, AREA, "#NovicePortalCenterAura";
+	initnpctimer;
+	end;
+
+OnTimer10000:
+	removespecialeffect 1048, AREA, "#NovicePortalCenterAura";
+	removespecialeffect 992, AREA, "#NovicePortalCenterAura";
+	specialeffect 1048, AREA, "#NovicePortalCenterAura";
+	specialeffect 992, AREA, "#NovicePortalCenterAura";
 	setnpctimer 0;
 	end;
 }
@@ -325,6 +344,31 @@ new_1-1,64,134,0	script	#NovicePortalOuterRing29	HIDDEN_NPC,{ end; }
 new_1-1,58,134,0	script	#NovicePortalOuterRing30	HIDDEN_NPC,{ end; }
 new_1-1,56,136,0	script	#NovicePortalOuterRing31	HIDDEN_NPC,{ end; }
 new_1-1,56,142,0	script	#NovicePortalOuterRing32	HIDDEN_NPC,{ end; }
+
+// Royal High Wizards autour du portail et leurs livres.
+new_1-1,55,130,5	script	Royal High Wizard#portal_1	10469,{
+	end;
+}
+
+new_1-1,56,131,5	script	#RoyalWizardBook_portal_1	10373,{
+	end;
+}
+
+new_1-1,53,144,7	script	Royal High Wizard#portal_2	10467,{
+	end;
+}
+
+new_1-1,54,143,7	script	#RoyalWizardBook_portal_2	10373,{
+	end;
+}
+
+new_1-1,68,147,1	script	Royal High Wizard#portal_3	10468,{
+	end;
+}
+
+new_1-1,67,146,1	script	#RoyalWizardBook_portal_3	10373,{
+	end;
+}
 
 
 //============================================================
