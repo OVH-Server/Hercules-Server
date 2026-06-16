@@ -441,7 +441,7 @@ new_1-1,62,109,4	script	Quest Reset Kafra#new11	4_F_KAFRA1,{
 	mes "Which novice quest do you want to reset?";
 	next;
 
-	switch(select("Reset Milon:Reset Alfan + Sagard:Reset Toly:Reset Bella:Cancel")) {
+	switch(select("Reset Milon:Reset Alfan + Sagard:Reset Toly:Reset Bella:Reset Cynthia:Reset Saint Azur:Reset General David:Reset Sir Oweyn:Reset General Triston:Reset All Recommendations:Cancel")) {
 	case 1:
 		Novice_Tuto_State = 0; Novice_Tuto_Done = 0; $Novice_Tuto_RiderBusy = 0;
 		sc_end(SC_ALL_RIDING);
@@ -472,6 +472,43 @@ new_1-1,62,109,4	script	Quest Reset Kafra#new11	4_F_KAFRA1,{
 		Novice_Bella_Talked = 0;
 		mes "[^0000FFQuest Reset Kafra^000000]";
 		mes "Bella has been reset.";
+		close;
+	case 5:
+		Novice_Cynthia_Quest = 0;
+		erasequest 65021;
+		mes "[^0000FFQuest Reset Kafra^000000]";
+		mes "Cynthia has been reset.";
+		close;
+	case 6:
+		Novice_Cynthia_Quest = 1;
+		erasequest 65021;
+		setquest 65021;
+		mes "[^0000FFQuest Reset Kafra^000000]";
+		mes "Saint Azur has been reset.";
+		close;
+	case 7:
+		Novice_David_Recommendation = 0;
+		mes "[^0000FFQuest Reset Kafra^000000]";
+		mes "General David has been reset.";
+		close;
+	case 8:
+		Novice_Oweyn_Recommendation = 0;
+		mes "[^0000FFQuest Reset Kafra^000000]";
+		mes "Sir Oweyn has been reset.";
+		close;
+	case 9:
+		Novice_Triston_Recommendation = 0;
+		mes "[^0000FFQuest Reset Kafra^000000]";
+		mes "General Triston has been reset.";
+		close;
+	case 10:
+		Novice_Cynthia_Quest = 0;
+		Novice_David_Recommendation = 0;
+		Novice_Oweyn_Recommendation = 0;
+		Novice_Triston_Recommendation = 0;
+		erasequest 65021;
+		mes "[^0000FFQuest Reset Kafra^000000]";
+		mes "All recommendation quests have been reset.";
 		close;
 	}
 
@@ -613,21 +650,46 @@ S_MoveToSagard:
 new_1-1,51,122,0	script	General David	657,{
 	mes "[^0000FFGeneral David^000000]";
 	mes "Where did you come from, soldier?!";
-	mes "Go hide. You are dead weight on the battlefield!";
+	mes "Move away. You are a dead weight on the battlefield!";
+	next;
+	if (select("Leave:...gulp... I still want to do something!") == 1)
+		close;
+
+	mes "[^0000FFGeneral David^000000]";
+	mes "That is honorable, but reality says otherwise.";
+	mes "What are you capable of accomplishing as you are now? Nothing. Leave.";
+	next;
+	if (select("Accept reality:Let me prove my abilities") == 1)
+		close;
+
+	mes "[^0000FFGeneral David^000000]";
+	mes "Your abilities will be useless against what we are facing here.";
+	mes "You still confuse courage with recklessness, but determination has its place on a battlefield, soldier.";
+
+	if (!Novice_David_Recommendation) {
+		if (!checkweight(7416,1)) {
+			mes "Your inventory is too heavy. Come back after lightening it.";
+			close;
+		}
+		getitem 7416,1;
+		Novice_David_Recommendation = 1;
+	} else {
+		mes "I already gave you my recommendation. Make good use of it.";
+	}
 	close;
 }
 
 new_1-1,49,120,6	script	Saint Rulf	616,{
 	mes "[^0000FFSaint Rulf^000000]";
-	mes "We are part of the Royal Guard.";
-	mes "We are here to defend the kingdom!";
+	mes "Stay away if you value your life.";
+	mes "Progress at your own pace so you can be useful in the battle to come.";
 	close;
 }
 
 new_1-1,48,124,6	script	Saint Olibrand	616,{
 	mes "[^0000FFSaint Olibrand^000000]";
-	mes "We are part of the Royal Guard.";
-	mes "We are here to defend the kingdom!";
+	mes "Go hide.";
+	mes "The weak have no place here.";
 	close;
 }
 
@@ -636,6 +698,18 @@ new_1-1,58,105,4	script	Lieutenant Amelina	469,{
 	mes "We are part of the Royal Guard.";
 	mes "We are here to defend the kingdom!";
 	close;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer119000:
+	npctalk "You are the elite of the kingdom of Prontera. The battle will be fierce, be ready!";
+	end;
+
+OnTimer120000:
+	setnpctimer 0;
+	end;
 }
 
 -	script	RG_Amelina_Template	417,{ end; }
@@ -709,6 +783,19 @@ new_1-1,50,101,4	script	Lieutenant Imayn	469,{
 	mes "We are part of the Royal Guard.";
 	mes "We are here to defend the kingdom!";
 	close;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	npctalk "Soldiers, form ranks! Prepare for battle!";
+	end;
+
+OnTimer120000:
+	npctalk "Soldiers, form ranks! Prepare for battle!";
+	setnpctimer 0;
+	end;
 }
 
 // Armee du Lieutenant Imayn: 10 rangees de Royal Guard, sprite 413.
@@ -775,6 +862,40 @@ new_1-1,47,89,0	duplicate(RG_Imayn_Template)	#imayn_060	413
 
 new_1-1,48,113,4	script	Sir Oweyn	902,{
 	mes "[^0000FFSir Oweyn^000000]";
+	mes "The portal is intensifying little by little. We have very little time left before we lose control.";
+	next;
+	mes "[^0000FFSir Oweyn^000000]";
+	mes "We must show discernment and composure if we are to avoid the dramatic consequences this will bring.";
+	next;
+	mes "[^0000FFSir Oweyn^000000]";
+	mes "You seem interested in the situation. What do you think?";
+	next;
+
+	switch(select("I only seem interested. I am just passing through.:What portal?!?:I am no portal expert, but when we have no idea what awaits us, we should at least be ready to react.")) {
+	case 1:
+		mes "[^0000FFSir Oweyn^000000]";
+		mes "You have that opportunity, and given the direction of events, you... seem... to have made the right choice.";
+		close;
+	case 2:
+		mes "[^0000FFSir Oweyn^000000]";
+		mes "Ahem... Let us work.";
+		close;
+	case 3:
+		mes "[^0000FFSir Oweyn^000000]";
+		mes "Ahah, a welcome display of clarity in this context.";
+		mes "Alchemists! Prepare what is necessary for a significant weakening of the seals, and report the approximate time of the portal's full opening to General Milon!";
+		if (!Novice_Oweyn_Recommendation) {
+			if (!checkweight(7416,1)) {
+				mes "Your inventory is too heavy. Come back after lightening it.";
+				close;
+			}
+			getitem 7416,1;
+			Novice_Oweyn_Recommendation = 1;
+		} else {
+			mes "I already gave you my recommendation. Make good use of it.";
+		}
+		close;
+	}
 	close;
 }
 
@@ -788,6 +909,34 @@ new_1-1,42,108,6	duplicate(SO_Army_Template)	Alchemist Recruit#oweyn_006	558
 
 new_1-1,46,107,4	script	General, Triston	654,{
 	mes "[^0000FFGeneral, Triston^000000]";
+	mes "You are on a battlefield, adventurer. State your identity:";
+	next;
+	if (select("Act as if I were not here.:" + strcharinfo(PC_NAME) + ", General.") == 1)
+		close;
+
+	mes "[^0000FFGeneral, Triston^000000]";
+	mes strcharinfo(PC_NAME) + ", and which regiment are you affiliated with?";
+	next;
+	mes "[^0000FF" + strcharinfo(PC_NAME) + "^000000]";
+	mes "None, General. I have only just arrived.";
+	next;
+	mes "[^0000FFGeneral, Triston^000000]";
+	mes "Only just arrived...";
+	mes "I have protected this kingdom with the same fervor for decades, and at this very moment it faces an attack of unprecedented scale.";
+	next;
+	mes "[^0000FFGeneral, Triston^000000]";
+	mes "Return when you are worthy of protecting anything at all, and be ready to sacrifice yourself for the common good.";
+
+	if (!Novice_Triston_Recommendation) {
+		if (!checkweight(7416,1)) {
+			mes "Your inventory is too heavy. Come back after lightening it.";
+			close;
+		}
+		getitem 7416,1;
+		Novice_Triston_Recommendation = 1;
+	} else {
+		mes "I already gave you my recommendation. Make good use of it.";
+	}
 	close;
 }
 
@@ -805,19 +954,66 @@ new_1-1,66,123,2	script	Saint Azur	936,{
 	mes "I am here to help keep the soldiers alive!";
 	mes "You should focus on getting equipped and come back to help us.";
 	mes "Go see ^0000FFGeneral Milon^000000. He will be glad to guide you!";
+
+	if (Novice_Cynthia_Quest == 1) {
+		next;
+		if (select("Ah, thank you. I will go see him.:Cynthia advised me to come see you. I have great respect for healers.") == 2) {
+			mes "[^0000FFSaint Azur^000000]";
+			mes "What a thoughtful child. Here, life is precious.";
+			if (!checkweight(7416,1)) {
+				mes "Your inventory is too heavy. Come back after lightening it.";
+				close;
+			}
+			getitem 7416,1;
+			Novice_Cynthia_Quest = 2;
+			if (questprogress(65021))
+				completequest 65021;
+			close;
+		}
+	}
 	close;
 }
 
 new_1-1,61,124,2	script	Yda, the Cold	655,{
 	mes "[^0000FFYda, the Cold^000000]";
-	mes "Leave me alone. I do not deal with little ones...";
+	emotion e_sigh;
+	mes "Well, well, what do we have here...";
+	next;
+	mes "[^0000FFYda, the Cold^000000]";
+	mes "I do not do babysitting. Leave me alone.";
 	close;
 }
 
 new_1-1,66,108,2	script	Cynthia	601,{
 	mes "[^0000FFCynthia^000000]";
-	mes "We are part of the Royal Guard.";
-	mes "We are here to defend the kingdom!";
+	mes "Hello, I am Cynthia, in charge of logistics and supplies.";
+	next;
+	mes "[^0000FFCynthia^000000]";
+	mes "This event is, let us say... alarming. We must do everything we can to avoid being overwhelmed, or it will be catastrophic.";
+	next;
+	mes "[^0000FFCynthia^000000]";
+	mes "I strongly advise you to go see General Milon, and if you already have...";
+	mes "Take the opportunity to meet the elite of Prontera's army gathered here.";
+	next;
+	mes "[^0000FFCynthia^000000]";
+	mes "Some are more atypical, but they are worth speaking to.";
+
+	if (!Novice_Cynthia_Quest) {
+		Novice_Cynthia_Quest = 1;
+		if (!questprogress(65021))
+			setquest 65021;
+		next;
+		mes "[^0000FFCynthia^000000]";
+		mes "Quest started: ^0000FFEquipment for Recommendations!^000000";
+	} else if (Novice_Cynthia_Quest == 1) {
+		next;
+		mes "[^0000FFCynthia^000000]";
+		mes "Go speak with ^0000FFSaint Azur^000000. He can surely help you.";
+	} else {
+		next;
+		mes "[^0000FFCynthia^000000]";
+		mes "Thank you for taking the time to meet Saint Azur.";
+	}
 	close;
 }
 
