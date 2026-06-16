@@ -382,7 +382,7 @@ OnTimer3900:
 	end;
 }
 
-new_1-1,54,143,7	script	#RoyalWizardBook_portal_2	10373,{
+new_1-1,54,142,1	script	#RoyalWizardBook_portal_2	10373,{
 	end;
 }
 
@@ -402,7 +402,7 @@ OnTimer4600:
 	end;
 }
 
-new_1-1,67,146,1	script	#RoyalWizardBook_portal_3	10373,{
+new_1-1,67,145,7	script	#RoyalWizardBook_portal_3	10373,{
 	end;
 }
 
@@ -417,12 +417,18 @@ OnInit:
 	initnpctimer;
 	end;
 
-OnTimer1000:
+OnTimer900:
 	for (.@i = 0; .@i < getarraysize(.WizardTarget$); .@i++) {
 		removespecialeffect 992, AREA, .WizardTarget$[.@i];
+	}
+	end;
+
+OnTimer1000:
+	for (.@i = 0; .@i < getarraysize(.WizardTarget$); .@i++) {
 		specialeffect 992, AREA, .WizardTarget$[.@i];
 	}
-	setnpctimer 0;
+	stopnpctimer;
+	initnpctimer;
 	end;
 }
 
