@@ -407,9 +407,6 @@ new_1-1,65,115,4	script	Alfan	735,{
 	mes "I am proud he chose me for this post.";
 	next;
 	select("Mount invocation?");
-	mes "[^0000FF" + strcharinfo(PC_NAME) + "^000000]";
-	mes "Mount invocation?";
-	next;
 	mes "[^0000FFAlfan^000000]";
 	mes "Yes, yes, and I can say I master it rather well.";
 	mes "When the time comes, come back to me and I will summon a mount especially for you!";
