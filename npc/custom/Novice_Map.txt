@@ -352,6 +352,7 @@ new_1-1,55,130,7	script	Royal High Wizard#portal_1	10469,{
 OnInit:
 	specialeffect 1048, AREA, strnpcinfo(3);
 	specialeffect 992, AREA, strnpcinfo(3);
+	addtimer 1000, "Royal High Wizard#portal_1::On992Loop";
 	initnpctimer;
 	end;
 
@@ -359,6 +360,11 @@ OnTimer3200:
 	removespecialeffect 1048, AREA, strnpcinfo(3);
 	specialeffect 1048, AREA, strnpcinfo(3);
 	setnpctimer 0;
+	end;
+
+On992Loop:
+	specialeffect 992, AREA, strnpcinfo(3);
+	addtimer 1000, "Royal High Wizard#portal_1::On992Loop";
 	end;
 }
 
@@ -372,6 +378,7 @@ new_1-1,53,144,5	script	Royal High Wizard#portal_2	10467,{
 OnInit:
 	specialeffect 1048, AREA, strnpcinfo(3);
 	specialeffect 992, AREA, strnpcinfo(3);
+	addtimer 1000, "Royal High Wizard#portal_2::On992Loop";
 	initnpctimer;
 	end;
 
@@ -380,9 +387,14 @@ OnTimer3900:
 	specialeffect 1048, AREA, strnpcinfo(3);
 	setnpctimer 0;
 	end;
+
+On992Loop:
+	specialeffect 992, AREA, strnpcinfo(3);
+	addtimer 1000, "Royal High Wizard#portal_2::On992Loop";
+	end;
 }
 
-new_1-1,54,142,1	script	#RoyalWizardBook_portal_2	10373,{
+new_1-1,54,143,5	script	#RoyalWizardBook_portal_2	10373,{
 	end;
 }
 
@@ -392,6 +404,7 @@ new_1-1,68,147,3	script	Royal High Wizard#portal_3	10468,{
 OnInit:
 	specialeffect 1048, AREA, strnpcinfo(3);
 	specialeffect 992, AREA, strnpcinfo(3);
+	addtimer 1000, "Royal High Wizard#portal_3::On992Loop";
 	initnpctimer;
 	end;
 
@@ -400,38 +413,16 @@ OnTimer4600:
 	specialeffect 1048, AREA, strnpcinfo(3);
 	setnpctimer 0;
 	end;
-}
 
-new_1-1,67,145,7	script	#RoyalWizardBook_portal_3	10373,{
+On992Loop:
+	specialeffect 992, AREA, strnpcinfo(3);
+	addtimer 1000, "Royal High Wizard#portal_3::On992Loop";
 	end;
 }
 
-new_1-1,61,139,0	script	#RoyalWizardPortal992Loop	HIDDEN_NPC,{
-	end;
-
-OnInit:
-	setarray .WizardTarget$[0],
-		"Royal High Wizard#portal_1",
-		"Royal High Wizard#portal_2",
-		"Royal High Wizard#portal_3";
-	initnpctimer;
-	end;
-
-OnTimer900:
-	for (.@i = 0; .@i < getarraysize(.WizardTarget$); .@i++) {
-		removespecialeffect 992, AREA, .WizardTarget$[.@i];
-	}
-	end;
-
-OnTimer1000:
-	for (.@i = 0; .@i < getarraysize(.WizardTarget$); .@i++) {
-		specialeffect 992, AREA, .WizardTarget$[.@i];
-	}
-	stopnpctimer;
-	initnpctimer;
+new_1-1,67,146,3	script	#RoyalWizardBook_portal_3	10373,{
 	end;
 }
-
 
 //============================================================
 // MAP: NEW_1-1
