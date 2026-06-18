@@ -446,7 +446,7 @@ new_1-1,62,109,4	script	Quest Reset Kafra#new11	4_F_KAFRA1,{
 		mes "[^0000FFQuest Reset Kafra^000000]";
 		mes "Which main tutorial step do you want to reset?";
 		next;
-		switch(select("Reset Milon:Reset Alfan + Sagard:Back")) {
+		switch(select("Reset Milon:Reset Alfan + Sagard:Reset quete tuto Olga:Back")) {
 		case 1:
 			Novice_Tuto_State = 0; Novice_Tuto_Done = 0; Novice_Tuto_RiderBusy = 0;
 			sc_end(SC_ALL_RIDING);
@@ -467,6 +467,11 @@ new_1-1,62,109,4	script	Quest Reset Kafra#new11	4_F_KAFRA1,{
 			setquest 65020;
 			mes "[^0000FFQuest Reset Kafra^000000]";
 			mes "Alfan and Sagard have been reset.";
+			close;
+		case 3:
+			callfunc "F_ResetTutoOlga";
+			mes "[^0000FFQuest Reset Kafra^000000]";
+			mes "Quete tuto Olga has been reset.";
 			close;
 		}
 		close;
@@ -530,6 +535,45 @@ new_1-1,62,109,4	script	Quest Reset Kafra#new11	4_F_KAFRA1,{
 	}
 
 	close;
+}
+
+function	script	F_ResetTutoOlga	{
+	if (Tuto1_State == 30 && countitem(7426) > 0)
+		delitem 7426,1;
+
+	Tuto1_State = 0;
+	Tuto1_Poring = 0;
+	Tuto1_Chonchon = 0;
+	Tuto1_Willow = 0;
+	Tuto1_Condor = 0;
+	Tuto1_Pillar = 0;
+	Tuto1_Pillar_Level = 0;
+	Tuto1_Plant = 0;
+	Tuto1_Rock = 0;
+	Tuto1_Archaeo = 0;
+	Tuto1_Poring_Done = 0;
+	Tuto1_Chonchon_Done = 0;
+	Tuto1_Willow_Done = 0;
+	Tuto1_Condor_Done = 0;
+	Tuto1_Pillar_Done = 0;
+	Tuto1_Resource_Done = 0;
+	Tuto1_PlantNode1 = 0;
+	Tuto1_PlantNode2 = 0;
+	Tuto1_PlantNode3 = 0;
+	Tuto1_RockNode1 = 0;
+	Tuto1_RockNode2 = 0;
+	Tuto1_RockNode3 = 0;
+	Tuto1_ArchaeoNode1 = 0;
+	Tuto1_First_Done = 0;
+
+	if (questprogress(65000))
+		erasequest 65000;
+	if (questprogress(65001))
+		erasequest 65001;
+	if (questprogress(65002))
+		erasequest 65002;
+
+	return;
 }
 
 new_1-1,65,115,4	script	Alfan	735,{
