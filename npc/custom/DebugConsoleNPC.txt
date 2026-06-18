@@ -225,14 +225,34 @@ function	script	F_DebugResetContracts	{
 function	script	F_DebugResetTutos	{
 	Tuto1_State = 0;
 	Tuto1_Poring = 0;
-	Tuto1_Lunatic = 0;
-	Tuto1_Checkpoint = 0;
-	Tuto1_Jellopy_Last = 0;
-	Tuto1_Jellopy_Timer = 0;
+	Tuto1_Chonchon = 0;
+	Tuto1_Willow = 0;
+	Tuto1_Condor = 0;
+	Tuto1_Pillar = 0;
+	Tuto1_Pillar_Level = 0;
+	Tuto1_Plant = 0;
+	Tuto1_Rock = 0;
+	Tuto1_Archaeo = 0;
 	Tuto1_Poring_Done = 0;
-	Tuto1_Lunatic_Done = 0;
+	Tuto1_Chonchon_Done = 0;
+	Tuto1_Willow_Done = 0;
+	Tuto1_Condor_Done = 0;
+	Tuto1_Pillar_Done = 0;
+	Tuto1_Resource_Done = 0;
+	Tuto1_PlantNode1 = 0;
+	Tuto1_PlantNode2 = 0;
+	Tuto1_PlantNode3 = 0;
+	Tuto1_RockNode1 = 0;
+	Tuto1_RockNode2 = 0;
+	Tuto1_RockNode3 = 0;
+	Tuto1_ArchaeoNode1 = 0;
 	Tuto1_First_Done = 0;
-	Tuto1_Jellopy_Done = 0;
+	if (questprogress(65000))
+		erasequest 65000;
+	if (questprogress(65001))
+		erasequest 65001;
+	if (questprogress(65002))
+		erasequest 65002;
 
 	Tuto2_State = 0;
 	$Tuto2_TaxiBusy = 0;

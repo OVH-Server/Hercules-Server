@@ -2532,18 +2532,23 @@ new_1-2,38,183,4	script	Olga	4_F_KAFRA1,5,5,{
 
 	if (Tuto1_State == 0) {
 		mes "Come closer, adventurer.";
-		mes "I have your first real quest to give you.";
+		mes "This world is still young, and every hand can shape it.";
 		next;
 		mes "[^0000FFOlga^000000]";
-		mes "You will have to cross the bridge, kill monsters, feed a Pillar of Ascension, and prepare your good deed...";
-		mes "Or not.";
+		mes "Today, you will bring the first stone to the great edifice of its creation.";
+		mes "Prove first that you can protect these lands.";
+		next;
+		mes "[^0000FFOlga^000000]";
+		mes "Defeat:";
+		mes "5 Poring";
+		mes "5 Chonchon";
+		mes "5 Willow";
+		mes "5 Condor";
 		next;
 		mes "[^0000FFOlga^000000]";
 		mes "Reward:";
-		mes "10,000 Zeny";
-		mes "200 Novice Potion";
-		mes "50 Fly Wing";
-		mes "5 Butterfly Wing";
+		mes "100,000 Zeny";
+		mes "1 Halter Lead";
 		next;
 
 		if (select("Accept:Decline") == 2) {
@@ -2561,75 +2566,67 @@ new_1-2,38,183,4	script	Olga	4_F_KAFRA1,5,5,{
 
 		Tuto1_State = 10;
 		Tuto1_Poring = 0;
-		Tuto1_Lunatic = 0;
-		Tuto1_Checkpoint = 0;
-		Tuto1_Jellopy_Last = -1;
-		Tuto1_Jellopy_Timer = 0;
+		Tuto1_Chonchon = 0;
+		Tuto1_Willow = 0;
+		Tuto1_Condor = 0;
+		Tuto1_Pillar = 0;
+		Tuto1_Pillar_Level = 0;
+		Tuto1_Plant = 0;
+		Tuto1_Rock = 0;
+		Tuto1_Archaeo = 0;
 		Tuto1_Poring_Done = 0;
-		Tuto1_Lunatic_Done = 0;
+		Tuto1_Chonchon_Done = 0;
+		Tuto1_Willow_Done = 0;
+		Tuto1_Condor_Done = 0;
+		Tuto1_Pillar_Done = 0;
+		Tuto1_Resource_Done = 0;
+		Tuto1_PlantNode1 = 0;
+		Tuto1_PlantNode2 = 0;
+		Tuto1_PlantNode3 = 0;
+		Tuto1_RockNode1 = 0;
+		Tuto1_RockNode2 = 0;
+		Tuto1_RockNode3 = 0;
+		Tuto1_ArchaeoNode1 = 0;
 		Tuto1_First_Done = 0;
-		Tuto1_Jellopy_Done = 0;
 
 		setquest 65000;
 
-		message strcharinfo(PC_NAME), "Tutorial Quest: Poring 0/2, Lunatic 0/2, Location 0/1.";
+		message strcharinfo(PC_NAME), "Tutorial Quest: Poring 0/5, Chonchon 0/5, Willow 0/5, Condor 0/5.";
 
 		mes "[^0000FFOlga^000000]";
 		mes "Quest started.";
 		mes "The monster kills are visible in your quest list.";
-		mes "Once everything is done, go speak with Olgi.";
+		mes "Once they are all defeated, go speak with Olgi.";
 		close;
 	}
 
 	if (Tuto1_State == 10) {
 		mes "Current task:";
-		mes "Poring: " + Tuto1_Poring + "/2";
-		mes "Lunatic: " + Tuto1_Lunatic + "/2";
-		mes "Location: " + Tuto1_Checkpoint + "/1";
-		mes "Olgi will validate this part.";
+		mes "Poring: " + Tuto1_Poring + "/5";
+		mes "Chonchon: " + Tuto1_Chonchon + "/5";
+		mes "Willow: " + Tuto1_Willow + "/5";
+		mes "Condor: " + Tuto1_Condor + "/5";
+		mes "Olgi will guide you after the monsters are defeated.";
 		close;
 	}
 
 	if (Tuto1_State == 20) {
-		mes "Olgi validated your first task.";
-		mes "Go speak with Olgu.";
+		mes "Olgi asked you to gather resources for stones filled with magic.";
+		mes "Plants: " + Tuto1_Plant + "/3";
+		mes "Rocks: " + Tuto1_Rock + "/3";
+		mes "Archaeological secret: " + Tuto1_Archaeo + "/1";
 		close;
 	}
 
 	if (Tuto1_State == 30) {
-		.@jellopy = countitem(909);
-		if (.@jellopy > 5)
-			.@jellopy = 5;
+		mes "Olgi asked you to feed the Pillar of Ascension with magical energy.";
+		mes "Find the pillar on the next map.";
+		close;
+	}
 
-		mes "Olgu sent you back to me.";
-		mes "Bring me 5 Jellopy.";
-		mes "Current progress: " + .@jellopy + "/5";
-		next;
-
-		if (countitem(909) < 5) {
-			mes "[^0000FFOlga^000000]";
-			mes "You do not have 5 Jellopy yet.";
-			close;
-		}
-
-		delitem 909,5;
-		Zeny += 100000;
-		getitem 12622,1;
-
-		Tuto1_State = 40;
-		Tuto1_Jellopy_Timer = 0;
-		Tuto1_Jellopy_Last = -1;
-		Tuto1_Jellopy_Done = 1;
-
-		completequest 65002;
-
-		message strcharinfo(PC_NAME), "Tutorial Quest: completed.";
-
-		mes "[^0000FFOlga^000000]";
-		mes "Quest complete.";
-		mes "Reward:";
-		mes "100,000 Zeny";
-		mes "1 Halter Lead";
+	if (Tuto1_State == 35) {
+		mes "The pillar has accepted your magical energy.";
+		mes "Go speak with Olgu.";
 		close;
 	}
 
@@ -2656,8 +2653,8 @@ OnTouch:
 // QUETE TUTORIEL 1-3 - SUITE OLGA
 // Objectifs, validation et recompenses de la quete tutoriel 1.
 //============================================================
-new_1-3,99,32,4	script	Olgi	4_M_03,{
-	callfunc "F_DebugConsole","Olgi","Click. State=" + Tuto1_State + " Poring=" + Tuto1_Poring + " Lunatic=" + Tuto1_Lunatic + " Checkpoint=" + Tuto1_Checkpoint;
+new_1-3,95,65,4	script	Olgi	4_M_03,{
+	callfunc "F_DebugConsole","Olgi","Click. State=" + Tuto1_State + " Poring=" + Tuto1_Poring + " Chonchon=" + Tuto1_Chonchon + " Willow=" + Tuto1_Willow + " Condor=" + Tuto1_Condor + " Plant=" + Tuto1_Plant + " Rock=" + Tuto1_Rock + " Archaeo=" + Tuto1_Archaeo + " Pillar=" + Tuto1_Pillar;
 
 	mes "[^0000FFOlgi^000000]";
 
@@ -2671,12 +2668,13 @@ new_1-3,99,32,4	script	Olgi	4_M_03,{
 		mes "Let me check your progress.";
 		next;
 
-		if (Tuto1_Poring < 2 || Tuto1_Lunatic < 2 || Tuto1_Checkpoint < 1) {
+		if (Tuto1_Poring < 5 || Tuto1_Chonchon < 5 || Tuto1_Willow < 5 || Tuto1_Condor < 5) {
 			mes "[^0000FFOlgi^000000]";
 			mes "You are not done yet.";
-			mes "Poring: " + Tuto1_Poring + "/2";
-			mes "Lunatic: " + Tuto1_Lunatic + "/2";
-			mes "Location: " + Tuto1_Checkpoint + "/1";
+			mes "Poring: " + Tuto1_Poring + "/5";
+			mes "Chonchon: " + Tuto1_Chonchon + "/5";
+			mes "Willow: " + Tuto1_Willow + "/5";
+			mes "Condor: " + Tuto1_Condor + "/5";
 			close;
 		}
 
@@ -2684,22 +2682,62 @@ new_1-3,99,32,4	script	Olgi	4_M_03,{
 		completequest 65000;
 		setquest 65001;
 
-		message strcharinfo(PC_NAME), "Tutorial Quest: first task validated. Go speak with Olgu.";
+		message strcharinfo(PC_NAME), "Tutorial Quest: gather 3 plants, mine 3 rocks, and discover 1 archaeological secret.";
 
 		mes "[^0000FFOlgi^000000]";
-		mes "Good. Everything is complete.";
-		mes "Now go speak with Olgu.";
+		mes "Good. The creatures have been pushed back.";
+		next;
+		mes "[^0000FFOlgi^000000]";
+		mes "Now we need resources to create stones filled with magic.";
+		mes "Gather 3 plants, mine 3 rocks, and discover 1 archaeological secret.";
+		mes "You do not need a gathering job for this tutorial task.";
 		close;
 	}
 
 	if (Tuto1_State == 20) {
-		mes "Go speak with Olgu.";
+		if (Tuto1_Plant < 3 || Tuto1_Rock < 3 || Tuto1_Archaeo < 1) {
+			mes "Bring me enough resources to create stones filled with magic.";
+			mes "Plants: " + Tuto1_Plant + "/3";
+			mes "Rocks: " + Tuto1_Rock + "/3";
+			mes "Archaeological secret: " + Tuto1_Archaeo + "/1";
+			close;
+		}
+
+		mes "Perfect. These resources can become a Red Charm Stone.";
+		mes "This stone will hold the magical energy needed to feed the pillar.";
+		next;
+
+		if (select("Create the Red Charm Stone.:Leave.") == 2)
+			close;
+
+		if (!checkweight(7426,1)) {
+			mes "[^0000FFOlgi^000000]";
+			mes "Your inventory is too heavy to receive the stone.";
+			close;
+		}
+
+		getitem 7426,1;
+		Tuto1_State = 30;
+		completequest 65001;
+		setquest 65002;
+
+		message strcharinfo(PC_NAME), "Tutorial Quest: Red Charm Stone created. Feed the Pillar of Ascension with its magical energy.";
+
+		mes "[^0000FFOlgi^000000]";
+		mes "The stone is ready.";
+		mes "Now bring it to the Pillar of Ascension and release its magical energy.";
 		close;
 	}
 
 	if (Tuto1_State == 30) {
-		mes "Olgu sent you back to Olga.";
-		mes "Bring Olga 5 Jellopy.";
+		mes "Feed the Pillar of Ascension with magical energy.";
+		mes "The pillar waits nearby.";
+		close;
+	}
+
+	if (Tuto1_State == 35) {
+		mes "The pillar has accepted your magical energy.";
+		mes "Go speak with Olgu.";
 		close;
 	}
 
@@ -2712,58 +2750,217 @@ new_1-3,99,32,4	script	Olgi	4_M_03,{
 	close;
 }
 
-new_1-3,87,32,0	script	Tuto1_Checkpoint	HIDDEN_NPC,2,2,{
-OnTouch:
-	if (Tuto1_State == 10 && Tuto1_Checkpoint < 1) {
-		Tuto1_Checkpoint = 1;
-		message strcharinfo(PC_NAME), "Tutorial Quest: Location visited 1/1.";
-		if (Tuto1_Poring >= 2 && Tuto1_Lunatic >= 2 && !Tuto1_First_Done) {
-			Tuto1_First_Done = 1;
-			message strcharinfo(PC_NAME), "Tutorial Quest: all objectives complete. Go validate with Olgi.";
-		}
+new_1-3,85,71,4	script	Pillar of Ascension#new13	4_F_VALKYRIE,{
+	mes "[^0000FFPillar of Ascension^000000]";
+
+	if (Tuto1_State < 30) {
+		mes "The pillar sleeps beneath a thin veil of light.";
+		mes "Its hunger does not answer you yet.";
+		close;
 	}
+
+	if (Tuto1_Pillar >= 1) {
+		mes "The pillar has already accepted your magical energy.";
+		mes "Its light now belongs to the first foundation of this world.";
+		close;
+	}
+
+	mes "The pillar is dormant.";
+	mes "It must be fed ^FF00001 time^000000 before it can awaken.";
+	mes "Required offering: ^FF0000magical energy^000000";
+	mes "Progress: " + Tuto1_Pillar + "/1";
+	next;
+
+	if (select("Feed the pillar.:Leave.") == 2)
+		close;
+
+	if (countitem(7426) < 1) {
+		mes "[^0000FFPillar of Ascension^000000]";
+		mes "You do not carry enough magical energy.";
+		close;
+	}
+
+	delitem 7426,1;
+	Tuto1_Pillar = 1;
+	Tuto1_Pillar_Done = 1;
+	Tuto1_Pillar_Level = 3;
+	Tuto1_State = 35;
+	specialeffect 1048, AREA, strnpcinfo(3);
+	sc_start SC_BLESSING,3600000,5;
+	skilleffect AL_BLESSING,0;
+	sc_start SC_INC_AGI,3600000,5;
+	skilleffect AL_INCAGI,0;
+
+	message strcharinfo(PC_NAME), "Tutorial Quest: Pillar of Ascension fed 1/1.";
+	message strcharinfo(PC_NAME), "Tutorial Quest: the pillar reached its maximum level. Go speak with Olgu on the bridge at 105 71.";
+
+	mes "[^0000FFPillar of Ascension^000000]";
+	mes "The magical energy sinks into the stone.";
+	mes "The pillar reaches its maximum level.";
+	mes "Blessing Lv.5 and Increase Agility Lv.5 flow through you for 1 hour.";
+
+	close;
+}
+
+function	script	F_Tuto1_HarvestResource	{
+	.@x = getarg(0);
+	.@y = getarg(1);
+	.@type = getarg(2);
+	.@node = getarg(3);
+
+	getmapxy .@map$, .@pc_x, .@pc_y, UNITTYPE_PC;
+	if (.@map$ != "new_1-3" || distance(.@pc_x,.@pc_y,.@x,.@y) > 4)
+		end;
+
+	mes "[^0000FFTuto Resource^000000]";
+
+	if (Tuto1_State < 20) {
+		mes "You do not need this resource yet.";
+		close;
+	}
+
+	if (Tuto1_State > 20) {
+		mes "You already gathered the resources needed for this tutorial task.";
+		close;
+	}
+
+	if (.@type == 1) {
+		.@var$ = "Tuto1_PlantNode" + .@node;
+		.@name$ = "plant";
+	}
+	else if (.@type == 2) {
+		.@var$ = "Tuto1_RockNode" + .@node;
+		.@name$ = "rock";
+	}
+	else {
+		.@var$ = "Tuto1_ArchaeoNode" + .@node;
+		.@name$ = "archaeological secret";
+	}
+
+	if (getd(.@var$)) {
+		mes "You already gathered this " + .@name$ + ".";
+		close;
+	}
+
+	if (.Busy)
+		end;
+
+	.Busy = 1;
+	specialeffect EF_SONIC_CLAW965;
+	setd .@var$, 1;
+
+	if (.@type == 1) {
+		Tuto1_Plant++;
+		message strcharinfo(PC_NAME), "Tutorial Quest: plants gathered " + Tuto1_Plant + "/3.";
+	}
+	else if (.@type == 2) {
+		Tuto1_Rock++;
+		message strcharinfo(PC_NAME), "Tutorial Quest: rocks mined " + Tuto1_Rock + "/3.";
+	}
+	else {
+		Tuto1_Archaeo++;
+		message strcharinfo(PC_NAME), "Tutorial Quest: archaeological secret discovered " + Tuto1_Archaeo + "/1.";
+	}
+
+	if (Tuto1_Plant >= 3 && Tuto1_Rock >= 3 && Tuto1_Archaeo >= 1 && !Tuto1_Resource_Done) {
+		Tuto1_Resource_Done = 1;
+		message strcharinfo(PC_NAME), "Tutorial Quest: ressources terminees. Allez voir Olgi en 95 65 pour creer les pierres qui contiendront l'energie du pilier.";
+	}
+
+	mes "You gathered the " + .@name$ + ".";
+	.Busy = 0;
+	close;
+}
+
+new_1-3,60,62,4	script	Tutorial Plant#olga01	4_CREEPER,{
+	callfunc "F_Tuto1_HarvestResource",60,62,1,1;
+OnInit:
+	setnpcdistance 100;
 	end;
 }
 
-new_1-3,116,45,4	script	Olgu	4_M_02,{
+new_1-3,74,37,4	script	Tutorial Plant#olga02	1816,{
+	callfunc "F_Tuto1_HarvestResource",74,37,1,2;
+OnInit:
+	setnpcdistance 100;
+	end;
+}
+
+new_1-3,56,76,4	script	Tutorial Plant#olga03	4_BLUE_FLOWER,{
+	callfunc "F_Tuto1_HarvestResource",56,76,1,3;
+OnInit:
+	setnpcdistance 100;
+	end;
+}
+
+new_1-3,118,49,4	script	Tutorial Mine#olga01	1908,{
+	callfunc "F_Tuto1_HarvestResource",118,49,2,1;
+OnInit:
+	setnpcdistance 100;
+	end;
+}
+
+new_1-3,116,25,4	script	Tutorial Mine#olga02	1908,{
+	callfunc "F_Tuto1_HarvestResource",116,25,2,2;
+OnInit:
+	setnpcdistance 100;
+	end;
+}
+
+new_1-3,139,65,4	script	Tutorial Mine#olga03	1908,{
+	callfunc "F_Tuto1_HarvestResource",139,65,2,3;
+OnInit:
+	setnpcdistance 100;
+	end;
+}
+
+new_1-3,80,81,4	script	Tutorial Secret#olga01	557,{
+	callfunc "F_Tuto1_HarvestResource",80,81,3,1;
+OnInit:
+	setnpcdistance 100;
+	end;
+}
+
+new_1-3,105,71,4	script	Olgu	4_M_02,{
 	callfunc "F_DebugConsole","Olgu","Click. State=" + Tuto1_State;
 
 	mes "[^0000FFOlgu^000000]";
 
-	if (Tuto1_State < 20) {
+	if (Tuto1_State < 35) {
 		mes "You are not ready for me yet.";
 		mes "Go follow Olga's instructions first.";
 		close;
 	}
 
-	if (Tuto1_State == 20) {
+	if (Tuto1_State == 35) {
 		mes "Olgi sent you?";
-		mes "Good.";
-		mes "Return to Olga with 5 Jellopy in your inventory.";
+		mes "Well done.";
+		mes "You gathered the resources, created the stone, and fed the pillar.";
 		next;
 
-		Tuto1_State = 30;
-		Tuto1_Jellopy_Last = -1;
-		Tuto1_Jellopy_Timer = 1;
+		if (!checkweight(501,100)) {
+			mes "[^0000FFOlgu^000000]";
+			mes "Your inventory is too heavy to receive the potions.";
+			close;
+		}
 
-		completequest 65001;
-		setquest 65002;
+		completequest 65002;
 
-		message strcharinfo(PC_NAME), "Tutorial Quest: collect 5 Jellopy, then return to Olga.";
-		addtimer 2000, "Tuto1_Tracker::OnJellopyCheck";
+		getexp 10000,10000;
+		Zeny += 10000;
+		getitem 501,100;
+
+		Tuto1_State = 40;
+
+		message strcharinfo(PC_NAME), "Tutorial Quest: completed.";
 
 		mes "[^0000FFOlgu^000000]";
-		mes "Olga will handle your final reward.";
-		close;
-	}
-
-	if (Tuto1_State == 30) {
-		.@jellopy = countitem(909);
-		if (.@jellopy > 5)
-			.@jellopy = 5;
-
-		mes "Return to Olga with 5 Jellopy.";
-		mes "Current progress: " + .@jellopy + "/5";
+		mes "Quest complete.";
+		mes "Reward:";
+		mes "10,000 Base EXP";
+		mes "10,000 Job EXP";
+		mes "10,000 Zeny";
+		mes "100 Red Potions";
 		close;
 	}
 
@@ -2776,67 +2973,52 @@ new_1-3,116,45,4	script	Olgu	4_M_02,{
 	close;
 }
 
+function	script	F_Tuto1_CheckComplete	{
+	if (Tuto1_State == 10 && Tuto1_Poring >= 5 && Tuto1_Chonchon >= 5 && Tuto1_Willow >= 5 && Tuto1_Condor >= 5 && !Tuto1_First_Done) {
+		Tuto1_First_Done = 1;
+		message strcharinfo(PC_NAME), "Allez voir Olgi pour continuer la quete tuto en 95 65.";
+	}
+	return;
+}
+
 -	script	Tuto1_Tracker	FAKE_NPC,{
 OnNPCKillEvent:
 	if (Tuto1_State != 10)
 		end;
 
-	if (killedrid == 1002 && Tuto1_Poring < 2) {
+	if (killedrid == 1002 && Tuto1_Poring < 5) {
 		Tuto1_Poring++;
-		if (Tuto1_Poring >= 2 && !Tuto1_Poring_Done) {
+		if (Tuto1_Poring >= 5 && !Tuto1_Poring_Done) {
 			Tuto1_Poring_Done = 1;
-			message strcharinfo(PC_NAME), "Tutorial Quest: Poring complete 2/2.";
+			message strcharinfo(PC_NAME), "Tutorial Quest: Poring complete 5/5.";
 		}
 	}
 
-	if (killedrid == 1063 && Tuto1_Lunatic < 2) {
-		Tuto1_Lunatic++;
-		if (Tuto1_Lunatic >= 2 && !Tuto1_Lunatic_Done) {
-			Tuto1_Lunatic_Done = 1;
-			message strcharinfo(PC_NAME), "Tutorial Quest: Lunatic complete 2/2.";
+	if (killedrid == 1011 && Tuto1_Chonchon < 5) {
+		Tuto1_Chonchon++;
+		if (Tuto1_Chonchon >= 5 && !Tuto1_Chonchon_Done) {
+			Tuto1_Chonchon_Done = 1;
+			message strcharinfo(PC_NAME), "Tutorial Quest: Chonchon complete 5/5.";
 		}
 	}
 
-	if (Tuto1_Poring >= 2 && Tuto1_Lunatic >= 2 && Tuto1_Checkpoint >= 1 && !Tuto1_First_Done) {
-		Tuto1_First_Done = 1;
-		message strcharinfo(PC_NAME), "Tutorial Quest: all objectives complete. Go validate with Olgi.";
+	if (killedrid == 1010 && Tuto1_Willow < 5) {
+		Tuto1_Willow++;
+		if (Tuto1_Willow >= 5 && !Tuto1_Willow_Done) {
+			Tuto1_Willow_Done = 1;
+			message strcharinfo(PC_NAME), "Tutorial Quest: Willow complete 5/5.";
+		}
 	}
 
-	end;
-
-OnJellopyCheck:
-	if (Tuto1_State != 30) {
-		Tuto1_Jellopy_Timer = 0;
-		end;
+	if (killedrid == 1009 && Tuto1_Condor < 5) {
+		Tuto1_Condor++;
+		if (Tuto1_Condor >= 5 && !Tuto1_Condor_Done) {
+			Tuto1_Condor_Done = 1;
+			message strcharinfo(PC_NAME), "Tutorial Quest: Condor complete 5/5.";
+		}
 	}
 
-	.@jellopy = countitem(909);
-	if (.@jellopy > 5)
-		.@jellopy = 5;
-
-	if (Tuto1_Jellopy_Last != .@jellopy) {
-		Tuto1_Jellopy_Last = .@jellopy;
-		message strcharinfo(PC_NAME), "Tutorial Quest: Jellopy " + .@jellopy + "/5.";
-	}
-
-	if (.@jellopy >= 5) {
-		if (Tuto1_Jellopy_Done)
-			end;
-
-		Tuto1_Jellopy_Done = 1;
-		message strcharinfo(PC_NAME), "Tutorial Quest: Jellopy complete. Return to Olga.";
-		Tuto1_Jellopy_Timer = 0;
-		end;
-	}
-
-	addtimer 2000, "Tuto1_Tracker::OnJellopyCheck";
-	end;
-
-OnPCLoginEvent:
-	if (Tuto1_State == 30 && !Tuto1_Jellopy_Timer) {
-		Tuto1_Jellopy_Timer = 1;
-		addtimer 2000, "Tuto1_Tracker::OnJellopyCheck";
-	}
+	callfunc "F_Tuto1_CheckComplete";
 	end;
 }
 
