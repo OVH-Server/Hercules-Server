@@ -1569,8 +1569,8 @@ OnTimer600000:
 S_BeginEnergyCoat:
 	if (.CloneGID <= 0)
 		return;
-	progressbar_unit "0xffff00", 1, .CloneGID;
-	specialeffect EF_CASTSPIN, AREA, .CloneGID;
+	setunitdata(.CloneGID, UDT_LOOKDIR, 6);
+	unitskilluseid(.CloneGID, MG_ENERGYCOAT, 1, .CloneGID);
 	return;
 
 S_ApplyEnergyCoat:
@@ -1583,8 +1583,8 @@ S_ApplyEnergyCoat:
 S_BeginDoubleCasting:
 	if (.CloneGID <= 0)
 		return;
-	progressbar_unit "0xffff00", 1, .CloneGID;
-	specialeffect EF_CASTSPIN, AREA, .CloneGID;
+	setunitdata(.CloneGID, UDT_LOOKDIR, 6);
+	unitskilluseid(.CloneGID, PF_DOUBLECASTING, 5, .CloneGID);
 	return;
 
 S_ApplyDoubleCasting:
@@ -1597,9 +1597,8 @@ S_ApplyDoubleCasting:
 S_BeginMemorize:
 	if (.CloneGID <= 0)
 		return;
-	progressbar_unit "0xffff00", 5, .CloneGID;
-	specialeffect EF_CASTSPIN, AREA, .CloneGID;
-	unitskilluseid(.CloneGID, PF_MEMORIZE, 1);
+	setunitdata(.CloneGID, UDT_LOOKDIR, 6);
+	unitskilluseid(.CloneGID, PF_MEMORIZE, 1, .CloneGID);
 	return;
 
 S_ApplyMemorize:
@@ -1613,6 +1612,90 @@ OnCloneDead:
 	stopnpctimer;
 	setnpctimer 0;
 	donpcevent "CastleProfessorClone#new11::OnInit";
+	end;
+}
+
+-	script	CastleHayataDefense#new11	-1,{
+	end;
+
+OnInit:
+	.PortalX = 124;
+	.PortalY = 110;
+	.HayataNpc$ = "CastleProfessorClone#new11";
+	.YgnizemGID = 0;
+	.FirstSpawnDone = 0;
+	killmonster "new_1-1", "CastleHayataDefense#new11::OnYgnizemDead";
+	stopnpctimer;
+	setnpctimer 0;
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	if (.FirstSpawnDone)
+		end;
+	.FirstSpawnDone = 1;
+	callsub S_SpawnYgnizem;
+	end;
+
+OnTimer60000:
+	callsub S_SpawnYgnizem;
+	stopnpctimer;
+	setnpctimer 0;
+	initnpctimer;
+	end;
+
+S_SpawnYgnizem:
+	.@hayata_gid = getvariableofnpc(.CloneGID, .HayataNpc$);
+	if (.@hayata_gid <= 0)
+		return;
+
+	if (.YgnizemGID > 0) {
+		unitkill(.YgnizemGID);
+		.YgnizemGID = 0;
+	}
+
+	specialeffect 994, AREA, "#CastleArrivalPattern01";
+	specialeffect 840, AREA, "#CastleArrivalPattern01";
+	.YgnizemGID = monster("new_1-1", .PortalX, .PortalY, "Ygnizem Clone", YGNIZEM, 1, "CastleHayataDefense#new11::OnYgnizemDead");
+	setunitdata(.YgnizemGID, UDT_SPEED, 120);
+	setunitdata(.YgnizemGID, UDT_MODE, MD_NOKNOCKBACK | MD_CANATTACK);
+	setunitdata(.YgnizemGID, UDT_AI, AI_NONE);
+	setunitdata(.YgnizemGID, UDT_LOOKDIR, 2);
+	unitattack(.YgnizemGID, .@hayata_gid);
+
+	sleep 1200;
+	if (.YgnizemGID <= 0 || .@hayata_gid <= 0)
+		return;
+	callsub S_HayataBolt, .@hayata_gid, .YgnizemGID;
+	return;
+
+S_HayataBolt:
+	.@hayata_gid = getarg(0);
+	.@target_gid = getarg(1);
+	if (.@hayata_gid <= 0 || .@target_gid <= 0)
+		return;
+
+	setunitdata(.@hayata_gid, UDT_LOOKDIR, 6);
+	switch(rand(3)) {
+		case 0:
+			unitskilluseid(.@hayata_gid, MG_FIREBOLT, 10, .@target_gid);
+			break;
+		case 1:
+			unitskilluseid(.@hayata_gid, MG_COLDBOLT, 10, .@target_gid);
+			break;
+		default:
+			unitskilluseid(.@hayata_gid, MG_LIGHTNINGBOLT, 10, .@target_gid);
+			break;
+	}
+	sleep 1800;
+	if (.YgnizemGID == .@target_gid) {
+		unitkill(.YgnizemGID);
+		.YgnizemGID = 0;
+	}
+	return;
+
+OnYgnizemDead:
+	.YgnizemGID = 0;
 	end;
 }
 
