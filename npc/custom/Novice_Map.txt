@@ -1528,8 +1528,8 @@ OnInit:
 	setunitdata(.CloneGID, UDT_MODE, MD_NOKNOCKBACK);
 	setunitdata(.CloneGID, UDT_AI, AI_NONE);
 	setunitdata(.CloneGID, UDT_LOOKDIR, 6);
-	setunitdata(.CloneGID, UDT_SP, 2000);
 	setunitdata(.CloneGID, UDT_MAXSP, 2000);
+	setunitdata(.CloneGID, UDT_SP, 2000);
 
 	stopnpctimer;
 	setnpctimer 0;
@@ -1540,23 +1540,23 @@ OnTimer1000:
 	callsub S_BeginEnergyCoat;
 	end;
 
-OnTimer2000:
+OnTimer6500:
 	callsub S_ApplyEnergyCoat;
 	end;
 
-OnTimer2500:
+OnTimer7000:
 	callsub S_BeginDoubleCasting;
 	end;
 
-OnTimer3500:
+OnTimer9500:
 	callsub S_ApplyDoubleCasting;
 	end;
 
-OnTimer4000:
+OnTimer10000:
 	callsub S_BeginMemorize;
 	end;
 
-OnTimer9000:
+OnTimer15500:
 	callsub S_ApplyMemorize;
 	end;
 
@@ -1630,11 +1630,11 @@ OnInit:
 	initnpctimer;
 	end;
 
-OnTimer1000:
+OnTimer5000:
 	if (.FirstSpawnDone)
 		end;
-	.FirstSpawnDone = 1;
-	callsub S_SpawnYgnizem;
+	if (callsub(S_SpawnYgnizem))
+		.FirstSpawnDone = 1;
 	end;
 
 OnTimer60000:
@@ -1645,9 +1645,9 @@ OnTimer60000:
 	end;
 
 S_SpawnYgnizem:
-	.@hayata_gid = getvariableofnpc(.CloneGID, .HayataNpc$);
+	.@hayata_gid = getvariableofnpc(.CloneGID, "CastleProfessorClone#new11");
 	if (.@hayata_gid <= 0)
-		return;
+		return 0;
 
 	if (.YgnizemGID > 0) {
 		unitkill(.YgnizemGID);
@@ -1657,17 +1657,19 @@ S_SpawnYgnizem:
 	specialeffect 994, AREA, "#CastleArrivalPattern01";
 	specialeffect 840, AREA, "#CastleArrivalPattern01";
 	.YgnizemGID = monster("new_1-1", .PortalX, .PortalY, "Ygnizem Clone", YGNIZEM, 1, "CastleHayataDefense#new11::OnYgnizemDead");
+	if (.YgnizemGID <= 0)
+		return 0;
 	setunitdata(.YgnizemGID, UDT_SPEED, 120);
 	setunitdata(.YgnizemGID, UDT_MODE, MD_NOKNOCKBACK | MD_CANATTACK);
 	setunitdata(.YgnizemGID, UDT_AI, AI_NONE);
 	setunitdata(.YgnizemGID, UDT_LOOKDIR, 2);
 	unitattack(.YgnizemGID, .@hayata_gid);
 
-	sleep 1200;
+	sleep 3500;
 	if (.YgnizemGID <= 0 || .@hayata_gid <= 0)
-		return;
+		return 1;
 	callsub S_HayataBolt, .@hayata_gid, .YgnizemGID;
-	return;
+	return 1;
 
 S_HayataBolt:
 	.@hayata_gid = getarg(0);
@@ -1687,7 +1689,7 @@ S_HayataBolt:
 			unitskilluseid(.@hayata_gid, MG_LIGHTNINGBOLT, 10, .@target_gid);
 			break;
 	}
-	sleep 1800;
+	sleep 3500;
 	if (.YgnizemGID == .@target_gid) {
 		unitkill(.YgnizemGID);
 		.YgnizemGID = 0;
