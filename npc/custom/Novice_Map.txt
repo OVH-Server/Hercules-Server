@@ -449,6 +449,7 @@ new_1-1,62,109,4	script	Quest Reset Kafra#new11	4_F_KAFRA1,{
 		switch(select("Reset Milon:Reset Alfan + Sagard:Reset quete tuto Olga:Back")) {
 		case 1:
 			Novice_Tuto_State = 0; Novice_Tuto_Done = 0; Novice_Tuto_RiderBusy = 0;
+			Novice_Milon_Talked = 0; Novice_Milon_Call_Done = 0;
 			sc_end(SC_ALL_RIDING);
 			setpcblock(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_SITSTAND, false);
 			if (countitem(12622) > 0)
@@ -764,11 +765,9 @@ OnInit:
 	initnpctimer;
 	end;
 
-OnTimer119000:
-	npctalk "You are the elite of the kingdom of Prontera. The battle will be fierce, be ready!";
-	end;
-
-OnTimer120000:
+OnTimer60000:
+	if (callfunc("F_Novice_HasMilonTalkedOnMap"))
+		npctalk "You are the elite of the kingdom of Prontera. The battle will be fierce, be ready!";
 	setnpctimer 0;
 	end;
 }
@@ -776,6 +775,22 @@ OnTimer120000:
 -	script	RG_Amelina_Template	417,{ end; }
 -	script	RG_Imayn_Template	413,{ end; }
 -	script	SO_Army_Template	744,{ end; }
+
+function	script	F_Novice_HasMilonTalkedOnMap	{
+	.@count = getunits(BL_PC, .@players, false, "new_1-1");
+	for (.@i = 0; .@i < .@count; .@i++) {
+		if (!attachrid(.@players[.@i]))
+			continue;
+
+		if (Novice_Milon_Talked || Novice_Tuto_State >= 1 || Novice_Tuto_Done) {
+			detachrid;
+			return 1;
+		}
+		detachrid;
+	}
+	detachrid;
+	return 0;
+}
 
 // Armee du Lieutenant Amelina: 10 rangees de Royal Guard, sprite 417.
 new_1-1,61,102,0	duplicate(RG_Amelina_Template)	#amelina_001	417
@@ -849,12 +864,9 @@ OnInit:
 	initnpctimer;
 	end;
 
-OnTimer60000:
-	npctalk "Soldiers, form ranks! Prepare for battle!";
-	end;
-
-OnTimer120000:
-	npctalk "Soldiers, form ranks! Prepare for battle!";
+OnTimer30000:
+	if (callfunc("F_Novice_HasMilonTalkedOnMap"))
+		npctalk "Soldiers, form ranks! Prepare for battle!";
 	setnpctimer 0;
 	end;
 }
@@ -1141,6 +1153,7 @@ new_1-1,57,120,4	script	General, Milon	10382,{
 L_Tuto1Dialog:
 	.Milon_DialogOpen++;
 	.@milon_dialog_counted = true;
+	Novice_Milon_Talked = 1;
 	mes "[^0000FFGeneral, Milon^000000]";
 
 	if (Novice_Tuto_Done || Novice_Tuto_State >= 2) {
@@ -1202,17 +1215,20 @@ OnInit:
 	initnpctimer;
 	end;
 
-OnTimer30000:
-	npctalk "Adventurer! Do not stay here!";
-	end;
+OnTimer1000:
+	.@count = getunits(BL_PC, .@players, false, "new_1-1", 37, 100, 77, 140);
+	for (.@i = 0; .@i < .@count; .@i++) {
+		if (!attachrid(.@players[.@i]))
+			continue;
 
-OnTimer32000:
-	npctalk "Quick!";
-	end;
-
-OnTimer34000:
-	npctalk "Come to me!";
-	setnpctimer 4000;
+		if (!Novice_Milon_Call_Done && !Novice_Tuto_Done && Novice_Tuto_State < 1) {
+			Novice_Milon_Call_Done = 1;
+			unittalk(getnpcid(strnpcinfo(3)), "Adventurer! Do not stay here! Quick! Come to me!", true, SELF, playerattached());
+		}
+		detachrid;
+	}
+	detachrid;
+	setnpctimer 0;
 	end;
 
 OnPCLogoutEvent:
