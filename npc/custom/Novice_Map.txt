@@ -1528,28 +1528,84 @@ OnInit:
 	setunitdata(.CloneGID, UDT_MODE, MD_NOKNOCKBACK);
 	setunitdata(.CloneGID, UDT_AI, AI_NONE);
 	setunitdata(.CloneGID, UDT_LOOKDIR, 6);
+	setunitdata(.CloneGID, UDT_SP, 2000);
+	setunitdata(.CloneGID, UDT_MAXSP, 2000);
 
-	callsub S_ApplyProfessorBuffs;
 	stopnpctimer;
 	setnpctimer 0;
 	initnpctimer;
 	end;
 
-OnTimer10000:
-	callsub S_ApplyProfessorBuffs;
+OnTimer1000:
+	callsub S_BeginEnergyCoat;
+	end;
+
+OnTimer2000:
+	callsub S_ApplyEnergyCoat;
+	end;
+
+OnTimer2500:
+	callsub S_BeginDoubleCasting;
+	end;
+
+OnTimer3500:
+	callsub S_ApplyDoubleCasting;
+	end;
+
+OnTimer4000:
+	callsub S_BeginMemorize;
+	end;
+
+OnTimer9000:
+	callsub S_ApplyMemorize;
+	end;
+
+OnTimer600000:
 	stopnpctimer;
 	setnpctimer 0;
 	initnpctimer;
 	end;
 
-S_ApplyProfessorBuffs:
+S_BeginEnergyCoat:
+	if (.CloneGID <= 0)
+		return;
+	progressbar_unit "0xffff00", 1, .CloneGID;
+	specialeffect EF_CASTSPIN, AREA, .CloneGID;
+	return;
+
+S_ApplyEnergyCoat:
 	if (.CloneGID <= 0)
 		return;
 	sc_start(SC_ENERGYCOAT, 600000, 5, 10000, SCFLAG_NOAVOID, .CloneGID);
-	sc_start(SC_DOUBLECASTING, 600000, 5, 10000, SCFLAG_NOAVOID, .CloneGID);
-	sc_start(SC_MEMORIZE, 600000, 5, 10000, SCFLAG_NOAVOID, .CloneGID);
 	specialeffect EF_ENERGYCOAT, AREA, .CloneGID;
+	return;
+
+S_BeginDoubleCasting:
+	if (.CloneGID <= 0)
+		return;
+	progressbar_unit "0xffff00", 1, .CloneGID;
+	specialeffect EF_CASTSPIN, AREA, .CloneGID;
+	return;
+
+S_ApplyDoubleCasting:
+	if (.CloneGID <= 0)
+		return;
+	sc_start(SC_DOUBLECASTING, 600000, 5, 10000, SCFLAG_NOAVOID, .CloneGID);
 	specialeffect EF_DOUBLECASTBODY, AREA, .CloneGID;
+	return;
+
+S_BeginMemorize:
+	if (.CloneGID <= 0)
+		return;
+	progressbar_unit "0xffff00", 5, .CloneGID;
+	specialeffect EF_CASTSPIN, AREA, .CloneGID;
+	unitskilluseid(.CloneGID, PF_MEMORIZE, 1);
+	return;
+
+S_ApplyMemorize:
+	if (.CloneGID <= 0)
+		return;
+	sc_start(SC_MEMORIZE, 600000, 5, 10000, SCFLAG_NOAVOID, .CloneGID);
 	specialeffect EF_MEMORIZE, AREA, .CloneGID;
 	return;
 
