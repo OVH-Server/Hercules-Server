@@ -1576,7 +1576,7 @@ S_BeginEnergyCoat:
 S_ApplyEnergyCoat:
 	if (.CloneGID <= 0)
 		return;
-	sc_start(SC_ENERGYCOAT, 600000, 5, 10000, SCFLAG_NOAVOID, .CloneGID);
+	sc_start(SC_ENERGYCOAT, 600000, 1, 10000, SCFLAG_NOAVOID|SCFLAG_FIXEDTICK, .CloneGID);
 	specialeffect EF_ENERGYCOAT, AREA, .CloneGID;
 	return;
 
@@ -1590,7 +1590,7 @@ S_BeginDoubleCasting:
 S_ApplyDoubleCasting:
 	if (.CloneGID <= 0)
 		return;
-	sc_start(SC_DOUBLECASTING, 600000, 5, 10000, SCFLAG_NOAVOID, .CloneGID);
+	sc_start(SC_DOUBLECASTING, 600000, 5, 10000, SCFLAG_NOAVOID|SCFLAG_FIXEDTICK, .CloneGID);
 	specialeffect EF_DOUBLECASTBODY, AREA, .CloneGID;
 	return;
 
@@ -1604,7 +1604,7 @@ S_BeginMemorize:
 S_ApplyMemorize:
 	if (.CloneGID <= 0)
 		return;
-	sc_start(SC_MEMORIZE, 600000, 5, 10000, SCFLAG_NOAVOID, .CloneGID);
+	sc_start(SC_MEMORIZE, 600000, 1, 10000, SCFLAG_NOAVOID|SCFLAG_FIXEDTICK, .CloneGID);
 	specialeffect EF_MEMORIZE, AREA, .CloneGID;
 	return;
 
@@ -1617,44 +1617,6 @@ OnCloneDead:
 
 new_1-1,124,110,4	script	Ygnizem Clone#castle	594,{
 	end;
-}
-
--	script	CastleHayataDefense#new11	-1,{
-	end;
-
-OnInit:
-	.PortalX = 124;
-	.PortalY = 110;
-	.YgnizemNpc$ = "Ygnizem Clone#castle";
-	.FirstSpawnDone = 0;
-	disablenpc .YgnizemNpc$;
-	stopnpctimer;
-	setnpctimer 0;
-	initnpctimer;
-	end;
-
-OnTimer5000:
-	if (.FirstSpawnDone)
-		end;
-	if (callsub(S_SpawnYgnizem))
-		.FirstSpawnDone = 1;
-	end;
-
-OnTimer60000:
-	callsub S_SpawnYgnizem;
-	stopnpctimer;
-	setnpctimer 0;
-	initnpctimer;
-	end;
-
-S_SpawnYgnizem:
-	disablenpc .YgnizemNpc$;
-	specialeffect 994, AREA, "#CastleArrivalPattern01";
-	specialeffect 840, AREA, "#CastleArrivalPattern01";
-	setnpcdisplay .YgnizemNpc$, "Ygnizem Clone", 594;
-	movenpc .YgnizemNpc$, .PortalX, .PortalY, 4;
-	enablenpc .YgnizemNpc$;
-	return 1;
 }
 
 //============================================================
