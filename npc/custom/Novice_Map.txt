@@ -1437,6 +1437,131 @@ OnTimer1000:
 	end;
 }
 
+new_1-1,145,133,0	script	#CastleArrivalPattern10	HIDDEN_NPC,{
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	specialeffect 994, AREA, "#CastleArrivalPattern10";
+	specialeffect 840, AREA, "#CastleArrivalPattern10";
+	setnpctimer 0;
+	end;
+}
+
+new_1-1,137,145,0	script	#CastleArrivalPattern11	HIDDEN_NPC,{
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	specialeffect 994, AREA, "#CastleArrivalPattern11";
+	specialeffect 840, AREA, "#CastleArrivalPattern11";
+	setnpctimer 0;
+	end;
+}
+
+new_1-1,127,80,0	script	#CastleArrivalPattern12	HIDDEN_NPC,{
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	specialeffect 994, AREA, "#CastleArrivalPattern12";
+	specialeffect 840, AREA, "#CastleArrivalPattern12";
+	setnpctimer 0;
+	end;
+}
+
+new_1-1,142,78,0	script	#CastleArrivalPattern13	HIDDEN_NPC,{
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	specialeffect 994, AREA, "#CastleArrivalPattern13";
+	specialeffect 840, AREA, "#CastleArrivalPattern13";
+	setnpctimer 0;
+	end;
+}
+
+new_1-1,146,89,0	script	#CastleArrivalPattern14	HIDDEN_NPC,{
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	specialeffect 994, AREA, "#CastleArrivalPattern14";
+	specialeffect 840, AREA, "#CastleArrivalPattern14";
+	setnpctimer 0;
+	end;
+}
+
+-	script	CastleProfessorClone#new11	-1,{
+	end;
+
+OnInit:
+	killmonster "new_1-1", "CastleProfessorClone#new11::OnCloneDead";
+
+	.CloneX = 131;
+	.CloneY = 110;
+	.CloneSlot = callsub(S_FindProfessorSlot);
+	.CloneGID = monster("new_1-1", .CloneX, .CloneY, "Professor Clone", 30000, 1, "CastleProfessorClone#new11::OnCloneDead");
+
+	if (.CloneSlot)
+		callfunc "F_ApplyCloneStyle", .CloneGID, .CloneSlot;
+	else
+		setunitdata(.CloneGID, UDT_CLASS, Job_Professor);
+
+	setunitdata(.CloneGID, UDT_SPEED, 120);
+	setunitdata(.CloneGID, UDT_MODE, MD_NOKNOCKBACK);
+	setunitdata(.CloneGID, UDT_AI, AI_NONE);
+	setunitdata(.CloneGID, UDT_LOOKDIR, 4);
+
+	callsub S_ApplyProfessorBuffs;
+	initnpctimer;
+	end;
+
+OnTimer10000:
+	callsub S_ApplyProfessorBuffs;
+	setnpctimer 0;
+	end;
+
+S_FindProfessorSlot:
+	for (.@slot = 1; .@slot <= 10; .@slot++) {
+		if ($CloneStyle_Saved[.@slot] && $CloneStyle_Class[.@slot] == Job_Professor)
+			return .@slot;
+	}
+	return 0;
+
+S_ApplyProfessorBuffs:
+	if (.CloneGID <= 0)
+		return;
+	sc_start(SC_ENERGYCOAT, 600000, 5, 10000, SCFLAG_NOAVOID, .CloneGID);
+	sc_start(SC_DOUBLECASTING, 600000, 5, 10000, SCFLAG_NOAVOID, .CloneGID);
+	sc_start(SC_MEMORIZE, 600000, 5, 10000, SCFLAG_NOAVOID, .CloneGID);
+	specialeffect EF_ENERGYCOAT, AREA, .CloneGID;
+	specialeffect EF_DOUBLECASTBODY, AREA, .CloneGID;
+	specialeffect EF_MEMORIZE, AREA, .CloneGID;
+	return;
+
+OnCloneDead:
+	stopnpctimer;
+	setnpctimer 0;
+	donpcevent "CastleProfessorClone#new11::OnInit";
+	end;
+}
+
 //============================================================
 // QUETE DEMON 1-1
 // Le messager cache lance la quete demon, puis Toly poursuit la suite.
