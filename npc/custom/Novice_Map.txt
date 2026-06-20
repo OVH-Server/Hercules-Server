@@ -762,6 +762,7 @@ new_1-1,58,105,4	script	Lieutenant Amelina	469,{
 	close;
 
 OnInit:
+	setnpctimer 30000;
 	initnpctimer;
 	end;
 
@@ -871,8 +872,8 @@ OnTimer30000:
 	end;
 }
 
-// Zone de protection magique devant les troupes: remplit le polygone de l'effet Land Protector.
-new_1-1,120,107,0	script	#NoviceLandProtectorZone	HIDDEN_NPC,{
+// Zone de protection magique devant les troupes: effet au sol case par case.
+new_1-1,120,107,0	script	#NoviceLandEffectZone	HIDDEN_NPC,{
 	end;
 
 OnInit:
@@ -881,12 +882,14 @@ OnInit:
 	initnpctimer;
 	end;
 
-OnTimer3000:
+OnTimer5000:
 	for (.@y = 90; .@y <= 107; .@y++) {
 		for (.@x = 120; .@x <= 137; .@x++) {
 			if (callsub(S_LPInside, .@x, .@y)) {
 				movenpc strnpcinfo(3), .@x, .@y, 0;
-				specialeffect EF_LANDPROTECTOR, AREA, strnpcinfo(3);
+				removespecialeffect 976, AREA, strnpcinfo(3);
+				specialeffect 976, AREA, strnpcinfo(3);
+				sleep2 10;
 			}
 		}
 	}
@@ -1291,7 +1294,7 @@ OnTimer1000:
 
 		if (!Novice_Milon_Call_Done && !Novice_Tuto_Done && Novice_Tuto_State < 1) {
 			Novice_Milon_Call_Done = 1;
-			unittalk(getnpcid(strnpcinfo(3)), "Adventurer! Do not stay here! Quick! Come to me!", true, SELF, playerattached());
+			npctalk "Adventurer! Do not stay here! Quick! Come to me!";
 		}
 		detachrid;
 	}
