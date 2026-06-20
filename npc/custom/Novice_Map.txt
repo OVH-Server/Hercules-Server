@@ -1320,11 +1320,12 @@ OnInit:
 
 OnTimer1000:
 	specialeffect 994, AREA, "#CastleArrivalPattern01";
+	specialeffect 840, AREA, "#CastleArrivalPattern01";
 	setnpctimer 0;
 	end;
 }
 
-new_1-1,131,105,0	script	#CastleArrivalPattern02	HIDDEN_NPC,{
+new_1-1,130,103,0	script	#CastleArrivalPattern02	HIDDEN_NPC,{
 	end;
 
 OnInit:
@@ -1333,6 +1334,7 @@ OnInit:
 
 OnTimer1000:
 	specialeffect 994, AREA, "#CastleArrivalPattern02";
+	specialeffect 840, AREA, "#CastleArrivalPattern02";
 	setnpctimer 0;
 	end;
 }
@@ -1346,6 +1348,7 @@ OnInit:
 
 OnTimer1000:
 	specialeffect 994, AREA, "#CastleArrivalPattern03";
+	specialeffect 840, AREA, "#CastleArrivalPattern03";
 	setnpctimer 0;
 	end;
 }
@@ -1359,6 +1362,7 @@ OnInit:
 
 OnTimer1000:
 	specialeffect 994, AREA, "#CastleArrivalPattern04";
+	specialeffect 840, AREA, "#CastleArrivalPattern04";
 	setnpctimer 0;
 	end;
 }
@@ -1372,6 +1376,63 @@ OnInit:
 
 OnTimer1000:
 	specialeffect 994, AREA, "#CastleArrivalPattern05";
+	specialeffect 840, AREA, "#CastleArrivalPattern05";
+	setnpctimer 0;
+	end;
+}
+
+new_1-1,124,126,0	script	#CastleArrivalPattern06	HIDDEN_NPC,{
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	specialeffect 994, AREA, "#CastleArrivalPattern06";
+	specialeffect 840, AREA, "#CastleArrivalPattern06";
+	setnpctimer 0;
+	end;
+}
+
+new_1-1,135,134,0	script	#CastleArrivalPattern07	HIDDEN_NPC,{
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	specialeffect 994, AREA, "#CastleArrivalPattern07";
+	specialeffect 840, AREA, "#CastleArrivalPattern07";
+	setnpctimer 0;
+	end;
+}
+
+new_1-1,128,141,0	script	#CastleArrivalPattern08	HIDDEN_NPC,{
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	specialeffect 994, AREA, "#CastleArrivalPattern08";
+	specialeffect 840, AREA, "#CastleArrivalPattern08";
+	setnpctimer 0;
+	end;
+}
+
+new_1-1,147,143,0	script	#CastleArrivalPattern09	HIDDEN_NPC,{
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	specialeffect 994, AREA, "#CastleArrivalPattern09";
+	specialeffect 840, AREA, "#CastleArrivalPattern09";
 	setnpctimer 0;
 	end;
 }
