@@ -875,18 +875,6 @@ OnTimer30000:
 // Zone de protection magique devant les troupes: effet 976 fixe, une source par case.
 -	script	Novice_LandEffect_Template	HIDDEN_NPC,{
 	end;
-
-OnInit:
-	initnpctimer;
-	end;
-
-OnTimer5000:
-	removespecialeffect 838, AREA, strnpcinfo(3);
-	removespecialeffect 976, AREA, strnpcinfo(3);
-	specialeffect 838, AREA, strnpcinfo(3);
-	specialeffect 976, AREA, strnpcinfo(3);
-	setnpctimer 0;
-	end;
 }
 
 new_1-1,132,90,0	duplicate(Novice_LandEffect_Template)	#NoviceLandEffect001	HIDDEN_NPC
@@ -1052,6 +1040,36 @@ new_1-1,134,107,0	duplicate(Novice_LandEffect_Template)	#NoviceLandEffect160	HID
 new_1-1,135,107,0	duplicate(Novice_LandEffect_Template)	#NoviceLandEffect161	HIDDEN_NPC
 new_1-1,136,107,0	duplicate(Novice_LandEffect_Template)	#NoviceLandEffect162	HIDDEN_NPC
 new_1-1,137,107,0	duplicate(Novice_LandEffect_Template)	#NoviceLandEffect163	HIDDEN_NPC
+
+new_1-1,120,107,0	script	#NoviceLandEffectController	HIDDEN_NPC,{
+	end;
+
+OnInit:
+	callsub S_PlayEffects;
+	initnpctimer;
+	end;
+
+OnTimer5000:
+	callsub S_PlayEffects;
+	setnpctimer 0;
+	end;
+
+S_PlayEffects:
+	for (.@i = 1; .@i <= 163; .@i++) {
+		if (.@i < 10)
+			.@npc$ = "#NoviceLandEffect00" + .@i;
+		else if (.@i < 100)
+			.@npc$ = "#NoviceLandEffect0" + .@i;
+		else
+			.@npc$ = "#NoviceLandEffect" + .@i;
+
+		removespecialeffect 838, AREA, .@npc$;
+		removespecialeffect 976, AREA, .@npc$;
+		specialeffect 838, AREA, .@npc$;
+		specialeffect 976, AREA, .@npc$;
+	}
+	return;
+}
 
 // Armee du Lieutenant Imayn: 10 rangees de Royal Guard, sprite 413.
 new_1-1,53,98,0	duplicate(RG_Imayn_Template)	#imayn_001	413
