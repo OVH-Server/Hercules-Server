@@ -1513,10 +1513,11 @@ OnTimer1000:
 OnInit:
 	killmonster "new_1-1", "CastleProfessorClone#new11::OnCloneDead";
 
-	.CloneX = 131;
-	.CloneY = 110;
-	.CloneSlot = callsub(S_FindProfessorSlot);
-	.CloneGID = monster("new_1-1", .CloneX, .CloneY, "Professor Clone", 30000, 1, "CastleProfessorClone#new11::OnCloneDead");
+	.CloneSlot = callsub(S_FindHayataSlot);
+	.StartX = 131;
+	.StartY = 110;
+
+	.CloneGID = monster("new_1-1", .StartX, .StartY, "Hayata", 1905, 1, "CastleProfessorClone#new11::OnCloneDead");
 
 	if (.CloneSlot)
 		callfunc "F_ApplyCloneStyle", .CloneGID, .CloneSlot;
@@ -1529,15 +1530,23 @@ OnInit:
 	setunitdata(.CloneGID, UDT_LOOKDIR, 4);
 
 	callsub S_ApplyProfessorBuffs;
+	stopnpctimer;
+	setnpctimer 0;
 	initnpctimer;
 	end;
 
 OnTimer10000:
 	callsub S_ApplyProfessorBuffs;
+	stopnpctimer;
 	setnpctimer 0;
+	initnpctimer;
 	end;
 
-S_FindProfessorSlot:
+S_FindHayataSlot:
+	for (.@slot = 1; .@slot <= 10; .@slot++) {
+		if ($CloneStyle_Saved[.@slot] && $CloneStyle_Name$[.@slot] == "Hayata")
+			return .@slot;
+	}
 	for (.@slot = 1; .@slot <= 10; .@slot++) {
 		if ($CloneStyle_Saved[.@slot] && $CloneStyle_Class[.@slot] == Job_Professor)
 			return .@slot;
