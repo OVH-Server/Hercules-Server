@@ -1615,16 +1615,19 @@ OnCloneDead:
 	end;
 }
 
+new_1-1,124,110,4	script	Ygnizem Clone#castle	594,{
+	end;
+}
+
 -	script	CastleHayataDefense#new11	-1,{
 	end;
 
 OnInit:
 	.PortalX = 124;
 	.PortalY = 110;
-	.HayataNpc$ = "CastleProfessorClone#new11";
-	.YgnizemGID = 0;
+	.YgnizemNpc$ = "Ygnizem Clone#castle";
 	.FirstSpawnDone = 0;
-	killmonster "new_1-1", "CastleHayataDefense#new11::OnYgnizemDead";
+	disablenpc .YgnizemNpc$;
 	stopnpctimer;
 	setnpctimer 0;
 	initnpctimer;
@@ -1645,60 +1648,13 @@ OnTimer60000:
 	end;
 
 S_SpawnYgnizem:
-	.@hayata_gid = getvariableofnpc(.CloneGID, "CastleProfessorClone#new11");
-	if (.@hayata_gid <= 0)
-		return 0;
-
-	if (.YgnizemGID > 0) {
-		unitkill(.YgnizemGID);
-		.YgnizemGID = 0;
-	}
-
+	disablenpc .YgnizemNpc$;
 	specialeffect 994, AREA, "#CastleArrivalPattern01";
 	specialeffect 840, AREA, "#CastleArrivalPattern01";
-	.YgnizemGID = monster("new_1-1", .PortalX, .PortalY, "Ygnizem Clone", YGNIZEM, 1, "CastleHayataDefense#new11::OnYgnizemDead");
-	if (.YgnizemGID <= 0)
-		return 0;
-	setunitdata(.YgnizemGID, UDT_SPEED, 120);
-	setunitdata(.YgnizemGID, UDT_MODE, MD_NOKNOCKBACK | MD_CANATTACK);
-	setunitdata(.YgnizemGID, UDT_AI, AI_NONE);
-	setunitdata(.YgnizemGID, UDT_LOOKDIR, 2);
-	unitattack(.YgnizemGID, .@hayata_gid);
-
-	sleep 3500;
-	if (.YgnizemGID <= 0 || .@hayata_gid <= 0)
-		return 1;
-	callsub S_HayataBolt, .@hayata_gid, .YgnizemGID;
+	setnpcdisplay .YgnizemNpc$, "Ygnizem Clone", 594;
+	movenpc .YgnizemNpc$, .PortalX, .PortalY, 4;
+	enablenpc .YgnizemNpc$;
 	return 1;
-
-S_HayataBolt:
-	.@hayata_gid = getarg(0);
-	.@target_gid = getarg(1);
-	if (.@hayata_gid <= 0 || .@target_gid <= 0)
-		return;
-
-	setunitdata(.@hayata_gid, UDT_LOOKDIR, 6);
-	switch(rand(3)) {
-		case 0:
-			unitskilluseid(.@hayata_gid, MG_FIREBOLT, 10, .@target_gid);
-			break;
-		case 1:
-			unitskilluseid(.@hayata_gid, MG_COLDBOLT, 10, .@target_gid);
-			break;
-		default:
-			unitskilluseid(.@hayata_gid, MG_LIGHTNINGBOLT, 10, .@target_gid);
-			break;
-	}
-	sleep 3500;
-	if (.YgnizemGID == .@target_gid) {
-		unitkill(.YgnizemGID);
-		.YgnizemGID = 0;
-	}
-	return;
-
-OnYgnizemDead:
-	.YgnizemGID = 0;
-	end;
 }
 
 //============================================================
