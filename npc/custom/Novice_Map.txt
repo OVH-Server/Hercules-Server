@@ -1665,13 +1665,10 @@ S_SpawnYgnizem:
 		if (.@gid <= 0)
 			continue;
 
-		setunitdata(.@gid, UDT_MODE, MD_CANMOVE | MD_CANATTACK | MD_NOKNOCKBACK | MD_BOSS);
+		setunitdata(.@gid, UDT_MODE, MD_NOKNOCKBACK | MD_BOSS);
 		setunitdata(.@gid, UDT_AI, AI_NONE);
-		setunitdata(.@gid, UDT_SPEED, 160);
-		setunitdata(.@gid, UDT_ATKRANGE, 1);
-		setunitdata(.@gid, UDT_MAXHP, 9000);
-		setunitdata(.@gid, UDT_HP, 9000);
-		unitattack(.@gid, .CloneGID);
+		setunitdata(.@gid, UDT_MAXHP, 2000000);
+		setunitdata(.@gid, UDT_HP, 2000000);
 		.YgnizemGID[.@slot] = .@gid;
 		.NextSpawn = (.@spawn + 1) % getarraysize(.SpawnX);
 		return;
@@ -1690,7 +1687,7 @@ S_RetargetYgnizem:
 			.YgnizemGID[.@i] = 0;
 			continue;
 		}
-		unitattack(.@gid, .CloneGID);
+		unitstop(.@gid);
 	}
 	return;
 
@@ -1731,6 +1728,7 @@ S_AttackNearbyYgnizem:
 			break;
 		}
 		.CastingBolt = 1;
+		setunitdata(.@gid, UDT_HP, 2000000);
 		unitattack(.CloneGID, .@gid);
 		unitskilluseid(.CloneGID, .@skill, 10, .@gid);
 
