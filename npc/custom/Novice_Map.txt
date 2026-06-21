@@ -1720,12 +1720,15 @@ S_AttackNearbyYgnizem:
 		switch(rand(3)) {
 		case 0:
 			.@skill = MG_FIREBOLT;
+			.@effect = 49;
 			break;
 		case 1:
 			.@skill = MG_COLDBOLT;
+			.@effect = 51;
 			break;
 		default:
 			.@skill = MG_LIGHTNINGBOLT;
+			.@effect = 29;
 			break;
 		}
 		.CastingBolt = 1;
@@ -1740,8 +1743,7 @@ S_AttackNearbyYgnizem:
 			return;
 		}
 
-		getunitdata(.@gid, UDT_MAPIDXY, .@mob);
-		npcskilleffect(.@skill, 10, .@mob[1], .@mob[2]);
+		specialeffect(.@effect, AREA, .@gid);
 		unitkill(.@gid);
 		.YgnizemGID[.@i] = 0;
 		.CastingBolt = 0;
