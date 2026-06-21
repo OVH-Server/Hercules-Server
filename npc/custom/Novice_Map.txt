@@ -1550,7 +1550,7 @@ OnTimer1000:
 
 // DARK APPARITION PORTALS - HAYATA DEFENSE
 // Hayata se buff toutes les minutes, puis lance des bolts sur les Ygnizem Clone.
-// Les degats sont appliques par script pour contourner la limite mob-versus-mob.
+// A la fin du cast, l'animation du bolt apparait sur Ygnizem, puis il est disabled immediatement.
 // Un seul Ygnizem Clone apparait toutes les 20 secondes depuis le Portal 1 et prend Hayata pour cible.
 -	script	CastleProfessorClone#new11	-1,{
 	end;
@@ -1563,7 +1563,6 @@ OnInit:
 	.StartX = 131;
 	.StartY = 110;
 	.CombatRange = 20;
-	.HayataBoltDamage = 15000;
 	.MaxYgnizem = 1;
 	.Tick = 0;
 	.NextSpawn = 0;
@@ -1600,9 +1599,9 @@ OnTimer1000:
 
 	if (.Tick == 1)
 		callsub S_CastEnergyCoat;
-	else if (.Tick == 4)
+	else if (.Tick == 3)
 		callsub S_CastDoubleCasting;
-	else if (.Tick == 8)
+	else if (.Tick == 6)
 		callsub S_CastMemorize;
 
 	if (.Tick % 20 == 0)
@@ -1716,31 +1715,28 @@ S_AttackNearbyYgnizem:
 		switch(rand(3)) {
 		case 0:
 			unitskilluseid(.CloneGID, MG_FIREBOLT, 10, .@gid);
-			specialeffect(EF_FIREHIT, AREA, .@gid);
+			.@effect = EF_FIREHIT;
 			break;
 		case 1:
 			unitskilluseid(.CloneGID, MG_COLDBOLT, 10, .@gid);
-			specialeffect(EF_COLDHIT, AREA, .@gid);
+			.@effect = EF_COLDHIT;
 			break;
 		default:
 			unitskilluseid(.CloneGID, MG_LIGHTNINGBOLT, 10, .@gid);
-			specialeffect(EF_LIGHTBOLT, AREA, .@gid);
+			.@effect = EF_LIGHTBOLT;
 			break;
 		}
 
-		sleep 900;
+		sleep 1800;
 		.@hp = getunitdata(.@gid, UDT_HP);
 		if (.@hp <= 0) {
 			.YgnizemGID[.@i] = 0;
 			return;
 		}
 
-		if (.@hp <= .HayataBoltDamage) {
-			unitkill(.@gid);
-			.YgnizemGID[.@i] = 0;
-		} else {
-			setunitdata(.@gid, UDT_HP, .@hp - .HayataBoltDamage);
-		}
+		specialeffect(.@effect, AREA, .@gid);
+		unitkill(.@gid);
+		.YgnizemGID[.@i] = 0;
 		return;
 	}
 	return;
