@@ -1550,7 +1550,7 @@ OnTimer1000:
 
 // DARK APPARITION PORTALS - HAYATA DEFENSE
 // Hayata se buff toutes les minutes, puis lance des bolts sur les Ygnizem Clone.
-// Les degats viennent du vrai sort lance par Hayata, comme Magician Otto sur Training Post.
+// Hayata caste le vrai sort, puis l'impact est force sur Ygnizem car deux monstres ne resolvent pas toujours les degats entre eux.
 // Un seul Ygnizem Clone apparait toutes les 20 secondes depuis le Portal 1 et prend Hayata pour cible.
 -	script	CastleProfessorClone#new11	-1,{
 	end;
@@ -1566,6 +1566,7 @@ OnInit:
 	.MaxYgnizem = 1;
 	.Tick = 0;
 	.NextSpawn = 0;
+	.CastingBolt = 0;
 	setarray .SpawnX[0], 124;
 	setarray .SpawnY[0], 110;
 
@@ -1694,6 +1695,8 @@ S_RetargetYgnizem:
 S_AttackNearbyYgnizem:
 	if (.CloneGID <= 0)
 		return;
+	if (.CastingBolt)
+		return;
 	getunitdata(.CloneGID, UDT_MAPIDXY, .@hayata);
 
 	for (.@i = 0; .@i < .MaxYgnizem; .@i++) {
@@ -1717,16 +1720,33 @@ S_AttackNearbyYgnizem:
 		switch(rand(3)) {
 		case 0:
 			.@skill = MG_FIREBOLT;
+			.@effect = EF_FIREHIT;
 			break;
 		case 1:
 			.@skill = MG_COLDBOLT;
+			.@effect = EF_COLDHIT;
 			break;
 		default:
 			.@skill = MG_LIGHTNINGBOLT;
+			.@effect = EF_LIGHTBOLT;
 			break;
 		}
+		.CastingBolt = 1;
 		unitattack(.CloneGID, .@gid);
 		unitskilluseid(.CloneGID, .@skill, 10, .@gid);
+
+		sleep 2800;
+		.@hp = getunitdata(.@gid, UDT_HP);
+		if (.@hp <= 0) {
+			.YgnizemGID[.@i] = 0;
+			.CastingBolt = 0;
+			return;
+		}
+
+		specialeffect(.@effect, AREA, .@gid);
+		unitkill(.@gid);
+		.YgnizemGID[.@i] = 0;
+		.CastingBolt = 0;
 		return;
 	}
 	return;
