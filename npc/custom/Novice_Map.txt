@@ -1550,7 +1550,7 @@ OnTimer1000:
 
 // DARK APPARITION PORTALS - HAYATA DEFENSE
 // Hayata se buff toutes les minutes, puis lance des bolts sur les Ygnizem Clone.
-// A la fin du cast, l'animation du bolt apparait sur Ygnizem, puis il est disabled immediatement.
+// Les degats viennent du vrai sort lance par Hayata, comme Magician Otto sur Training Post.
 // Un seul Ygnizem Clone apparait toutes les 20 secondes depuis le Portal 1 et prend Hayata pour cible.
 -	script	CastleProfessorClone#new11	-1,{
 	end;
@@ -1584,8 +1584,8 @@ OnInit:
 	setunitdata(.CloneGID, UDT_MAXHP, 2000000);
 	setunitdata(.CloneGID, UDT_HP, 2000000);
 	setunitdata(.CloneGID, UDT_DEX, 90);
-	setunitdata(.CloneGID, UDT_MATKMIN, 1200);
-	setunitdata(.CloneGID, UDT_MATKMAX, 1800);
+	setunitdata(.CloneGID, UDT_MATKMIN, 5000);
+	setunitdata(.CloneGID, UDT_MATKMAX, 6500);
 	setunitdata(.CloneGID, UDT_MAXSP, 2000);
 	setunitdata(.CloneGID, UDT_SP, 2000);
 
@@ -1601,7 +1601,7 @@ OnTimer1000:
 		callsub S_CastEnergyCoat;
 	else if (.Tick == 4)
 		callsub S_CastDoubleCasting;
-	else if (.Tick == 6)
+	else if (.Tick == 7)
 		callsub S_CastMemorize;
 
 	if (.Tick % 20 == 0)
@@ -1666,6 +1666,8 @@ S_SpawnYgnizem:
 
 		setunitdata(.@gid, UDT_MODE, MD_CANMOVE | MD_CANATTACK | MD_AGGRESSIVE | MD_ANGRY);
 		setunitdata(.@gid, UDT_SPEED, 160);
+		setunitdata(.@gid, UDT_MAXHP, 9000);
+		setunitdata(.@gid, UDT_HP, 9000);
 		unitattack(.@gid, .CloneGID);
 		.YgnizemGID[.@slot] = .@gid;
 		.NextSpawn = (.@spawn + 1) % getarraysize(.SpawnX);
@@ -1714,29 +1716,17 @@ S_AttackNearbyYgnizem:
 		setunitdata(.CloneGID, UDT_LOOKDIR, 6);
 		switch(rand(3)) {
 		case 0:
-			unitskilluseid(.CloneGID, MG_FIREBOLT, 10, .@gid);
-			.@effect = EF_FIREHIT;
+			.@skill = MG_FIREBOLT;
 			break;
 		case 1:
-			unitskilluseid(.CloneGID, MG_COLDBOLT, 10, .@gid);
-			.@effect = EF_COLDHIT;
+			.@skill = MG_COLDBOLT;
 			break;
 		default:
-			unitskilluseid(.CloneGID, MG_LIGHTNINGBOLT, 10, .@gid);
-			.@effect = EF_LIGHTBOLT;
+			.@skill = MG_LIGHTNINGBOLT;
 			break;
 		}
-
-		sleep 3000;
-		.@hp = getunitdata(.@gid, UDT_HP);
-		if (.@hp <= 0) {
-			.YgnizemGID[.@i] = 0;
-			return;
-		}
-
-		specialeffect(.@effect, AREA, .@gid);
-		unitkill(.@gid);
-		.YgnizemGID[.@i] = 0;
+		unitattack(.CloneGID, .@gid);
+		unitskilluseid(.CloneGID, .@skill, 10, .@gid);
 		return;
 	}
 	return;
