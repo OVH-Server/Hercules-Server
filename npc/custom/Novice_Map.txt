@@ -1551,7 +1551,7 @@ OnTimer1000:
 // DARK APPARITION PORTALS - HAYATA DEFENSE
 // Hayata se buff toutes les minutes, puis lance des bolts sur les Ygnizem Clone.
 // Les degats sont appliques par script pour contourner la limite mob-versus-mob.
-// Un seul Ygnizem Clone apparait toutes les 30 secondes depuis le Portal 1 et prend Hayata pour cible.
+// Un seul Ygnizem Clone apparait toutes les 20 secondes depuis le Portal 1 et prend Hayata pour cible.
 -	script	CastleProfessorClone#new11	-1,{
 	end;
 
@@ -1584,6 +1584,7 @@ OnInit:
 	setunitdata(.CloneGID, UDT_ATKRANGE, 9);
 	setunitdata(.CloneGID, UDT_MAXHP, 2000000);
 	setunitdata(.CloneGID, UDT_HP, 2000000);
+	setunitdata(.CloneGID, UDT_DEX, 90);
 	setunitdata(.CloneGID, UDT_MATKMIN, 1200);
 	setunitdata(.CloneGID, UDT_MATKMAX, 1800);
 	setunitdata(.CloneGID, UDT_MAXSP, 2000);
@@ -1604,7 +1605,7 @@ OnTimer1000:
 	else if (.Tick == 11)
 		callsub S_CastMemorize;
 
-	if (.Tick % 30 == 0)
+	if (.Tick % 20 == 0)
 		callsub S_SpawnYgnizem;
 
 	callsub S_RetargetYgnizem;
@@ -1732,6 +1733,8 @@ S_AttackNearbyYgnizem:
 		}
 
 		if (.@hp <= .HayataBoltDamage) {
+			setunitdata(.@gid, UDT_HP, 1);
+			sleep 5000;
 			unitkill(.@gid);
 			.YgnizemGID[.@i] = 0;
 		} else {
