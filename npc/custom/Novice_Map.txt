@@ -1727,7 +1727,7 @@ S_AttackNearbyYgnizem:
 			break;
 		}
 
-		sleep 2200;
+		sleep 3000;
 		.@hp = getunitdata(.@gid, UDT_HP);
 		if (.@hp <= 0) {
 			.YgnizemGID[.@i] = 0;
