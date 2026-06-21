@@ -1719,12 +1719,15 @@ S_AttackNearbyYgnizem:
 		switch(rand(3)) {
 		case 0:
 			.@skill = MG_FIREBOLT;
+			.@effect = EF_FIREHIT;
 			break;
 		case 1:
 			.@skill = MG_COLDBOLT;
+			.@effect = EF_COLDHIT;
 			break;
 		default:
 			.@skill = MG_LIGHTNINGBOLT;
+			.@effect = EF_LIGHTBOLT;
 			break;
 		}
 		.CastingBolt = 1;
@@ -1732,7 +1735,19 @@ S_AttackNearbyYgnizem:
 		unitattack(.CloneGID, .@gid);
 		unitskilluseid(.CloneGID, .@skill, 10, .@gid);
 
-		sleep 2800;
+		sleep 1500;
+		.@hp = getunitdata(.@gid, UDT_HP);
+		if (.@hp <= 0) {
+			.YgnizemGID[.@i] = 0;
+			.CastingBolt = 0;
+			return;
+		}
+
+		setunitdata(.@gid, UDT_HP, 2000000);
+		specialeffect(.@effect, AREA, .@gid);
+		sleep 300;
+		unitkill(.@gid);
+		.YgnizemGID[.@i] = 0;
 		.CastingBolt = 0;
 		return;
 	}
