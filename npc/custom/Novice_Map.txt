@@ -1578,7 +1578,7 @@ OnInit:
 		setunitdata(.CloneGID, UDT_CLASS, Job_Mage);
 
 	setunitdata(.CloneGID, UDT_SPEED, 120);
-	setunitdata(.CloneGID, UDT_MODE, MD_NOKNOCKBACK | MD_CANATTACK);
+	setunitdata(.CloneGID, UDT_MODE, MD_NOKNOCKBACK | MD_CANATTACK | MD_BOSS);
 	setunitdata(.CloneGID, UDT_AI, AI_NONE);
 	setunitdata(.CloneGID, UDT_LOOKDIR, 6);
 	setunitdata(.CloneGID, UDT_ATKRANGE, 9);
