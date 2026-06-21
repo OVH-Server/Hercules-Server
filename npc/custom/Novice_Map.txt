@@ -1323,6 +1323,7 @@ new_1-1,146,115,4	script	Sagard	10378,{
 // Role: effets de portail d'apparition utilises apres le chemin de teleportation sombre.
 // Note: chaque #CastleArrivalPatternXX est un point d'effet de portail cache separe.
 //============================================================
+// Portal 1: devant Hayata.
 new_1-1,124,110,0	script	#CastleArrivalPattern01	HIDDEN_NPC,{
 	end;
 
@@ -1337,6 +1338,7 @@ OnTimer1000:
 	end;
 }
 
+// Portal 2.
 new_1-1,130,103,0	script	#CastleArrivalPattern02	HIDDEN_NPC,{
 	end;
 
@@ -1351,6 +1353,7 @@ OnTimer1000:
 	end;
 }
 
+// Portal 3.
 new_1-1,130,96,0	script	#CastleArrivalPattern03	HIDDEN_NPC,{
 	end;
 
@@ -1365,6 +1368,7 @@ OnTimer1000:
 	end;
 }
 
+// Portal 4.
 new_1-1,140,97,0	script	#CastleArrivalPattern04	HIDDEN_NPC,{
 	end;
 
@@ -1379,6 +1383,7 @@ OnTimer1000:
 	end;
 }
 
+// Portal 5.
 new_1-1,134,88,0	script	#CastleArrivalPattern05	HIDDEN_NPC,{
 	end;
 
@@ -1393,6 +1398,7 @@ OnTimer1000:
 	end;
 }
 
+// Portal 6.
 new_1-1,124,126,0	script	#CastleArrivalPattern06	HIDDEN_NPC,{
 	end;
 
@@ -1407,6 +1413,7 @@ OnTimer1000:
 	end;
 }
 
+// Portal 7.
 new_1-1,135,134,0	script	#CastleArrivalPattern07	HIDDEN_NPC,{
 	end;
 
@@ -1421,6 +1428,7 @@ OnTimer1000:
 	end;
 }
 
+// Portal 8.
 new_1-1,128,141,0	script	#CastleArrivalPattern08	HIDDEN_NPC,{
 	end;
 
@@ -1435,6 +1443,7 @@ OnTimer1000:
 	end;
 }
 
+// Portal 9.
 new_1-1,147,143,0	script	#CastleArrivalPattern09	HIDDEN_NPC,{
 	end;
 
@@ -1449,6 +1458,7 @@ OnTimer1000:
 	end;
 }
 
+// Portal 10.
 new_1-1,145,133,0	script	#CastleArrivalPattern10	HIDDEN_NPC,{
 	end;
 
@@ -1463,6 +1473,7 @@ OnTimer1000:
 	end;
 }
 
+// Portal 11.
 new_1-1,137,145,0	script	#CastleArrivalPattern11	HIDDEN_NPC,{
 	end;
 
@@ -1477,6 +1488,7 @@ OnTimer1000:
 	end;
 }
 
+// Portal 12.
 new_1-1,127,80,0	script	#CastleArrivalPattern12	HIDDEN_NPC,{
 	end;
 
@@ -1491,6 +1503,7 @@ OnTimer1000:
 	end;
 }
 
+// Portal 13.
 new_1-1,142,78,0	script	#CastleArrivalPattern13	HIDDEN_NPC,{
 	end;
 
@@ -1505,6 +1518,7 @@ OnTimer1000:
 	end;
 }
 
+// Portal 14.
 new_1-1,146,89,0	script	#CastleArrivalPattern14	HIDDEN_NPC,{
 	end;
 
@@ -1519,15 +1533,40 @@ OnTimer1000:
 	end;
 }
 
+// Portal 15.
+new_1-1,132,121,0	script	#CastleArrivalPattern15	HIDDEN_NPC,{
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	specialeffect 994, AREA, "#CastleArrivalPattern15";
+	specialeffect 840, AREA, "#CastleArrivalPattern15";
+	setnpctimer 0;
+	end;
+}
+
+// DARK APPARITION PORTALS - HAYATA DEFENSE
+// Hayata se buff toutes les minutes, puis attaque les Ygnizem Clone invoques par les portails proches.
+// Les Ygnizem Clone sont de vrais monstres agressifs et sont forces a prendre Hayata pour cible.
 -	script	CastleProfessorClone#new11	-1,{
 	end;
 
 OnInit:
 	killmonster "new_1-1", "CastleProfessorClone#new11::OnCloneDead";
+	killmonster "new_1-1", "CastleProfessorClone#new11::OnYgnizemDead";
 
 	.CloneSlot = 7;
 	.StartX = 131;
 	.StartY = 110;
+	.CombatRange = 20;
+	.MaxYgnizem = 8;
+	.Tick = 0;
+	.NextSpawn = 0;
+	setarray .SpawnX[0], 124;
+	setarray .SpawnY[0], 110;
 
 	.CloneGID = monster("new_1-1", .StartX, .StartY, "Hayata", 1905, 1, "CastleProfessorClone#new11::OnCloneDead");
 
@@ -1537,9 +1576,14 @@ OnInit:
 		setunitdata(.CloneGID, UDT_CLASS, Job_Mage);
 
 	setunitdata(.CloneGID, UDT_SPEED, 120);
-	setunitdata(.CloneGID, UDT_MODE, MD_NOKNOCKBACK);
+	setunitdata(.CloneGID, UDT_MODE, MD_NOKNOCKBACK | MD_CANATTACK);
 	setunitdata(.CloneGID, UDT_AI, AI_NONE);
 	setunitdata(.CloneGID, UDT_LOOKDIR, 6);
+	setunitdata(.CloneGID, UDT_ATKRANGE, 9);
+	setunitdata(.CloneGID, UDT_MAXHP, 2000000);
+	setunitdata(.CloneGID, UDT_HP, 2000000);
+	setunitdata(.CloneGID, UDT_MATKMIN, 1200);
+	setunitdata(.CloneGID, UDT_MATKMAX, 1800);
 	setunitdata(.CloneGID, UDT_MAXSP, 2000);
 	setunitdata(.CloneGID, UDT_SP, 2000);
 
@@ -1549,33 +1593,32 @@ OnInit:
 	end;
 
 OnTimer1000:
-	callsub S_BeginEnergyCoat;
-	end;
+	.Tick++;
 
-OnTimer6500:
-	callsub S_ApplyEnergyCoat;
-	end;
+	if (.Tick == 1)
+		callsub S_BeginEnergyCoat;
+	else if (.Tick == 7) {
+		callsub S_ApplyEnergyCoat;
+		callsub S_BeginDoubleCasting;
+	} else if (.Tick == 10)
+		callsub S_ApplyDoubleCasting;
+	else if (.Tick == 11)
+		callsub S_BeginMemorize;
+	else if (.Tick == 16)
+		callsub S_ApplyMemorize;
 
-OnTimer7000:
-	callsub S_BeginDoubleCasting;
-	end;
+	if (.Tick % 5 == 0)
+		callsub S_SpawnYgnizem;
 
-OnTimer9500:
-	callsub S_ApplyDoubleCasting;
-	end;
+	callsub S_RetargetYgnizem;
 
-OnTimer10000:
-	callsub S_BeginMemorize;
-	end;
+	if (.Tick >= 17 && .Tick % 2 == 1)
+		callsub S_AttackNearbyYgnizem;
 
-OnTimer15500:
-	callsub S_ApplyMemorize;
-	end;
+	if (.Tick >= 60)
+		.Tick = 0;
 
-OnTimer600000:
-	stopnpctimer;
 	setnpctimer 0;
-	initnpctimer;
 	end;
 
 S_BeginEnergyCoat:
@@ -1620,14 +1663,96 @@ S_ApplyMemorize:
 	specialeffect EF_MEMORIZE, AREA, .CloneGID;
 	return;
 
+S_SpawnYgnizem:
+	if (.CloneGID <= 0)
+		return;
+	if (mobcount("new_1-1", "CastleProfessorClone#new11::OnYgnizemDead") >= .MaxYgnizem)
+		return;
+
+	.@slot = -1;
+	for (.@i = 0; .@i < .MaxYgnizem; .@i++) {
+		if (.YgnizemGID[.@i] <= 0 || getunitdata(.YgnizemGID[.@i], UDT_HP) <= 0) {
+			.@slot = .@i;
+			break;
+		}
+	}
+	if (.@slot < 0)
+		return;
+
+	for (.@tries = 0; .@tries < getarraysize(.SpawnX); .@tries++) {
+		.@spawn = (.NextSpawn + .@tries) % getarraysize(.SpawnX);
+		.@gid = monster("new_1-1", .SpawnX[.@spawn], .SpawnY[.@spawn], "Ygnizem Clone", 1652, 1, "CastleProfessorClone#new11::OnYgnizemDead");
+		if (.@gid <= 0)
+			continue;
+
+		setunitdata(.@gid, UDT_MODE, MD_CANMOVE | MD_CANATTACK | MD_AGGRESSIVE | MD_ANGRY);
+		setunitdata(.@gid, UDT_SPEED, 160);
+		unitattack(.@gid, .CloneGID);
+		.YgnizemGID[.@slot] = .@gid;
+		.NextSpawn = (.@spawn + 1) % getarraysize(.SpawnX);
+		return;
+	}
+	return;
+
+S_RetargetYgnizem:
+	if (.CloneGID <= 0)
+		return;
+
+	for (.@i = 0; .@i < .MaxYgnizem; .@i++) {
+		.@gid = .YgnizemGID[.@i];
+		if (.@gid <= 0)
+			continue;
+		if (getunitdata(.@gid, UDT_HP) <= 0) {
+			.YgnizemGID[.@i] = 0;
+			continue;
+		}
+		unitattack(.@gid, .CloneGID);
+	}
+	return;
+
+S_AttackNearbyYgnizem:
+	if (.CloneGID <= 0)
+		return;
+	getunitdata(.CloneGID, UDT_MAPIDXY, .@hayata);
+
+	for (.@i = 0; .@i < .MaxYgnizem; .@i++) {
+		.@gid = .YgnizemGID[.@i];
+		if (.@gid <= 0)
+			continue;
+		if (getunitdata(.@gid, UDT_HP) <= 0) {
+			.YgnizemGID[.@i] = 0;
+			continue;
+		}
+		getunitdata(.@gid, UDT_MAPIDXY, .@mob);
+
+		.@dx = .@hayata[1] - .@mob[1];
+		.@dy = .@hayata[2] - .@mob[2];
+		if ((.@dx * .@dx) + (.@dy * .@dy) > (.CombatRange * .CombatRange))
+			continue;
+
+		setunitdata(.CloneGID, UDT_LOOKDIR, 6);
+		switch(rand(3)) {
+		case 0:
+			unitskilluseid(.CloneGID, MG_FIREBOLT, 10, .@gid);
+			break;
+		case 1:
+			unitskilluseid(.CloneGID, MG_COLDBOLT, 10, .@gid);
+			break;
+		default:
+			unitskilluseid(.CloneGID, MG_LIGHTNINGBOLT, 10, .@gid);
+			break;
+		}
+		return;
+	}
+	return;
+
 OnCloneDead:
 	stopnpctimer;
 	setnpctimer 0;
 	donpcevent "CastleProfessorClone#new11::OnInit";
 	end;
-}
 
-new_1-1,124,110,4	script	Ygnizem Clone#castle	594,{
+OnYgnizemDead:
 	end;
 }
 
