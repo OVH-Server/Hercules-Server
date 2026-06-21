@@ -1723,8 +1723,6 @@ S_AttackNearbyYgnizem:
 		.@effect = EF_LIGHTBOLT;
 		.CastingBolt = 1;
 		setunitdata(.@gid, UDT_HP, 2000000);
-		unitstop(.@gid);
-		setunitdata(.@gid, UDT_MODE, MD_CANMOVE | MD_NOKNOCKBACK);
 		unitattack(.CloneGID, .@gid);
 		unitskilluseid(.CloneGID, .@skill, 10, .@gid);
 
