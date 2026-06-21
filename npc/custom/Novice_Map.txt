@@ -1,19 +1,28 @@
 //===== Hercules Script ======================================
 // Initial player spawn: 53,111
 
-// Custom novice tutorial map.
+// Map custom du tutoriel novice.
 // Portail - effets interessants a retenir: 992, 994, 1025, 1048, 1062, 1064, 1068, 1080.
-// Quest state:
-// Novice_Tuto_State 0 = not started
-// Novice_Tuto_State 1 = sent to Sagard
-// Novice_Tuto_State 2 = briefed by Sagard
-// Novice_Tuto_Done 1 = tutorial quest completed
-// Novice_Tuto3_Gone 1 = Toly refused and no longer speaks
+// Etats de quete:
+// Novice_Tuto_State 0 = pas commence
+// Novice_Tuto_State 1 = envoye vers Sagard
+// Novice_Tuto_State 2 = briefing de Sagard termine
+// Novice_Tuto_Done 1 = quete du tutoriel terminee
+// Novice_Tuto3_Gone 1 = Toly refuse et ne parle plus
 
 //============================================================
-// PORTAIL ANIME - NEW_1-1
-// Hidden NPC uniquement pour eviter un sprite visible au sol.
-// Effet 1025 au centre, relance toutes les 2 secondes avec chevauchement tres court.
+// INDEX DES PORTAILS - NEW_1-1
+// Primary Ascension Portal: cote ouest, grand portail avec les Royal High Wizards.
+// Dark Summoning Portal: portail du rituel demon, avec les Shadow Summoners autour.
+// Dark Teleportation Portal: portail qui mene vers la zone des portails de la cour du chateau.
+// Dark Apparition Portals: effets d'apparition caches repartis dans la cour du chateau.
+//============================================================
+
+//============================================================
+// PRIMARY ASCENSION PORTAL - COTE OUEST
+// Position: centre autour de new_1-1,61,139.
+// Role: grand portail principal, entoure par les Royal High Wizards et leurs livres.
+// Visuels: pulse central, aura centrale, anneau interieur et anneau exterieur.
 //============================================================
 new_1-1,61,139,0	script	#NoviceSpawnPortalA	HIDDEN_NPC,{
 	end;
@@ -345,7 +354,8 @@ new_1-1,58,134,0	script	#NovicePortalOuterRing30	HIDDEN_NPC,{ end; }
 new_1-1,56,136,0	script	#NovicePortalOuterRing31	HIDDEN_NPC,{ end; }
 new_1-1,56,142,0	script	#NovicePortalOuterRing32	HIDDEN_NPC,{ end; }
 
-// Royal High Wizards autour du portail et leurs livres.
+// PRIMARY ASCENSION PORTAL - MAGES ET LIVRES
+// Ces NPC sont les Royal High Wizards places autour du portail ouest.
 new_1-1,55,130,7	script	Royal High Wizard#portal_1	10469,{
 	end;
 
@@ -1308,8 +1318,10 @@ new_1-1,146,115,4	script	Sagard	10378,{
 }
 
 //============================================================
-// COUR DU CHATEAU - PORTAILS D'ARRIVEE
-// Patterns des portails utilises apres le portail Shadow.
+// DARK APPARITION PORTALS - COUR DU CHATEAU
+// Position: cour du chateau, repartis environ entre x124-147 / y78-145.
+// Role: effets de portail d'apparition utilises apres le chemin de teleportation sombre.
+// Note: chaque #CastleArrivalPatternXX est un point d'effet de portail cache separe.
 //============================================================
 new_1-1,124,110,0	script	#CastleArrivalPattern01	HIDDEN_NPC,{
 	end;
@@ -1866,8 +1878,11 @@ new_1-1,128,57,6	script	Bella	667,{
 }
 
 //============================================================
-// QUETE DEMON - PORTAILS ET CLONES
-// Decor, rituel, invocateurs et clones lies a la suite demon.
+// DARK SUMMONING PORTAL - ZONE DU RITUEL DEMON
+// Position: centre autour de new_1-1,114,46.
+// Role: portail d'invocation sombre avec les Shadow Summoners places autour.
+// Visuels: pulse central, aura centrale et anneau interieur.
+// Elements lies: Shadow Summoners et visuels de clones invoques sous ce bloc.
 //============================================================
 new_1-1,114,46,0	script	#DemonShadowPortalA	HIDDEN_NPC,{
 	end;
@@ -2007,148 +2022,8 @@ new_1-1,111,47,0	script	#DemonShadowPortalRing14	HIDDEN_NPC,{ end; }
 new_1-1,112,48,0	script	#DemonShadowPortalRing15	HIDDEN_NPC,{ end; }
 new_1-1,113,49,0	script	#DemonShadowPortalRing16	HIDDEN_NPC,{ end; }
 
-new_1-1,114,51,0	script	#DemonShadowPortalOuterRing01	HIDDEN_NPC,{
-	end;
-
-OnInit:
-	initnpctimer;
-	end;
-
-OnTimer100:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing01";
-	end;
-OnTimer200:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing02";
-	end;
-OnTimer300:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing03";
-	end;
-OnTimer400:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing04";
-	end;
-OnTimer500:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing05";
-	end;
-OnTimer600:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing06";
-	end;
-OnTimer700:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing07";
-	end;
-OnTimer800:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing08";
-	end;
-OnTimer900:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing09";
-	end;
-OnTimer1000:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing10";
-	end;
-OnTimer1100:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing11";
-	end;
-OnTimer1200:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing12";
-	end;
-OnTimer1300:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing13";
-	end;
-OnTimer1400:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing14";
-	end;
-OnTimer1500:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing15";
-	end;
-OnTimer1600:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing16";
-	end;
-OnTimer1700:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing17";
-	end;
-OnTimer1800:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing18";
-	end;
-OnTimer1900:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing19";
-	end;
-OnTimer2000:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing20";
-	end;
-OnTimer2100:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing21";
-	end;
-OnTimer2200:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing22";
-	end;
-OnTimer2300:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing23";
-	end;
-OnTimer2400:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing24";
-	end;
-OnTimer2500:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing25";
-	end;
-OnTimer2600:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing26";
-	end;
-OnTimer2700:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing27";
-	end;
-OnTimer2800:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing28";
-	end;
-OnTimer2900:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing29";
-	end;
-OnTimer3000:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing30";
-	end;
-OnTimer3100:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing31";
-	end;
-OnTimer3200:
-	specialeffect 1064, AREA, "#DemonShadowPortalOuterRing32";
-	end;
-
-OnTimer4000:
-	stopnpctimer;
-	initnpctimer;
-	end;
-}
-
-new_1-1,115,51,0	script	#DemonShadowPortalOuterRing02	HIDDEN_NPC,{ end; }
-new_1-1,117,50,0	script	#DemonShadowPortalOuterRing03	HIDDEN_NPC,{ end; }
-new_1-1,118,49,0	script	#DemonShadowPortalOuterRing04	HIDDEN_NPC,{ end; }
-new_1-1,119,48,0	script	#DemonShadowPortalOuterRing05	HIDDEN_NPC,{ end; }
-new_1-1,119,47,0	script	#DemonShadowPortalOuterRing06	HIDDEN_NPC,{ end; }
-new_1-1,119,46,0	script	#DemonShadowPortalOuterRing07	HIDDEN_NPC,{ end; }
-new_1-1,119,45,0	script	#DemonShadowPortalOuterRing08	HIDDEN_NPC,{ end; }
-new_1-1,119,44,0	script	#DemonShadowPortalOuterRing09	HIDDEN_NPC,{ end; }
-new_1-1,118,43,0	script	#DemonShadowPortalOuterRing10	HIDDEN_NPC,{ end; }
-new_1-1,117,42,0	script	#DemonShadowPortalOuterRing11	HIDDEN_NPC,{ end; }
-new_1-1,115,41,0	script	#DemonShadowPortalOuterRing12	HIDDEN_NPC,{ end; }
-new_1-1,114,41,0	script	#DemonShadowPortalOuterRing13	HIDDEN_NPC,{ end; }
-new_1-1,113,41,0	script	#DemonShadowPortalOuterRing14	HIDDEN_NPC,{ end; }
-new_1-1,111,42,0	script	#DemonShadowPortalOuterRing15	HIDDEN_NPC,{ end; }
-new_1-1,110,43,0	script	#DemonShadowPortalOuterRing16	HIDDEN_NPC,{ end; }
-new_1-1,109,44,0	script	#DemonShadowPortalOuterRing17	HIDDEN_NPC,{ end; }
-new_1-1,109,45,0	script	#DemonShadowPortalOuterRing18	HIDDEN_NPC,{ end; }
-new_1-1,109,46,0	script	#DemonShadowPortalOuterRing19	HIDDEN_NPC,{ end; }
-new_1-1,109,47,0	script	#DemonShadowPortalOuterRing20	HIDDEN_NPC,{ end; }
-new_1-1,109,48,0	script	#DemonShadowPortalOuterRing21	HIDDEN_NPC,{ end; }
-new_1-1,110,49,0	script	#DemonShadowPortalOuterRing22	HIDDEN_NPC,{ end; }
-new_1-1,111,50,0	script	#DemonShadowPortalOuterRing23	HIDDEN_NPC,{ end; }
-new_1-1,113,51,0	script	#DemonShadowPortalOuterRing24	HIDDEN_NPC,{ end; }
-new_1-1,114,51,0	script	#DemonShadowPortalOuterRing25	HIDDEN_NPC,{ end; }
-new_1-1,117,51,0	script	#DemonShadowPortalOuterRing26	HIDDEN_NPC,{ end; }
-new_1-1,119,49,0	script	#DemonShadowPortalOuterRing27	HIDDEN_NPC,{ end; }
-new_1-1,119,43,0	script	#DemonShadowPortalOuterRing28	HIDDEN_NPC,{ end; }
-new_1-1,117,41,0	script	#DemonShadowPortalOuterRing29	HIDDEN_NPC,{ end; }
-new_1-1,111,41,0	script	#DemonShadowPortalOuterRing30	HIDDEN_NPC,{ end; }
-new_1-1,109,43,0	script	#DemonShadowPortalOuterRing31	HIDDEN_NPC,{ end; }
-new_1-1,109,49,0	script	#DemonShadowPortalOuterRing32	HIDDEN_NPC,{ end; }
-
+// DARK SUMMONING PORTAL - SHADOW SUMMONERS
+// Ces invocateurs sont autour du Dark Summoning Portal et pulsent avec l'effet 844.
 -	script	Shadow_Summoner_Template	1198,{
 OnInit:
 	initnpctimer;
@@ -2168,8 +2043,16 @@ new_1-1,117,42,1	duplicate(Shadow_Summoner_Template)	Shadow Summoner#novice_3	11
 new_1-1,111,42,7	duplicate(Shadow_Summoner_Template)	Shadow Summoner#novice_4	1198
 new_1-1,109,48,5	duplicate(Shadow_Summoner_Template)	Shadow Summoner#novice_5	1198
 
+// DARK TELEPORTATION PORTAL - WATCHER
+// Cet invocateur marque la zone du portail de teleportation sombre.
 new_1-1,124,63,3	duplicate(Shadow_Summoner_Template)	Shadow Summoner#portal_watcher	1198
 
+//============================================================
+// DARK TELEPORTATION PORTAL - CHEMIN VERS LES PORTAILS DE LA COUR
+// Position: centre autour de new_1-1,118,64.
+// Role: portail de teleportation/arrivee qui oriente le joueur vers les portails de la cour du chateau.
+// Visuels: pulse central, pulse du coeur et aura. Les anneaux ont ete retires volontairement.
+//============================================================
 new_1-1,118,64,0	script	#DemonPortalArrivalA	HIDDEN_NPC,{
 	end;
 
@@ -2227,226 +2110,8 @@ OnTimer10000:
 	end;
 }
 
-new_1-1,118,67,0	script	#DemonPortalArrivalRing01	HIDDEN_NPC,{
-	end;
-
-OnInit:
-	initnpctimer;
-	end;
-
-OnTimer100:
-	specialeffect 994, AREA, "#DemonPortalArrivalRing01";
-	end;
-OnTimer200:
-	specialeffect 994, AREA, "#DemonPortalArrivalRing02";
-	end;
-OnTimer300:
-	specialeffect 994, AREA, "#DemonPortalArrivalRing03";
-	end;
-OnTimer400:
-	specialeffect 994, AREA, "#DemonPortalArrivalRing04";
-	end;
-OnTimer500:
-	specialeffect 994, AREA, "#DemonPortalArrivalRing05";
-	end;
-OnTimer600:
-	specialeffect 994, AREA, "#DemonPortalArrivalRing06";
-	end;
-OnTimer700:
-	specialeffect 994, AREA, "#DemonPortalArrivalRing07";
-	end;
-OnTimer800:
-	specialeffect 994, AREA, "#DemonPortalArrivalRing08";
-	end;
-OnTimer900:
-	specialeffect 994, AREA, "#DemonPortalArrivalRing09";
-	end;
-OnTimer1000:
-	specialeffect 994, AREA, "#DemonPortalArrivalRing10";
-	end;
-OnTimer1100:
-	specialeffect 994, AREA, "#DemonPortalArrivalRing11";
-	end;
-OnTimer1200:
-	specialeffect 994, AREA, "#DemonPortalArrivalRing12";
-	end;
-OnTimer1300:
-	specialeffect 994, AREA, "#DemonPortalArrivalRing13";
-	end;
-OnTimer1400:
-	specialeffect 994, AREA, "#DemonPortalArrivalRing14";
-	end;
-OnTimer1500:
-	specialeffect 994, AREA, "#DemonPortalArrivalRing15";
-	end;
-OnTimer1600:
-	specialeffect 994, AREA, "#DemonPortalArrivalRing16";
-	end;
-
-OnTimer2000:
-	stopnpctimer;
-	initnpctimer;
-	end;
-}
-
-new_1-1,119,67,0	script	#DemonPortalArrivalRing02	HIDDEN_NPC,{ end; }
-new_1-1,120,66,0	script	#DemonPortalArrivalRing03	HIDDEN_NPC,{ end; }
-new_1-1,121,65,0	script	#DemonPortalArrivalRing04	HIDDEN_NPC,{ end; }
-new_1-1,121,64,0	script	#DemonPortalArrivalRing05	HIDDEN_NPC,{ end; }
-new_1-1,121,63,0	script	#DemonPortalArrivalRing06	HIDDEN_NPC,{ end; }
-new_1-1,120,62,0	script	#DemonPortalArrivalRing07	HIDDEN_NPC,{ end; }
-new_1-1,119,61,0	script	#DemonPortalArrivalRing08	HIDDEN_NPC,{ end; }
-new_1-1,118,61,0	script	#DemonPortalArrivalRing09	HIDDEN_NPC,{ end; }
-new_1-1,117,61,0	script	#DemonPortalArrivalRing10	HIDDEN_NPC,{ end; }
-new_1-1,116,62,0	script	#DemonPortalArrivalRing11	HIDDEN_NPC,{ end; }
-new_1-1,115,63,0	script	#DemonPortalArrivalRing12	HIDDEN_NPC,{ end; }
-new_1-1,115,64,0	script	#DemonPortalArrivalRing13	HIDDEN_NPC,{ end; }
-new_1-1,115,65,0	script	#DemonPortalArrivalRing14	HIDDEN_NPC,{ end; }
-new_1-1,116,66,0	script	#DemonPortalArrivalRing15	HIDDEN_NPC,{ end; }
-new_1-1,117,67,0	script	#DemonPortalArrivalRing16	HIDDEN_NPC,{ end; }
-
-new_1-1,118,69,0	script	#DemonPortalArrivalOuterRing01	HIDDEN_NPC,{
-	end;
-
-OnInit:
-	initnpctimer;
-	end;
-
-OnTimer100:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing01";
-	end;
-OnTimer200:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing02";
-	end;
-OnTimer300:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing03";
-	end;
-OnTimer400:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing04";
-	end;
-OnTimer500:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing05";
-	end;
-OnTimer600:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing06";
-	end;
-OnTimer700:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing07";
-	end;
-OnTimer800:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing08";
-	end;
-OnTimer900:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing09";
-	end;
-OnTimer1000:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing10";
-	end;
-OnTimer1100:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing11";
-	end;
-OnTimer1200:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing12";
-	end;
-OnTimer1300:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing13";
-	end;
-OnTimer1400:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing14";
-	end;
-OnTimer1500:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing15";
-	end;
-OnTimer1600:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing16";
-	end;
-OnTimer1700:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing17";
-	end;
-OnTimer1800:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing18";
-	end;
-OnTimer1900:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing19";
-	end;
-OnTimer2000:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing20";
-	end;
-OnTimer2100:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing21";
-	end;
-OnTimer2200:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing22";
-	end;
-OnTimer2300:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing23";
-	end;
-OnTimer2400:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing24";
-	end;
-OnTimer2500:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing25";
-	end;
-OnTimer2600:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing26";
-	end;
-OnTimer2700:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing27";
-	end;
-OnTimer2800:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing28";
-	end;
-OnTimer2900:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing29";
-	end;
-OnTimer3000:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing30";
-	end;
-OnTimer3100:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing31";
-	end;
-OnTimer3200:
-	specialeffect 1064, AREA, "#DemonPortalArrivalOuterRing32";
-	end;
-
-OnTimer4000:
-	stopnpctimer;
-	initnpctimer;
-	end;
-}
-
-new_1-1,119,69,0	script	#DemonPortalArrivalOuterRing02	HIDDEN_NPC,{ end; }
-new_1-1,121,68,0	script	#DemonPortalArrivalOuterRing03	HIDDEN_NPC,{ end; }
-new_1-1,122,67,0	script	#DemonPortalArrivalOuterRing04	HIDDEN_NPC,{ end; }
-new_1-1,123,66,0	script	#DemonPortalArrivalOuterRing05	HIDDEN_NPC,{ end; }
-new_1-1,123,65,0	script	#DemonPortalArrivalOuterRing06	HIDDEN_NPC,{ end; }
-new_1-1,123,64,0	script	#DemonPortalArrivalOuterRing07	HIDDEN_NPC,{ end; }
-new_1-1,123,63,0	script	#DemonPortalArrivalOuterRing08	HIDDEN_NPC,{ end; }
-new_1-1,123,62,0	script	#DemonPortalArrivalOuterRing09	HIDDEN_NPC,{ end; }
-new_1-1,122,61,0	script	#DemonPortalArrivalOuterRing10	HIDDEN_NPC,{ end; }
-new_1-1,121,60,0	script	#DemonPortalArrivalOuterRing11	HIDDEN_NPC,{ end; }
-new_1-1,119,59,0	script	#DemonPortalArrivalOuterRing12	HIDDEN_NPC,{ end; }
-new_1-1,118,59,0	script	#DemonPortalArrivalOuterRing13	HIDDEN_NPC,{ end; }
-new_1-1,117,59,0	script	#DemonPortalArrivalOuterRing14	HIDDEN_NPC,{ end; }
-new_1-1,115,60,0	script	#DemonPortalArrivalOuterRing15	HIDDEN_NPC,{ end; }
-new_1-1,114,61,0	script	#DemonPortalArrivalOuterRing16	HIDDEN_NPC,{ end; }
-new_1-1,113,62,0	script	#DemonPortalArrivalOuterRing17	HIDDEN_NPC,{ end; }
-new_1-1,113,63,0	script	#DemonPortalArrivalOuterRing18	HIDDEN_NPC,{ end; }
-new_1-1,113,64,0	script	#DemonPortalArrivalOuterRing19	HIDDEN_NPC,{ end; }
-new_1-1,113,65,0	script	#DemonPortalArrivalOuterRing20	HIDDEN_NPC,{ end; }
-new_1-1,113,66,0	script	#DemonPortalArrivalOuterRing21	HIDDEN_NPC,{ end; }
-new_1-1,114,67,0	script	#DemonPortalArrivalOuterRing22	HIDDEN_NPC,{ end; }
-new_1-1,115,68,0	script	#DemonPortalArrivalOuterRing23	HIDDEN_NPC,{ end; }
-new_1-1,117,69,0	script	#DemonPortalArrivalOuterRing24	HIDDEN_NPC,{ end; }
-new_1-1,118,69,0	script	#DemonPortalArrivalOuterRing25	HIDDEN_NPC,{ end; }
-new_1-1,121,69,0	script	#DemonPortalArrivalOuterRing26	HIDDEN_NPC,{ end; }
-new_1-1,123,67,0	script	#DemonPortalArrivalOuterRing27	HIDDEN_NPC,{ end; }
-new_1-1,123,61,0	script	#DemonPortalArrivalOuterRing28	HIDDEN_NPC,{ end; }
-new_1-1,121,59,0	script	#DemonPortalArrivalOuterRing29	HIDDEN_NPC,{ end; }
-new_1-1,115,59,0	script	#DemonPortalArrivalOuterRing30	HIDDEN_NPC,{ end; }
-new_1-1,113,61,0	script	#DemonPortalArrivalOuterRing31	HIDDEN_NPC,{ end; }
-new_1-1,113,67,0	script	#DemonPortalArrivalOuterRing32	HIDDEN_NPC,{ end; }
-
+// DARK SUMMONING PORTAL - RITUEL DES CLONES
+// Ces visuels de clones sortent du Dark Summoning Portal et marchent vers le Dark Teleportation Portal.
 -	script	Portal_Clone_Template	594,{
 	end;
 
@@ -2471,6 +2136,8 @@ new_1-1,114,46,4	duplicate(Portal_Clone_Template)	Rawrel Clone#novice	591
 new_1-1,114,46,4	duplicate(Portal_Clone_Template)	Magaleta Clone#portal	596
 new_1-1,114,46,4	duplicate(Portal_Clone_Template)	Seyren Clone#novice	599
 
+// DARK SUMMONING PORTAL - GENERATEUR DE CLONES
+// Controleur cache qui fait tourner les visuels de clones dans le portail d'invocation.
 new_1-1,114,46,0	script	Shadow Portal#novice	HIDDEN_NPC,{
 OnInit:
 	killmonster "new_1-1", "Shadow Portal#novice::OnCloneDead";
