@@ -1600,9 +1600,9 @@ OnTimer1000:
 
 	if (.Tick == 1)
 		callsub S_CastEnergyCoat;
-	else if (.Tick == 7)
+	else if (.Tick == 4)
 		callsub S_CastDoubleCasting;
-	else if (.Tick == 11)
+	else if (.Tick == 8)
 		callsub S_CastMemorize;
 
 	if (.Tick % 20 == 0)
@@ -1716,12 +1716,15 @@ S_AttackNearbyYgnizem:
 		switch(rand(3)) {
 		case 0:
 			unitskilluseid(.CloneGID, MG_FIREBOLT, 10, .@gid);
+			specialeffect(EF_FIREHIT, AREA, .@gid);
 			break;
 		case 1:
 			unitskilluseid(.CloneGID, MG_COLDBOLT, 10, .@gid);
+			specialeffect(EF_COLDHIT, AREA, .@gid);
 			break;
 		default:
 			unitskilluseid(.CloneGID, MG_LIGHTNINGBOLT, 10, .@gid);
+			specialeffect(EF_LIGHTBOLT, AREA, .@gid);
 			break;
 		}
 
@@ -1733,8 +1736,6 @@ S_AttackNearbyYgnizem:
 		}
 
 		if (.@hp <= .HayataBoltDamage) {
-			setunitdata(.@gid, UDT_HP, 1);
-			sleep 5000;
 			unitkill(.@gid);
 			.YgnizemGID[.@i] = 0;
 		} else {
