@@ -1549,8 +1549,9 @@ OnTimer1000:
 }
 
 // DARK APPARITION PORTALS - HAYATA DEFENSE
-// Hayata se buff toutes les minutes, puis attaque les Ygnizem Clone invoques par les portails proches.
-// Les Ygnizem Clone sont de vrais monstres agressifs et sont forces a prendre Hayata pour cible.
+// Hayata se buff toutes les minutes, puis lance des bolts sur les Ygnizem Clone.
+// Les degats sont appliques par script pour contourner la limite mob-versus-mob.
+// Un seul Ygnizem Clone apparait toutes les 30 secondes depuis le Portal 1 et prend Hayata pour cible.
 -	script	CastleProfessorClone#new11	-1,{
 	end;
 
@@ -1562,7 +1563,8 @@ OnInit:
 	.StartX = 131;
 	.StartY = 110;
 	.CombatRange = 20;
-	.MaxYgnizem = 8;
+	.HayataBoltDamage = 15000;
+	.MaxYgnizem = 1;
 	.Tick = 0;
 	.NextSpawn = 0;
 	setarray .SpawnX[0], 124;
@@ -1607,12 +1609,12 @@ OnTimer1000:
 	else if (.Tick == 16)
 		callsub S_ApplyMemorize;
 
-	if (.Tick % 5 == 0)
+	if (.Tick % 30 == 0)
 		callsub S_SpawnYgnizem;
 
 	callsub S_RetargetYgnizem;
 
-	if (.Tick >= 17 && .Tick % 2 == 1)
+	if (.Tick >= 17 && .Tick % 3 == 0)
 		callsub S_AttackNearbyYgnizem;
 
 	if (.Tick >= 60)
@@ -1719,12 +1721,14 @@ S_AttackNearbyYgnizem:
 		.@gid = .YgnizemGID[.@i];
 		if (.@gid <= 0)
 			continue;
-		if (getunitdata(.@gid, UDT_HP) <= 0) {
+
+		.@hp = getunitdata(.@gid, UDT_HP);
+		if (.@hp <= 0) {
 			.YgnizemGID[.@i] = 0;
 			continue;
 		}
-		getunitdata(.@gid, UDT_MAPIDXY, .@mob);
 
+		getunitdata(.@gid, UDT_MAPIDXY, .@mob);
 		.@dx = .@hayata[1] - .@mob[1];
 		.@dy = .@hayata[2] - .@mob[2];
 		if ((.@dx * .@dx) + (.@dy * .@dy) > (.CombatRange * .CombatRange))
@@ -1741,6 +1745,13 @@ S_AttackNearbyYgnizem:
 		default:
 			unitskilluseid(.CloneGID, MG_LIGHTNINGBOLT, 10, .@gid);
 			break;
+		}
+
+		if (.@hp <= .HayataBoltDamage) {
+			unitkill(.@gid);
+			.YgnizemGID[.@i] = 0;
+		} else {
+			setunitdata(.@gid, UDT_HP, .@hp - .HayataBoltDamage);
 		}
 		return;
 	}
