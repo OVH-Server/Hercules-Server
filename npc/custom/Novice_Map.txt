@@ -1599,7 +1599,7 @@ OnTimer1000:
 
 	if (.Tick == 1)
 		callsub S_CastEnergyCoat;
-	else if (.Tick == 3)
+	else if (.Tick == 4)
 		callsub S_CastDoubleCasting;
 	else if (.Tick == 6)
 		callsub S_CastMemorize;
@@ -1727,7 +1727,7 @@ S_AttackNearbyYgnizem:
 			break;
 		}
 
-		sleep 1800;
+		sleep 2200;
 		.@hp = getunitdata(.@gid, UDT_HP);
 		if (.@hp <= 0) {
 			.YgnizemGID[.@i] = 0;
