@@ -1567,7 +1567,7 @@ OnInit:
 	}
 
 	for (.@i = 0; .@i < .MaxHayata; .@i++) {
-		.CloneGID[.@i] = monster("new_1-1", .HayataX[.@i], .HayataY[.@i], "Hayata", .CloneMobID, 1, "CastleProfessorClone#new11::OnCloneDead");
+		.CloneGID[.@i] = monster("new_1-1", .HayataX[.@i], .HayataY[.@i], "Hayata " + (.@i + 1), .CloneMobID, 1, "CastleProfessorClone#new11::OnCloneDead");
 		callsub S_SetupHayata, .CloneGID[.@i];
 		.HayataCasting[.@i] = 0;
 		.HayataCastEndTick[.@i] = 0;
