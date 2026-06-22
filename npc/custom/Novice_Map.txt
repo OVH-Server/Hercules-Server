@@ -1545,7 +1545,7 @@ OnTimer1000:
 // DARK APPARITION PORTALS - HAYATA DEFENSE
 // Trois Hayata se buffent toutes les minutes, puis lancent des bolts sur les Ygnizem Clone.
 // Les Ygnizem Clone apparaissent sur les portails actifs de la cour du chateau.
-// Un portail ne peut avoir qu'un seul Ygnizem actif, et un nouveau portail est choisi toutes les 5 secondes.
+// Un portail ne peut avoir qu'un seul Ygnizem actif, et les portails sont parcourus dans l'ordre toutes les 5 secondes.
 -	script	CastleProfessorClone#new11	-1,{
 	end;
 
@@ -1591,7 +1591,7 @@ OnTimer1000:
 	else if (.Tick == 7)
 		callsub S_CastMemorize;
 
-	if (.Tick % 5 == 0)
+	if (.Tick >= 10 && .Tick % 5 == 0)
 		callsub S_SpawnYgnizem;
 
 	callsub S_RetargetYgnizem;
@@ -1782,6 +1782,7 @@ S_AttackNearbyYgnizem:
 			.CastEffect[.@h] = .@effect;
 			setunitdata(.@gid, UDT_HP, 2000000);
 			unitattack(.@hayata_gid, .@gid);
+			areamobuseskill("new_1-1", .@hayata[1], .@hayata[2], 1, .CloneMobID, .@skill, 10, 1800, 0, e_no1, 1);
 			if (.@h == 0)
 				donpcevent "CastleProfessorClone#new11::OnHayataCast0";
 			else if (.@h == 1)
@@ -1805,9 +1806,6 @@ S_HayataCast:
 		.CastingBolt[.@h] = 0;
 		return;
 	}
-
-	getunitdata(.@hayata_gid, UDT_MAPIDXY, .@hayata);
-	areamobuseskill("new_1-1", .@hayata[1], .@hayata[2], 1, .CloneMobID, .CastSkill[.@h], 10, 1800, 0, e_no1, 1);
 
 	sleep 1800;
 	.@hp = getunitdata(.@gid, UDT_HP);
