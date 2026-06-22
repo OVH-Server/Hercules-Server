@@ -1556,10 +1556,6 @@ OnInit:
 
 	.CloneSlot = 7;
 	.CloneMobID = 1905;
-	if ($CloneStyle_Saved[.CloneSlot])
-		.CastMobID = $CloneStyle_Class[.CloneSlot];
-	else
-		.CastMobID = Job_Mage;
 	.CombatRange = 20;
 	.Tick = 0;
 	.NextSpawn = 0;
@@ -1812,7 +1808,7 @@ S_HayataCast:
 	}
 
 	getunitdata(.@hayata_gid, UDT_MAPIDXY, .@hayata);
-	areamobuseskill("new_1-1", .@hayata[1], .@hayata[2], 1, .CastMobID, .CastSkill, 10, 1800, 0, e_no1, 1);
+	areamobuseskill("new_1-1", .@hayata[1], .@hayata[2], 1, .CloneMobID, .CastSkill, 10, 1800, 0, e_no1, 1);
 
 	sleep 1800;
 	.@hp = getunitdata(.@gid, UDT_HP);
