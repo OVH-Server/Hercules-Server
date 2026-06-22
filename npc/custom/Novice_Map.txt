@@ -673,13 +673,14 @@ new_1-1,65,115,4	script	Alfan	735,{
 	callsub S_MoveToSagard, 88,112, 3000;
 	callsub S_MoveToSagard, 101,112, 3500;
 	callsub S_MoveToSagard, 114,112, 3500;
-	callsub S_MoveToSagard, 124,116, 3500;
-	callsub S_MoveToSagard, 131,126, 4000;
-	callsub S_MoveToSagard, 139,126, 3500;
-	callsub S_MoveToSagard, 137,116, 3500;
-	callsub S_MoveToSagard, 134,108, 3500;
-	callsub S_MoveToSagard, 141,106, 3000;
-	callsub S_MoveToSagard, 143,113, 3000;
+	callsub S_MoveToSagard, 121,115, 2500;
+	callsub S_MoveToSagard, 126,121, 3000;
+	callsub S_MoveToSagard, 131,130, 3500;
+	callsub S_MoveToSagard, 139,129, 3500;
+	callsub S_MoveToSagard, 140,122, 3000;
+	callsub S_MoveToSagard, 135,113, 3500;
+	callsub S_MoveToSagard, 138,107, 3000;
+	callsub S_MoveToSagard, 143,110, 3000;
 
 	sc_end(SC_ALL_RIDING);
 	if (countitem(12622) > 0)
@@ -1080,13 +1081,6 @@ new_1-1,66,108,2	script	Cynthia	601,{
 	next;
 	mes "[^0000FFCynthia^000000]";
 	mes "Some are more atypical, but they are worth speaking to.";
-	close;
-}
-
-new_1-1,131,116,4	script	Royal Guard Derric	419,{
-	mes "[^0000FFRoyal Guard Derric^000000]";
-	mes "We are part of the Royal Guard.";
-	mes "We are here to defend the kingdom!";
 	close;
 }
 
@@ -1560,8 +1554,8 @@ OnInit:
 	killmonster "new_1-1", "CastleProfessorClone#new11::OnYgnizemDead";
 
 	.CloneSlot = 7;
-	.StartX = 131;
-	.StartY = 110;
+	.StartX = 130;
+	.StartY = 112;
 	.CloneMobID = 1905;
 	.CombatRange = 20;
 	.MaxYgnizem = 1;
@@ -1720,18 +1714,14 @@ S_AttackNearbyYgnizem:
 			continue;
 
 		setunitdata(.CloneGID, UDT_LOOKDIR, 6);
-		switch(rand(3)) {
+		switch(rand(2)) {
 		case 0:
 			.@skill = MG_LIGHTNINGBOLT;
 			.@effect = EF_LIGHTBOLT;
 			break;
-		case 1:
+		default:
 			.@skill = MG_COLDBOLT;
 			.@effect = EF_COLDHIT;
-			break;
-		default:
-			.@skill = MG_FIREBOLT;
-			.@effect = EF_FIREHIT;
 			break;
 		}
 		.CastingBolt = 1;
