@@ -1784,9 +1784,9 @@ S_StartHayataCast:
 
 	setunitdata(.@gid, UDT_HP, 2000000);
 	unitattack(.@hayata_gid, .@gid);
-	unitskilluseid(.@hayata_gid, .@skill, 10, .@gid);
+	areamobuseskill("new_1-1", .HayataX[.@hayata_index], .HayataY[.@hayata_index], 0, .CloneMobID, .@skill, 10, 900, 0, e_no1, 1);
 	.HayataCasting[.@hayata_index] = 1;
-	.HayataCastEndTick[.@hayata_index] = .Clock + 2;
+	.HayataCastEndTick[.@hayata_index] = .Clock + 1;
 	.HayataTargetSlot[.@hayata_index] = .@enemy_slot;
 	.HayataTargetGID[.@hayata_index] = .@gid;
 	.HayataCastEffect[.@hayata_index] = .@effect;
@@ -1883,7 +1883,7 @@ S_SetupHayata:
 		setunitdata(.@gid, UDT_CLASS, Job_Mage);
 
 	setunitdata(.@gid, UDT_SPEED, 120);
-	setunitdata(.@gid, UDT_MODE, MD_NOKNOCKBACK | MD_CANATTACK | MD_BOSS);
+	setunitdata(.@gid, UDT_MODE, MD_NOKNOCKBACK | MD_BOSS);
 	setunitdata(.@gid, UDT_AI, AI_NONE);
 	setunitdata(.@gid, UDT_LOOKDIR, 6);
 	setunitdata(.@gid, UDT_ATKRANGE, 9);
