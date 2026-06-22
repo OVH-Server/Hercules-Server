@@ -1645,11 +1645,14 @@ S_SpawnYgnizem:
 		if (.@slot < 0)
 			return;
 
+		specialeffect 665, AREA, .SpawnNpc$[.@spawn];
+		sleep 1000;
 		.@gid = monster("new_1-1", .SpawnX[.@spawn], .SpawnY[.@spawn], "Ygnizem Clone", 1652, 1, "CastleProfessorClone#new11::OnYgnizemDead");
 		if (.@gid <= 0)
 			continue;
 
 		specialeffect 873, AREA, .SpawnNpc$[.@spawn];
+		specialeffect 847, AREA, .@gid;
 		setunitdata(.@gid, UDT_MODE, MD_CANMOVE | MD_CANATTACK | MD_NOKNOCKBACK);
 		setunitdata(.@gid, UDT_AI, AI_ATTACK);
 		setunitdata(.@gid, UDT_SPEED, 160);
