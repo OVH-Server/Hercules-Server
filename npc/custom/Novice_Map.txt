@@ -1863,7 +1863,14 @@ S_StartHayataCast:
 	}
 
 	unitattack(.@hayata_gid, .@gid);
-	areamobuseskill("new_1-1", .HayataX[.@hayata_index], .HayataY[.@hayata_index], 0, .CloneMobID, .@skill, 10, 900, 0, e_no1, 1);
+	if (.@skill == CR_GRANDCROSS) {
+		areamobuseskill("new_1-1", .HayataX[.@hayata_index], .HayataY[.@hayata_index], 0, .CloneMobID, .@skill, 10, 450, 0, e_no1, 0);
+		specialeffect(EF_GRANDCROSS, AREA, .@hayata_gid);
+	} else if (.@skill == CR_HOLYCROSS) {
+		areamobuseskill("new_1-1", .HayataX[.@hayata_index], .HayataY[.@hayata_index], 0, .CloneMobID, .@skill, 10, 450, 0, e_no1, 1);
+	} else {
+		areamobuseskill("new_1-1", .HayataX[.@hayata_index], .HayataY[.@hayata_index], 0, .CloneMobID, .@skill, 10, 900, 0, e_no1, 1);
+	}
 	.HayataCasting[.@hayata_index] = 1;
 	.HayataCastEndTick[.@hayata_index] = .Clock + 1;
 	.HayataNextCastTick[.@hayata_index] = .Clock + 2;
@@ -1982,10 +1989,14 @@ S_SetupHayata:
 	setunitdata(.@gid, UDT_HP, 2000000);
 	setunitdata(.@gid, UDT_DEX, 90);
 	if (.@hayata_index == 2) {
-		setunitdata(.@gid, UDT_ATKMIN, 5000);
-		setunitdata(.@gid, UDT_ATKMAX, 5000);
-		setunitdata(.@gid, UDT_MATKMIN, 5000);
-		setunitdata(.@gid, UDT_MATKMAX, 5000);
+		setunitdata(.@gid, UDT_STR, 99);
+		setunitdata(.@gid, UDT_AGI, 99);
+		setunitdata(.@gid, UDT_VIT, 99);
+		setunitdata(.@gid, UDT_LUK, 99);
+		setunitdata(.@gid, UDT_ATKMIN, 3000);
+		setunitdata(.@gid, UDT_ATKMAX, 3000);
+		setunitdata(.@gid, UDT_MATKMIN, 3000);
+		setunitdata(.@gid, UDT_MATKMAX, 3000);
 	} else {
 		setunitdata(.@gid, UDT_MATKMIN, 7000);
 		setunitdata(.@gid, UDT_MATKMAX, 7000);
