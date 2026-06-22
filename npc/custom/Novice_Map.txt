@@ -1540,7 +1540,6 @@ OnInit:
 	killmonster "new_1-1", "CastleProfessorClone#new11::OnCloneDead";
 	killmonster "new_1-1", "CastleProfessorClone#new11::OnEnemyDead";
 
-	.CloneSlot = 7;
 	.CloneMobID = 1905;
 	.CombatRange = 20;
 	.MaxHayata = 3;
@@ -1549,6 +1548,7 @@ OnInit:
 	.Clock = 0;
 	setarray .HayataX[0], 130, 129, 141;
 	setarray .HayataY[0], 112, 131, 139;
+	setarray .HayataCloneSlot[0], 7, 8, 9;
 	setarray .SpawnX[0], 124, 124, 135, 128, 147, 145, 137, 132;
 	setarray .SpawnY[0], 110, 126, 134, 141, 143, 133, 145, 121;
 	setarray .SpawnNpc$[0], "#CastleArrivalPattern01", "#CastleArrivalPattern06", "#CastleArrivalPattern07", "#CastleArrivalPattern08", "#CastleArrivalPattern09", "#CastleArrivalPattern10", "#CastleArrivalPattern11", "#CastleArrivalPattern15";
@@ -1568,7 +1568,7 @@ OnInit:
 
 	for (.@i = 0; .@i < .MaxHayata; .@i++) {
 		.CloneGID[.@i] = monster("new_1-1", .HayataX[.@i], .HayataY[.@i], "Hayata " + (.@i + 1), .CloneMobID, 1, "CastleProfessorClone#new11::OnCloneDead");
-		callsub S_SetupHayata, .CloneGID[.@i];
+		callsub S_SetupHayata, .CloneGID[.@i], .@i;
 		.HayataCasting[.@i] = 0;
 		.HayataCastEndTick[.@i] = 0;
 		.HayataNextCastTick[.@i] = 0;
@@ -1890,11 +1890,13 @@ S_GetClosestHayata:
 
 S_SetupHayata:
 	.@gid = getarg(0);
+	.@hayata_index = getarg(1);
 	if (.@gid <= 0)
 		return;
 
-	if ($CloneStyle_Saved[.CloneSlot])
-		callfunc "F_ApplyCloneStyle", .@gid, .CloneSlot;
+	.@clone_slot = .HayataCloneSlot[.@hayata_index];
+	if ($CloneStyle_Saved[.@clone_slot])
+		callfunc "F_ApplyCloneStyle", .@gid, .@clone_slot;
 	else
 		setunitdata(.@gid, UDT_CLASS, Job_Mage);
 
