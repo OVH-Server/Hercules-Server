@@ -1720,8 +1720,20 @@ S_AttackNearbyYgnizem:
 			continue;
 
 		setunitdata(.CloneGID, UDT_LOOKDIR, 6);
-		.@skill = MG_LIGHTNINGBOLT;
-		.@effect = EF_LIGHTBOLT;
+		switch(rand(3)) {
+		case 0:
+			.@skill = MG_LIGHTNINGBOLT;
+			.@effect = EF_LIGHTBOLT;
+			break;
+		case 1:
+			.@skill = MG_COLDBOLT;
+			.@effect = EF_COLDHIT;
+			break;
+		default:
+			.@skill = MG_FIREBOLT;
+			.@effect = EF_FIREHIT;
+			break;
+		}
 		.CastingBolt = 1;
 		setunitdata(.@gid, UDT_HP, 2000000);
 		unitattack(.CloneGID, .@gid);
