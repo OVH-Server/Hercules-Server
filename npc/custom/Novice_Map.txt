@@ -1983,10 +1983,15 @@ S_SetupHayata:
 	setunitdata(.@gid, UDT_MAXHP, 2000000);
 	setunitdata(.@gid, UDT_HP, 2000000);
 	setunitdata(.@gid, UDT_DEX, 90);
-	setunitdata(.@gid, UDT_ATKMIN, 10000);
-	setunitdata(.@gid, UDT_ATKMAX, 10000);
-	setunitdata(.@gid, UDT_MATKMIN, 10000);
-	setunitdata(.@gid, UDT_MATKMAX, 10000);
+	if (.@hayata_index == 2) {
+		setunitdata(.@gid, UDT_ATKMIN, 10000);
+		setunitdata(.@gid, UDT_ATKMAX, 10000);
+		setunitdata(.@gid, UDT_MATKMIN, 10000);
+		setunitdata(.@gid, UDT_MATKMAX, 10000);
+	} else {
+		setunitdata(.@gid, UDT_MATKMIN, 7000);
+		setunitdata(.@gid, UDT_MATKMAX, 7000);
+	}
 	setunitdata(.@gid, UDT_MAXSP, 2000);
 	setunitdata(.@gid, UDT_SP, 2000);
 	return;
