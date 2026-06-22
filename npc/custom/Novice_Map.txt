@@ -1559,6 +1559,7 @@ OnInit:
 	for (.@i = 0; .@i < .MaxEnemy; .@i++) {
 		.EnemyGID[.@i] = 0;
 		.EnemyPortal[.@i] = -1;
+		.EnemyTargetHayata[.@i] = -1;
 		.PortalEnemyGID[.@i] = 0;
 		.PortalPending[.@i] = 0;
 		.PortalSummonTick[.@i] = 0;
@@ -1689,10 +1690,13 @@ S_SpawnEnemyFromPortal:
 	setunitdata(.@gid, UDT_ATKRANGE, 1);
 	setunitdata(.@gid, UDT_MAXHP, 50000);
 	setunitdata(.@gid, UDT_HP, 50000);
+	.EnemyTargetHayata[.@slot] = -1;
 	callsub S_GetClosestHayata, .SpawnX[.@spawn], .SpawnY[.@spawn];
 	.@target = .ClosestHayataGID;
-	if (.@target > 0)
+	if (.@target > 0) {
 		unitattack(.@gid, .@target);
+		.EnemyTargetHayata[.@slot] = .ClosestHayataIndex;
+	}
 	.EnemyGID[.@slot] = .@gid;
 	.EnemyPortal[.@slot] = .@spawn;
 	.EnemyMobIDBySlot[.@slot] = .EnemyMobID[.@enemy];
@@ -1712,8 +1716,10 @@ S_RetargetEnemy:
 		}
 		getunitdata(.@gid, UDT_MAPIDXY, .@mob);
 		callsub S_GetClosestHayata, .@mob[1], .@mob[2];
-		if (.ClosestHayataGID > 0)
+		if (.ClosestHayataGID > 0) {
 			unitattack(.@gid, .ClosestHayataGID);
+			.EnemyTargetHayata[.@i] = .ClosestHayataIndex;
+		}
 	}
 	return;
 
@@ -1732,6 +1738,8 @@ S_AttackNearbyEnemy:
 		getunitdata(.@hayata_gid, UDT_MAPIDXY, .@hayata);
 
 		for (.@i = 0; .@i < .MaxEnemy; .@i++) {
+			if (.EnemyTargetHayata[.@i] != .@hayata_index)
+				continue;
 			.@gid = .EnemyGID[.@i];
 			if (.@gid <= 0 || .EnemyCasting[.@i])
 				continue;
@@ -1836,6 +1844,7 @@ S_ClearEnemySlot:
 		.PortalEnemyGID[.@portal] = 0;
 	.EnemyGID[.@slot] = 0;
 	.EnemyPortal[.@slot] = -1;
+	.EnemyTargetHayata[.@slot] = -1;
 	.EnemyMobIDBySlot[.@slot] = 0;
 	.EnemyCasting[.@slot] = 0;
 	for (.@i = 0; .@i < .MaxHayata; .@i++) {
