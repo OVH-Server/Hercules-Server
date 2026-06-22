@@ -1864,6 +1864,8 @@ S_StartHayataCast:
 
 	unitattack(.@hayata_gid, .@gid);
 	areamobuseskill("new_1-1", .HayataX[.@hayata_index], .HayataY[.@hayata_index], 0, .CloneMobID, .@skill, 10, 900, 0, e_no1, 1);
+	if (.@skill == CR_GRANDCROSS)
+		specialeffect(EF_GRANDCROSS, AREA, .@hayata_gid);
 	.HayataCasting[.@hayata_index] = 1;
 	.HayataCastEndTick[.@hayata_index] = .Clock + 1;
 	.HayataNextCastTick[.@hayata_index] = .Clock + 2;
@@ -1981,8 +1983,8 @@ S_SetupHayata:
 	setunitdata(.@gid, UDT_MAXHP, 2000000);
 	setunitdata(.@gid, UDT_HP, 2000000);
 	setunitdata(.@gid, UDT_DEX, 90);
-	setunitdata(.@gid, UDT_MATKMIN, 7000);
-	setunitdata(.@gid, UDT_MATKMAX, 7000);
+	setunitdata(.@gid, UDT_MATKMIN, 10000);
+	setunitdata(.@gid, UDT_MATKMAX, 10000);
 	setunitdata(.@gid, UDT_MAXSP, 2000);
 	setunitdata(.@gid, UDT_SP, 2000);
 	return;
