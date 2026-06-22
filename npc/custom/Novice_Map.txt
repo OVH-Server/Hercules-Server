@@ -1591,6 +1591,8 @@ OnTimer1000:
 		callsub S_CastDoubleCasting;
 	else if (.Tick == 7)
 		callsub S_CastMemorize;
+	else if (.Tick == 10)
+		callsub S_CastShrink;
 
 	callsub S_UpdatePortalSpawns;
 
@@ -1605,33 +1607,72 @@ OnTimer1000:
 	end;
 
 S_CastEnergyCoat:
-	for (.@i = 0; .@i < .MaxHayata; .@i++) {
+	for (.@i = 0; .@i < 2; .@i++) {
 		if (.CloneGID[.@i] <= 0)
 			continue;
 		setunitdata(.CloneGID[.@i], UDT_LOOKDIR, 6);
 		unitskilluseid(.CloneGID[.@i], MG_ENERGYCOAT, 1, .CloneGID[.@i]);
 		sc_start(SC_ENERGYCOAT, 600000, 1, 10000, SCFLAG_NOAVOID|SCFLAG_FIXEDTICK, .CloneGID[.@i]);
 	}
+	callsub S_CastAutoGuard;
 	return;
 
 S_CastDoubleCasting:
-	for (.@i = 0; .@i < .MaxHayata; .@i++) {
+	for (.@i = 0; .@i < 1; .@i++) {
 		if (.CloneGID[.@i] <= 0)
 			continue;
 		setunitdata(.CloneGID[.@i], UDT_LOOKDIR, 6);
 		unitskilluseid(.CloneGID[.@i], PF_DOUBLECASTING, 5, .CloneGID[.@i]);
 		sc_start(SC_DOUBLECASTING, 600000, 5, 10000, SCFLAG_NOAVOID|SCFLAG_FIXEDTICK, .CloneGID[.@i]);
 	}
+	callsub S_CastReflectShield;
 	return;
 
 S_CastMemorize:
-	for (.@i = 0; .@i < .MaxHayata; .@i++) {
+	for (.@i = 0; .@i < 1; .@i++) {
 		if (.CloneGID[.@i] <= 0)
 			continue;
 		setunitdata(.CloneGID[.@i], UDT_LOOKDIR, 6);
 		unitskilluseid(.CloneGID[.@i], PF_MEMORIZE, 1, .CloneGID[.@i]);
 		sc_start(SC_MEMORIZE, 600000, 1, 10000, SCFLAG_NOAVOID|SCFLAG_FIXEDTICK, .CloneGID[.@i]);
 	}
+	callsub S_CastDefender;
+	return;
+
+S_CastAutoGuard:
+	.@i = 2;
+	if (.CloneGID[.@i] <= 0)
+		return;
+	setunitdata(.CloneGID[.@i], UDT_LOOKDIR, 6);
+	unitskilluseid(.CloneGID[.@i], CR_AUTOGUARD, 10, .CloneGID[.@i]);
+	sc_start(SC_AUTOGUARD, 600000, 10, 10000, SCFLAG_NOAVOID|SCFLAG_FIXEDTICK, .CloneGID[.@i]);
+	return;
+
+S_CastReflectShield:
+	.@i = 2;
+	if (.CloneGID[.@i] <= 0)
+		return;
+	setunitdata(.CloneGID[.@i], UDT_LOOKDIR, 6);
+	unitskilluseid(.CloneGID[.@i], CR_REFLECTSHIELD, 10, .CloneGID[.@i]);
+	sc_start(SC_REFLECTSHIELD, 600000, 10, 10000, SCFLAG_NOAVOID|SCFLAG_FIXEDTICK, .CloneGID[.@i]);
+	return;
+
+S_CastDefender:
+	.@i = 2;
+	if (.CloneGID[.@i] <= 0)
+		return;
+	setunitdata(.CloneGID[.@i], UDT_LOOKDIR, 6);
+	unitskilluseid(.CloneGID[.@i], CR_DEFENDER, 5, .CloneGID[.@i]);
+	sc_start(SC_DEFENDER, 600000, 5, 10000, SCFLAG_NOAVOID|SCFLAG_FIXEDTICK, .CloneGID[.@i]);
+	return;
+
+S_CastShrink:
+	.@i = 2;
+	if (.CloneGID[.@i] <= 0)
+		return;
+	setunitdata(.CloneGID[.@i], UDT_LOOKDIR, 6);
+	unitskilluseid(.CloneGID[.@i], CR_SHRINK, 1, .CloneGID[.@i]);
+	sc_start(SC_CR_SHRINK, 600000, 1, 10000, SCFLAG_NOAVOID|SCFLAG_FIXEDTICK, .CloneGID[.@i]);
 	return;
 
 S_UpdatePortalSpawns:
@@ -1771,24 +1812,54 @@ S_StartHayataCast:
 		return;
 
 	setunitdata(.@hayata_gid, UDT_LOOKDIR, 6);
-	if (.EnemyMobIDBySlot[.@enemy_slot] == 1652)
+	if (.@hayata_index == 2) {
 		.@roll = rand(2);
-	else
-		.@roll = rand(3);
+		switch(.@roll) {
+		case 0:
+			.@skill = CR_HOLYCROSS;
+			.@effect = EF_HOLYCROSS;
+			break;
+		default:
+			.@skill = CR_GRANDCROSS;
+			.@effect = EF_GRANDCROSS;
+			break;
+		}
+	} else {
+		if (.EnemyMobIDBySlot[.@enemy_slot] == 1652) {
+			if (.@hayata_index == 1)
+				.@roll = rand(3);
+			else
+				.@roll = rand(2);
+		} else {
+			if (.@hayata_index == 1)
+				.@roll = rand(4);
+			else
+				.@roll = rand(3);
+		}
 
-	switch(.@roll) {
-	case 0:
-		.@skill = MG_COLDBOLT;
-		.@effect = EF_COLDHIT;
-		break;
-	case 1:
-		.@skill = MG_LIGHTNINGBOLT;
-		.@effect = EF_LIGHTBOLT;
-		break;
-	default:
-		.@skill = MG_FIREBOLT;
-		.@effect = EF_FIREHIT;
-		break;
+		switch(.@roll) {
+		case 0:
+			.@skill = MG_COLDBOLT;
+			.@effect = EF_COLDHIT;
+			break;
+		case 1:
+			.@skill = MG_LIGHTNINGBOLT;
+			.@effect = EF_LIGHTBOLT;
+			break;
+		case 2:
+			if (.EnemyMobIDBySlot[.@enemy_slot] == 1652) {
+				.@skill = WZ_JUPITEL;
+				.@effect = EF_LIGHTBOLT;
+			} else {
+				.@skill = MG_FIREBOLT;
+				.@effect = EF_FIREHIT;
+			}
+			break;
+		default:
+			.@skill = WZ_JUPITEL;
+			.@effect = EF_LIGHTBOLT;
+			break;
+		}
 	}
 
 	unitattack(.@hayata_gid, .@gid);
@@ -1899,6 +1970,8 @@ S_SetupHayata:
 		callfunc "F_ApplyCloneStyle", .@gid, .@clone_slot;
 	else
 		setunitdata(.@gid, UDT_CLASS, Job_Mage);
+	if (.@clone_slot == 9)
+		callsub S_ApplyHayataPeco, .@gid;
 
 	setunitdata(.@gid, UDT_SPEED, 120);
 	setunitdata(.@gid, UDT_MODE, MD_NOKNOCKBACK | MD_BOSS);
@@ -1912,6 +1985,15 @@ S_SetupHayata:
 	setunitdata(.@gid, UDT_MATKMAX, 7000);
 	setunitdata(.@gid, UDT_MAXSP, 2000);
 	setunitdata(.@gid, UDT_SP, 2000);
+	return;
+
+S_ApplyHayataPeco:
+	.@gid = getarg(0);
+	if (.@gid <= 0)
+		return;
+
+	setunitdata(.@gid, UDT_OPTIONS, getunitdata(.@gid, UDT_OPTIONS) | Option_Riding);
+	sc_start(SC_RIDING, 604800000, MOUNT_PECO, 10000, SCFLAG_NOAVOID|SCFLAG_FIXEDTICK, .@gid);
 	return;
 
 OnCloneDead:
