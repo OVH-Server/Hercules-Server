@@ -1994,6 +1994,7 @@ S_SetupHayata:
 	if (.@clone_slot == 9)
 		callsub S_ApplyHayataPeco, .@gid;
 
+	setunitdata(.@gid, UDT_LEVEL, 90);
 	setunitdata(.@gid, UDT_SPEED, 120);
 	setunitdata(.@gid, UDT_MODE, MD_NOKNOCKBACK | MD_BOSS);
 	setunitdata(.@gid, UDT_AI, AI_NONE);
