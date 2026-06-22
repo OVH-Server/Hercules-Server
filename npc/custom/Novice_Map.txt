@@ -1529,35 +1529,38 @@ OnTimer1000:
 }
 
 // DARK APPARITION PORTALS - HAYATA DEFENSE
-// Hayata se buff toutes les deux minutes, puis lance des bolts sur les Ygnizem Clone.
-// Ygnizem Clone est un vrai clone ennemi, attire vers le Hayata le plus proche, avec l'impact Lightning force au bon timing.
-// Les 7 portails de la partie haute de la cour invoquent un Ygnizem Clone toutes les 5 secondes.
-// Chaque portail ne peut garder qu'un Ygnizem actif a la fois.
+// Hayata se buff toutes les deux minutes, puis lance des bolts sur les clones ennemis.
+// Chaque clone ennemi est attire vers le Hayata le plus proche, avec l'impact Lightning force au bon timing.
+// Les portails de la cour invoquent un clone ennemi toutes les 5 secondes.
+// Chaque portail ne peut garder qu'un clone ennemi actif a la fois.
 -	script	CastleProfessorClone#new11	-1,{
 	end;
 
 OnInit:
 	killmonster "new_1-1", "CastleProfessorClone#new11::OnCloneDead";
-	killmonster "new_1-1", "CastleProfessorClone#new11::OnYgnizemDead";
+	killmonster "new_1-1", "CastleProfessorClone#new11::OnEnemyDead";
 
 	.CloneSlot = 7;
 	.CloneMobID = 1905;
 	.CombatRange = 20;
 	.MaxHayata = 3;
-	.MaxYgnizem = 7;
+	.MaxEnemy = 8;
 	.Tick = 0;
 	.NextSpawn = 0;
+	.NextEnemy = 0;
 	.CastingBolt = 0;
 	setarray .HayataX[0], 130, 129, 141;
 	setarray .HayataY[0], 112, 131, 139;
-	setarray .SpawnX[0], 124, 135, 128, 147, 145, 137, 132;
-	setarray .SpawnY[0], 126, 134, 141, 143, 133, 145, 121;
-	setarray .SpawnNpc$[0], "#CastleArrivalPattern06", "#CastleArrivalPattern07", "#CastleArrivalPattern08", "#CastleArrivalPattern09", "#CastleArrivalPattern10", "#CastleArrivalPattern11", "#CastleArrivalPattern15";
+	setarray .SpawnX[0], 124, 124, 135, 128, 147, 145, 137, 132;
+	setarray .SpawnY[0], 110, 126, 134, 141, 143, 133, 145, 121;
+	setarray .SpawnNpc$[0], "#CastleArrivalPattern01", "#CastleArrivalPattern06", "#CastleArrivalPattern07", "#CastleArrivalPattern08", "#CastleArrivalPattern09", "#CastleArrivalPattern10", "#CastleArrivalPattern11", "#CastleArrivalPattern15";
+	setarray .EnemyName$[0], "Ygnizem Clone", "Banshee Clone", "Bloody Murderer Clone", "Skogul Clone";
+	setarray .EnemyMobID[0], 1652, 1867, 1507, 1761;
 
-	for (.@i = 0; .@i < .MaxYgnizem; .@i++) {
-		.YgnizemGID[.@i] = 0;
-		.YgnizemPortal[.@i] = -1;
-		.PortalYgnizemGID[.@i] = 0;
+	for (.@i = 0; .@i < .MaxEnemy; .@i++) {
+		.EnemyGID[.@i] = 0;
+		.EnemyPortal[.@i] = -1;
+		.PortalEnemyGID[.@i] = 0;
 	}
 
 	for (.@i = 0; .@i < .MaxHayata; .@i++) {
@@ -1581,12 +1584,12 @@ OnTimer1000:
 		callsub S_CastMemorize;
 
 	if (.Tick % 5 == 0)
-		callsub S_SpawnYgnizem;
+		callsub S_SpawnEnemy;
 
-	callsub S_RetargetYgnizem;
+	callsub S_RetargetEnemy;
 
 	if (.Tick >= 17 && .Tick % 3 == 0)
-		callsub S_AttackNearbyYgnizem;
+		callsub S_AttackNearbyEnemy;
 
 	if (.Tick >= 120)
 		.Tick = 0;
@@ -1624,20 +1627,20 @@ S_CastMemorize:
 	}
 	return;
 
-S_SpawnYgnizem:
-	callsub S_CleanupYgnizem;
+S_SpawnEnemy:
+	callsub S_CleanupEnemy;
 
-	if (mobcount("new_1-1", "CastleProfessorClone#new11::OnYgnizemDead") >= .MaxYgnizem)
+	if (mobcount("new_1-1", "CastleProfessorClone#new11::OnEnemyDead") >= .MaxEnemy)
 		return;
 
 	for (.@tries = 0; .@tries < getarraysize(.SpawnX); .@tries++) {
 		.@spawn = (.NextSpawn + .@tries) % getarraysize(.SpawnX);
-		if (.PortalYgnizemGID[.@spawn] > 0)
+		if (.PortalEnemyGID[.@spawn] > 0)
 			continue;
 
 		.@slot = -1;
-		for (.@i = 0; .@i < .MaxYgnizem; .@i++) {
-			if (.YgnizemGID[.@i] <= 0 || getunitdata(.YgnizemGID[.@i], UDT_HP) <= 0) {
+		for (.@i = 0; .@i < .MaxEnemy; .@i++) {
+			if (.EnemyGID[.@i] <= 0 || getunitdata(.EnemyGID[.@i], UDT_HP) <= 0) {
 				.@slot = .@i;
 				break;
 			}
@@ -1647,7 +1650,8 @@ S_SpawnYgnizem:
 
 		specialeffect 665, AREA, .SpawnNpc$[.@spawn];
 		sleep 1000;
-		.@gid = monster("new_1-1", .SpawnX[.@spawn], .SpawnY[.@spawn], "Ygnizem Clone", 1652, 1, "CastleProfessorClone#new11::OnYgnizemDead");
+		.@enemy = .NextEnemy;
+		.@gid = monster("new_1-1", .SpawnX[.@spawn], .SpawnY[.@spawn], .EnemyName$[.@enemy], .EnemyMobID[.@enemy], 1, "CastleProfessorClone#new11::OnEnemyDead");
 		if (.@gid <= 0)
 			continue;
 
@@ -1663,21 +1667,22 @@ S_SpawnYgnizem:
 		.@target = .ClosestHayataGID;
 		if (.@target > 0)
 			unitattack(.@gid, .@target);
-		.YgnizemGID[.@slot] = .@gid;
-		.YgnizemPortal[.@slot] = .@spawn;
-		.PortalYgnizemGID[.@spawn] = .@gid;
+		.EnemyGID[.@slot] = .@gid;
+		.EnemyPortal[.@slot] = .@spawn;
+		.PortalEnemyGID[.@spawn] = .@gid;
 		.NextSpawn = (.@spawn + 1) % getarraysize(.SpawnX);
+		.NextEnemy = (.NextEnemy + 1) % getarraysize(.EnemyMobID);
 		return;
 	}
 	return;
 
-S_RetargetYgnizem:
-	for (.@i = 0; .@i < .MaxYgnizem; .@i++) {
-		.@gid = .YgnizemGID[.@i];
+S_RetargetEnemy:
+	for (.@i = 0; .@i < .MaxEnemy; .@i++) {
+		.@gid = .EnemyGID[.@i];
 		if (.@gid <= 0)
 			continue;
 		if (getunitdata(.@gid, UDT_HP) <= 0) {
-			callsub S_ClearYgnizemSlot, .@i;
+			callsub S_ClearEnemySlot, .@i;
 			continue;
 		}
 		getunitdata(.@gid, UDT_MAPIDXY, .@mob);
@@ -1687,18 +1692,18 @@ S_RetargetYgnizem:
 	}
 	return;
 
-S_AttackNearbyYgnizem:
+S_AttackNearbyEnemy:
 	if (.CastingBolt)
 		return;
 
-	for (.@i = 0; .@i < .MaxYgnizem; .@i++) {
-		.@gid = .YgnizemGID[.@i];
+	for (.@i = 0; .@i < .MaxEnemy; .@i++) {
+		.@gid = .EnemyGID[.@i];
 		if (.@gid <= 0)
 			continue;
 
 		.@hp = getunitdata(.@gid, UDT_HP);
 		if (.@hp <= 0) {
-			callsub S_ClearYgnizemSlot, .@i;
+			callsub S_ClearEnemySlot, .@i;
 			continue;
 		}
 
@@ -1737,7 +1742,7 @@ S_AttackNearbyYgnizem:
 		sleep 1800;
 		.@hp = getunitdata(.@gid, UDT_HP);
 		if (.@hp <= 0) {
-			callsub S_ClearYgnizemSlot, .@i;
+			callsub S_ClearEnemySlot, .@i;
 			.CastingBolt = 0;
 			return;
 		}
@@ -1746,26 +1751,26 @@ S_AttackNearbyYgnizem:
 		specialeffect(.@effect, AREA, .@gid);
 		sleep 700;
 		unitkill(.@gid);
-		callsub S_ClearYgnizemSlot, .@i;
+		callsub S_ClearEnemySlot, .@i;
 		.CastingBolt = 0;
 		return;
 	}
 	return;
 
-S_CleanupYgnizem:
-	for (.@i = 0; .@i < .MaxYgnizem; .@i++) {
-		if (.YgnizemGID[.@i] <= 0 || getunitdata(.YgnizemGID[.@i], UDT_HP) <= 0)
-			callsub S_ClearYgnizemSlot, .@i;
+S_CleanupEnemy:
+	for (.@i = 0; .@i < .MaxEnemy; .@i++) {
+		if (.EnemyGID[.@i] <= 0 || getunitdata(.EnemyGID[.@i], UDT_HP) <= 0)
+			callsub S_ClearEnemySlot, .@i;
 	}
 	return;
 
-S_ClearYgnizemSlot:
+S_ClearEnemySlot:
 	.@slot = getarg(0);
-	.@portal = .YgnizemPortal[.@slot];
+	.@portal = .EnemyPortal[.@slot];
 	if (.@portal >= 0 && .@portal < getarraysize(.SpawnX))
-		.PortalYgnizemGID[.@portal] = 0;
-	.YgnizemGID[.@slot] = 0;
-	.YgnizemPortal[.@slot] = -1;
+		.PortalEnemyGID[.@portal] = 0;
+	.EnemyGID[.@slot] = 0;
+	.EnemyPortal[.@slot] = -1;
 	return;
 
 S_GetClosestHayata:
@@ -1828,8 +1833,8 @@ OnCloneDead:
 	donpcevent "CastleProfessorClone#new11::OnInit";
 	end;
 
-OnYgnizemDead:
-	callsub S_CleanupYgnizem;
+OnEnemyDead:
+	callsub S_CleanupEnemy;
 	.CastingBolt = 0;
 	end;
 }
