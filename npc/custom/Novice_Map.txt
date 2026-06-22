@@ -1546,8 +1546,8 @@ OnInit:
 	.MaxEnemy = 11;
 	.Tick = 0;
 	.Clock = 0;
-	setarray .HayataX[0], 130, 129, 141, 136;
-	setarray .HayataY[0], 112, 131, 139, 104;
+	setarray .HayataX[0], 130, 129, 141, 134;
+	setarray .HayataY[0], 112, 131, 139, 100;
 	setarray .HayataCloneSlot[0], 7, 8, 9, 9;
 	setarray .SpawnX[0], 124, 124, 135, 128, 147, 145, 137, 132, 130, 140, 130;
 	setarray .SpawnY[0], 110, 126, 134, 141, 143, 133, 145, 121, 103, 97, 96;
