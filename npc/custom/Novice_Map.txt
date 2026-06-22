@@ -1782,9 +1782,9 @@ S_StartHayataCast:
 		break;
 	}
 
-	setunitdata(.@gid, UDT_HP, 2000000);
 	unitattack(.@hayata_gid, .@gid);
 	areamobuseskill("new_1-1", .HayataX[.@hayata_index], .HayataY[.@hayata_index], 0, .CloneMobID, .@skill, 10, 900, 0, e_no1, 1);
+	setunitdata(.@gid, UDT_HP, 1);
 	.HayataCasting[.@hayata_index] = 1;
 	.HayataCastEndTick[.@hayata_index] = .Clock + 1;
 	.HayataTargetSlot[.@hayata_index] = .@enemy_slot;
@@ -1799,12 +1799,18 @@ S_FinishHayataCasts:
 			continue;
 
 		.@slot = .HayataTargetSlot[.@hayata_index];
+		if (.@slot < 0) {
+			.HayataCasting[.@hayata_index] = 0;
+			.HayataTargetGID[.@hayata_index] = 0;
+			.HayataCastEndTick[.@hayata_index] = 0;
+			.HayataCastEffect[.@hayata_index] = 0;
+			continue;
+		}
 		.@gid = .EnemyGID[.@slot];
-		if (.@gid > 0 && .@gid == .HayataTargetGID[.@hayata_index] && .EnemyCasting[.@slot] && getunitdata(.@gid, UDT_HP) > 0) {
-			setunitdata(.@gid, UDT_HP, 2000000);
-			specialeffect(.HayataCastEffect[.@hayata_index], AREA, .@gid);
-			unitkill(.@gid);
+		if (.@gid > 0 && .@gid == .HayataTargetGID[.@hayata_index] && .EnemyCasting[.@slot] && getunitdata(.@gid, UDT_HP) <= 0) {
 			callsub S_ClearEnemySlot, .@slot;
+		} else {
+			.EnemyCasting[.@slot] = 0;
 		}
 
 		.HayataCasting[.@hayata_index] = 0;
