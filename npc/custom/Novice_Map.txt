@@ -1543,7 +1543,7 @@ OnTimer1000:
 }
 
 // DARK APPARITION PORTALS - HAYATA DEFENSE
-// Trois Hayata se buffent toutes les minutes, puis lancent des bolts sur les Ygnizem Clone.
+// Trois Hayata se buffent toutes les deux minutes, puis lancent des bolts sur les Ygnizem Clone.
 // Les Ygnizem Clone apparaissent sur les portails actifs de la cour du chateau.
 // Un portail ne peut avoir qu'un seul Ygnizem actif, et les portails sont parcourus dans l'ordre toutes les 5 secondes.
 -	script	CastleProfessorClone#new11	-1,{
@@ -1562,8 +1562,8 @@ OnInit:
 
 	setarray .StartX[0], 130, 129, 141;
 	setarray .StartY[0], 114, 132, 140;
-	setarray .SpawnX[0], 124, 124, 135, 128, 147, 145, 137, 132;
-	setarray .SpawnY[0], 110, 126, 134, 141, 143, 133, 145, 121;
+	setarray .SpawnX[0], 124, 124, 135, 128, 147, 145, 137, 132, 145;
+	setarray .SpawnY[0], 110, 126, 134, 141, 143, 133, 145, 121, 132;
 	.MaxYgnizem = getarraysize(.SpawnX);
 
 	for (.@i = 0; .@i < .MaxYgnizem; .@i++)
@@ -1591,7 +1591,7 @@ OnTimer1000:
 	else if (.Tick == 7)
 		callsub S_CastMemorize;
 
-	if (.Tick >= 10 && .Tick % 5 == 0)
+	if (.Tick >= 15 && .Tick % 5 == 0)
 		callsub S_SpawnYgnizem;
 
 	callsub S_RetargetYgnizem;
@@ -1599,7 +1599,7 @@ OnTimer1000:
 	if (.Tick >= 17 && .Tick % 3 == 0)
 		callsub S_AttackNearbyYgnizem;
 
-	if (.Tick >= 60)
+	if (.Tick >= 120)
 		.Tick = 0;
 
 	setnpctimer 0;
@@ -1782,7 +1782,7 @@ S_AttackNearbyYgnizem:
 			.CastEffect[.@h] = .@effect;
 			setunitdata(.@gid, UDT_HP, 2000000);
 			unitattack(.@hayata_gid, .@gid);
-			areamobuseskill("new_1-1", .@hayata[1], .@hayata[2], 1, .CloneMobID, .@skill, 10, 1800, 0, e_no1, 1);
+			unitskilluseid(.@hayata_gid, .@skill, 10, .@gid);
 			if (.@h == 0)
 				donpcevent "CastleProfessorClone#new11::OnHayataCast0";
 			else if (.@h == 1)
