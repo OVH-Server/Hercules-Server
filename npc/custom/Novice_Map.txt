@@ -1531,7 +1531,7 @@ OnTimer1000:
 // DARK APPARITION PORTALS - HAYATA DEFENSE
 // Hayata se buff toutes les deux minutes, puis lance des bolts sur les clones ennemis.
 // Chaque clone ennemi est attire vers le Hayata le plus proche, avec l'impact Lightning force au bon timing.
-// Les portails de la cour invoquent un clone ennemi toutes les 15 secondes.
+// Les portails de la cour invoquent un clone ennemi selon leur propre rythme: 10, 20 ou 30 secondes.
 // Chaque portail ne peut garder qu'un clone ennemi actif a la fois.
 -	script	CastleProfessorClone#new11	-1,{
 	end;
@@ -1546,12 +1546,13 @@ OnInit:
 	.MaxHayata = 3;
 	.MaxEnemy = 8;
 	.Tick = 0;
-	.CastingBolt = 0;
+	.Clock = 0;
 	setarray .HayataX[0], 130, 129, 141;
 	setarray .HayataY[0], 112, 131, 139;
 	setarray .SpawnX[0], 124, 124, 135, 128, 147, 145, 137, 132;
 	setarray .SpawnY[0], 110, 126, 134, 141, 143, 133, 145, 121;
 	setarray .SpawnNpc$[0], "#CastleArrivalPattern01", "#CastleArrivalPattern06", "#CastleArrivalPattern07", "#CastleArrivalPattern08", "#CastleArrivalPattern09", "#CastleArrivalPattern10", "#CastleArrivalPattern11", "#CastleArrivalPattern15";
+	setarray .SpawnInterval[0], 10, 20, 30, 10, 20, 30, 10, 20;
 	setarray .EnemyName$[0], "Ygnizem Invocation", "Banshee Invocation", "Bloody Murderer Invocation", "Skogul Invocation";
 	setarray .EnemyMobID[0], 1652, 1867, 1507, 1761;
 
@@ -1559,11 +1560,17 @@ OnInit:
 		.EnemyGID[.@i] = 0;
 		.EnemyPortal[.@i] = -1;
 		.PortalEnemyGID[.@i] = 0;
+		.PortalPending[.@i] = 0;
+		.PortalSummonTick[.@i] = 0;
+		.PortalNextTick[.@i] = .SpawnInterval[.@i];
 	}
 
 	for (.@i = 0; .@i < .MaxHayata; .@i++) {
 		.CloneGID[.@i] = monster("new_1-1", .HayataX[.@i], .HayataY[.@i], "Hayata", .CloneMobID, 1, "CastleProfessorClone#new11::OnCloneDead");
 		callsub S_SetupHayata, .CloneGID[.@i];
+		.HayataCasting[.@i] = 0;
+		.HayataCastEndTick[.@i] = 0;
+		.HayataTargetSlot[.@i] = -1;
 	}
 
 	stopnpctimer;
@@ -1573,6 +1580,7 @@ OnInit:
 
 OnTimer1000:
 	.Tick++;
+	.Clock++;
 
 	if (.Tick == 1)
 		callsub S_CastEnergyCoat;
@@ -1581,12 +1589,12 @@ OnTimer1000:
 	else if (.Tick == 7)
 		callsub S_CastMemorize;
 
-	if (.Tick % 15 == 0)
-		callsub S_SpawnEnemy;
+	callsub S_UpdatePortalSpawns;
 
 	callsub S_RetargetEnemy;
+	callsub S_FinishHayataCasts;
 
-	if (.Tick >= 17 && .Tick % 3 == 0)
+	if (.Tick >= 17)
 		callsub S_AttackNearbyEnemy;
 
 	if (.Tick >= 120)
@@ -1625,63 +1633,72 @@ S_CastMemorize:
 	}
 	return;
 
-S_SpawnEnemy:
+S_UpdatePortalSpawns:
 	callsub S_CleanupEnemy;
 
+	for (.@spawn = 0; .@spawn < getarraysize(.SpawnX); .@spawn++) {
+		if (.PortalEnemyGID[.@spawn] > 0) {
+			.PortalPending[.@spawn] = 0;
+			continue;
+		}
+
+		if (.PortalPending[.@spawn]) {
+			if (.Clock >= .PortalSummonTick[.@spawn])
+				callsub S_SpawnEnemyFromPortal, .@spawn;
+			continue;
+		}
+
+		if (.Clock < .PortalNextTick[.@spawn])
+			continue;
+
+		.PortalPending[.@spawn] = 1;
+		.PortalSummonTick[.@spawn] = .Clock + 1;
+		specialeffect 665, AREA, .SpawnNpc$[.@spawn];
+	}
+	return;
+
+S_SpawnEnemyFromPortal:
+	.@spawn = getarg(0);
+	.PortalPending[.@spawn] = 0;
+
+	if (.PortalEnemyGID[.@spawn] > 0)
+		return;
 	if (mobcount("new_1-1", "CastleProfessorClone#new11::OnEnemyDead") >= .MaxEnemy)
 		return;
 
-	.@count = 0;
-	for (.@spawn = 0; .@spawn < getarraysize(.SpawnX); .@spawn++) {
-		if (.PortalEnemyGID[.@spawn] > 0)
-			continue;
-
-		.@pending[.@count] = .@spawn;
-		specialeffect 665, AREA, .SpawnNpc$[.@spawn];
-		.@count++;
+	.@slot = -1;
+	for (.@i = 0; .@i < .MaxEnemy; .@i++) {
+		if (.EnemyGID[.@i] <= 0 || getunitdata(.EnemyGID[.@i], UDT_HP) <= 0) {
+			.@slot = .@i;
+			break;
+		}
 	}
-	if (.@count <= 0)
+	if (.@slot < 0)
 		return;
 
-	sleep 1000;
+	.@enemy = rand(getarraysize(.EnemyMobID));
+	.@gid = monster("new_1-1", .SpawnX[.@spawn], .SpawnY[.@spawn], .EnemyName$[.@enemy], .EnemyMobID[.@enemy], 1, "CastleProfessorClone#new11::OnEnemyDead");
+	if (.@gid <= 0)
+		return;
 
-	for (.@pending_index = 0; .@pending_index < .@count; .@pending_index++) {
-		.@spawn = .@pending[.@pending_index];
-		if (.PortalEnemyGID[.@spawn] > 0)
-			continue;
-
-		.@slot = -1;
-		for (.@i = 0; .@i < .MaxEnemy; .@i++) {
-			if (.EnemyGID[.@i] <= 0 || getunitdata(.EnemyGID[.@i], UDT_HP) <= 0) {
-				.@slot = .@i;
-				break;
-			}
-		}
-		if (.@slot < 0)
-			return;
-
-		.@enemy = rand(getarraysize(.EnemyMobID));
-		.@gid = monster("new_1-1", .SpawnX[.@spawn], .SpawnY[.@spawn], .EnemyName$[.@enemy], .EnemyMobID[.@enemy], 1, "CastleProfessorClone#new11::OnEnemyDead");
-		if (.@gid <= 0)
-			continue;
-
-		specialeffect 873, AREA, .SpawnNpc$[.@spawn];
-		specialeffect 847, AREA, .@gid;
-		setunitdata(.@gid, UDT_MODE, MD_CANMOVE | MD_CANATTACK | MD_NOKNOCKBACK);
-		setunitdata(.@gid, UDT_AI, AI_ATTACK);
-		setunitdata(.@gid, UDT_SPEED, 160);
-		setunitdata(.@gid, UDT_ATKRANGE, 1);
-		setunitdata(.@gid, UDT_MAXHP, 2000000);
-		setunitdata(.@gid, UDT_HP, 2000000);
-		callsub S_GetClosestHayata, .SpawnX[.@spawn], .SpawnY[.@spawn];
-		.@target = .ClosestHayataGID;
-		if (.@target > 0)
-			unitattack(.@gid, .@target);
-		.EnemyGID[.@slot] = .@gid;
-		.EnemyPortal[.@slot] = .@spawn;
-		.EnemyMobIDBySlot[.@slot] = .EnemyMobID[.@enemy];
-		.PortalEnemyGID[.@spawn] = .@gid;
-	}
+	specialeffect 873, AREA, .SpawnNpc$[.@spawn];
+	specialeffect 847, AREA, .@gid;
+	setunitdata(.@gid, UDT_MODE, MD_CANMOVE | MD_CANATTACK | MD_NOKNOCKBACK);
+	setunitdata(.@gid, UDT_AI, AI_ATTACK);
+	setunitdata(.@gid, UDT_SPEED, 160);
+	setunitdata(.@gid, UDT_ATKRANGE, 1);
+	setunitdata(.@gid, UDT_MAXHP, 2000000);
+	setunitdata(.@gid, UDT_HP, 2000000);
+	callsub S_GetClosestHayata, .SpawnX[.@spawn], .SpawnY[.@spawn];
+	.@target = .ClosestHayataGID;
+	if (.@target > 0)
+		unitattack(.@gid, .@target);
+	.EnemyGID[.@slot] = .@gid;
+	.EnemyPortal[.@slot] = .@spawn;
+	.EnemyMobIDBySlot[.@slot] = .EnemyMobID[.@enemy];
+	.EnemyCasting[.@slot] = 0;
+	.PortalEnemyGID[.@spawn] = .@gid;
+	.PortalNextTick[.@spawn] = .Clock + .SpawnInterval[.@spawn];
 	return;
 
 S_RetargetEnemy:
@@ -1701,72 +1718,97 @@ S_RetargetEnemy:
 	return;
 
 S_AttackNearbyEnemy:
-	if (.CastingBolt)
-		return;
-
-	for (.@i = 0; .@i < .MaxEnemy; .@i++) {
-		.@gid = .EnemyGID[.@i];
-		if (.@gid <= 0)
+	for (.@hayata_index = 0; .@hayata_index < .MaxHayata; .@hayata_index++) {
+		.@hayata_gid = .CloneGID[.@hayata_index];
+		if (.@hayata_gid <= 0 || .HayataCasting[.@hayata_index])
 			continue;
-
-		.@hp = getunitdata(.@gid, UDT_HP);
-		if (.@hp <= 0) {
-			callsub S_ClearEnemySlot, .@i;
+		if (getunitdata(.@hayata_gid, UDT_HP) <= 0) {
+			.CloneGID[.@hayata_index] = 0;
 			continue;
 		}
 
-		getunitdata(.@gid, UDT_MAPIDXY, .@mob);
-		callsub S_GetClosestHayata, .@mob[1], .@mob[2];
-		.@hayata_gid = .ClosestHayataGID;
-		.@hayata_index = .ClosestHayataIndex;
-		if (.@hayata_gid <= 0)
-			continue;
 		getunitdata(.@hayata_gid, UDT_MAPIDXY, .@hayata);
-		.@dx = .@hayata[1] - .@mob[1];
-		.@dy = .@hayata[2] - .@mob[2];
-		if ((.@dx * .@dx) + (.@dy * .@dy) > (.CombatRange * .CombatRange))
+
+		for (.@i = 0; .@i < .MaxEnemy; .@i++) {
+			.@gid = .EnemyGID[.@i];
+			if (.@gid <= 0 || .EnemyCasting[.@i])
+				continue;
+
+			.@hp = getunitdata(.@gid, UDT_HP);
+			if (.@hp <= 0) {
+				callsub S_ClearEnemySlot, .@i;
+				continue;
+			}
+
+			getunitdata(.@gid, UDT_MAPIDXY, .@mob);
+			.@dx = .@hayata[1] - .@mob[1];
+			.@dy = .@hayata[2] - .@mob[2];
+			if ((.@dx * .@dx) + (.@dy * .@dy) > (.CombatRange * .CombatRange))
+				continue;
+
+			callsub S_StartHayataCast, .@hayata_index, .@i;
+			break;
+		}
+	}
+	return;
+
+S_StartHayataCast:
+	.@hayata_index = getarg(0);
+	.@enemy_slot = getarg(1);
+	.@hayata_gid = .CloneGID[.@hayata_index];
+	.@gid = .EnemyGID[.@enemy_slot];
+	if (.@hayata_gid <= 0 || .@gid <= 0)
+		return;
+
+	setunitdata(.@hayata_gid, UDT_LOOKDIR, 6);
+	if (.EnemyMobIDBySlot[.@enemy_slot] == 1652)
+		.@roll = rand(2);
+	else
+		.@roll = rand(3);
+
+	switch(.@roll) {
+	case 0:
+		.@skill = MG_COLDBOLT;
+		.@effect = EF_COLDHIT;
+		break;
+	case 1:
+		.@skill = MG_LIGHTNINGBOLT;
+		.@effect = EF_LIGHTBOLT;
+		break;
+	default:
+		.@skill = MG_FIREBOLT;
+		.@effect = EF_FIREHIT;
+		break;
+	}
+
+	setunitdata(.@gid, UDT_HP, 2000000);
+	unitattack(.@hayata_gid, .@gid);
+	areamobuseskill("new_1-1", .HayataX[.@hayata_index], .HayataY[.@hayata_index], 0, .CloneMobID, .@skill, 10, 1800, 0, e_no1, 1);
+	.HayataCasting[.@hayata_index] = 1;
+	.HayataCastEndTick[.@hayata_index] = .Clock + 2;
+	.HayataTargetSlot[.@hayata_index] = .@enemy_slot;
+	.HayataCastEffect[.@hayata_index] = .@effect;
+	.EnemyCasting[.@enemy_slot] = 1;
+	return;
+
+S_FinishHayataCasts:
+	for (.@hayata_index = 0; .@hayata_index < .MaxHayata; .@hayata_index++) {
+		if (!.HayataCasting[.@hayata_index] || .Clock < .HayataCastEndTick[.@hayata_index])
 			continue;
 
-		setunitdata(.@hayata_gid, UDT_LOOKDIR, 6);
-		if (.EnemyMobIDBySlot[.@i] == 1652) {
-			.@roll = rand(2);
-		} else {
-			.@roll = rand(3);
-		}
-		switch(.@roll) {
-		case 0:
-			.@skill = MG_COLDBOLT;
-			.@effect = EF_COLDHIT;
-			break;
-		case 1:
-			.@skill = MG_LIGHTNINGBOLT;
-			.@effect = EF_LIGHTBOLT;
-			break;
-		default:
-			.@skill = MG_FIREBOLT;
-			.@effect = EF_FIREHIT;
-			break;
-		}
-		.CastingBolt = 1;
-		setunitdata(.@gid, UDT_HP, 2000000);
-		unitattack(.@hayata_gid, .@gid);
-		areamobuseskill("new_1-1", .HayataX[.@hayata_index], .HayataY[.@hayata_index], 0, .CloneMobID, .@skill, 10, 1800, 0, e_no1, 1);
-
-		sleep 1800;
-		.@hp = getunitdata(.@gid, UDT_HP);
-		if (.@hp <= 0) {
-			callsub S_ClearEnemySlot, .@i;
-			.CastingBolt = 0;
-			return;
+		.@slot = .HayataTargetSlot[.@hayata_index];
+		.@gid = .EnemyGID[.@slot];
+		if (.@gid > 0 && getunitdata(.@gid, UDT_HP) > 0) {
+			setunitdata(.@gid, UDT_HP, 2000000);
+			specialeffect(.HayataCastEffect[.@hayata_index], AREA, .@gid);
+			unitkill(.@gid);
+			callsub S_ClearEnemySlot, .@slot;
 		}
 
-		setunitdata(.@gid, UDT_HP, 2000000);
-		specialeffect(.@effect, AREA, .@gid);
-		sleep 700;
-		unitkill(.@gid);
-		callsub S_ClearEnemySlot, .@i;
-		.CastingBolt = 0;
-		return;
+		.HayataCasting[.@hayata_index] = 0;
+		.HayataTargetSlot[.@hayata_index] = -1;
+		.HayataCastEndTick[.@hayata_index] = 0;
+		.HayataCastEffect[.@hayata_index] = 0;
 	}
 	return;
 
@@ -1785,6 +1827,7 @@ S_ClearEnemySlot:
 	.EnemyGID[.@slot] = 0;
 	.EnemyPortal[.@slot] = -1;
 	.EnemyMobIDBySlot[.@slot] = 0;
+	.EnemyCasting[.@slot] = 0;
 	return;
 
 S_GetClosestHayata:
@@ -1849,7 +1892,6 @@ OnCloneDead:
 
 OnEnemyDead:
 	callsub S_CleanupEnemy;
-	.CastingBolt = 0;
 	end;
 }
 
