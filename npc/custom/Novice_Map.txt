@@ -1593,6 +1593,8 @@ OnTimer1000:
 		callsub S_CastMemorize;
 	else if (.Tick == 10)
 		callsub S_CastShrink;
+	if (.Clock % 2 == 0)
+		callsub S_PlayHayataAura;
 
 	callsub S_UpdatePortalSpawns;
 
@@ -1676,6 +1678,14 @@ S_CastShrink:
 		setunitdata(.CloneGID[.@i], UDT_LOOKDIR, 6);
 		unitskilluseid(.CloneGID[.@i], CR_SHRINK, 1, .CloneGID[.@i]);
 		sc_start(SC_CR_SHRINK, 600000, 1, 10000, SCFLAG_NOAVOID|SCFLAG_FIXEDTICK, .CloneGID[.@i]);
+	}
+	return;
+
+S_PlayHayataAura:
+	for (.@i = 0; .@i < .MaxHayata; .@i++) {
+		if (.CloneGID[.@i] <= 0 || getunitdata(.CloneGID[.@i], UDT_HP) <= 0)
+			continue;
+		specialeffect(488, AREA, .CloneGID[.@i]);
 	}
 	return;
 
