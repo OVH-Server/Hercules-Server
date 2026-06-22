@@ -1795,7 +1795,7 @@ S_AttackNearbyYgnizem:
 			.CastingBolt[.@h] = 1;
 			setunitdata(.@gid, UDT_HP, 2000000);
 			unitattack(.@hayata_gid, .@gid);
-			areamobuseskill("new_1-1", .@hayata[1], .@hayata[2], 0, .CloneMobID, .@skill, 10, 1800, 0, e_no1, 1);
+			areamobuseskill("new_1-1", .StartX[.@h], .StartY[.@h], 0, .CloneMobID, .@skill, 10, 1800, 0, e_no1, 1);
 
 			sleep 1800;
 			.@hp = getunitdata(.@gid, UDT_HP);
