@@ -1687,8 +1687,8 @@ S_SpawnEnemyFromPortal:
 	setunitdata(.@gid, UDT_AI, AI_ATTACK);
 	setunitdata(.@gid, UDT_SPEED, 160);
 	setunitdata(.@gid, UDT_ATKRANGE, 1);
-	setunitdata(.@gid, UDT_MAXHP, 2000000);
-	setunitdata(.@gid, UDT_HP, 2000000);
+	setunitdata(.@gid, UDT_MAXHP, 50000);
+	setunitdata(.@gid, UDT_HP, 50000);
 	callsub S_GetClosestHayata, .SpawnX[.@spawn], .SpawnY[.@spawn];
 	.@target = .ClosestHayataGID;
 	if (.@target > 0)
@@ -1785,7 +1785,6 @@ S_StartHayataCast:
 
 	unitattack(.@hayata_gid, .@gid);
 	areamobuseskill("new_1-1", .HayataX[.@hayata_index], .HayataY[.@hayata_index], 0, .CloneMobID, .@skill, 10, 900, 0, e_no1, 1);
-	setunitdata(.@gid, UDT_HP, 1);
 	.HayataCasting[.@hayata_index] = 1;
 	.HayataCastEndTick[.@hayata_index] = .Clock + 1;
 	.HayataNextCastTick[.@hayata_index] = .Clock + 2;
@@ -1809,8 +1808,7 @@ S_FinishHayataCasts:
 			continue;
 		}
 		.@gid = .EnemyGID[.@slot];
-		if (.@gid > 0 && .@gid == .HayataTargetGID[.@hayata_index] && .EnemyCasting[.@slot] && getunitdata(.@gid, UDT_HP) <= 1) {
-			unitkill(.@gid);
+		if (.@gid > 0 && .@gid == .HayataTargetGID[.@hayata_index] && .EnemyCasting[.@slot] && getunitdata(.@gid, UDT_HP) <= 0) {
 			callsub S_ClearEnemySlot, .@slot;
 		} else if (.@slot >= 0) {
 			.EnemyCasting[.@slot] = 0;
@@ -1826,13 +1824,8 @@ S_FinishHayataCasts:
 
 S_CleanupEnemy:
 	for (.@i = 0; .@i < .MaxEnemy; .@i++) {
-		if (.EnemyGID[.@i] <= 0)
+		if (.EnemyGID[.@i] <= 0 || getunitdata(.EnemyGID[.@i], UDT_HP) <= 0)
 			callsub S_ClearEnemySlot, .@i;
-		else if (getunitdata(.EnemyGID[.@i], UDT_HP) <= 1) {
-			if (getunitdata(.EnemyGID[.@i], UDT_HP) > 0)
-				unitkill(.EnemyGID[.@i]);
-			callsub S_ClearEnemySlot, .@i;
-		}
 	}
 	return;
 
@@ -1904,8 +1897,8 @@ S_SetupHayata:
 	setunitdata(.@gid, UDT_MAXHP, 2000000);
 	setunitdata(.@gid, UDT_HP, 2000000);
 	setunitdata(.@gid, UDT_DEX, 90);
-	setunitdata(.@gid, UDT_MATKMIN, 5000);
-	setunitdata(.@gid, UDT_MATKMAX, 6500);
+	setunitdata(.@gid, UDT_MATKMIN, 50000);
+	setunitdata(.@gid, UDT_MATKMAX, 65000);
 	setunitdata(.@gid, UDT_MAXSP, 2000);
 	setunitdata(.@gid, UDT_SP, 2000);
 	return;
