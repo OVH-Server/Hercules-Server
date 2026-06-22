@@ -1571,6 +1571,7 @@ OnInit:
 		.HayataCasting[.@i] = 0;
 		.HayataCastEndTick[.@i] = 0;
 		.HayataTargetSlot[.@i] = -1;
+		.HayataTargetGID[.@i] = 0;
 	}
 
 	stopnpctimer;
@@ -1783,10 +1784,11 @@ S_StartHayataCast:
 
 	setunitdata(.@gid, UDT_HP, 2000000);
 	unitattack(.@hayata_gid, .@gid);
-	areamobuseskill("new_1-1", .HayataX[.@hayata_index], .HayataY[.@hayata_index], 0, .CloneMobID, .@skill, 10, 1800, 0, e_no1, 1);
+	unitskilluseid(.@hayata_gid, .@skill, 10, .@gid);
 	.HayataCasting[.@hayata_index] = 1;
 	.HayataCastEndTick[.@hayata_index] = .Clock + 2;
 	.HayataTargetSlot[.@hayata_index] = .@enemy_slot;
+	.HayataTargetGID[.@hayata_index] = .@gid;
 	.HayataCastEffect[.@hayata_index] = .@effect;
 	.EnemyCasting[.@enemy_slot] = 1;
 	return;
@@ -1798,7 +1800,7 @@ S_FinishHayataCasts:
 
 		.@slot = .HayataTargetSlot[.@hayata_index];
 		.@gid = .EnemyGID[.@slot];
-		if (.@gid > 0 && getunitdata(.@gid, UDT_HP) > 0) {
+		if (.@gid > 0 && .@gid == .HayataTargetGID[.@hayata_index] && .EnemyCasting[.@slot] && getunitdata(.@gid, UDT_HP) > 0) {
 			setunitdata(.@gid, UDT_HP, 2000000);
 			specialeffect(.HayataCastEffect[.@hayata_index], AREA, .@gid);
 			unitkill(.@gid);
@@ -1807,6 +1809,7 @@ S_FinishHayataCasts:
 
 		.HayataCasting[.@hayata_index] = 0;
 		.HayataTargetSlot[.@hayata_index] = -1;
+		.HayataTargetGID[.@hayata_index] = 0;
 		.HayataCastEndTick[.@hayata_index] = 0;
 		.HayataCastEffect[.@hayata_index] = 0;
 	}
@@ -1828,6 +1831,15 @@ S_ClearEnemySlot:
 	.EnemyPortal[.@slot] = -1;
 	.EnemyMobIDBySlot[.@slot] = 0;
 	.EnemyCasting[.@slot] = 0;
+	for (.@i = 0; .@i < .MaxHayata; .@i++) {
+		if (.HayataTargetSlot[.@i] == .@slot) {
+			.HayataCasting[.@i] = 0;
+			.HayataTargetSlot[.@i] = -1;
+			.HayataTargetGID[.@i] = 0;
+			.HayataCastEndTick[.@i] = 0;
+			.HayataCastEffect[.@i] = 0;
+		}
+	}
 	return;
 
 S_GetClosestHayata:
