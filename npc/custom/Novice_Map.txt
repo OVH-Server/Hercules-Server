@@ -1531,7 +1531,7 @@ OnTimer1000:
 // DARK APPARITION PORTALS - HAYATA DEFENSE
 // Hayata se buff toutes les deux minutes, puis lance des bolts sur les clones ennemis.
 // Chaque clone ennemi est attire vers le Hayata le plus proche, avec l'impact Lightning force au bon timing.
-// Les portails de la cour invoquent un clone ennemi toutes les 5 secondes.
+// Les portails de la cour invoquent un clone ennemi toutes les 15 secondes.
 // Chaque portail ne peut garder qu'un clone ennemi actif a la fois.
 -	script	CastleProfessorClone#new11	-1,{
 	end;
@@ -1581,7 +1581,7 @@ OnTimer1000:
 	else if (.Tick == 7)
 		callsub S_CastMemorize;
 
-	if (.Tick % 5 == 0)
+	if (.Tick % 15 == 0)
 		callsub S_SpawnEnemy;
 
 	callsub S_RetargetEnemy;
