@@ -1562,6 +1562,7 @@ OnInit:
 	.CloneSlot = 7;
 	.StartX = 131;
 	.StartY = 110;
+	.CloneMobID = 1905;
 	.CombatRange = 20;
 	.MaxYgnizem = 1;
 	.Tick = 0;
@@ -1570,7 +1571,7 @@ OnInit:
 	setarray .SpawnX[0], 124;
 	setarray .SpawnY[0], 110;
 
-	.CloneGID = monster("new_1-1", .StartX, .StartY, "Hayata", 1905, 1, "CastleProfessorClone#new11::OnCloneDead");
+	.CloneGID = monster("new_1-1", .StartX, .StartY, "Hayata", .CloneMobID, 1, "CastleProfessorClone#new11::OnCloneDead");
 
 	if ($CloneStyle_Saved[.CloneSlot])
 		callfunc "F_ApplyCloneStyle", .CloneGID, .CloneSlot;
@@ -1724,7 +1725,7 @@ S_AttackNearbyYgnizem:
 		.CastingBolt = 1;
 		setunitdata(.@gid, UDT_HP, 2000000);
 		unitattack(.CloneGID, .@gid);
-		unitskilluseid(.CloneGID, .@skill, 10, .@gid);
+		areamobuseskill("new_1-1", .StartX, .StartY, 0, .CloneMobID, .@skill, 10, 1800, 0, e_no1, 1);
 
 		sleep 1800;
 		.@hp = getunitdata(.@gid, UDT_HP);
